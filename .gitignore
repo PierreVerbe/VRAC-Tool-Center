@@ -1,0 +1,9 @@
+### Intellij ###
+.idea/
+*.iml
+
+### API ###
+target/
+
+### Macintosh ###
+.DS_Store

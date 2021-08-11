@@ -1,52 +1,50 @@
-docker-compose up (start all 3 containers)
-docker ps (see them running)
+# VRAC Tool Center
 
-docker-compose start (restart containers that were previously created, but were stopped. It never creates new containers)
-docker-compose stop (stop)
+## About this repository
+This repository contains the several tools used by the VRAC association which participates in the "Coupe de France de robotique" every year.
 
+## Prerequisite
+For rest service : <br>
+* Install Java 8 <br>
+* Install Maven <br>
 
+For ui : <br>
+* Install Node.js <br>
 
+To launch containerized tool center : <br>
+* Install Docker <br>
+* Install Docker-compose <br>
 
+## Technical Stack
+* Database MongoDB
+* API REST Spring
+* UI React
 
-# Stop services only
+## Installation and run "VRAC Tool Center"
+* Download repository and go inside this folder
+```bash
+git clone https://github.com/PierreVerbe/VRAC-Tool-Center
+cd VRAC-Tool-Center
+```
+
+* First start-up containerized app
+```bash
+docker-compose up
+```
+
+* Stop containerized app
+```bash
 docker-compose stop
+```
 
-# Stop and remove containers, networks..
-docker-compose down 
+* Start containerized app
+```bash
+docker-compose start
+```
 
-# Down and remove volumes
-docker-compose down --volumes 
-
-# Down and remove images
-docker-compose down --rmi <all|local> 
-
-
-docker exec -it vrac-tool-center_mongo_1 bash
-mongo
-use test
-show dbs
-show collections
-
-
-Docker create a release of rest service 
-docker build -t pierreverbe/vrac-tool-center-rest-service:0.1.0-SNAPSHOT .
-
-see images available
-docker images
-
-run docker image 
-docker run -p 6039:8080 pierreverbe/vrac-tool-center-rest-service:0.1.0-SNAPSHOT
-
-stop docker image with id : 54eb18675981f6a9742b79f626f4ca3bfbeb4ed9565505b5d51ee4d980fcb590
-docker container stop 54eb18675981f6a9742b79f626f4ca3bfbeb4ed9565505b5d51ee4d980fcb590 
-
-
-
-docker login --username=pierreverbe
-password
-
-docker push pierreverbe/vrac-tool-center-rest-service:0.1.1-SNAPSHOT
-
-
-
-
+## Notes
+* Publish a new release [file](resources/docs/release.md) <br>
+* If you have issues look at this [file](resources/docs/issue.md) <br>
+* Todo list [file](resources/docs/todo.md) <br>
+* Docker Hub, [rest service](https://hub.docker.com/r/pierreverbe/vrac-tool-center-rest-service) <br>
+* Docker Hub, [react ui](https://hub.docker.com/repository/docker/pierreverbe/vrac-tool-center-ui) <br>
