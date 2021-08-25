@@ -11,3 +11,6 @@
 * [ ] MongoDB in cloud <br>
 * [ ] github package <br>
 * [ ] github release <br>
+
+* [ ] delete icon material <br>
+* [ ] delete swipeable <br>
