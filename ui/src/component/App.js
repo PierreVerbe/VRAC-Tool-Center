@@ -58,7 +58,6 @@ const App = () => {
             <h1 style={{ marginTop: "10vh" }}>Monitoring part</h1>
           </Route>
           <Route path="/" >
-            <h1 style={{ marginTop: "10vh" }}>Home part</h1>
             <Home/>
           </Route>
         </Switch>
