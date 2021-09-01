@@ -1,8 +1,10 @@
-/*
 .App {
-  text-align: center;
+  height: 100vh;
 }
-*/
+
+.switchDarkMode {
+  margin-top: 100px;
+}
 
 .App-logo {
   height: 40vmin;
