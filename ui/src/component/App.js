@@ -1,69 +1,85 @@
 import React from "react"
-import { BrowserRouter, Link, Route, Switch } from "react-router-dom"
+import { connect } from "react-redux"
+import { BrowserRouter, Link, Route, Switch as SwitchRouter } from "react-router-dom"
 
 import Home from "./home/Home"
 import UIStudent from "./student/UIStudent"
 
-import './App.css'
-import AppBar from '@material-ui/core/AppBar'
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
+import { setDarkModeActionCreator } from "./../action/generalAction"
 
-const App = () => {
+import './App.css'
+import { ThemeProvider, createTheme } from "@material-ui/core/styles"
+import { Switch, AppBar, Tabs, Tab, Paper } from '@material-ui/core'
+
+const App = ({darkMode, setDarkMode}) => {
+  
+  const darkTheme = createTheme({
+    palette: {
+      type: "dark"
+    }
+  })
+
+  const ligthTheme = createTheme({})
+
   const routes = ["/", "/strategy", "/monitoring"]
 
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Route
-          path="/"
-          render={(history) => (
-            <AppBar>
-              <Tabs
-                value={
-                  history.location.pathname !== ""
-                    ? history.location.pathname
-                    : false
-                }
-              >
-                <Tab
-                  value={routes[0]}
-                  label="Home"
-                  component={Link}
-                  to={routes[0]}
-                />
-                <Tab
-                  value={routes[1]}
-                  label="Strategy"
-                  component={Link}
-                  to={routes[1]}
-                />
-                <Tab
-                  value={routes[2]}
-                  label="Monitoring"
-                  component={Link}
-                  to={routes[2]}
-                />
-              </Tabs>
-            </AppBar>
-          )}
-        />
+    <ThemeProvider theme={darkMode ? darkTheme : ligthTheme}>
+      <Paper className="App">
+      <Switch className="switchDarkMode" checked={darkMode} onChange={() => setDarkMode(!darkMode)}></Switch>
+        <BrowserRouter>
+          <Route
+            path="/"
+            render={(history) => (
+              <AppBar>
+                <Tabs value={history.location.pathname !== "" ? history.location.pathname : false}>
+                  <Tab
+                    value={routes[0]}
+                    label="Home"
+                    component={Link}
+                    to={routes[0]}
+                  />
+                  <Tab
+                    value={routes[1]}
+                    label="Strategy"
+                    component={Link}
+                    to={routes[1]}
+                  />
+                  <Tab
+                    value={routes[2]}
+                    label="Monitoring"
+                    component={Link}
+                    to={routes[2]}
+                  />  
+                </Tabs>
+              </AppBar>
+            )}
+          />
 
-        <Switch>
-          <Route path="/strategy">
-            <h1 style={{ marginTop: "10vh" }}>Strategy part</h1>
-            <UIStudent/>
-          </Route>
-          <Route path="/monitoring" >
-            <h1 style={{ marginTop: "10vh" }}>Monitoring part</h1>
-          </Route>
-          <Route path="/" >
-            <Home/>
-          </Route>
-        </Switch>
-      </BrowserRouter>
-    </div>
+          <SwitchRouter>
+            <Route path="/strategy">
+              <h1 style={{ marginTop: "10vh" }}>Strategy part</h1>
+              <UIStudent/>
+            </Route>
+            <Route path="/monitoring" >
+              <h1 style={{ marginTop: "10vh" }}>Monitoring part</h1>
+            </Route>
+            <Route path="/" >
+              <Home/>
+            </Route>
+          </SwitchRouter>
+        </BrowserRouter>
+      </Paper>
+    </ThemeProvider>
   )
 }
 
-export default App
+const mapStateToProps = state => ({
+  darkMode: state.darkMode
+})
+
+const mapDispatchToProps = dispatch => ({
+  setDarkMode: (darkMode) => dispatch(setDarkModeActionCreator(darkMode))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
