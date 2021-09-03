@@ -1,4 +1,4 @@
-# Mongo
+# MongoDB
 
 * To access MongoDB container
 ```bash
