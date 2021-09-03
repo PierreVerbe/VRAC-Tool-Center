@@ -2,7 +2,7 @@ import { GET_ALL_STUDENTS, INSERT_STUDENT } from "../action/studentAction"
 import { SET_DARK_MODE } from "../action/generalAction"
 
 const defaultState = {
-    darkMode: true,
+    darkMode: false,
     students: []
 }
 
