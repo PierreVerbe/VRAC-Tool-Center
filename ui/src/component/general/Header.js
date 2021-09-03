@@ -14,51 +14,51 @@ const Header = ({darkMode, setDarkMode}) => {
     const routes = ["/", "/strategy", "/monitoring"]
 
     return (
-        <div>
-            <Switch className="switchDarkMode" checked={darkMode} onChange={() => setDarkMode(!darkMode)}></Switch>
+        <header>
+            <Switch className="switchDarkMode" color="primary" checked={darkMode} onChange={() => setDarkMode(!darkMode)}></Switch>
             <BrowserRouter>
-            <Route
-                path="/"
-                render={(history) => (
-                <AppBar>
-                    <Tabs value={history.location.pathname !== "" ? history.location.pathname : false}>
-                    <Tab
-                        value={routes[0]}
-                        label="Home"
-                        component={Link}
-                        to={routes[0]}
-                    />
-                    <Tab
-                        value={routes[1]}
-                        label="Strategy"
-                        component={Link}
-                        to={routes[1]}
-                    />
-                    <Tab
-                        value={routes[2]}
-                        label="Monitoring"
-                        component={Link}
-                        to={routes[2]}
-                    />  
-                    </Tabs>
-                </AppBar>
-                )}
-            />
+                <Route
+                    path="/"
+                    render={(history) => (
+                    <AppBar color="primary">
+                        <Tabs value={history.location.pathname !== "" ? history.location.pathname : false}>
+                        <Tab
+                            value={routes[0]}
+                            label="Home"
+                            component={Link}
+                            to={routes[0]}
+                        />
+                        <Tab
+                            value={routes[1]}
+                            label="Strategy"
+                            component={Link}
+                            to={routes[1]}
+                        />
+                        <Tab
+                            value={routes[2]}
+                            label="Monitoring"
+                            component={Link}
+                            to={routes[2]}
+                        />  
+                        </Tabs>
+                    </AppBar>
+                    )}
+                />
 
-            <SwitchRouter>
-                <Route path="/strategy">
-                <h1 style={{ marginTop: "10vh" }}>Strategy part</h1>
-                <UIStudent/>
-                </Route>
-                <Route path="/monitoring" >
-                <h1 style={{ marginTop: "10vh" }}>Monitoring part</h1>
-                </Route>
-                <Route path="/" >
-                <Home/>
-                </Route>
-            </SwitchRouter>
+                <SwitchRouter>
+                    <Route path="/strategy">
+                    <h1 style={{ marginTop: "10vh" }}>Strategy part</h1>
+                    <UIStudent/>
+                    </Route>
+                    <Route path="/monitoring" >
+                    <h1 style={{ marginTop: "10vh" }}>Monitoring part</h1>
+                    </Route>
+                    <Route path="/" >
+                    <Home/>
+                    </Route>
+                </SwitchRouter>
             </BrowserRouter>
-        </div>
+        </header>
     )
 }
 
