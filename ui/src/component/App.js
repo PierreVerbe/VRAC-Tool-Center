@@ -13,13 +13,7 @@ const App = ({darkMode}) => {
   
   const darkTheme = createTheme({
     palette: {
-      type: "dark",
-      primary: {
-        main: blue[500]
-      },
-      secondary: {
-        main: green[500]
-      }
+      type: "dark"
     }
   })
 

@@ -15,7 +15,7 @@ const Header = ({darkMode, setDarkMode}) => {
 
     return (
         <header>
-            <Switch className="switchDarkMode" color="primary" checked={darkMode} onChange={() => setDarkMode(!darkMode)}></Switch>
+            <Switch className="switchDarkMode" color="secondary" checked={darkMode} onChange={() => setDarkMode(!darkMode)}></Switch>
             <BrowserRouter>
                 <Route
                     path="/"
