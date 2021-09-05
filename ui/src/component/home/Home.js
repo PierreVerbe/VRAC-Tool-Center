@@ -7,6 +7,17 @@ const Home = () => {
     return (
         <div>
             <img id="logoVracHome" alt="Vrac Logo" src={logo}/>
+            <img id="logoVracHome" alt="Vrac Logo" src={logo}/>
+            <img id="logoVracHome" alt="Vrac Logo" src={logo}/>
+            <img id="logoVracHome" alt="Vrac Logo" src={logo}/>
+            <img id="logoVracHome" alt="Vrac Logo" src={logo}/>
+            <img id="logoVracHome" alt="Vrac Logo" src={logo}/>
+            <img id="logoVracHome" alt="Vrac Logo" src={logo}/>
+            <img id="logoVracHome" alt="Vrac Logo" src={logo}/>
+            <img id="logoVracHome" alt="Vrac Logo" src={logo}/>
+            <img id="logoVracHome" alt="Vrac Logo" src={logo}/>
+            <img id="logoVracHome" alt="Vrac Logo" src={logo}/>
+            
         </div>
     )
 }
