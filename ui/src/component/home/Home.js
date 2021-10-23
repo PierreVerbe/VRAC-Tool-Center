@@ -20,7 +20,7 @@ const Home = () => {
                 <p>Édition 2021</p>
                 <ul>
                     <li>Coupe de France de robotique : 9 ème</li>
-                    <li>Coupe de D'île de france : ? ème</li>
+                    <li>Coupe de D'île de france : 2 ème</li>
                 </ul>
             </div>
         </div>
