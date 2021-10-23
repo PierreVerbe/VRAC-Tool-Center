@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 import ListStudent from "./ListStudent"
 import { getAllStudentsActionCreator, insertStudentActionCreator } from "./../../action/studentAction"
 
-const UIStudent = ({ students, getStudents, insertStudent }) => {
+const UIStudent = ({students, getStudents, insertStudent}) => {
 
     console.log(students)
 
