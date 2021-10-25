@@ -1,4 +1,5 @@
 import React from "react"
+
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -39,26 +40,27 @@ const LoadDelete = () => {
     return (
         <div className={classes.root}>
             <Grid container spacing={3}>
-            <Grid item xs={6}>
-                <Paper component="form">
-                    <IconButton className={classes.iconButton} aria-label="menu">
-                        <MenuIcon />
-                    </IconButton>
-                    <InputBase
-                        className={classes.input}
-                        placeholder="Search VRAC Monitoring"
-                        inputProps={{ 'aria-label': 'search vrac monitoring' }}
-                    />
-                    <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                        <SearchIcon />
-                    </IconButton>
-                    <TableMonitoring/>
-                </Paper>
-            </Grid>
-            <Grid item xs={6}>
-                <Paper className={classes.paper}>xs=6</Paper>
-                
-            </Grid>
+                <Grid item xs={6}>
+                    <Paper component="form">
+                        <IconButton className={classes.iconButton} aria-label="menu">
+                            <MenuIcon />
+                        </IconButton>
+                        <InputBase
+                            className={classes.input}
+                            placeholder="Search VRAC Monitoring"
+                            inputProps={{ 'aria-label': 'search vrac monitoring' }}
+                        />
+                        <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                            <SearchIcon />
+                        </IconButton>
+                        <TableMonitoring/>
+                    </Paper>
+                </Grid>
+
+                <Grid item xs={6}>
+                    <Paper className={classes.paper}>xs=6</Paper>
+                    
+                </Grid>
             </Grid>
         </div>
     )

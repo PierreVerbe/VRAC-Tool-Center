@@ -1,47 +1,40 @@
 import React from "react"
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
+
+import Paper from '@material-ui/core/Paper'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableContainer from '@material-ui/core/TableContainer'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles'
 
 const columns = [
-    { id: 'id', label: 'Id', minWidth: 170 },
-    { id: 'name', label: 'Name', minWidth: 100 },
-    {
-      id: 'date',
-      label: 'Date',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toLocaleString('en-US'),
-    },
-    {
-      id: 'description',
-      label: 'Description',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toLocaleString('en-US'),
-    },
-    {
-      id: 'version',
-      label: 'Version',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toFixed(2),
-    },
-  ];
+    { id: 'id', label: 'Id', minWidth: 10 },
+    { id: 'name', label: 'Name', minWidth: 10 },
+    { id: 'date', label: 'Date', minWidth: 10 },
+    { id: 'description', label: 'Description', minWidth: 10 },
+    { id: 'version', label: 'Version', minWidth: 10 }
+  ]
 
   function createData(id, name, date, description, version) {
-    return { id, name, date, description, version };
+    return { id, name, date, description, version }
   }
 
   const rows = [
-    createData('India', 'IN', 1324171354, 3287263, "df"),
-    createData('India', 'IN', 1324171354, 3287263, "df"),
+    createData(0, 'First monitoring', "dd-MM-yyyy HH:mm:ss", "my first monitoring desc", "v1.0"),
+    createData(1, 'Second monitoring', "dd-MM-yyyy HH:mm:ss", "my second monitoring desc", "v1.0.3"),
+    createData(999, 'Third monitoring', "dd-MM-yyyy HH:mm:ss", "my third monitoring desc", "v1.0.0"),
+    createData(999, 'Third monitoring', "dd-MM-yyyy HH:mm:ss", "my third monitoring desc", "v1.0.0"),
+    createData(999, 'Third monitoring', "dd-MM-yyyy HH:mm:ss", "my third monitoring desc", "v1.0.0"),
+    createData(999, 'Third monitoring', "dd-MM-yyyy HH:mm:ss", "my third monitoring desc", "v1.0.0"),
+    createData(999, 'Third monitoring', "dd-MM-yyyy HH:mm:ss", "my third monitoring desc", "v1.0.0"),
+    createData(999, 'Third monitoring', "dd-MM-yyyy HH:mm:ss", "my third monitoring desc", "v1.0.0"),
+    createData(999, 'Third monitoring', "dd-MM-yyyy HH:mm:ss", "my third monitoring desc", "v1.0.0"),
+    createData(999, 'Third monitoring', "dd-MM-yyyy HH:mm:ss", "my third monitoring desc", "v1.0.0"),
+    createData(999, 'Third monitoring', "dd-MM-yyyy HH:mm:ss", "my third monitoring desc", "v1.0.0"),
+    createData(999, 'Third monitoring', "dd-MM-yyyy HH:mm:ss", "my third monitoring desc", "v1.0.0"),
   ]
 
   const useStyles = makeStyles({
@@ -51,21 +44,21 @@ const columns = [
     container: {
       maxHeight: 440,
     },
-  });
+  })
+
+  function rowCounter(rows) {
+    switch (rows) {
+      case 0:
+        return "Empty table"
+      case 1:
+        return "1 row"
+      default:
+        return rows + " rows"
+    }
+  }
 
 const TableMonitoring = () => {
-    const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+  const classes = useStyles()
 
   return (
     <Paper className={classes.root}>
@@ -84,35 +77,31 @@ const TableMonitoring = () => {
               ))}
             </TableRow>
           </TableHead>
+          
           <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+            {rows.map((row) => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                   {columns.map((column) => {
-                    const value = row[column.id];
+                    const value = row[column.id]
                     return (
                       <TableCell key={column.id} align={column.align}>
                         {column.format && typeof value === 'number' ? column.format(value) : value}
                       </TableCell>
-                    );
+                    )
                   })}
                 </TableRow>
-              );
+              )
             })}
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+  
+      <Typography >
+        {rowCounter(rows.length)} 
+      </Typography>
     </Paper>
-  );
+  )
 }
 
 export default TableMonitoring
