@@ -1,11 +1,14 @@
 import React from "react"
+
+import Paper from '@material-ui/core/Paper';
+
 import logo from "./../../resources/image/logo_VRAC.png"
 
 import "./Home.css"
 
 const Home = () => {
     return (
-        <div>
+        <Paper elevation={3} >
             <img id="logoVracHome" alt="Vrac Logo" src={logo}/>
             <div id="textHome">
                 <h1>Vieux Roboticiens Amis de Cachan</h1>
@@ -14,7 +17,7 @@ const Home = () => {
                 <p>Édition 2019</p>
                 <ul>
                     <li>Coupe de France de robotique : 34 ème</li>
-                    <li>Coupe de D'île de france : ? ème</li>
+                    <li>Coupe de D'île de france : 9 ème</li>
                 </ul>
                 <p>Édition 2020 Coupe de France de robotique : 9 ème</p>
                 <p>Édition 2021</p>
@@ -23,7 +26,7 @@ const Home = () => {
                     <li>Coupe de D'île de france : 2 ème</li>
                 </ul>
             </div>
-        </div>
+        </Paper>
     )
 }
 
