@@ -62,7 +62,6 @@ const Header = ({darkMode, setDarkMode}) => {
                     </Route>
 
                     <Route path="/monitoring" >
-                        <h1 style={{ marginTop: "10vh" }}>Monitoring part</h1>
                         <Monitoring/>
                     </Route>
                     
