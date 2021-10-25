@@ -24,7 +24,7 @@ const Header = ({darkMode, setDarkMode}) => {
                     path="/"
                     render={(history) => (
                         <AppBar color="primary" position="static">
-                            <Toolbar  variant="dense">
+                            <Toolbar variant="dense">
                                 <MenuIcon />
 
                                 <Tabs value={history.location.pathname !== "" ? history.location.pathname : false}>
