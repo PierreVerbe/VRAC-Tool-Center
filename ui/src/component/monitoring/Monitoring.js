@@ -70,6 +70,39 @@ const useColorlibStepIconStyles = makeStyles({
   }
 })
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: '20px',
+      height: '80vh',
+  },
+  paper: {
+    width: '100%',
+    height: '100%',
+  },
+  button: {
+    marginRight: theme.spacing(1)
+  },
+  instructions: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1)
+  }
+}))
+
+ColorlibStepIcon.propTypes = {
+  /**
+   * Whether this step is active.
+   */
+  active: PropTypes.bool,
+  /**
+   * Mark the step as completed. Is passed to child components.
+   */
+  completed: PropTypes.bool,
+  /**
+   * The label displayed in the step icon.
+   */
+  icon: PropTypes.node
+}
+
 function ColorlibStepIcon(props) {
   const classes = useColorlibStepIconStyles()
   const { active, completed } = props
@@ -92,43 +125,6 @@ function ColorlibStepIcon(props) {
   )
 }
 
-ColorlibStepIcon.propTypes = {
-  /**
-   * Whether this step is active.
-   */
-  active: PropTypes.bool,
-  /**
-   * Mark the step as completed. Is passed to child components.
-   */
-  completed: PropTypes.bool,
-  /**
-   * The label displayed in the step icon.
-   */
-  icon: PropTypes.node
-}
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: '20px',
-      height: '80vh',
-  },
-  paper: {
-    width: '100%',
-    height: '100%',
-  },
-  button: {
-    marginRight: theme.spacing(1)
-  },
-  instructions: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1)
-  }
-}))
-
-function getSteps() {
-  return ["Load/Delete", "Simulation", "Statistic"]
-}
-
 function getStepContent(step) {
   switch (step) {
     case 0:
@@ -145,24 +141,19 @@ function getStepContent(step) {
 const Monitoring = ({monitoringStepper, setMonitoringStepper}) => {
 
   const classes = useStyles()
-  const steps = getSteps()
+  const steps = ["Load/Delete", "Simulation", "Statistic"]
 
   const handleNext = () => {
-    setMonitoringStepper(monitoringStepper + 1)
+    monitoringStepper === steps.length - 1 ? setMonitoringStepper(0) : setMonitoringStepper(monitoringStepper + 1)
   }
 
   const handleBack = () => {
-    setMonitoringStepper(monitoringStepper - 1)
+    monitoringStepper === 0 ? setMonitoringStepper(steps.length - 1) : setMonitoringStepper(monitoringStepper - 1)
   }
 
-  const handleReset = () => {
-    setMonitoringStepper(0)
-  }
-
-    return (
-      <div className={classes.root}>
+  return (
+    <div className={classes.root}>
       <Paper elevation={3} className={classes.paper}>
-        
         <Stepper
           alternativeLabel
           activeStep={monitoringStepper}
@@ -174,44 +165,33 @@ const Monitoring = ({monitoringStepper, setMonitoringStepper}) => {
             </Step>
           ))}
         </Stepper>
-        <div>
-          {monitoringStepper === steps.length ? (
-            <div>
-              <Typography className={classes.instructions}>
-                All steps completed - you&aposre finished
-              </Typography>
-              <Button onClick={handleReset} className={classes.button}>
-                Reset
-              </Button>
-            </div>
-          ) : (
-            <div>
-              <Typography className={classes.instructions}>
-                {getStepContent(monitoringStepper)}
-              </Typography>
-              <div>
-                <Button
-                  disabled={monitoringStepper === 0}
-                  onClick={handleBack}
-                  className={classes.button}
-                >
-                  Back
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNext}
-                  className={classes.button}
-                >
-                  {monitoringStepper === steps.length - 1 ? "Finish" : "Next"}
-                </Button>
-              </div>
-            </div>
-          )}
-        </div>
-        </Paper>
-      </div>
+
+        <Typography className={classes.instructions}>
+          {getStepContent(monitoringStepper)}
+        </Typography>
+
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleBack}
+          className={classes.button}
+        >
+          Back
+        </Button>
+
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleNext}
+          className={classes.button}
+        >
+          Next
+        </Button>
+
+      </Paper>
+    </div>
   )
+  
 }
 
 const mapStateToProps = state => ({
