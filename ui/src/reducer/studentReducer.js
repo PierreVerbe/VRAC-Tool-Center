@@ -1,6 +1,6 @@
 import { SET_DARK_MODE } from "../action/generalAction"
 import { GET_ALL_STUDENTS, INSERT_STUDENT } from "../action/studentAction"
-import { SET_MONITORING_STEPPER } from "../action/monitoringAction"
+import { SET_MONITORING_STEPPER, SET_ROW_MONITORING_TABLE } from "../action/monitoringAction"
 
 const defaultState = {
     // General
@@ -10,7 +10,8 @@ const defaultState = {
     students: [],
 
     // Monitoring
-    monitoringStepper: 0
+    monitoringStepper: 0,
+    rowMonitoringTable: null
 }
 
 export const studentReducer = (state = defaultState, action) => {
@@ -37,6 +38,12 @@ export const studentReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 monitoringStepper: action.payload
+            }
+
+        case SET_ROW_MONITORING_TABLE:
+            return {
+                ...state,
+                rowMonitoringTable: action.payload
             }
 
         default:

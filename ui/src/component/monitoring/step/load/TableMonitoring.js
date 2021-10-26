@@ -1,4 +1,5 @@
 import React from "react"
+import { connect } from "react-redux"
 import PropTypes from 'prop-types'
 
 import Paper from '@material-ui/core/Paper'
@@ -11,6 +12,8 @@ import TableRow from '@material-ui/core/TableRow'
 import Typography from '@material-ui/core/Typography'
 import Checkbox from '@material-ui/core/Checkbox'
 import { makeStyles } from '@material-ui/core/styles'
+
+import { setRowMonitoringTableActionCreator } from "./../../../../action/monitoringAction"
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 10 },
@@ -89,19 +92,18 @@ TableMonitoringHead.propTypes = {
   isSelected: PropTypes.bool.isRequired
 }
 
-const TableMonitoring = () => {
-  const [selected, setSelected] = React.useState(null)
-
+const TableMonitoring = ({rowMonitoringTable, setRowMonitoringTable}) => {
+  
   const handleClick = (event, id) => {
-    if (selected === null){
-      setSelected(id)
+    if (rowMonitoringTable === null){
+      setRowMonitoringTable(id)
     }
-    else if (selected === id){
-      setSelected(null)
+    else if (rowMonitoringTable === id){
+      setRowMonitoringTable(null)
     }
   }
 
-  const isSelected = (id) => id === selected
+  const isSelected = (id) => id === rowMonitoringTable
 
   const classes = useStyles()
 
@@ -109,7 +111,7 @@ const TableMonitoring = () => {
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
-          <TableMonitoringHead isSelected={selected !== null}/>
+          <TableMonitoringHead isSelected={rowMonitoringTable !== null}/>
           
           <TableBody>
             {rows.map((row, index) => {
@@ -154,4 +156,12 @@ const TableMonitoring = () => {
   )
 }
 
-export default TableMonitoring
+const mapStateToProps = state => ({
+  rowMonitoringTable: state.rowMonitoringTable
+})
+
+const mapDispatchToProps = dispatch => ({
+  setRowMonitoringTable: rowMonitoringTable => dispatch(setRowMonitoringTableActionCreator(rowMonitoringTable))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(TableMonitoring)
