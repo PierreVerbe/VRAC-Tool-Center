@@ -59,19 +59,16 @@ function rowCounter(rows) {
   }
 }
 
-
 const TableMonitoringHead = (props) => {
-  const { classes, numSelected, rowCount } = props
+  const { isSelected } = props
  
   return (
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
           <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            
-            inputProps={{ 'aria-label': 'select all desserts' }}
+            indeterminate={isSelected}
+            checked={false}
           />
         </TableCell>
         {columns.map((column) => (
@@ -89,36 +86,22 @@ const TableMonitoringHead = (props) => {
 }
 
 TableMonitoringHead.propTypes = {
-  classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
-  rowCount: PropTypes.number.isRequired,
+  isSelected: PropTypes.bool.isRequired
 }
 
 const TableMonitoring = () => {
-  const [selected, setSelected] = React.useState([])
+  const [selected, setSelected] = React.useState(null)
 
-  
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name)
-    let newSelected = []
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name)
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1))
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1))
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      )
+  const handleClick = (event, id) => {
+    if (selected === null){
+      setSelected(id)
     }
-
-    setSelected(newSelected)
+    else if (selected === id){
+      setSelected(null)
+    }
   }
 
-  const isSelected = (name) => selected.indexOf(name) !== -1
+  const isSelected = (id) => id === selected
 
   const classes = useStyles()
 
@@ -126,11 +109,7 @@ const TableMonitoring = () => {
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
-          <TableMonitoringHead
-            classes={classes}
-            numSelected={selected.length}
-            rowCount={rows.length}
-          />
+          <TableMonitoringHead isSelected={selected !== null}/>
           
           <TableBody>
             {rows.map((row, index) => {
