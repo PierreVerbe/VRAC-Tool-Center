@@ -7,37 +7,38 @@ import {DropzoneArea} from 'material-ui-dropzone'
 
 import { setIdRowMonitoringTableActionCreator, setMonitoringActionCreator } from "./../../../../action/monitoringAction"
 
-const LoadJsonFile = (files) => {
-    console.log(files)
-    console.log("setIdRowMonitoringTable 2")
-    //console.log(ff)
-    if (files.length > 0) {
-        var file = files[0]
-        var fileReader = new FileReader()
 
-        fileReader.onload = function(progressEvent) {
-            var stringData = progressEvent.target.result;
-            console.log(stringData);
-            
-        }
-        fileReader.readAsText(file, "UTF-8")
-    }
-}
 
 const DropzoneOrReactJson = (props) => {
     const { isSelected, monitoring, setIdRowMonitoringTable, setMonitoring } = props
-console.log("setIdRowMonitoringTable")
+
+    const LoadJsonFile = (files) => {
+    
+        console.log("setIdRowMonitoringTable 2")
+        //console.log(truc)
+        //console.log(ff)
+        if (files.length > 0) {
+            var file = files[0]
+            var fileReader = new FileReader()
+    
+            fileReader.onload = function(progressEvent) {
+                var stringData = progressEvent.target.result;
+                console.log(stringData);
+                setIdRowMonitoringTable(-1)
+                setMonitoring(stringData)
+            }
+            fileReader.readAsText(file, "UTF-8")
+        }
+    }
+
+    console.log("setIdRowMonitoringTable")
     console.log(setIdRowMonitoringTable)
     console.log(monitoring)
     
+    setIdRowMonitoringTable.bind(this)
     if (isSelected === false) {
-        const module = {
-            f: this,
-            ff: setIdRowMonitoringTable
-          }
-          console.log(module)
         return <DropzoneArea onChange={LoadJsonFile.bind(this)}/>
-    } 
+    }
     else {
        return (
            <div>
