@@ -23,9 +23,10 @@ const DropzoneOrReactJson = (props) => {
     
             fileReader.onload = function(progressEvent) {
                 var stringData = progressEvent.target.result;
+                const obj = JSON.parse(stringData)
                 console.log(stringData);
                 setIdRowMonitoringTable(-1)
-                setMonitoring(stringData)
+                setMonitoring(obj)
             }
             fileReader.readAsText(file, "UTF-8")
         }
