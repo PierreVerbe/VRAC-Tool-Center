@@ -6,8 +6,6 @@ import { getAllStudentsActionCreator, insertStudentActionCreator } from "./../..
 
 const UIStudent = ({students, getStudents, insertStudent}) => {
 
-    console.log(students)
-
     useEffect(getStudents, [])
 
     const onSubmit = (event) => {

@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography'
 import Checkbox from '@material-ui/core/Checkbox'
 import { makeStyles } from '@material-ui/core/styles'
 
-import { setRowMonitoringTableActionCreator } from "./../../../../action/monitoringAction"
+import { setIdRowMonitoringTableActionCreator } from "./../../../../action/monitoringAction"
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 10 },
@@ -92,18 +92,18 @@ TableMonitoringHead.propTypes = {
   isSelected: PropTypes.bool.isRequired
 }
 
-const TableMonitoring = ({rowMonitoringTable, setRowMonitoringTable}) => {
+const TableMonitoring = ({idRowMonitoringTable, setIdRowMonitoringTable}) => {
   
   const handleClick = (event, id) => {
-    if (rowMonitoringTable === null){
-      setRowMonitoringTable(id)
+    if (idRowMonitoringTable === null){
+      setIdRowMonitoringTable(id)
     }
-    else if (rowMonitoringTable === id){
-      setRowMonitoringTable(null)
+    else if (idRowMonitoringTable === id){
+      setIdRowMonitoringTable(null)
     }
   }
 
-  const isSelected = (id) => id === rowMonitoringTable
+  const isSelected = (id) => id === idRowMonitoringTable
 
   const classes = useStyles()
 
@@ -111,7 +111,7 @@ const TableMonitoring = ({rowMonitoringTable, setRowMonitoringTable}) => {
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
-          <TableMonitoringHead isSelected={rowMonitoringTable !== null}/>
+          <TableMonitoringHead isSelected={idRowMonitoringTable !== null}/>
           
           <TableBody>
             {rows.map((row, index) => {
@@ -157,11 +157,11 @@ const TableMonitoring = ({rowMonitoringTable, setRowMonitoringTable}) => {
 }
 
 const mapStateToProps = state => ({
-  rowMonitoringTable: state.rowMonitoringTable
+  idRowMonitoringTable: state.idRowMonitoringTable
 })
 
 const mapDispatchToProps = dispatch => ({
-  setRowMonitoringTable: rowMonitoringTable => dispatch(setRowMonitoringTableActionCreator(rowMonitoringTable))
+  setIdRowMonitoringTable: idRowMonitoringTable => dispatch(setIdRowMonitoringTableActionCreator(idRowMonitoringTable))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableMonitoring)
