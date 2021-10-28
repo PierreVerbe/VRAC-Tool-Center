@@ -6,6 +6,8 @@ import PropTypes from 'prop-types'
 import Button from "@material-ui/core/Button"
 //import { makeStyles } from '@material-ui/core/styles'
 import { DropzoneArea } from 'material-ui-dropzone'
+import GetAppIcon from '@material-ui/icons/GetApp';
+import ClearIcon from '@material-ui/icons/Clear';
 
 import DeleteIcon from '@material-ui/icons/Delete'
 import SaveIcon from '@material-ui/icons/Save'
@@ -137,6 +139,8 @@ const handleClear = () => {
                 variant="contained"
                 color="primary"
                 onClick={handleExport}
+
+                startIcon={<GetAppIcon />}
                 //className={classes.button}
                 style={{backgroundColor: "blue"}}
                 disabled={isExportButtonDisabled()}
@@ -150,6 +154,7 @@ const handleClear = () => {
                 variant="contained"
                 color="primary"
                 onClick={handleClear}
+                startIcon={<ClearIcon />}
                 //className={classes.button}
                 disabled={isClearButtonDisabled()}
                 style={{backgroundColor: "orange"}}
