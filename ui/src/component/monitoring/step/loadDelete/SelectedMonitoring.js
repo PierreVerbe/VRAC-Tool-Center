@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 import PropTypes from 'prop-types'
 
 import Button from "@material-ui/core/Button"
-import { makeStyles } from '@material-ui/core/styles'
+//import { makeStyles } from '@material-ui/core/styles'
 import { DropzoneArea } from 'material-ui-dropzone'
 
 import DeleteIcon from '@material-ui/icons/Delete'
@@ -12,6 +12,7 @@ import SaveIcon from '@material-ui/icons/Save'
 
 import { setIdRowMonitoringTableActionCreator, setMonitoringActionCreator } from "../../../../action/monitoringAction"
 
+/*
 const useStyles = makeStyles({
     root: {
       width: '100%',
@@ -20,6 +21,7 @@ const useStyles = makeStyles({
       maxHeight: 500,
     },
   })
+*/
 
 const DropzoneOrReactJson = (props) => {
     const { isSelected, monitoring, setIdRowMonitoringTable, setMonitoring } = props
@@ -130,7 +132,7 @@ const handleClear = () => {
             >
                 Delete
             </Button>
-            
+
             <Button
                 variant="contained"
                 color="primary"

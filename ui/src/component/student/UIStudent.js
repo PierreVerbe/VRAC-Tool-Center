@@ -6,7 +6,7 @@ import { getAllStudentsActionCreator, insertStudentActionCreator } from "./../..
 
 const UIStudent = ({students, getStudents, insertStudent}) => {
 
-    useEffect(getStudents, [])
+    useEffect(getStudents, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     const onSubmit = (event) => {
         const { id, name, age, grade } = event.target.elements
