@@ -18,7 +18,7 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
 
-import { setIdRowMonitoringTableActionCreator } from "../../../../action/monitoringAction"
+import { setIdRowMonitoringTableActionCreator, setMonitoringActionCreator } from "../../../../action/monitoringAction"
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 10 },
@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function rowCounter(rows) {
+const rowCounter = (rows) => {
   switch (rows) {
     case 0:
       return "Empty table"
@@ -127,7 +127,7 @@ TableMonitoringHead.propTypes = {
   isAnyRowSelected: PropTypes.bool.isRequired
 }
 
-const TableMonitoring = ({idRowMonitoringTable, setIdRowMonitoringTable}) => {
+const TableMonitoring = ({idRowMonitoringTable, setIdRowMonitoringTable, setMonitoring}) => {
   const classes = useStyles()
   
   const isSelected = (id) => id === idRowMonitoringTable
@@ -135,9 +135,11 @@ const TableMonitoring = ({idRowMonitoringTable, setIdRowMonitoringTable}) => {
   const handleClick = (event, id) => {
     if (idRowMonitoringTable === null){
       setIdRowMonitoringTable(id)
+      setMonitoring({"hello": id})
     }
     else if (idRowMonitoringTable === id){
       setIdRowMonitoringTable(null)
+      setMonitoring({})
     }
   }
 
@@ -197,7 +199,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setIdRowMonitoringTable: idRowMonitoringTable => dispatch(setIdRowMonitoringTableActionCreator(idRowMonitoringTable))
+  setIdRowMonitoringTable: idRowMonitoringTable => dispatch(setIdRowMonitoringTableActionCreator(idRowMonitoringTable)),
+  setMonitoring: monitoring => dispatch(setMonitoringActionCreator(monitoring))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableMonitoring)

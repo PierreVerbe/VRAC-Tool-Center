@@ -69,17 +69,39 @@ DropzoneOrReactJson.propTypes = {
   }
 
 const SelectedMonitoring = ({idRowMonitoringTable, monitoring, setIdRowMonitoringTable, setMonitoring}) => {
-console.log(idRowMonitoringTable)
-
 //const classes = useStyles()
 
+const isSaveButtonDisabled = () => {
+    return (idRowMonitoringTable !== null && idRowMonitoringTable !== -1)  || Object.entries(monitoring).length === 0
+}
+
+const handleSave = () => {
+    console.log("save here")
+}
+
+const isDeleteButtonDisabled = () => {
+    return (idRowMonitoringTable === null || idRowMonitoringTable === -1) || Object.entries(monitoring).length === 0
+}
+
+const handleDelete = () => {
+    console.log("delete here")
+}
+
+const isExportButtonDisabled = () => {
+    return Object.entries(monitoring).length === 0
+}
+
+const handleExport = () => {
+    console.log("export here")
+}
+
+const isClearButtonDisabled = () => {
+    return Object.entries(monitoring).length === 0
+}
+
 const handleClear = () => {
-    if (monitoring !== {}) {
-        setMonitoring({})
-    }
-    if (idRowMonitoringTable !== null) {
-        setIdRowMonitoringTable(null)
-    }
+    setMonitoring({})
+    setIdRowMonitoringTable(null)
 }
 
     return (
@@ -88,31 +110,36 @@ const handleClear = () => {
             <Button
                 variant="contained"
                 color="primary"
-                onClick={handleClear}
+                onClick={handleSave}
                 //className={classes.button}
                 startIcon={<SaveIcon />}
                 style={{backgroundColor: "green"}}
+                disabled={isSaveButtonDisabled()}
             >
-            Save
+                Save
             </Button>
+
             <Button
                 variant="contained"
                 color="primary"
-                onClick={handleClear}
+                onClick={handleDelete}
                 //className={classes.button}
                 startIcon={<DeleteIcon />}
                 style={{backgroundColor: "red"}}
+                disabled={isDeleteButtonDisabled()}
             >
-            Delete
+                Delete
             </Button>
+            
             <Button
                 variant="contained"
                 color="primary"
-                onClick={handleClear}
+                onClick={handleExport}
                 //className={classes.button}
                 style={{backgroundColor: "blue"}}
+                disabled={isExportButtonDisabled()}
             >
-            Export
+                Export
             </Button>
 
             <DropzoneOrReactJson isSelected={idRowMonitoringTable !== null} monitoring={monitoring} setIdRowMonitoringTable={setIdRowMonitoringTable} setMonitoring={setMonitoring} />
@@ -122,9 +149,10 @@ const handleClear = () => {
                 color="primary"
                 onClick={handleClear}
                 //className={classes.button}
+                disabled={isClearButtonDisabled()}
                 style={{backgroundColor: "orange"}}
             >
-            Clear
+                Clear
             </Button>
         </div>
     )
