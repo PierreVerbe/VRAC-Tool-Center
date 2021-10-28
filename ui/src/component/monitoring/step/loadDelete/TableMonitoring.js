@@ -12,8 +12,13 @@ import TableRow from '@material-ui/core/TableRow'
 import Typography from '@material-ui/core/Typography'
 import Checkbox from '@material-ui/core/Checkbox'
 import { makeStyles } from '@material-ui/core/styles'
+import InputBase from '@material-ui/core/InputBase'
+import IconButton from '@material-ui/core/IconButton'
 
-import { setIdRowMonitoringTableActionCreator } from "./../../../../action/monitoringAction"
+import MenuIcon from '@material-ui/icons/Menu'
+import SearchIcon from '@material-ui/icons/Search'
+
+import { setIdRowMonitoringTableActionCreator } from "../../../../action/monitoringAction"
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 10 },
@@ -42,14 +47,21 @@ const rows = [
   createData(999, 'Third monitoring', "dd-MM-yyyy HH:mm:ss", "my third monitoring desc", "v1.0.0"),
 ]
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
   },
   container: {
     maxHeight: 500,
   },
-})
+  iconButton: {
+      padding: 10,
+  },
+  input: {
+      marginLeft: theme.spacing(1),
+      flex: 1,
+  }
+}))
 
 function rowCounter(rows) {
   switch (rows) {
@@ -62,18 +74,41 @@ function rowCounter(rows) {
   }
 }
 
+const SearchBar = () => {
+  const classes = useStyles()
+
+  return (
+    <div>
+      <IconButton className={classes.iconButton} aria-label="menu">
+        <MenuIcon />
+      </IconButton>
+      
+      <InputBase
+          className={classes.input}
+          placeholder="Search VRAC Monitoring"
+          inputProps={{ 'aria-label': 'search vrac monitoring' }}
+      />
+
+      <IconButton type="submit" className={classes.iconButton} aria-label="search">
+        <SearchIcon />
+      </IconButton>
+    </div>
+  )
+}
+
 const TableMonitoringHead = (props) => {
-  const { isSelected } = props
+  const {isAnyRowSelected} = props
  
   return (
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
           <Checkbox
-            indeterminate={isSelected}
+            indeterminate={isAnyRowSelected}
             checked={false}
           />
         </TableCell>
+        
         {columns.map((column) => (
           <TableCell
             key={column.id}
@@ -89,11 +124,14 @@ const TableMonitoringHead = (props) => {
 }
 
 TableMonitoringHead.propTypes = {
-  isSelected: PropTypes.bool.isRequired
+  isAnyRowSelected: PropTypes.bool.isRequired
 }
 
 const TableMonitoring = ({idRowMonitoringTable, setIdRowMonitoringTable}) => {
+  const classes = useStyles()
   
+  const isSelected = (id) => id === idRowMonitoringTable
+
   const handleClick = (event, id) => {
     if (idRowMonitoringTable === null){
       setIdRowMonitoringTable(id)
@@ -103,19 +141,17 @@ const TableMonitoring = ({idRowMonitoringTable, setIdRowMonitoringTable}) => {
     }
   }
 
-  const isSelected = (id) => id === idRowMonitoringTable
-
-  const classes = useStyles()
-
   return (
     <Paper className={classes.root}>
+      <SearchBar/>
+
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
-          <TableMonitoringHead isSelected={idRowMonitoringTable !== null}/>
+          <TableMonitoringHead isAnyRowSelected={idRowMonitoringTable !== null}/>
           
           <TableBody>
             {rows.map((row, index) => {
-              const isItemSelected = isSelected(row.id)
+              const isRowSelected = isSelected(row.id)
               const labelId = `enhanced-table-checkbox-${index}`
               
               return (
@@ -125,11 +161,11 @@ const TableMonitoring = ({idRowMonitoringTable, setIdRowMonitoringTable}) => {
                   role="checkbox"
                   tabIndex={-1}
                   key={row.id}
-                  selected={isItemSelected}
+                  selected={isRowSelected}
                 >
                   <TableCell padding="checkbox">
                         <Checkbox
-                          checked={isItemSelected}
+                          checked={isRowSelected}
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
                   </TableCell>

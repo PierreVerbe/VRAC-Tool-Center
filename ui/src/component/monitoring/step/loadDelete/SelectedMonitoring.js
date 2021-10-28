@@ -7,7 +7,10 @@ import Button from "@material-ui/core/Button"
 import { makeStyles } from '@material-ui/core/styles'
 import { DropzoneArea } from 'material-ui-dropzone'
 
-import { setIdRowMonitoringTableActionCreator, setMonitoringActionCreator } from "./../../../../action/monitoringAction"
+import DeleteIcon from '@material-ui/icons/Delete'
+import SaveIcon from '@material-ui/icons/Save'
+
+import { setIdRowMonitoringTableActionCreator, setMonitoringActionCreator } from "../../../../action/monitoringAction"
 
 const useStyles = makeStyles({
     root: {
@@ -31,9 +34,9 @@ const DropzoneOrReactJson = (props) => {
             var fileReader = new FileReader()
     
             fileReader.onload = function(progressEvent) {
-                var stringData = progressEvent.target.result;
+                var stringData = progressEvent.target.result
                 const obj = JSON.parse(stringData)
-                console.log(stringData);
+                console.log(stringData)
                 setIdRowMonitoringTable(-1)
                 setMonitoring(obj)
             }
@@ -82,12 +85,44 @@ const handleClear = () => {
     return (
         <div>
             <p>Simulation section</p>
-            <DropzoneOrReactJson isSelected={idRowMonitoringTable !== null} monitoring={monitoring} setIdRowMonitoringTable={setIdRowMonitoringTable} setMonitoring={setMonitoring} />
             <Button
                 variant="contained"
                 color="primary"
                 onClick={handleClear}
                 //className={classes.button}
+                startIcon={<SaveIcon />}
+                style={{backgroundColor: "green"}}
+            >
+            Save
+            </Button>
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={handleClear}
+                //className={classes.button}
+                startIcon={<DeleteIcon />}
+                style={{backgroundColor: "red"}}
+            >
+            Delete
+            </Button>
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={handleClear}
+                //className={classes.button}
+                style={{backgroundColor: "blue"}}
+            >
+            Export
+            </Button>
+
+            <DropzoneOrReactJson isSelected={idRowMonitoringTable !== null} monitoring={monitoring} setIdRowMonitoringTable={setIdRowMonitoringTable} setMonitoring={setMonitoring} />
+        
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={handleClear}
+                //className={classes.button}
+                style={{backgroundColor: "orange"}}
             >
             Clear
             </Button>

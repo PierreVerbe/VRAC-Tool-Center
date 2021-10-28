@@ -12,11 +12,11 @@ import StepLabel from "@material-ui/core/StepLabel"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 
-import DesktopWindowsIcon from '@material-ui/icons/DesktopWindows';
-import EqualizerIcon from '@material-ui/icons/Equalizer';
-import GetAppIcon from '@material-ui/icons/GetApp';
+import DesktopWindowsIcon from '@material-ui/icons/DesktopWindows'
+import EqualizerIcon from '@material-ui/icons/Equalizer'
+import GetAppIcon from '@material-ui/icons/GetApp'
 
-import LoadDelete from "./step/load/LoadDelete"
+import LoadDelete from "./step/loadDelete/LoadDelete"
 import Simulation from "./step/Simulation"
 import Statistic from "./step/Statistic"
 import { setMonitoringStepperActionCreator } from "./../../action/monitoringAction"
@@ -89,17 +89,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 ColorlibStepIcon.propTypes = {
-  /**
-   * Whether this step is active.
-   */
   active: PropTypes.bool,
-  /**
-   * Mark the step as completed. Is passed to child components.
-   */
   completed: PropTypes.bool,
-  /**
-   * The label displayed in the step icon.
-   */
   icon: PropTypes.node
 }
 
@@ -125,7 +116,7 @@ function ColorlibStepIcon(props) {
   )
 }
 
-function getStepContent(step) {
+const getStepContent = (step) => {
   switch (step) {
     case 0:
       return <LoadDelete/>
@@ -139,7 +130,6 @@ function getStepContent(step) {
 }
 
 const Monitoring = ({monitoringStepper, setMonitoringStepper}) => {
-
   const classes = useStyles()
   const steps = ["Load/Delete", "Simulation", "Statistic"]
 
@@ -191,7 +181,6 @@ const Monitoring = ({monitoringStepper, setMonitoringStepper}) => {
       </Paper>
     </div>
   )
-  
 }
 
 const mapStateToProps = state => ({
