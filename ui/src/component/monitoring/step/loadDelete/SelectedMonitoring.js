@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 
 import Button from "@material-ui/core/Button"
 //import { makeStyles } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography';
 import { DropzoneArea } from 'material-ui-dropzone'
 import GetAppIcon from '@material-ui/icons/GetApp';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -110,7 +111,12 @@ const handleClear = () => {
 
     return (
         <div>
-            <p>Simulation section</p>
+            <Typography > Id : {monitoring.id ? monitoring.id : "none"}</Typography>
+            <Typography > Name : {monitoring.name ? monitoring.name : "none"}</Typography>
+            <Typography > Date : {monitoring.date ? monitoring.date : "none"}</Typography>
+            <Typography > Description : {monitoring.description ? monitoring.description : "none"}</Typography>
+            <Typography > Version : {monitoring.version ? monitoring.version : "none"}</Typography>
+
             <Button
                 variant="contained"
                 color="primary"
