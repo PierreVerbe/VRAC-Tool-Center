@@ -32,20 +32,7 @@ function createData(id, name, date, description, version) {
   return { id, name, date, description, version }
 }
 
-const rows = [
-  createData(0, 'First monitoring', "dd-MM-yyyy HH:mm:ss", "my first monitoring desc", "v1.0"),
-  createData(1, 'Second monitoring', "dd-MM-yyyy HH:mm:ss", "my second monitoring desc", "v1.0.3"),
-  createData(101, 'Third monitoring', "dd-MM-yyyy HH:mm:ss", "my third monitoring desc", "v1.0.0"),
-  createData(102, 'Third monitoring', "dd-MM-yyyy HH:mm:ss", "my third monitoring desc", "v1.0.0"),
-  createData(103, 'Third monitoring', "dd-MM-yyyy HH:mm:ss", "my third monitoring desc", "v1.0.0"),
-  createData(104, 'Third monitoring', "dd-MM-yyyy HH:mm:ss", "my third monitoring desc", "v1.0.0"),
-  createData(105, 'Third monitoring', "dd-MM-yyyy HH:mm:ss", "my third monitoring desc", "v1.0.0"),
-  createData(106, 'Third monitoring', "dd-MM-yyyy HH:mm:ss", "my third monitoring desc", "v1.0.0"),
-  createData(107, 'Third monitoring', "dd-MM-yyyy HH:mm:ss", "my third monitoring desc", "v1.0.0"),
-  createData(108, 'Third monitoring', "dd-MM-yyyy HH:mm:ss", "my third monitoring desc", "v1.0.0"),
-  createData(109, 'Third monitoring', "dd-MM-yyyy HH:mm:ss", "my third monitoring desc", "v1.0.0"),
-  createData(999, 'Third monitoring', "dd-MM-yyyy HH:mm:ss", "my third monitoring desc", "v1.0.0"),
-]
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -127,7 +114,9 @@ TableMonitoringHead.propTypes = {
   isAnyRowSelected: PropTypes.bool.isRequired
 }
 
-const TableMonitoring = ({idRowMonitoringTable, setIdRowMonitoringTable, setMonitoring}) => {
+const TableMonitoring = ({idRowMonitoringTable, setIdRowMonitoringTable, allMonitorings, setMonitoring}) => {
+  const rows = allMonitorings
+  
   const classes = useStyles()
   
   const isSelected = (id) => id === idRowMonitoringTable
@@ -195,7 +184,8 @@ const TableMonitoring = ({idRowMonitoringTable, setIdRowMonitoringTable, setMoni
 }
 
 const mapStateToProps = state => ({
-  idRowMonitoringTable: state.idRowMonitoringTable
+  idRowMonitoringTable: state.idRowMonitoringTable,
+  allMonitorings: state.allMonitorings
 })
 
 const mapDispatchToProps = dispatch => ({

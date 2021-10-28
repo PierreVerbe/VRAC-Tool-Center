@@ -1,4 +1,4 @@
-import React from "react"
+import React,{ useEffect } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import clsx from "clsx"
@@ -19,7 +19,7 @@ import GetAppIcon from '@material-ui/icons/GetApp'
 import LoadDelete from "./step/loadDelete/LoadDelete"
 import Simulation from "./step/Simulation"
 import Statistic from "./step/Statistic"
-import { setMonitoringStepperActionCreator } from "./../../action/monitoringAction"
+import { getAllMonitoringsActionCreator, setMonitoringStepperActionCreator } from "./../../action/monitoringAction"
 
 import "./Monitoring.css"
 
@@ -129,7 +129,9 @@ const getStepContent = (step) => {
   }
 }
 
-const Monitoring = ({monitoringStepper, setMonitoringStepper}) => {
+const Monitoring = ({getAllMonitorings, monitoringStepper, setMonitoringStepper}) => {
+  useEffect(getAllMonitorings, [])
+  
   const classes = useStyles()
   const steps = ["Load/Delete", "Simulation", "Statistic"]
 
@@ -188,6 +190,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  getAllMonitorings: () => dispatch(getAllMonitoringsActionCreator()),
   setMonitoringStepper: monitoringStepper => dispatch(setMonitoringStepperActionCreator(monitoringStepper))
 })
 

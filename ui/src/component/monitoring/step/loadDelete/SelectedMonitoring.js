@@ -27,10 +27,6 @@ const DropzoneOrReactJson = (props) => {
     const { isSelected, monitoring, setIdRowMonitoringTable, setMonitoring } = props
 
     const LoadJsonFile = (files) => {
-    
-        console.log("setIdRowMonitoringTable 2")
-        //console.log(truc)
-        //console.log(ff)
         if (files.length > 0) {
             var file = files[0]
             var fileReader = new FileReader()
@@ -38,17 +34,12 @@ const DropzoneOrReactJson = (props) => {
             fileReader.onload = function(progressEvent) {
                 var stringData = progressEvent.target.result
                 const obj = JSON.parse(stringData)
-                console.log(stringData)
                 setIdRowMonitoringTable(-1)
                 setMonitoring(obj)
             }
             fileReader.readAsText(file, "UTF-8")
         }
     }
-
-    console.log("setIdRowMonitoringTable")
-    console.log(setIdRowMonitoringTable)
-    console.log(monitoring)
     
     setIdRowMonitoringTable.bind(this)
     if (isSelected === false) {
@@ -93,8 +84,17 @@ const isExportButtonDisabled = () => {
     return Object.entries(monitoring).length === 0
 }
 
-const handleExport = () => {
-    console.log("export here")
+const handleExport = async () => {
+    const fileName = monitoring.name ? monitoring.name : "exported_file"
+    const json = JSON.stringify(monitoring)
+    const blob = new Blob([json], {type:'application/json'})
+    const href = await URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = href
+    link.download = fileName + ".json"
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
 }
 
 const isClearButtonDisabled = () => {
