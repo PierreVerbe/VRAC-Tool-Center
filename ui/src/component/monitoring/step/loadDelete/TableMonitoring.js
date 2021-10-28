@@ -124,7 +124,7 @@ const TableMonitoring = ({idRowMonitoringTable, setIdRowMonitoringTable, allMoni
   const handleClick = (event, id) => {
     if (idRowMonitoringTable === null){
       setIdRowMonitoringTable(id)
-      setMonitoring({"hello": id})
+      setMonitoring(allMonitorings.filter(row => row.id === id)[0])
     }
     else if (idRowMonitoringTable === id){
       setIdRowMonitoringTable(null)
