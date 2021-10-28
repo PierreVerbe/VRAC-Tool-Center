@@ -51,7 +51,7 @@ const DropzoneOrReactJson = (props) => {
     else {
        return (
            <div>
-            <ReactJson src={monitoring} />
+            <ReactJson src={monitoring} collapsed={1}/>
            </div>
        )
    }
