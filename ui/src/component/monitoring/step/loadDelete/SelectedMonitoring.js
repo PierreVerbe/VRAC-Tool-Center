@@ -10,6 +10,13 @@ import { DropzoneArea } from 'material-ui-dropzone'
 import GetAppIcon from '@material-ui/icons/GetApp';
 import ClearIcon from '@material-ui/icons/Clear';
 
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 import DeleteIcon from '@material-ui/icons/Delete'
 import SaveIcon from '@material-ui/icons/Save'
 
@@ -65,15 +72,58 @@ DropzoneOrReactJson.propTypes = {
   }
 
 const SelectedMonitoring = ({insertMonitoring, deleteMonitoring, idRowMonitoringTable, monitoring, setIdRowMonitoringTable, setMonitoring}) => {
-//const classes = useStyles()
+    const [open, setOpen] = React.useState(false);
+
+    const onTextIdChange = (id) => {
+        const monitoringUpdated = {...monitoring, id: id.target.value}
+        setMonitoring(monitoringUpdated);
+    }
+  
+    const onTextNameChange = (name) => {
+        const monitoringUpdated = {...monitoring, name: name.target.value}
+        setMonitoring(monitoringUpdated);
+    }
+
+    const onTextDescriptionChange = (description) => {
+        const monitoringUpdated = {...monitoring, description: description.target.value}
+        setMonitoring(monitoringUpdated);
+    }
+
+    const onTextVersionChange = (version) => {
+        const monitoringUpdated = {...monitoring, version: version.target.value}
+        setMonitoring(monitoringUpdated);
+    }
+    //const classes = useStyles()
 
 const isSaveButtonDisabled = () => {
     return (idRowMonitoringTable !== null && idRowMonitoringTable !== -1)  || Object.entries(monitoring).length === 0
 }
 
 const handleSave = () => {
-    console.log("save here")
+    setOpen(true);
 }
+const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSubmit = () => {
+    
+         console.log(monitoring)
+         insertMonitoring(monitoring)
+        
+
+        /*
+        insertStudent({ id: id.value, name: name.value, age: age.value, grade: grade.value })
+        id.value = null
+        name.value = null
+        age.value = null
+        grade.value = null
+        */
+
+       
+    
+    setOpen(false);
+  };
 
 const isDeleteButtonDisabled = () => {
     return (idRowMonitoringTable === null || idRowMonitoringTable === -1) || Object.entries(monitoring).length === 0
@@ -133,6 +183,78 @@ const handleClear = () => {
             >
                 Save
             </Button>
+
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Save VRAC monitoring</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        To save monitoring, please enter the fields below.
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        onChange={onTextIdChange}
+                        value={monitoring.id}
+                        id="id"
+                        label="Id"
+                        fullWidth
+                        variant="standard"
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        onChange={onTextNameChange}
+                        id="name"
+                        label="Name"
+                        defaultValue={monitoring.name}
+                        fullWidth
+                        variant="standard"
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        onChange={onTextDescriptionChange}
+                        id="description"
+                        label="Description"
+                        defaultValue={monitoring.description}
+                        fullWidth
+                        variant="standard"
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        onChange={onTextVersionChange}
+                        id="version"
+                        label="Version"
+                        defaultValue={monitoring.version}
+                        fullWidth
+                        variant="standard"
+                    />
+                </DialogContent>
+                <DialogActions>
+                <Button 
+                    variant="contained"
+                    color="primary"
+                    onClick={handleClose}
+                    startIcon={<ClearIcon />}
+                    //className={classes.button}
+                    style={{backgroundColor: "orange"}} >
+                    Cancel
+                </Button>
+                <Button 
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSubmit}
+                    // className={classes.button}
+                    startIcon={<SaveIcon />}
+                    style={{backgroundColor: "green"}}
+                    >
+                    
+                
+                    Save
+                </Button>
+                </DialogActions>
+            </Dialog>
 
             <Button
                 variant="contained"
