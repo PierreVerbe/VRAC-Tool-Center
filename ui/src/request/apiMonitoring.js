@@ -1,18 +1,18 @@
 import Axios from "axios"
 
-const baseURL = `http://localhost:5000`
+const baseURL = "http://localhost:5000"
 
 // CREATE
 export const insertMonitoring = async (monitoring) => {
     try {
-        await Axios.post(baseURL + "/insert/monitoring",
+        const result = await Axios.post(baseURL + "/insert/monitoring",
         {   
            name: monitoring.name,
            description: monitoring.description,
            monitoring: monitoring.monitoring,
            version: monitoring.version
-        }
-        )
+        })
+        return result.data
     } catch (error) {
         alert("The API is potentially down: " + error)
     }
@@ -21,18 +21,26 @@ export const insertMonitoring = async (monitoring) => {
 // READ
 export const getAllMonitorings = async () => {
     try {
-        const res = await Axios.get(baseURL + "/find/allMonitorings")
-        return res.data
+        const result = await Axios.get(baseURL + "/find/allMonitorings")
+        return result.data
     } catch (error) {
         alert("The API is potentially down: " + error)
         return []
     }
 }
 
-export const getMonitoring = async () => {
+export const getMonitoring = async (monitoring) => {
     try {
-        const res = await Axios.get(baseURL + "/find/monitoring")
-        return res.data
+        const result = await Axios.get(baseURL + "/find/monitoring",
+        {
+            id: monitoring.id,
+            name: monitoring.name,
+            date: monitoring.date,
+            description: monitoring.description,
+            monitoring: monitoring.monitoring,
+            version: monitoring.version
+        })
+        return result.data
     } catch (error) {
         alert("The API is potentially down: " + error)
         return []
@@ -42,16 +50,15 @@ export const getMonitoring = async () => {
 // UPDATE
 export const updateMonitoring = async (monitoring) => {
     try {
-        await Axios.put(baseURL + "/update/monitoring",
+        const result = await Axios.put(baseURL + "/update/monitoring",
         {
             id: monitoring.id,
             name: monitoring.name,
             description: monitoring.description,
             monitoring: monitoring.monitoring,
             version: monitoring.version
-        }
-        )
-        
+        })
+        return result.data
     } catch (error) {
         alert("The API is potentially down: " + error)
         return []
@@ -61,15 +68,16 @@ export const updateMonitoring = async (monitoring) => {
 // DELETE
 export const deleteMonitoring = async (monitoring) => {
     try {
-        await Axios.delete(baseURL + "/delete/monitoring",
-        {
-            id: monitoring.id,
-            name: monitoring.name,
-            description: monitoring.description,
-            monitoring: monitoring.monitoring,
-            version: monitoring.version
-        }
-        )
+        const result = await Axios.delete(baseURL + "/delete/monitoring", {
+            data : {
+                id: monitoring.id,
+                name: monitoring.name,
+                description: monitoring.description,
+                monitoring: monitoring.monitoring,
+                version: monitoring.version
+            }
+        })
+        return result.data
     } catch (error) {
         alert("The API is potentially down: " + error)
         return []

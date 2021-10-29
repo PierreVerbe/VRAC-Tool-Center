@@ -2,6 +2,9 @@ import { insertMonitoring, getAllMonitorings, getMonitoring, updateMonitoring, d
 
 export const INSERT_MONITORING = "INSERT_MONITORING"
 export const GET_ALL_MONITORINGS = "GET_ALL_MONITORINGS"
+export const GET_MONITORING = "GET_MONITORING"
+export const UPDATE_MONITORING = "UPDATE_MONITORING"
+export const DELETE_MONITORING = "DELETE_MONITORING"
 
 export const SET_MONITORING_STEPPER = "SET_MONITORING_STEPPER"
 export const SET_ID_ROW_MONITORING_TABLE = "SET_ID_ROW_MONITORING_TABLE"
@@ -24,6 +27,39 @@ export const getAllMonitoringsActionCreator = () => {
         const result = await getAllMonitorings()
         dispatch({
             type: GET_ALL_MONITORINGS,
+            payload: result
+        })
+    }
+}
+
+export const getMonitoringActionCreator = (monitoring) => {
+    return async function (dispatch) {
+        const result = await getMonitoring(monitoring)
+        dispatch({
+            type: GET_MONITORING,
+            payload: result
+        })
+    }
+}
+
+export const updateMonitoringActionCreator = (monitoring) => {
+    return async function (dispatch) {
+        await updateMonitoring(monitoring)
+        const resultAllMonitorings = await getAllMonitorings()
+        const resultMonitoring = await getMonitoring(monitoring)
+        dispatch({
+            type: UPDATE_MONITORING,
+            payload: {allMonitorings: resultAllMonitorings, monitoring: resultMonitoring}
+        })
+    }
+}
+
+export const deleteMonitoringActionCreator = (monitoring) => {
+    return async function (dispatch) {
+        await deleteMonitoring(monitoring)
+        const result = await getAllMonitorings()
+        dispatch({
+            type: DELETE_MONITORING,
             payload: result
         })
     }

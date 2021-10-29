@@ -13,7 +13,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import DeleteIcon from '@material-ui/icons/Delete'
 import SaveIcon from '@material-ui/icons/Save'
 
-import { setIdRowMonitoringTableActionCreator, setMonitoringActionCreator } from "../../../../action/monitoringAction"
+import { insertMonitoringActionCreator, deleteMonitoringActionCreator, setIdRowMonitoringTableActionCreator, setMonitoringActionCreator } from "../../../../action/monitoringAction"
 
 /*
 const useStyles = makeStyles({
@@ -64,7 +64,7 @@ DropzoneOrReactJson.propTypes = {
     setMonitoring: PropTypes.func.isRequired
   }
 
-const SelectedMonitoring = ({idRowMonitoringTable, monitoring, setIdRowMonitoringTable, setMonitoring}) => {
+const SelectedMonitoring = ({insertMonitoring, deleteMonitoring, idRowMonitoringTable, monitoring, setIdRowMonitoringTable, setMonitoring}) => {
 //const classes = useStyles()
 
 const isSaveButtonDisabled = () => {
@@ -80,7 +80,12 @@ const isDeleteButtonDisabled = () => {
 }
 
 const handleDelete = () => {
-    console.log("delete here")
+    if (idRowMonitoringTable !== -1) {
+        const body = {id: idRowMonitoringTable}
+        deleteMonitoring(body)
+        setIdRowMonitoringTable(null)
+        setMonitoring({})
+    }
 }
 
 const isExportButtonDisabled = () => {
@@ -105,8 +110,8 @@ const isClearButtonDisabled = () => {
 }
 
 const handleClear = () => {
-    setMonitoring({})
     setIdRowMonitoringTable(null)
+    setMonitoring({})
 }
 
     return (
@@ -177,6 +182,8 @@ const mapStateToProps = state => ({
 })
   
 const mapDispatchToProps = dispatch => ({
+    insertMonitoring: monitoringToInsert => dispatch(insertMonitoringActionCreator(monitoringToInsert)),
+    deleteMonitoring: monitoringToDelete => dispatch(deleteMonitoringActionCreator(monitoringToDelete)),
     setIdRowMonitoringTable: idRowMonitoringTable => dispatch(setIdRowMonitoringTableActionCreator(idRowMonitoringTable)),
     setMonitoring: monitoring => dispatch(setMonitoringActionCreator(monitoring))
 })
