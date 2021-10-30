@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2),
         color: theme.palette.text.secondary,
     }
-  }))
+}))
 
 const LoadDelete = () => {
     const classes = useStyles()
@@ -28,13 +28,13 @@ const LoadDelete = () => {
             <Grid container spacing={3}>
                 <Grid item xs={6}>
                     <Paper className={classes.paper} component="form">
-                        <TableMonitoring/>
+                        <TableMonitoring />
                     </Paper>
                 </Grid>
 
                 <Grid item xs={6}>
-                    <Paper  className={classes.paper} component="form">
-                        <SelectedMonitoring/>
+                    <Paper className={classes.paper} component="form">
+                        <SelectedMonitoring />
                     </Paper>
                 </Grid>
             </Grid>

@@ -14,7 +14,7 @@ import PublishIcon from '@material-ui/icons/Publish'
 
 import { insertMonitoringActionCreator, setMonitoringActionCreator, setOpenDialogMonitoringActionCreator } from "../../../../../action/monitoringAction"
 
-const DialogSaveMonitoring = ({monitoring, setMonitoring, insertMonitoring, openDialogMonitoring, setOpenDialogMonitoring}) => {
+const DialogSaveMonitoring = ({ monitoring, setMonitoring, insertMonitoring, openDialogMonitoring, setOpenDialogMonitoring }) => {
     const handleCancel = () => {
         setOpenDialogMonitoring(false)
     }
@@ -26,17 +26,17 @@ const DialogSaveMonitoring = ({monitoring, setMonitoring, insertMonitoring, open
 
     // Text field in dialog
     const onTextNameChange = (name) => {
-        const monitoringUpdated = {...monitoring, name: name.target.value}
+        const monitoringUpdated = { ...monitoring, name: name.target.value }
         setMonitoring(monitoringUpdated)
     }
 
     const onTextDescriptionChange = (description) => {
-        const monitoringUpdated = {...monitoring, description: description.target.value}
+        const monitoringUpdated = { ...monitoring, description: description.target.value }
         setMonitoring(monitoringUpdated)
     }
 
     const onTextVersionChange = (version) => {
-        const monitoringUpdated = {...monitoring, version: version.target.value}
+        const monitoringUpdated = { ...monitoring, version: version.target.value }
         setMonitoring(monitoringUpdated)
     }
 
@@ -81,24 +81,24 @@ const DialogSaveMonitoring = ({monitoring, setMonitoring, insertMonitoring, open
             </DialogContent>
 
             <DialogActions>
-                <Button 
+                <Button
                     variant="contained"
                     color="primary"
                     onClick={handleCancel}
                     startIcon={<ClearIcon />}
                     //className={classes.button}
-                    style={{backgroundColor: "orange"}} 
+                    style={{ backgroundColor: "orange" }}
                 >
                     Cancel
                 </Button>
 
-                <Button 
+                <Button
                     variant="contained"
                     color="primary"
                     onClick={handleSubmit}
                     // className={classes.button}
                     startIcon={<PublishIcon />}
-                    style={{backgroundColor: "green"}}
+                    style={{ backgroundColor: "green" }}
                 >
                     Submit
                 </Button>
@@ -111,11 +111,11 @@ const mapStateToProps = state => ({
     monitoring: state.monitoring,
     openDialogMonitoring: state.openDialogMonitoring
 })
-  
+
 const mapDispatchToProps = dispatch => ({
     insertMonitoring: monitoringToInsert => dispatch(insertMonitoringActionCreator(monitoringToInsert)),
     setMonitoring: monitoring => dispatch(setMonitoringActionCreator(monitoring)),
     setOpenDialogMonitoring: openDialogMonitoring => dispatch(setOpenDialogMonitoringActionCreator(openDialogMonitoring))
 })
-  
+
 export default connect(mapStateToProps, mapDispatchToProps)(DialogSaveMonitoring)

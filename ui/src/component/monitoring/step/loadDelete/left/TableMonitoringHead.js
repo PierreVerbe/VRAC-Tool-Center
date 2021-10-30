@@ -12,35 +12,35 @@ export const columns = [
     { id: 'date', label: 'Date', minWidth: 10 },
     { id: 'description', label: 'Description', minWidth: 10 },
     { id: 'version', label: 'Version', minWidth: 10 }
-  ]
+]
 
 export const TableMonitoringHead = (props) => {
-    const {isAnyRowSelected} = props
-   
+    const { isAnyRowSelected } = props
+
     return (
-      <TableHead>
-        <TableRow>
-          <TableCell padding="checkbox">
-            <Checkbox
-              indeterminate={isAnyRowSelected}
-              checked={false}
-            />
-          </TableCell>
-          
-          {columns.map((column) => (
-            <TableCell
-              key={column.id}
-              align={column.align}
-              style={{ minWidth: column.minWidth }}
-            >
-              {column.label}
-            </TableCell>
-          ))}
-        </TableRow>
-      </TableHead>
+        <TableHead>
+            <TableRow>
+                <TableCell padding="checkbox">
+                    <Checkbox
+                        indeterminate={isAnyRowSelected}
+                        checked={false}
+                    />
+                </TableCell>
+
+                {columns.map((column) => (
+                    <TableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ minWidth: column.minWidth }}
+                    >
+                        {column.label}
+                    </TableCell>
+                ))}
+            </TableRow>
+        </TableHead>
     )
-  }
-  
-  TableMonitoringHead.propTypes = {
+}
+
+TableMonitoringHead.propTypes = {
     isAnyRowSelected: PropTypes.bool.isRequired
-  }
+}

@@ -24,12 +24,12 @@ const useStyles = makeStyles({
   })
 */
 
-const SelectedMonitoring = ({deleteMonitoring, idRowMonitoringTable, monitoring, setIdRowMonitoringTable, setMonitoring, setOpenDialogMonitoring}) => {
+const SelectedMonitoring = ({ deleteMonitoring, idRowMonitoringTable, monitoring, setIdRowMonitoringTable, setMonitoring, setOpenDialogMonitoring }) => {
     //const classes = useStyles()
 
     // Is button disabled
     const isSaveButtonDisabled = () => {
-        return (idRowMonitoringTable !== null && idRowMonitoringTable !== -1)  || Object.entries(monitoring).length === 0
+        return (idRowMonitoringTable !== null && idRowMonitoringTable !== -1) || Object.entries(monitoring).length === 0
     }
 
     const isDeleteButtonDisabled = () => {
@@ -51,17 +51,17 @@ const SelectedMonitoring = ({deleteMonitoring, idRowMonitoringTable, monitoring,
 
     const handleDelete = () => {
         if (idRowMonitoringTable !== -1) {
-            const body = {id: idRowMonitoringTable}
+            const body = { id: idRowMonitoringTable }
             deleteMonitoring(body)
             setIdRowMonitoringTable(null)
             setMonitoring({})
         }
     }
-    
+
     const handleExport = async () => {
         const fileName = monitoring.name ? monitoring.name : "exported_file"
         const json = JSON.stringify(monitoring)
-        const blob = new Blob([json], {type:'application/json'})
+        const blob = new Blob([json], { type: 'application/json' })
         const href = await URL.createObjectURL(blob)
         const link = document.createElement('a')
         link.href = href
@@ -70,7 +70,7 @@ const SelectedMonitoring = ({deleteMonitoring, idRowMonitoringTable, monitoring,
         link.click()
         document.body.removeChild(link)
     }
-    
+
     const handleClear = () => {
         setIdRowMonitoringTable(null)
         setMonitoring({})
@@ -84,13 +84,13 @@ const SelectedMonitoring = ({deleteMonitoring, idRowMonitoringTable, monitoring,
                 onClick={handleSave}
                 //className={classes.button}
                 startIcon={<SaveIcon />}
-                style={{backgroundColor: "green"}}
+                style={{ backgroundColor: "green" }}
                 disabled={isSaveButtonDisabled()}
             >
                 Save
             </Button>
 
-            <DialogSaveMonitoring/>
+            <DialogSaveMonitoring />
 
             <Button
                 variant="contained"
@@ -98,7 +98,7 @@ const SelectedMonitoring = ({deleteMonitoring, idRowMonitoringTable, monitoring,
                 onClick={handleDelete}
                 //className={classes.button}
                 startIcon={<DeleteIcon />}
-                style={{backgroundColor: "red"}}
+                style={{ backgroundColor: "red" }}
                 disabled={isDeleteButtonDisabled()}
             >
                 Delete
@@ -111,14 +111,14 @@ const SelectedMonitoring = ({deleteMonitoring, idRowMonitoringTable, monitoring,
 
                 startIcon={<GetAppIcon />}
                 //className={classes.button}
-                style={{backgroundColor: "blue"}}
+                style={{ backgroundColor: "blue" }}
                 disabled={isExportButtonDisabled()}
             >
                 Export
             </Button>
 
             <DropzoneOrReactJson isSelected={idRowMonitoringTable !== null} monitoring={monitoring} setIdRowMonitoringTable={setIdRowMonitoringTable} setMonitoring={setMonitoring} />
-        
+
             <Button
                 variant="contained"
                 color="primary"
@@ -126,7 +126,7 @@ const SelectedMonitoring = ({deleteMonitoring, idRowMonitoringTable, monitoring,
                 startIcon={<ClearIcon />}
                 //className={classes.button}
                 disabled={isClearButtonDisabled()}
-                style={{backgroundColor: "orange"}}
+                style={{ backgroundColor: "orange" }}
             >
                 Clear
             </Button>
@@ -138,7 +138,7 @@ const mapStateToProps = state => ({
     idRowMonitoringTable: state.idRowMonitoringTable,
     monitoring: state.monitoring
 })
-  
+
 const mapDispatchToProps = dispatch => ({
     setIdRowMonitoringTable: idRowMonitoringTable => dispatch(setIdRowMonitoringTableActionCreator(idRowMonitoringTable)),
     insertMonitoring: monitoringToInsert => dispatch(insertMonitoringActionCreator(monitoringToInsert)),
@@ -146,5 +146,5 @@ const mapDispatchToProps = dispatch => ({
     setMonitoring: monitoring => dispatch(setMonitoringActionCreator(monitoring)),
     setOpenDialogMonitoring: openDialogMonitoring => dispatch(setOpenDialogMonitoringActionCreator(openDialogMonitoring))
 })
-  
+
 export default connect(mapStateToProps, mapDispatchToProps)(SelectedMonitoring)

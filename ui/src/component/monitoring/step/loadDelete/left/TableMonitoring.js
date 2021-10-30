@@ -23,11 +23,11 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: 500,
   },
   iconButton: {
-      padding: 10,
+    padding: 10,
   },
   input: {
-      marginLeft: theme.spacing(1),
-      flex: 1,
+    marginLeft: theme.spacing(1),
+    flex: 1,
   }
 }))
 
@@ -42,19 +42,19 @@ const rowCounter = (rows) => {
   }
 }
 
-const TableMonitoring = ({idRowMonitoringTable, setIdRowMonitoringTable, allMonitorings, setMonitoring}) => {
+const TableMonitoring = ({ idRowMonitoringTable, setIdRowMonitoringTable, allMonitorings, setMonitoring }) => {
   const classes = useStyles()
 
   const rows = allMonitorings
-  
+
   const isSelected = (id) => id === idRowMonitoringTable
 
   const handleClick = (event, id) => {
-    if (idRowMonitoringTable === null){
+    if (idRowMonitoringTable === null) {
       setIdRowMonitoringTable(id)
       setMonitoring(allMonitorings.filter(row => row.id === id)[0])
     }
-    else if (idRowMonitoringTable === id){
+    else if (idRowMonitoringTable === id) {
       setIdRowMonitoringTable(null)
       setMonitoring({})
     }
@@ -62,20 +62,20 @@ const TableMonitoring = ({idRowMonitoringTable, setIdRowMonitoringTable, allMoni
 
   return (
     <Paper className={classes.root}>
-      <TableMonitoringSearchBar/>
+      <TableMonitoringSearchBar />
 
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
-          <TableMonitoringHead isAnyRowSelected={idRowMonitoringTable !== null}/>
-          
+          <TableMonitoringHead isAnyRowSelected={idRowMonitoringTable !== null} />
+
           <TableBody>
             {rows.map((row, index) => {
               const isRowSelected = isSelected(row.id)
               const labelId = `enhanced-table-checkbox-${index}`
-              
+
               return (
-                <TableRow 
-                  hover 
+                <TableRow
+                  hover
                   onClick={(event) => handleClick(event, row.id)}
                   role="checkbox"
                   tabIndex={-1}
@@ -83,12 +83,12 @@ const TableMonitoring = ({idRowMonitoringTable, setIdRowMonitoringTable, allMoni
                   selected={isRowSelected}
                 >
                   <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isRowSelected}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                        />
+                    <Checkbox
+                      checked={isRowSelected}
+                      inputProps={{ 'aria-labelledby': labelId }}
+                    />
                   </TableCell>
-                  
+
                   {columns.map((column) => {
                     const value = row[column.id]
                     return (
@@ -103,9 +103,9 @@ const TableMonitoring = ({idRowMonitoringTable, setIdRowMonitoringTable, allMoni
           </TableBody>
         </Table>
       </TableContainer>
-  
+
       <Typography >
-        {rowCounter(rows.length)} 
+        {rowCounter(rows.length)}
       </Typography>
     </Paper>
   )

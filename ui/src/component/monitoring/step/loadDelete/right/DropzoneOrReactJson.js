@@ -10,8 +10,8 @@ const DropzoneOrReactJson = (props) => {
         if (files.length > 0) {
             var file = files[0]
             var fileReader = new FileReader()
-    
-            fileReader.onload = function(progressEvent) {
+
+            fileReader.onload = function (progressEvent) {
                 var stringData = progressEvent.target.result
                 const obj = JSON.parse(stringData)
                 setIdRowMonitoringTable(-1)
@@ -20,18 +20,18 @@ const DropzoneOrReactJson = (props) => {
             fileReader.readAsText(file, "UTF-8")
         }
     }
-    
+
     setIdRowMonitoringTable.bind(this)
     if (isSelected === false) {
-        return <DropzoneArea onChange={LoadJsonFile.bind(this)}/>
+        return <DropzoneArea onChange={LoadJsonFile.bind(this)} />
     }
 
     else {
-       return (
-           <div>
-            <ReactJson src={monitoring} collapsed={1}/>
-           </div>
-       )
+        return (
+            <div>
+                <ReactJson src={monitoring} collapsed={1} />
+            </div>
+        )
     }
 }
 

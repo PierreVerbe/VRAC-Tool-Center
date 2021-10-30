@@ -1,4 +1,4 @@
-import React,{ useEffect } from "react"
+import React, { useEffect } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import clsx from "clsx"
@@ -73,7 +73,7 @@ const useColorlibStepIconStyles = makeStyles({
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: '20px',
-      height: '80vh',
+    height: '80vh',
   },
   paper: {
     width: '100%',
@@ -119,19 +119,19 @@ function ColorlibStepIcon(props) {
 const getStepContent = (step) => {
   switch (step) {
     case 0:
-      return <LoadDelete/>
+      return <LoadDelete />
     case 1:
-      return <Simulation/>
+      return <Simulation />
     case 2:
-      return <Statistic/>
+      return <Statistic />
     default:
       return "Unknown step"
   }
 }
 
-const Monitoring = ({getAllMonitorings, monitoringStepper, setMonitoringStepper}) => {
+const Monitoring = ({ getAllMonitorings, monitoringStepper, setMonitoringStepper }) => {
   useEffect(getAllMonitorings)
-  
+
   const classes = useStyles()
   const steps = ["Load/Delete", "Simulation", "Statistic"]
 
