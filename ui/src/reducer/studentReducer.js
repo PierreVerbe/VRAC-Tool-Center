@@ -1,6 +1,6 @@
 import { SET_DARK_MODE } from "../action/generalAction"
 import { GET_ALL_STUDENTS, INSERT_STUDENT } from "../action/studentAction"
-import { INSERT_MONITORING, GET_ALL_MONITORINGS, GET_MONITORING, UPDATE_MONITORING, DELETE_MONITORING, SET_MONITORING_STEPPER, SET_ID_ROW_MONITORING_TABLE, SET_MONITORING } from "../action/monitoringAction"
+import { INSERT_MONITORING, GET_ALL_MONITORINGS, GET_MONITORING, UPDATE_MONITORING, DELETE_MONITORING, SET_MONITORING_STEPPER, SET_ID_ROW_MONITORING_TABLE, SET_MONITORING, SET_OPEN_DIALOG_MONITORING } from "../action/monitoringAction"
 
 const defaultState = {
     // General
@@ -10,10 +10,11 @@ const defaultState = {
     students: [],
 
     // Monitoring
-    allMonitorings: [],
     monitoringStepper: 0,
+    allMonitorings: [],
     idRowMonitoringTable: null,
-    monitoring: {}
+    monitoring: {},
+    openDialogMonitoring: false
 }
 
 export const studentReducer = (state = defaultState, action) => {
@@ -83,6 +84,12 @@ export const studentReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 monitoring: action.payload
+            }
+
+        case SET_OPEN_DIALOG_MONITORING:
+            return {
+                ...state,
+                openDialogMonitoring: action.payload
             }
 
         default:

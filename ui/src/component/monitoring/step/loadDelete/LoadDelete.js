@@ -4,8 +4,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 
-import TableMonitoring from "./TableMonitoring"
-import SelectedMonitoring from "./SelectedMonitoring"
+import TableMonitoring from "./left/TableMonitoring"
+import SelectedMonitoring from "./right/SelectedMonitoring"
 
 const useStyles = makeStyles((theme) => ({
     root: {

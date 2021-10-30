@@ -17,8 +17,8 @@ import EqualizerIcon from '@material-ui/icons/Equalizer'
 import GetAppIcon from '@material-ui/icons/GetApp'
 
 import LoadDelete from "./step/loadDelete/LoadDelete"
-import Simulation from "./step/Simulation"
-import Statistic from "./step/Statistic"
+import Simulation from "./step/simulation/Simulation"
+import Statistic from "./step/statistic/Statistic"
 import { getAllMonitoringsActionCreator, setMonitoringStepperActionCreator } from "./../../action/monitoringAction"
 
 import "./Monitoring.css"
@@ -130,7 +130,7 @@ const getStepContent = (step) => {
 }
 
 const Monitoring = ({getAllMonitorings, monitoringStepper, setMonitoringStepper}) => {
-  useEffect(getAllMonitorings, [])
+  useEffect(getAllMonitorings)
   
   const classes = useStyles()
   const steps = ["Load/Delete", "Simulation", "Statistic"]
@@ -179,7 +179,6 @@ const Monitoring = ({getAllMonitorings, monitoringStepper, setMonitoringStepper}
         >
           Next
         </Button>
-
       </Paper>
     </div>
   )

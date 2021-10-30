@@ -18,7 +18,7 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
 
-import { setIdRowMonitoringTableActionCreator, setMonitoringActionCreator } from "../../../../action/monitoringAction"
+import { setIdRowMonitoringTableActionCreator, setMonitoringActionCreator } from "../../../../../action/monitoringAction"
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 10 },
@@ -27,12 +27,6 @@ const columns = [
   { id: 'description', label: 'Description', minWidth: 10 },
   { id: 'version', label: 'Version', minWidth: 10 }
 ]
-
-function createData(id, name, date, description, version) {
-  return { id, name, date, description, version }
-}
-
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
