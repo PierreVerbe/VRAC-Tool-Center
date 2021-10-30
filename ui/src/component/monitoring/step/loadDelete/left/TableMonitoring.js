@@ -1,32 +1,19 @@
 import React from "react"
 import { connect } from "react-redux"
-import PropTypes from 'prop-types'
 
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Typography from '@material-ui/core/Typography'
 import Checkbox from '@material-ui/core/Checkbox'
 import { makeStyles } from '@material-ui/core/styles'
-import InputBase from '@material-ui/core/InputBase'
-import IconButton from '@material-ui/core/IconButton'
 
-import MenuIcon from '@material-ui/icons/Menu'
-import SearchIcon from '@material-ui/icons/Search'
-
+import { columns, TableMonitoringHead } from "./TableMonitoringHead"
+import TableMonitoringSearchBar from "./TableMonitoringSearchBar"
 import { setIdRowMonitoringTableActionCreator, setMonitoringActionCreator } from "../../../../../action/monitoringAction"
-
-const columns = [
-  { id: 'id', label: 'Id', minWidth: 10 },
-  { id: 'name', label: 'Name', minWidth: 10 },
-  { id: 'date', label: 'Date', minWidth: 10 },
-  { id: 'description', label: 'Description', minWidth: 10 },
-  { id: 'version', label: 'Version', minWidth: 10 }
-]
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,63 +42,10 @@ const rowCounter = (rows) => {
   }
 }
 
-const SearchBar = () => {
-  const classes = useStyles()
-
-  return (
-    <div>
-      <IconButton className={classes.iconButton} aria-label="menu">
-        <MenuIcon />
-      </IconButton>
-      
-      <InputBase
-          className={classes.input}
-          placeholder="Search VRAC Monitoring"
-          inputProps={{ 'aria-label': 'search vrac monitoring' }}
-      />
-
-      <IconButton type="submit" className={classes.iconButton} aria-label="search">
-        <SearchIcon />
-      </IconButton>
-    </div>
-  )
-}
-
-const TableMonitoringHead = (props) => {
-  const {isAnyRowSelected} = props
- 
-  return (
-    <TableHead>
-      <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={isAnyRowSelected}
-            checked={false}
-          />
-        </TableCell>
-        
-        {columns.map((column) => (
-          <TableCell
-            key={column.id}
-            align={column.align}
-            style={{ minWidth: column.minWidth }}
-          >
-            {column.label}
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  )
-}
-
-TableMonitoringHead.propTypes = {
-  isAnyRowSelected: PropTypes.bool.isRequired
-}
-
 const TableMonitoring = ({idRowMonitoringTable, setIdRowMonitoringTable, allMonitorings, setMonitoring}) => {
-  const rows = allMonitorings
-  
   const classes = useStyles()
+
+  const rows = allMonitorings
   
   const isSelected = (id) => id === idRowMonitoringTable
 
@@ -128,7 +62,7 @@ const TableMonitoring = ({idRowMonitoringTable, setIdRowMonitoringTable, allMoni
 
   return (
     <Paper className={classes.root}>
-      <SearchBar/>
+      <TableMonitoringSearchBar/>
 
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">

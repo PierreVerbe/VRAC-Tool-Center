@@ -1,8 +1,5 @@
 import React from "react"
 import { connect } from "react-redux"
-import ReactJson from 'react-json-view'
-import { DropzoneArea } from 'material-ui-dropzone'
-import PropTypes from 'prop-types'
 
 import Button from "@material-ui/core/Button"
 
@@ -12,6 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import GetAppIcon from '@material-ui/icons/GetApp'
 import ClearIcon from '@material-ui/icons/Clear'
 
+import DropzoneOrReactJson from "./DropzoneOrReactJson"
 import DialogSaveMonitoring from "./DialogSaveMonitoring"
 import { insertMonitoringActionCreator, deleteMonitoringActionCreator, setIdRowMonitoringTableActionCreator, setMonitoringActionCreator, setOpenDialogMonitoringActionCreator } from "../../../../../action/monitoringAction"
 
@@ -25,45 +23,6 @@ const useStyles = makeStyles({
     },
   })
 */
-
-const DropzoneOrReactJson = (props) => {
-    const { isSelected, monitoring, setIdRowMonitoringTable, setMonitoring } = props
-
-    const LoadJsonFile = (files) => {
-        if (files.length > 0) {
-            var file = files[0]
-            var fileReader = new FileReader()
-    
-            fileReader.onload = function(progressEvent) {
-                var stringData = progressEvent.target.result
-                const obj = JSON.parse(stringData)
-                setIdRowMonitoringTable(-1)
-                setMonitoring(obj)
-            }
-            fileReader.readAsText(file, "UTF-8")
-        }
-    }
-    
-    setIdRowMonitoringTable.bind(this)
-    if (isSelected === false) {
-        return <DropzoneArea onChange={LoadJsonFile.bind(this)}/>
-    }
-
-    else {
-       return (
-           <div>
-            <ReactJson src={monitoring} collapsed={1}/>
-           </div>
-       )
-    }
-}
-
-DropzoneOrReactJson.propTypes = {
-    isSelected: PropTypes.bool.isRequired,
-    monitoring: PropTypes.object.isRequired,
-    setIdRowMonitoringTable: PropTypes.func.isRequired,
-    setMonitoring: PropTypes.func.isRequired
-}
 
 const SelectedMonitoring = ({deleteMonitoring, idRowMonitoringTable, monitoring, setIdRowMonitoringTable, setMonitoring, setOpenDialogMonitoring}) => {
     //const classes = useStyles()
