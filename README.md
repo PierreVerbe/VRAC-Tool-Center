@@ -4,8 +4,8 @@
 This repository contains the several tools used by the VRAC association which participates in the "Coupe de France de robotique" every year.
 
 VRAC Tool Center is devided into 2 sub projects : 
-* REST service
-* Web application
+* [REST service](https://github.com/PierreVerbe/VRAC-Tool-Center-REST-API)
+* [Web application](https://github.com/PierreVerbe/VRAC-Tool-Center)
  
 ## Technical Stack
 ### Rest service

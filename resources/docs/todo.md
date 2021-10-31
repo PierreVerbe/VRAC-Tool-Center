@@ -14,3 +14,10 @@
 
 * [ ] delete icon material <br>
 * [ ] delete swipeable <br>
+
+# rest
+* [ ] finir test <br>
+
+# ui
+* [ ] dark mode on left <br>
+* [ ] paper full screen <br>
