@@ -7,9 +7,10 @@ export const UPDATE_MONITORING = "UPDATE_MONITORING"
 export const DELETE_MONITORING = "DELETE_MONITORING"
 
 export const SET_MONITORING_STEPPER = "SET_MONITORING_STEPPER"
-export const SET_ID_ROW_MONITORING_TABLE = "SET_ID_ROW_MONITORING_TABLE"
 export const SET_MONITORING = "SET_MONITORING"
+export const SET_ID_ROW_MONITORING_TABLE = "SET_ID_ROW_MONITORING_TABLE"
 export const SET_OPEN_DIALOG_MONITORING = "SET_OPEN_DIALOG_MONITORING"
+export const SET_ACTIVE_STEP_MONITORING = "SET_ACTIVE_STEP_MONITORING"
 
 // REST call 
 export const insertMonitoringActionCreator = monitoringToInsert => {
@@ -99,6 +100,15 @@ export const setOpenDialogMonitoringActionCreator = openDialogMonitoring => {
         dispatch({
             type: SET_OPEN_DIALOG_MONITORING,
             payload: openDialogMonitoring
+        })
+    }
+}
+
+export const setActiveStepMonitoringActionCreator = activeStepMonitoring => {
+    return function (dispatch) {
+        dispatch({
+            type: SET_ACTIVE_STEP_MONITORING,
+            payload: activeStepMonitoring
         })
     }
 }
