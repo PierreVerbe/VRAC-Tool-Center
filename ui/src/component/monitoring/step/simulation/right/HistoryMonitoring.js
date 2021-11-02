@@ -117,9 +117,3 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(HistoryMonitoring)
-
-/*
-
-delete react-window
-
-*/
