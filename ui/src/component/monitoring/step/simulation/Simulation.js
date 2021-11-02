@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 
 import HistoryMonitoring from "./right/HistoryMonitoring"
+import RobotField from "./left/RobotField"
 
 const Simulation = () => {
     return (
@@ -11,7 +12,7 @@ const Simulation = () => {
             <Grid container spacing={3}>
                 <Grid item xs={6}>
                     <Paper>
-                        
+                        <RobotField/>
                     </Paper>
                 </Grid>
 

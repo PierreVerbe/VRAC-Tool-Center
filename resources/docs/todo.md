@@ -12,8 +12,7 @@
 * [ ] github package <br>
 * [ ] github release <br>
 
-* [ ] delete icon material <br>
-* [ ] delete swipeable <br>
+* [x] delete swipeable <br>
 
 # rest
 * [ ] finir test <br>
