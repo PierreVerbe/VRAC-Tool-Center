@@ -1,40 +1,24 @@
-import React, { useRef, useEffect } from "react"
-import { connect } from "react-redux"
-import TableBackground from "./../../../../../resources/image/SailTheWorld/fondTable21.svg"
+export const TABLE_WIDTH = 3000 //mm
+export const TABLE_HEIGHT = 2000 //mm
+export const REDUCING_FACTOR = 4
 
-const TABLE_WIDTH = 3000 //mm
-const TABLE_HEIGHT = 2000 //mm
-const REDUCING_FACTOR = 4
+export class RobotField {
+    constructor(context, image) {
+        this.context = context
+        this.image = image
+    }
 
-const RobotField = ({ monitoring, activeStepMonitoring }) => {
-    var img = new Image()
-    img.src = TableBackground
+    render(monitoring, activeStepMonitoring) {
+        // Draw base field
+        this.context.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, TABLE_WIDTH / REDUCING_FACTOR, TABLE_HEIGHT / REDUCING_FACTOR)
 
-    const canvasRef = useRef(null)
-
-    useEffect(() => {
-        const canvas = canvasRef.current
-        const context = canvas.getContext('2d')
-
-        img.onload = function () {
-            context.drawImage(img, 0, 0, img.width, img.height, 0, 0, TABLE_WIDTH / REDUCING_FACTOR, TABLE_HEIGHT / REDUCING_FACTOR)
+        if (Object.keys(monitoring).length !== 0) {
             const step = monitoring.monitoring[activeStepMonitoring]
-            context.strokeRect(step.x / REDUCING_FACTOR, step.y / REDUCING_FACTOR, 100, 100)
+            this.renderRobot(step)
         }
-    })
+    }
 
-    return (
-        <div>
-            <canvas ref={canvasRef} width={TABLE_WIDTH / REDUCING_FACTOR} height={TABLE_HEIGHT / REDUCING_FACTOR}>
-                Désolé, votre navigateur ne prend pas en charge &ltcanvas&gt.
-            </canvas>
-        </div>
-    )
+    renderRobot(step) {
+        this.context.strokeRect(step.x / REDUCING_FACTOR, step.y / REDUCING_FACTOR, 100, 100)
+    }
 }
-
-const mapStateToProps = state => ({
-    monitoring: state.monitoring,
-    activeStepMonitoring: state.activeStepMonitoring
-})
-
-export default connect(mapStateToProps)(RobotField)
