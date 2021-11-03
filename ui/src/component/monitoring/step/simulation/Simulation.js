@@ -10,13 +10,13 @@ const Simulation = () => {
     return (
         <div>
             <Grid container spacing={3}>
-                <Grid item xs={6}>
+                <Grid item xs={8}>
                     <Paper>
                         <RobotField/>
                     </Paper>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <Paper>
                         <HistoryMonitoring/>
                     </Paper>
