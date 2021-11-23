@@ -2,15 +2,14 @@ import React from "react"
 import { connect } from "react-redux"
 
 import Header from "./general/Header"
-import Footer from "./general/Footer"
 
 import './App.css'
 import { ThemeProvider, createTheme } from "@material-ui/core/styles"
 import Paper from '@material-ui/core/Paper'
 import { blue, green } from "@material-ui/core/colors"
 
-const App = ({darkMode}) => {
-  
+const App = ({ darkMode }) => {
+
   const darkTheme = createTheme({
     palette: {
       type: "dark"
@@ -30,9 +29,8 @@ const App = ({darkMode}) => {
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : ligthTheme}>
-      <Paper className="App">
-        <Header/>
-        <Footer/>
+      <Paper className="App" elevation={0} square={true}>
+        <Header />
       </Paper>
     </ThemeProvider>
   )
