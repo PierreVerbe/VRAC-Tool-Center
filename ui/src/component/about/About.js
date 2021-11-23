@@ -2,31 +2,18 @@ import React from "react"
 
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
 
 import YouTubeIcon from '@material-ui/icons/YouTube'
 import HttpIcon from '@material-ui/icons/Http'
 import GitHubIcon from '@material-ui/icons/GitHub'
 
+import "./../Style.css"
 import "./About.css"
 
-const useStyles = makeStyles({
-    root: {
-        padding: '20px',
-        height: '80vh',
-    },
-    paper: {
-        width: '100%',
-        height: '100%',
-    },
-})
-
 const About = () => {
-    const classes = useStyles()
-
     return (
-        <div className={classes.root}>
-            <Paper elevation={3} className={classes.paper}>
+        <div className="rootPage">
+            <Paper elevation={3} className="paperPage">
        
                 <div id="textAbout">
                     <Typography variant="h1" component="h2">Vieux Roboticiens Amis de Cachan</Typography>

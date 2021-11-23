@@ -1,13 +1,3 @@
-#rootHome {
-    padding: 20px
-}
-
-#paperHome {
-    display: inline-block;
-    width: 100%;
-    height: calc(100vh - 92px);
-}
-
 #logoVracHome {
     margin: auto;
     display: flex;

@@ -1,0 +1,9 @@
+.rootPage {
+    padding: 20px
+}
+
+.paperPage {
+    display: inline-block;
+    width: 100%;
+    height: calc(100vh - 92px);
+}
