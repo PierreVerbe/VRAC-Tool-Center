@@ -1,8 +1,13 @@
 import React, { useEffect } from "react"
 import { connect } from "react-redux"
 
+import Paper from '@material-ui/core/Paper'
+
 import ListStudent from "./ListStudent"
+import { ELEVATION_PAGE_CONTENT } from "../Style"
 import { getAllStudentsActionCreator, insertStudentActionCreator } from "./../../action/studentAction"
+
+import "./../Style.css"
 
 const UIStudent = ({students, getStudents, insertStudent}) => {
 
@@ -19,8 +24,8 @@ const UIStudent = ({students, getStudents, insertStudent}) => {
     }
 
     return (
-        <div className="marginWrapper">
-            <div className="jobInput">
+        <div className="rootPage">
+            <Paper className="paperPage" elevation={ELEVATION_PAGE_CONTENT}>
                 <form onSubmit={onSubmit}>
                     <input id="example" type="number" name="id"></input>
                     <input id="example" type="text" name="name"></input>
@@ -28,8 +33,8 @@ const UIStudent = ({students, getStudents, insertStudent}) => {
                     <input id="example" type="number" name="grade"></input>
                     <input type="submit" value="Created student" />
                 </form>
-            </div>
-            <ListStudent students={students} />
+                <ListStudent students={students} />
+            </Paper>
         </div>
     )
 }
