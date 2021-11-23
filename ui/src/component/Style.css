@@ -1,5 +1,9 @@
+#App {
+    height: 100vh;
+}
+
 .rootPage {
-    padding: 20px
+    padding: 20px;
 }
 
 .paperPage {

@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 
 import Header from "./general/Header"
 
-import './App.css'
+import './Style.css'
 import { ThemeProvider, createTheme } from "@material-ui/core/styles"
 import Paper from '@material-ui/core/Paper'
 import { blue, green } from "@material-ui/core/colors"
@@ -29,7 +29,7 @@ const App = ({ darkMode }) => {
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : ligthTheme}>
-      <Paper className="App" elevation={0} square={true}>
+      <Paper id="App" elevation={0} square={true}>
         <Header />
       </Paper>
     </ThemeProvider>

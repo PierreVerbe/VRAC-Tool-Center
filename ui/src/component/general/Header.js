@@ -13,8 +13,6 @@ import Monitoring from "./../monitoring/Monitoring"
 import About from "./../about/About"
 import { setDarkModeActionCreator } from "./../../action/generalAction"
 
-import './Header.css'
-
 const Header = ({darkMode, setDarkMode}) => {
     const routes = ["/", "/strategy", "/monitoring", "/about"]
 
