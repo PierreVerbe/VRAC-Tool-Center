@@ -1,6 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 
+import Box from '@material-ui/core/Box';
 import MobileStepper from '@material-ui/core/MobileStepper'
 import Button from '@material-ui/core/Button'
 import ListItem from '@material-ui/core/ListItem'
@@ -23,7 +24,7 @@ const useStyles = makeStyles({
     width: '100%',
     position: 'relative',
     overflow: 'auto',
-    maxHeight: 300,
+    maxHeight: 'calc(100vh - 390px)',
   },
   listSection: {
     backgroundColor: 'inherit',
@@ -35,7 +36,6 @@ const useStyles = makeStyles({
 })
 
 const HistoryMonitoring = ({ monitoring, activeStepMonitoring, setActiveStepMonitoring }) => {
-
   const classes = useStyles()
   const theme = useTheme()
 
@@ -66,31 +66,33 @@ const HistoryMonitoring = ({ monitoring, activeStepMonitoring, setActiveStepMoni
     else {
       return (
         <div>
-          <MobileStepper
-            variant="progress"
-            steps={monitoring.monitoring.length}
-            position="static"
-            activeStep={activeStepMonitoring}
-            className={classes.root}
-            nextButton={
-              <Button size="small" onClick={handleNext} disabled={activeStepMonitoring === monitoring.monitoring.length - 1}>
-                Next
-                {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-              </Button>
-            }
-            backButton={
-              <Button size="small" onClick={handleBack} disabled={activeStepMonitoring === 0}>
-                {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-                Back
-              </Button>
-            }
-          />
+          <Box display="flex" justifyContent="center">
+            <MobileStepper
+              variant="progress"
+              steps={monitoring.monitoring.length}
+              position="static"
+              activeStep={activeStepMonitoring}
+              className={classes.root}
+              nextButton={
+                <Button size="small" onClick={handleNext} disabled={activeStepMonitoring === monitoring.monitoring.length - 1}>
+                  Next
+                  {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+                </Button>
+              }
+              backButton={
+                <Button size="small" onClick={handleBack} disabled={activeStepMonitoring === 0}>
+                  {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+                  Back
+                </Button>
+              }
+            />
+          </Box>
 
           <List className={classes.list} subheader={<li />}>
             {<li key={`section`} className={classes.listSection}>
               <ul className={classes.ul}>
                 {monitoring.monitoring.map((item) =>
-                  item.id === activeStepMonitoring + 1 ? activeItemMonitoring(true, item) : activeItemMonitoring(false, item)
+                  item.id === activeStepMonitoring ? activeItemMonitoring(true, item) : activeItemMonitoring(false, item)
                 )}
               </ul>
             </li>}
