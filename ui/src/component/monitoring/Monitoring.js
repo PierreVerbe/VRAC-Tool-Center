@@ -95,24 +95,26 @@ const Monitoring = ({ getAllMonitorings, monitoringStepper, setMonitoringStepper
         <Typography component={'span'} className={classes.instructions}>
           {getStepContent(monitoringStepper)}
         </Typography>
+        
+        <div className="buttonPage">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleBack}
+            className={classes.button}
+          >
+            Back
+          </Button>
 
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleBack}
-          className={classes.button}
-        >
-          Back
-        </Button>
-
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleNext}
-          className={classes.button}
-        >
-          Next
-        </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleNext}
+            className={classes.button}
+          >
+            Next
+          </Button>
+        </div>
       </Paper>
     </div>
   )

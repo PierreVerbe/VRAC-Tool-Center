@@ -1,7 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -16,9 +15,6 @@ import TableMonitoringSearchBar from "./TableMonitoringSearchBar"
 import { setIdRowMonitoringTableActionCreator, setMonitoringActionCreator } from "../../../../../action/monitoringAction"
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-  },
   container: {
     maxHeight: 500,
   },
@@ -61,7 +57,7 @@ const TableMonitoring = ({ idRowMonitoringTable, setIdRowMonitoringTable, allMon
   }
 
   return (
-    <Paper className={classes.root}>
+    <div>
       <TableMonitoringSearchBar />
 
       <TableContainer className={classes.container}>
@@ -107,7 +103,7 @@ const TableMonitoring = ({ idRowMonitoringTable, setIdRowMonitoringTable, allMon
       <Typography >
         {rowCounter(rows.length)}
       </Typography>
-    </Paper>
+      </div>
   )
 }
 

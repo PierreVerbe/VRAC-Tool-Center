@@ -11,3 +11,17 @@
     width: 100%;
     height: calc(100vh - 92px);
 }
+
+.buttonPage {
+    padding: 10px;
+}
+
+.rootStep {
+    padding: 10px;
+    height: calc(100vh - 320px);
+}
+
+.paperPanel {
+    padding: 10px;
+    height: calc(100vh - 325px);
+}
