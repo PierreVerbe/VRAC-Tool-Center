@@ -12,9 +12,16 @@ import Strategy from "../strategy/Strategy"
 import Monitoring from "./../monitoring/Monitoring"
 import About from "./../about/About"
 import { setDarkModeActionCreator } from "./../../action/generalAction"
+import { setStrategyStepperActionCreator } from "./../../action/strategyAction"
+import { setMonitoringStepperActionCreator } from "./../../action/monitoringAction"
 
-const Header = ({darkMode, setDarkMode}) => {
+const Header = ({ darkMode, setDarkMode, setStrategyStepper, setMonitoringStepper }) => {
     const routes = ["/", "/strategy", "/monitoring", "/about"]
+
+    const setStepperToZero = () => {
+        setStrategyStepper(0)
+        setMonitoringStepper(0)
+    }
 
     return (
         <header>
@@ -32,25 +39,29 @@ const Header = ({darkMode, setDarkMode}) => {
                                         label="Home"
                                         component={Link}
                                         to={routes[0]}
+                                        onClick={setStepperToZero}
                                     />
                                     <Tab
                                         value={routes[1]}
                                         label="Strategy"
                                         component={Link}
                                         to={routes[1]}
+                                        onClick={setStepperToZero}
                                     />
                                     <Tab
                                         value={routes[2]}
                                         label="Monitoring"
                                         component={Link}
                                         to={routes[2]}
+                                        onClick={setStepperToZero}
                                     />
                                     <Tab
                                         value={routes[3]}
                                         label="About"
                                         component={Link}
                                         to={routes[3]}
-                                    />  
+                                        onClick={setStepperToZero}
+                                    />
                                 </Tabs>
 
                                 <Brightness4Icon />
@@ -62,19 +73,19 @@ const Header = ({darkMode, setDarkMode}) => {
 
                 <SwitchRouter>
                     <Route path="/strategy">
-                        <Strategy/>
+                        <Strategy />
                     </Route>
 
                     <Route path="/monitoring" >
-                        <Monitoring/>
+                        <Monitoring />
                     </Route>
 
                     <Route path="/about" >
-                        <About/>
+                        <About />
                     </Route>
-                    
+
                     <Route path="/" >
-                        <Home/>
+                        <Home />
                     </Route>
                 </SwitchRouter>
             </BrowserRouter>
@@ -85,9 +96,11 @@ const Header = ({darkMode, setDarkMode}) => {
 const mapStateToProps = state => ({
     darkMode: state.darkMode
 })
-  
+
 const mapDispatchToProps = dispatch => ({
-    setDarkMode: (darkMode) => dispatch(setDarkModeActionCreator(darkMode))
+    setDarkMode: (darkMode) => dispatch(setDarkModeActionCreator(darkMode)),
+    setStrategyStepper: strategyStepper => dispatch(setStrategyStepperActionCreator(strategyStepper)),
+    setMonitoringStepper: monitoringStepper => dispatch(setMonitoringStepperActionCreator(monitoringStepper))
 })
-  
+
 export default connect(mapStateToProps, mapDispatchToProps)(Header)
