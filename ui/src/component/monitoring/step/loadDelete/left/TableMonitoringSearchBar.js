@@ -8,12 +8,6 @@ import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        width: '100%',
-    },
-    container: {
-        maxHeight: 500,
-    },
     iconButton: {
         padding: 10,
     },

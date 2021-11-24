@@ -18,13 +18,6 @@ const useStyles = makeStyles((theme) => ({
   container: {
     maxHeight: 500,
   },
-  iconButton: {
-    padding: 10,
-  },
-  input: {
-    marginLeft: theme.spacing(1),
-    flex: 1,
-  }
 }))
 
 const rowCounter = (rows) => {

@@ -3,7 +3,6 @@ import { connect } from "react-redux"
 
 import Button from "@material-ui/core/Button"
 
-//import { makeStyles } from '@material-ui/core/styles'
 import SaveIcon from '@material-ui/icons/Save'
 import DeleteIcon from '@material-ui/icons/Delete'
 import GetAppIcon from '@material-ui/icons/GetApp'
@@ -13,20 +12,7 @@ import DropzoneOrReactJson from "./DropzoneOrReactJson"
 import DialogSaveMonitoring from "./DialogSaveMonitoring"
 import { insertMonitoringActionCreator, deleteMonitoringActionCreator, setIdRowMonitoringTableActionCreator, setMonitoringActionCreator, setOpenDialogMonitoringActionCreator } from "../../../../../action/monitoringAction"
 
-/*
-const useStyles = makeStyles({
-    root: {
-      width: '100%',
-    },
-    container: {
-      maxHeight: 500,
-    },
-  })
-*/
-
 const SelectedMonitoring = ({ deleteMonitoring, idRowMonitoringTable, monitoring, setIdRowMonitoringTable, setMonitoring, setOpenDialogMonitoring }) => {
-    //const classes = useStyles()
-
     // Is button disabled
     const isSaveButtonDisabled = () => {
         return (idRowMonitoringTable !== null && idRowMonitoringTable !== -1) || Object.entries(monitoring).length === 0
@@ -82,7 +68,6 @@ const SelectedMonitoring = ({ deleteMonitoring, idRowMonitoringTable, monitoring
                 variant="contained"
                 color="primary"
                 onClick={handleSave}
-                //className={classes.button}
                 startIcon={<SaveIcon />}
                 style={{ backgroundColor: "green" }}
                 disabled={isSaveButtonDisabled()}
@@ -96,7 +81,6 @@ const SelectedMonitoring = ({ deleteMonitoring, idRowMonitoringTable, monitoring
                 variant="contained"
                 color="primary"
                 onClick={handleDelete}
-                //className={classes.button}
                 startIcon={<DeleteIcon />}
                 style={{ backgroundColor: "red" }}
                 disabled={isDeleteButtonDisabled()}
@@ -108,9 +92,7 @@ const SelectedMonitoring = ({ deleteMonitoring, idRowMonitoringTable, monitoring
                 variant="contained"
                 color="primary"
                 onClick={handleExport}
-
                 startIcon={<GetAppIcon />}
-                //className={classes.button}
                 style={{ backgroundColor: "blue" }}
                 disabled={isExportButtonDisabled()}
             >
@@ -124,7 +106,6 @@ const SelectedMonitoring = ({ deleteMonitoring, idRowMonitoringTable, monitoring
                 color="primary"
                 onClick={handleClear}
                 startIcon={<ClearIcon />}
-                //className={classes.button}
                 disabled={isClearButtonDisabled()}
                 style={{ backgroundColor: "orange" }}
             >
