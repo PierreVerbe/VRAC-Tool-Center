@@ -54,7 +54,7 @@ const ColorlibConnector = withStyles({
 const useColorlibStepIconStyles = makeStyles({
     root: {
         backgroundColor: "#ccc",
-        index: 1,
+        zIndex: 1,
         color: "#fff",
         width: 50,
         height: 50,
