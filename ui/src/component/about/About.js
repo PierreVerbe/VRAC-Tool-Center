@@ -7,13 +7,15 @@ import YouTubeIcon from '@material-ui/icons/YouTube'
 import HttpIcon from '@material-ui/icons/Http'
 import GitHubIcon from '@material-ui/icons/GitHub'
 
+import { ELEVATION_PAGE_CONTENT } from "./../Style"
+
 import "./../Style.css"
 import "./About.css"
 
 const About = () => {
     return (
         <div className="rootPage">
-            <Paper elevation={3} className="paperPage">
+            <Paper elevation={ELEVATION_PAGE_CONTENT} className="paperPage">
        
                 <div id="textAbout">
                     <Typography variant="h1" component="h2">Vieux Roboticiens Amis de Cachan</Typography>
