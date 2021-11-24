@@ -8,7 +8,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import Brightness4Icon from '@material-ui/icons/Brightness4'
 
 import Home from "./../home/Home"
-import UIStudent from "./../student/UIStudent"
+import Strategy from "../strategy/Strategy"
 import Monitoring from "./../monitoring/Monitoring"
 import About from "./../about/About"
 import { setDarkModeActionCreator } from "./../../action/generalAction"
@@ -62,7 +62,7 @@ const Header = ({darkMode, setDarkMode}) => {
 
                 <SwitchRouter>
                     <Route path="/strategy">
-                        <UIStudent/>
+                        <Strategy/>
                     </Route>
 
                     <Route path="/monitoring" >
