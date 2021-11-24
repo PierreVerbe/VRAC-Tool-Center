@@ -1,13 +1,17 @@
 import { SET_DARK_MODE } from "../action/generalAction"
 import { GET_ALL_STUDENTS, INSERT_STUDENT } from "../action/studentAction"
 import { INSERT_MONITORING, GET_ALL_MONITORINGS, GET_MONITORING, UPDATE_MONITORING, DELETE_MONITORING, SET_MONITORING_STEPPER, SET_ID_ROW_MONITORING_TABLE, SET_MONITORING, SET_OPEN_DIALOG_MONITORING } from "../action/monitoringAction"
+import { SET_STRATEGY_STEPPER } from "../action/strategyAction"
 
 const defaultState = {
     // General
     darkMode: false,
 
-    // Strategy
+    // Student
     students: [],
+
+    // Strategy
+    strategyStepper: 0,
 
     // Monitoring
     monitoringStepper: 0,
@@ -35,6 +39,12 @@ export const studentReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 darkMode: action.payload
+            }
+
+        case SET_STRATEGY_STEPPER:
+            return {
+                ...state,
+                strategyStepper: action.payload
             }
 
         case INSERT_MONITORING:
