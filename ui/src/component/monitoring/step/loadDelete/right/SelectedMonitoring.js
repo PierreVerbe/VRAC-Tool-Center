@@ -1,6 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 
+import Box from '@material-ui/core/Box'
 import Button from "@material-ui/core/Button"
 
 import SaveIcon from '@material-ui/icons/Save'
@@ -11,6 +12,8 @@ import ClearIcon from '@material-ui/icons/Clear'
 import DropzoneOrReactJson from "./DropzoneOrReactJson"
 import DialogSaveMonitoring from "./DialogSaveMonitoring"
 import { insertMonitoringActionCreator, deleteMonitoringActionCreator, setIdRowMonitoringTableActionCreator, setMonitoringActionCreator, setOpenDialogMonitoringActionCreator } from "../../../../../action/monitoringAction"
+
+import './../LoadDelete.css'
 
 const SelectedMonitoring = ({ deleteMonitoring, idRowMonitoringTable, monitoring, setIdRowMonitoringTable, setMonitoring, setOpenDialogMonitoring }) => {
     // Is button disabled
@@ -64,53 +67,66 @@ const SelectedMonitoring = ({ deleteMonitoring, idRowMonitoringTable, monitoring
 
     return (
         <div>
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={handleSave}
-                startIcon={<SaveIcon />}
-                style={{ backgroundColor: "green" }}
-                disabled={isSaveButtonDisabled()}
-            >
-                Save
-            </Button>
+            <Box id="topButtonGroupMonitoring" display="flex" flexDirection="row">
+                <Box className="buttonMonitoring">
+                    <Button
+                        className="buttonMonitoring"
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSave}
+                        startIcon={<SaveIcon />}
+                        style={{ backgroundColor: "green" }}
+                        disabled={isSaveButtonDisabled()}
+                    >
+                        Save
+                    </Button>
+                </Box>
 
-            <DialogSaveMonitoring />
+                <DialogSaveMonitoring />
 
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={handleDelete}
-                startIcon={<DeleteIcon />}
-                style={{ backgroundColor: "red" }}
-                disabled={isDeleteButtonDisabled()}
-            >
-                Delete
-            </Button>
+                <Box className="buttonMonitoring">
+                    <Button
+                        className="buttonMonitoring"
+                        variant="contained"
+                        color="primary"
+                        onClick={handleDelete}
+                        startIcon={<DeleteIcon />}
+                        style={{ backgroundColor: "red" }}
+                        disabled={isDeleteButtonDisabled()}
+                    >
+                        Delete
+                    </Button>
+                </Box>
 
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={handleExport}
-                startIcon={<GetAppIcon />}
-                style={{ backgroundColor: "blue" }}
-                disabled={isExportButtonDisabled()}
-            >
-                Export
-            </Button>
+                <Box className="buttonMonitoring">
+                    <Button
+                        className="buttonMonitoring"
+                        variant="contained"
+                        color="primary"
+                        onClick={handleExport}
+                        startIcon={<GetAppIcon />}
+                        style={{ backgroundColor: "blue" }}
+                        disabled={isExportButtonDisabled()}
+                    >
+                        Export
+                    </Button>
+                </Box>
+            </Box>
 
-            <DropzoneOrReactJson isSelected={idRowMonitoringTable !== null} monitoring={monitoring} setIdRowMonitoringTable={setIdRowMonitoringTable} setMonitoring={setMonitoring} />
+            <DropzoneOrReactJson id="truc" isSelected={idRowMonitoringTable !== null} monitoring={monitoring} setIdRowMonitoringTable={setIdRowMonitoringTable} setMonitoring={setMonitoring} />
 
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={handleClear}
-                startIcon={<ClearIcon />}
-                disabled={isClearButtonDisabled()}
-                style={{ backgroundColor: "orange" }}
-            >
-                Clear
-            </Button>
+            <div id="bottomButtonGroupMonitoring">
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleClear}
+                    startIcon={<ClearIcon />}
+                    disabled={isClearButtonDisabled()}
+                    style={{ backgroundColor: "orange" }}
+                >
+                    Clear
+                </Button>
+            </div>
         </div>
     )
 }
