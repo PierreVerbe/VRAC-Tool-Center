@@ -1,6 +1,9 @@
 import { SET_DARK_MODE, SET_SNACK_BAR } from "../action/generalAction"
-import { INSERT_STRATEGY, GET_ALL_STRATEGIES, GET_STRATEGY, UPDATE_STRATEGY, DELETE_STRATEGY, SET_STRATEGY_STEPPER, SET_ID_ROW_STRATEGY_TABLE, SET_STRATEGY, SET_OPEN_DIALOG_STRATEGY, SET_OPEN_DIALOG_NODE_STRATEGY, SET_META_ACTION_ARRAY, SET_OPEN_DIALOG_META_ACTION, SET_STRATEGY_CREATOR, SET_STRATEGY_LOADER, SET_FILE_UPLOADED } from "../action/strategyAction"
+import { SET_STRATEGY_LOADER, SET_FILE_UPLOADED } from "../action/strategyAction"
 import { SET_ACTIVE_STEP_MONITORING, INSERT_MONITORING, GET_ALL_MONITORINGS, GET_MONITORING, UPDATE_MONITORING, DELETE_MONITORING, SET_MONITORING_STEPPER, SET_ID_ROW_MONITORING_TABLE, SET_MONITORING, SET_OPEN_DIALOG_MONITORING } from "../action/monitoringAction"
+import { INSERT_STRATEGY, GET_ALL_STRATEGIES, GET_STRATEGY, UPDATE_STRATEGY, DELETE_STRATEGY, SET_STRATEGY_STEPPER, SET_ID_ROW_STRATEGY_TABLE, SET_STRATEGY, SET_OPEN_DIALOG_STRATEGY, SET_OPEN_DIALOG_NODE_STRATEGY, SET_META_ACTION_ARRAY, SET_OPEN_DIALOG_META_ACTION, SET_STRATEGY_CREATOR } from "../action/strategyAction"
+import { reducerStrategy } from "./strategyReducer"
+import { reducerMonitoring } from "./monitoringReducer"
 
 const defaultState = {
     // General
@@ -35,13 +38,17 @@ const defaultState = {
         openDialogMonitoring: false,
         // Simulation
         activeStepMonitoring: 0
-        // Statistic
-       
+        // Statistic  
 }
 
 export const reducer = (state = defaultState, action) => {
-    switch (action.type) {
+    const stateGeneral = commonReducer(state, action)
+    const stateStrategy = reducerStrategy(stateGeneral, action)
+    return reducerMonitoring(stateStrategy, action) 
+}
 
+const commonReducer = (state, action) => {
+    switch (action.type) {
         case SET_DARK_MODE:
             return {
                 ...state,
