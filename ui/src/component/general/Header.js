@@ -10,12 +10,11 @@ import Brightness4Icon from '@material-ui/icons/Brightness4'
 import Home from "./../home/Home"
 import UIStudent from "./../student/UIStudent"
 import Monitoring from "./../monitoring/Monitoring"
+import About from "./../about/About"
 import { setDarkModeActionCreator } from "./../../action/generalAction"
 
-import './Header.css'
-
 const Header = ({darkMode, setDarkMode}) => {
-    const routes = ["/", "/strategy", "/monitoring"]
+    const routes = ["/", "/strategy", "/monitoring", "/about"]
 
     return (
         <header>
@@ -45,6 +44,12 @@ const Header = ({darkMode, setDarkMode}) => {
                                         label="Monitoring"
                                         component={Link}
                                         to={routes[2]}
+                                    />
+                                    <Tab
+                                        value={routes[3]}
+                                        label="About"
+                                        component={Link}
+                                        to={routes[3]}
                                     />  
                                 </Tabs>
 
@@ -57,12 +62,15 @@ const Header = ({darkMode, setDarkMode}) => {
 
                 <SwitchRouter>
                     <Route path="/strategy">
-                        <h1 style={{ marginTop: "10vh" }}>Strategy part</h1>
                         <UIStudent/>
                     </Route>
 
                     <Route path="/monitoring" >
                         <Monitoring/>
+                    </Route>
+
+                    <Route path="/about" >
+                        <About/>
                     </Route>
                     
                     <Route path="/" >
