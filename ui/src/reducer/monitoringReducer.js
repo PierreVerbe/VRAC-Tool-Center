@@ -1,6 +1,6 @@
 import { INSERT_MONITORING, GET_ALL_MONITORINGS, GET_MONITORING, UPDATE_MONITORING, DELETE_MONITORING, SET_MONITORING_STEPPER, SET_ID_ROW_MONITORING_TABLE, SET_MONITORING, SET_OPEN_DIALOG_MONITORING, SET_ACTIVE_STEP_MONITORING } from "../action/monitoringAction"
 
-export const reducerMonitoring = (state, action) => {
+export const monitoringReducer = (state, action) => {
     switch (action.type) {
         case INSERT_MONITORING:
             return {

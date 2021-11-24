@@ -1,6 +1,6 @@
 import { SET_STRATEGY_STEPPER } from "../action/strategyAction"
 
-export const reducerStrategy = (state, action) => {
+export const strategyReducer = (state, action) => {
     switch (action.type) {
 
         case SET_STRATEGY_STEPPER:

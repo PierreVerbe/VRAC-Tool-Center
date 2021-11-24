@@ -50,6 +50,146 @@ const commonReducer = (state, action) => {
                 darkMode: action.payload
             }
 
+        case INSERT_STRATEGY:
+            return {
+                ...state,
+                allStrategies: action.payload
+            }
+
+        case GET_ALL_STRATEGIES:
+            return {
+                ...state,
+                allStrategies: action.payload
+            }
+
+        case GET_STRATEGY:
+            return {
+                ...state,
+                strategy: action.payload
+            }
+
+        case UPDATE_STRATEGY:
+            return {
+                ...state,
+                allStrategies: action.payload.allStrategies,
+                strategy: action.payload.strategy
+            }
+
+        case DELETE_STRATEGY:
+            return {
+                ...state,
+                allStrategies: action.payload
+            }
+
+        case SET_STRATEGY_STEPPER:
+            return {
+                ...state,
+                strategyStepper: action.payload
+            }
+
+        case SET_ID_ROW_STRATEGY_TABLE:
+            return {
+                ...state,
+                idRowStrategyTable: action.payload
+            }
+
+        case SET_STRATEGY:
+            return {
+                ...state,
+                strategy: action.payload
+            }
+
+        case SET_OPEN_DIALOG_STRATEGY:
+            return {
+                ...state,
+                openDialogStrategy: action.payload
+            }
+
+        case INSERT_MONITORING:
+            return {
+                ...state,
+                allMonitorings: action.payload
+            }
+
+        case GET_ALL_MONITORINGS:
+            return {
+                ...state,
+                allMonitorings: action.payload
+            }
+
+        case GET_MONITORING:
+            return {
+                ...state,
+                monitoring: action.payload
+            }
+
+        case UPDATE_MONITORING:
+            return {
+                ...state,
+                allMonitorings: action.payload.allMonitorings,
+                monitoring: action.payload.monitoring
+            }
+
+        case DELETE_MONITORING:
+            return {
+                ...state,
+                allMonitorings: action.payload
+            }
+
+        case SET_MONITORING_STEPPER:
+            return {
+                ...state,
+                monitoringStepper: action.payload
+            }
+
+        case SET_ID_ROW_MONITORING_TABLE:
+            return {
+                ...state,
+                idRowMonitoringTable: action.payload
+            }
+
+        case SET_MONITORING:
+            return {
+                ...state,
+                monitoring: action.payload
+            }
+
+        case SET_OPEN_DIALOG_MONITORING:
+            return {
+                ...state,
+                openDialogMonitoring: action.payload
+            }
+
+        case SET_OPEN_DIALOG_NODE_STRATEGY:
+            return {
+                ...state,
+                openDialogNodeStrategy: action.payload
+            }
+
+        case SET_META_ACTION_ARRAY:
+            return {
+                ...state,
+                metaActionArray: action.payload
+            }
+
+        case SET_OPEN_DIALOG_META_ACTION:
+            return {
+                ...state,
+                openDialogMetaAction: action.payload
+            }
+
+        case SET_STRATEGY_CREATOR:
+            return {
+                ...state,
+                strategyCreator: action.payload
+            }
+            
+        case SET_ACTIVE_STEP_MONITORING:
+            return {
+                ...state,
+                activeStepMonitoring: action.payload
+            }
+
         default:
             return state
     }
