@@ -2,6 +2,8 @@ import StepConnector from "@material-ui/core/StepConnector"
 import { makeStyles, withStyles } from "@material-ui/core/styles"
 
 export const ELEVATION_PAGE_CONTENT = 3
+export const GRID_CONTAINER_SPACING = 3
+export const MONITORING_GRID_SIZING = 6
 
 // Strategy & Monitoring Stepper
 export const ColorlibConnector = withStyles({

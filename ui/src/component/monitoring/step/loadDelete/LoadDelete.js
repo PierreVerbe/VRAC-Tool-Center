@@ -1,39 +1,26 @@
 import React from "react"
 
-import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 
+import { ELEVATION_PAGE_CONTENT, GRID_CONTAINER_SPACING, MONITORING_GRID_SIZING } from "../../../Style"
 import TableMonitoring from "./left/TableMonitoring"
 import SelectedMonitoring from "./right/SelectedMonitoring"
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        padding: '2px 4px',
-        display: 'flex',
-        alignItems: 'center',
-        flexGrow: 1,
-    },
-    paper: {
-        padding: theme.spacing(2),
-        color: theme.palette.text.secondary,
-    }
-}))
+import './../../../Style.css'
 
 const LoadDelete = () => {
-    const classes = useStyles()
-
     return (
-        <div className={classes.root}>
-            <Grid container spacing={3}>
-                <Grid item xs={6}>
-                    <Paper className={classes.paper} component="form">
+        <div className="rootStep">
+            <Grid container spacing={GRID_CONTAINER_SPACING}>
+                <Grid item xs={MONITORING_GRID_SIZING}>
+                    <Paper elevation={ELEVATION_PAGE_CONTENT} className="paperPanel" component="form">
                         <TableMonitoring />
                     </Paper>
                 </Grid>
 
-                <Grid item xs={6}>
-                    <Paper className={classes.paper} component="form">
+                <Grid item xs={MONITORING_GRID_SIZING}>
+                    <Paper elevation={ELEVATION_PAGE_CONTENT} className="paperPanel" component="form">
                         <SelectedMonitoring />
                     </Paper>
                 </Grid>
