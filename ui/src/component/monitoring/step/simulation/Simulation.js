@@ -30,19 +30,3 @@ const Simulation = () => {
 }
 
 export default Simulation
-
-/*
-terrain gauche
-droite log avec curseur (evolue log avec un play button)
-
-
-evolution pas à pas
-evolution vitesse du match
-
-
-
-Version enlever
-tri id, date, name
-
-docker rasp + freebox ouvert port
-*/
