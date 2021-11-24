@@ -1,0 +1,15 @@
+#topButtonGroupMonitoring {
+    padding-bottom: 10px;
+}
+
+#bottomButtonGroupMonitoring {
+    padding-top: 10px;
+}
+
+.buttonMonitoring {
+   padding-right: 10px;
+}
+
+#truc {
+    max-height: calc(100vh - 1000px);
+}

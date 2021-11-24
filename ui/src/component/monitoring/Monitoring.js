@@ -9,6 +9,7 @@ import Step from "@material-ui/core/Step"
 import StepLabel from "@material-ui/core/StepLabel"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
+import Box from '@material-ui/core/Box';
 
 import DesktopWindowsIcon from '@material-ui/icons/DesktopWindows'
 import EqualizerIcon from '@material-ui/icons/Equalizer'
@@ -96,7 +97,7 @@ const Monitoring = ({ getAllMonitorings, monitoringStepper, setMonitoringStepper
           {getStepContent(monitoringStepper)}
         </Typography>
         
-        <div className="buttonPage">
+        <Box className="buttonPage" display="flex" justifyContent="flex-end">
           <Button
             variant="contained"
             color="primary"
@@ -114,7 +115,7 @@ const Monitoring = ({ getAllMonitorings, monitoringStepper, setMonitoringStepper
           >
             Next
           </Button>
-        </div>
+        </Box>
       </Paper>
     </div>
   )

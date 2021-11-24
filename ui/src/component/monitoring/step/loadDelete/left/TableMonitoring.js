@@ -16,8 +16,8 @@ import { setIdRowMonitoringTableActionCreator, setMonitoringActionCreator } from
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    maxHeight: 500,
-  },
+    maxHeight: 'calc(100vh - 390px)',
+  }
 }))
 
 const rowCounter = (rows) => {
@@ -96,7 +96,7 @@ const TableMonitoring = ({ idRowMonitoringTable, setIdRowMonitoringTable, allMon
       <Typography >
         {rowCounter(rows.length)}
       </Typography>
-      </div>
+    </div>
   )
 }
 
