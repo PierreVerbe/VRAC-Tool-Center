@@ -11,7 +11,7 @@ import ClearIcon from '@material-ui/icons/Clear'
 
 import DropzoneOrReactJson from "./DropzoneOrReactJson"
 import DialogSaveStrategy from "./DialogSaveStrategy"
-import { insertMonitoringActionCreator, deleteMonitoringActionCreator, setIdRowMonitoringTableActionCreator, setMonitoringActionCreator, setOpenDialogMonitoringActionCreator } from "../../../../../action/monitoringAction"
+import { insertStrategyActionCreator, deleteStrategyActionCreator, setIdRowStrategyTableActionCreator, setStrategyActionCreator, setOpenDialogStrategyActionCreator } from "../../../../../action/strategyAction"
 
 /*
 const useStyles = makeStyles({
@@ -24,43 +24,43 @@ const useStyles = makeStyles({
   })
 */
 
-const SelectedStrategy = ({ deleteMonitoring, idRowMonitoringTable, monitoring, setIdRowMonitoringTable, setMonitoring, setOpenDialogMonitoring }) => {
+const SelectedStrategy = ({ deleteStrategy, idRowStrategyTable, strategy, setIdRowStrategyTable, setStrategy, setOpenDialogStrategy }) => {
     //const classes = useStyles()
 
     // Is button disabled
     const isSaveButtonDisabled = () => {
-        return (idRowMonitoringTable !== null && idRowMonitoringTable !== -1) || Object.entries(monitoring).length === 0
+        return (idRowStrategyTable !== null && idRowStrategyTable !== -1) || Object.entries(strategy).length === 0
     }
 
     const isDeleteButtonDisabled = () => {
-        return (idRowMonitoringTable === null || idRowMonitoringTable === -1) || Object.entries(monitoring).length === 0
+        return (idRowStrategyTable === null || idRowStrategyTable === -1) || Object.entries(strategy).length === 0
     }
 
     const isExportButtonDisabled = () => {
-        return Object.entries(monitoring).length === 0
+        return Object.entries(strategy).length === 0
     }
 
     const isClearButtonDisabled = () => {
-        return Object.entries(monitoring).length === 0
+        return Object.entries(strategy).length === 0
     }
 
     // OnClick function for button
     const handleSave = () => {
-        setOpenDialogMonitoring(true)
+        setOpenDialogStrategy(true)
     }
 
     const handleDelete = () => {
-        if (idRowMonitoringTable !== -1) {
-            const body = { id: idRowMonitoringTable }
-            deleteMonitoring(body)
-            setIdRowMonitoringTable(null)
-            setMonitoring({})
+        if (idRowStrategyTable !== -1) {
+            const body = { id: idRowStrategyTable }
+            deleteStrategy(body)
+            setIdRowStrategyTable(null)
+            setStrategy({})
         }
     }
 
     const handleExport = async () => {
-        const fileName = monitoring.name ? monitoring.name : "exported_file"
-        const json = JSON.stringify(monitoring)
+        const fileName = strategy.name ? strategy.name : "exported_file"
+        const json = JSON.stringify(strategy)
         const blob = new Blob([json], { type: 'application/json' })
         const href = await URL.createObjectURL(blob)
         const link = document.createElement('a')
@@ -72,8 +72,8 @@ const SelectedStrategy = ({ deleteMonitoring, idRowMonitoringTable, monitoring, 
     }
 
     const handleClear = () => {
-        setIdRowMonitoringTable(null)
-        setMonitoring({})
+        setIdRowStrategyTable(null)
+        setStrategy({})
     }
 
     return (
@@ -117,7 +117,7 @@ const SelectedStrategy = ({ deleteMonitoring, idRowMonitoringTable, monitoring, 
                 Export
             </Button>
 
-            <DropzoneOrReactJson isSelected={idRowMonitoringTable !== null} monitoring={monitoring} setIdRowMonitoringTable={setIdRowMonitoringTable} setMonitoring={setMonitoring} />
+            <DropzoneOrReactJson isSelected={idRowStrategyTable !== null} strategy={strategy} setIdRowStrategyTable={setIdRowStrategyTable} setStrategy={setStrategy} />
 
             <Button
                 variant="contained"
@@ -135,16 +135,16 @@ const SelectedStrategy = ({ deleteMonitoring, idRowMonitoringTable, monitoring, 
 }
 
 const mapStateToProps = state => ({
-    idRowMonitoringTable: state.idRowMonitoringTable,
-    monitoring: state.monitoring
+    idRowStrategyTable: state.idRowStrategyTable,
+    strategy: state.strategy
 })
 
 const mapDispatchToProps = dispatch => ({
-    setIdRowMonitoringTable: idRowMonitoringTable => dispatch(setIdRowMonitoringTableActionCreator(idRowMonitoringTable)),
-    insertMonitoring: monitoringToInsert => dispatch(insertMonitoringActionCreator(monitoringToInsert)),
-    deleteMonitoring: monitoringToDelete => dispatch(deleteMonitoringActionCreator(monitoringToDelete)),
-    setMonitoring: monitoring => dispatch(setMonitoringActionCreator(monitoring)),
-    setOpenDialogMonitoring: openDialogMonitoring => dispatch(setOpenDialogMonitoringActionCreator(openDialogMonitoring))
+    setIdRowStrategyTable: idRowStrategyTable => dispatch(setIdRowStrategyTableActionCreator(idRowStrategyTable)),
+    insertStrategy: strategyToInsert => dispatch(insertStrategyActionCreator(strategyToInsert)),
+    deleteStrategy: strategyToDelete => dispatch(deleteStrategyActionCreator(strategyToDelete)),
+    setStrategy: strategy => dispatch(setStrategyActionCreator(strategy)),
+    setOpenDialogStrategy: openDialogStrategy => dispatch(setOpenDialogStrategyActionCreator(openDialogStrategy))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectedStrategy)

@@ -4,7 +4,7 @@ import { DropzoneArea } from 'material-ui-dropzone'
 import PropTypes from 'prop-types'
 
 const DropzoneOrReactJson = (props) => {
-    const { isSelected, monitoring, setIdRowMonitoringTable, setMonitoring } = props
+    const { isSelected, strategy, setIdRowStrategyTable, setStrategy } = props
 
     const LoadJsonFile = (files) => {
         if (files.length > 0) {
@@ -14,14 +14,14 @@ const DropzoneOrReactJson = (props) => {
             fileReader.onload = function (progressEvent) {
                 var stringData = progressEvent.target.result
                 const obj = JSON.parse(stringData)
-                setIdRowMonitoringTable(-1)
-                setMonitoring(obj)
+                setIdRowStrategyTable(-1)
+                setStrategy(obj)
             }
             fileReader.readAsText(file, "UTF-8")
         }
     }
 
-    setIdRowMonitoringTable.bind(this)
+    setIdRowStrategyTable.bind(this)
     if (isSelected === false) {
         return <DropzoneArea onChange={LoadJsonFile.bind(this)} />
     }
@@ -29,7 +29,7 @@ const DropzoneOrReactJson = (props) => {
     else {
         return (
             <div>
-                <ReactJson src={monitoring} collapsed={1} />
+                <ReactJson src={strategy} collapsed={1} />
             </div>
         )
     }
@@ -37,9 +37,9 @@ const DropzoneOrReactJson = (props) => {
 
 DropzoneOrReactJson.propTypes = {
     isSelected: PropTypes.bool.isRequired,
-    monitoring: PropTypes.object.isRequired,
-    setIdRowMonitoringTable: PropTypes.func.isRequired,
-    setMonitoring: PropTypes.func.isRequired
+    strategy: PropTypes.object.isRequired,
+    setIdRowStrategyTable: PropTypes.func.isRequired,
+    setStrategy: PropTypes.func.isRequired
 }
 
 export default DropzoneOrReactJson

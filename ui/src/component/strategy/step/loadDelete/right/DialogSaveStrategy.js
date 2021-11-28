@@ -12,40 +12,45 @@ import Button from "@material-ui/core/Button"
 import ClearIcon from '@material-ui/icons/Clear'
 import PublishIcon from '@material-ui/icons/Publish'
 
-import { insertMonitoringActionCreator, setMonitoringActionCreator, setOpenDialogMonitoringActionCreator } from "../../../../../action/monitoringAction"
+import { insertStrategyActionCreator, setStrategyActionCreator, setOpenDialogStrategyActionCreator } from "../../../../../action/strategyAction"
 
-const DialogSaveStrategy = ({ monitoring, setMonitoring, insertMonitoring, openDialogMonitoring, setOpenDialogMonitoring }) => {
+const DialogSaveStrategy = ({ strategy, setStrategy, insertStrategy, openDialogStrategy, setOpenDialogStrategy }) => {
     const handleCancel = () => {
-        setOpenDialogMonitoring(false)
+        setOpenDialogStrategy(false)
     }
 
     const handleSubmit = () => {
-        insertMonitoring(monitoring)
-        setOpenDialogMonitoring(false)
+        insertStrategy(strategy)
+        setOpenDialogStrategy(false)
     }
 
     // Text field in dialog
     const onTextNameChange = (name) => {
-        const monitoringUpdated = { ...monitoring, name: name.target.value }
-        setMonitoring(monitoringUpdated)
+        const strategyUpdated = { ...strategy, name: name.target.value }
+        setStrategy(strategyUpdated)
     }
 
     const onTextDescriptionChange = (description) => {
-        const monitoringUpdated = { ...monitoring, description: description.target.value }
-        setMonitoring(monitoringUpdated)
+        const strategyUpdated = { ...strategy, description: description.target.value }
+        setStrategy(strategyUpdated)
+    }
+
+    const onTextSenderChange = (sender) => {
+        const strategyUpdated = { ...strategy, sender: sender.target.value }
+        setStrategy(strategyUpdated)
     }
 
     const onTextVersionChange = (version) => {
-        const monitoringUpdated = { ...monitoring, version: version.target.value }
-        setMonitoring(monitoringUpdated)
+        const strategyUpdated = { ...strategy, version: version.target.value }
+        setStrategy(strategyUpdated)
     }
 
     return (
-        <Dialog open={openDialogMonitoring} onClose={handleCancel}>
-            <DialogTitle>Save VRAC monitoring</DialogTitle>
+        <Dialog open={openDialogStrategy} onClose={handleCancel}>
+            <DialogTitle>Save VRAC strategy</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    To save monitoring, please enter the fields below.
+                    To save strategy, please enter the fields below.
                 </DialogContentText>
 
                 <TextField
@@ -54,7 +59,7 @@ const DialogSaveStrategy = ({ monitoring, setMonitoring, insertMonitoring, openD
                     onChange={onTextNameChange}
                     id="name"
                     label="Name"
-                    defaultValue={monitoring.name}
+                    defaultValue={strategy.name}
                     fullWidth
                     variant="standard"
                 />
@@ -64,7 +69,17 @@ const DialogSaveStrategy = ({ monitoring, setMonitoring, insertMonitoring, openD
                     onChange={onTextDescriptionChange}
                     id="description"
                     label="Description"
-                    defaultValue={monitoring.description}
+                    defaultValue={strategy.description}
+                    fullWidth
+                    variant="standard"
+                />
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    onChange={onTextSenderChange}
+                    id="sender"
+                    label="Sender"
+                    defaultValue={strategy.sender}
                     fullWidth
                     variant="standard"
                 />
@@ -74,7 +89,7 @@ const DialogSaveStrategy = ({ monitoring, setMonitoring, insertMonitoring, openD
                     onChange={onTextVersionChange}
                     id="version"
                     label="Version"
-                    defaultValue={monitoring.version}
+                    defaultValue={strategy.version}
                     fullWidth
                     variant="standard"
                 />
@@ -108,14 +123,14 @@ const DialogSaveStrategy = ({ monitoring, setMonitoring, insertMonitoring, openD
 }
 
 const mapStateToProps = state => ({
-    monitoring: state.monitoring,
-    openDialogMonitoring: state.openDialogMonitoring
+    strategy: state.strategy,
+    openDialogStrategy: state.openDialogStrategy
 })
 
 const mapDispatchToProps = dispatch => ({
-    insertMonitoring: monitoringToInsert => dispatch(insertMonitoringActionCreator(monitoringToInsert)),
-    setMonitoring: monitoring => dispatch(setMonitoringActionCreator(monitoring)),
-    setOpenDialogMonitoring: openDialogMonitoring => dispatch(setOpenDialogMonitoringActionCreator(openDialogMonitoring))
+    insertStrategy: strategyToInsert => dispatch(insertStrategyActionCreator(strategyToInsert)),
+    setStrategy: strategy => dispatch(setStrategyActionCreator(strategy)),
+    setOpenDialogStrategy: openDialogStrategy => dispatch(setOpenDialogStrategyActionCreator(openDialogStrategy))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DialogSaveStrategy)
