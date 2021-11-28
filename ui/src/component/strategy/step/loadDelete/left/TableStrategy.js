@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import { columns, TableStrategyHead } from "./TableStrategyHead"
 import TableStrategySearchBar from "./TableStrategySearchBar"
-import { setIdRowMonitoringTableActionCreator, setMonitoringActionCreator } from "../../../../../action/monitoringAction"
+import { setIdRowStrategyTableActionCreator, setStrategyActionCreator } from "../../../../../action/strategyAction"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,21 +42,21 @@ const rowCounter = (rows) => {
   }
 }
 
-const TableStrategy = ({ idRowMonitoringTable, setIdRowMonitoringTable, allMonitorings, setMonitoring }) => {
+const TableStrategy = ({ idRowStrategyTable, setIdRowStrategyTable, allStrategies, setStrategy }) => {
   const classes = useStyles()
 
-  const rows = allMonitorings
+  const rows = allStrategies
 
-  const isSelected = (id) => id === idRowMonitoringTable
+  const isSelected = (id) => id === idRowStrategyTable
 
   const handleClick = (event, id) => {
-    if (idRowMonitoringTable === null) {
-      setIdRowMonitoringTable(id)
-      setMonitoring(allMonitorings.filter(row => row.id === id)[0])
+    if (idRowStrategyTable === null) {
+      setIdRowStrategyTable(id)
+      setStrategy(allStrategies.filter(row => row.id === id)[0])
     }
-    else if (idRowMonitoringTable === id) {
-      setIdRowMonitoringTable(null)
-      setMonitoring({})
+    else if (idRowStrategyTable === id) {
+      setIdRowStrategyTable(null)
+      setStrategy({})
     }
   }
 
@@ -66,7 +66,7 @@ const TableStrategy = ({ idRowMonitoringTable, setIdRowMonitoringTable, allMonit
 
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
-          <TableStrategyHead isAnyRowSelected={idRowMonitoringTable !== null} />
+          <TableStrategyHead isAnyRowSelected={idRowStrategyTable !== null} />
 
           <TableBody>
             {rows.map((row, index) => {
@@ -112,13 +112,13 @@ const TableStrategy = ({ idRowMonitoringTable, setIdRowMonitoringTable, allMonit
 }
 
 const mapStateToProps = state => ({
-  idRowMonitoringTable: state.idRowMonitoringTable,
-  allMonitorings: state.allMonitorings
+  idRowStrategyTable: state.idRowStrategyTable,
+  allStrategies: state.allStrategies
 })
 
 const mapDispatchToProps = dispatch => ({
-  setIdRowMonitoringTable: idRowMonitoringTable => dispatch(setIdRowMonitoringTableActionCreator(idRowMonitoringTable)),
-  setMonitoring: monitoring => dispatch(setMonitoringActionCreator(monitoring))
+  setIdRowStrategyTable: idRowStrategyTable => dispatch(setIdRowStrategyTableActionCreator(idRowStrategyTable)),
+  setStrategy: strategy => dispatch(setStrategyActionCreator(strategy))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableStrategy)

@@ -1,6 +1,6 @@
 import { SET_DARK_MODE } from "../action/generalAction"
 import { INSERT_MONITORING, GET_ALL_MONITORINGS, GET_MONITORING, UPDATE_MONITORING, DELETE_MONITORING, SET_MONITORING_STEPPER, SET_ID_ROW_MONITORING_TABLE, SET_MONITORING, SET_OPEN_DIALOG_MONITORING } from "../action/monitoringAction"
-import { SET_STRATEGY_STEPPER } from "../action/strategyAction"
+import { SET_STRATEGY_STEPPER, SET_ID_ROW_STRATEGY_TABLE, GET_ALL_STRATEGIES } from "../action/strategyAction"
 
 const defaultState = {
     // General
@@ -8,6 +8,8 @@ const defaultState = {
 
     // Strategy
     strategyStepper: 0,
+    allStrategies: [],
+    idRowStrategyTable: null,
 
     // Monitoring
     monitoringStepper: 0,
@@ -31,6 +33,25 @@ export const reducer = (state = defaultState, action) => {
                 ...state,
                 strategyStepper: action.payload
             }
+
+
+
+        case SET_ID_ROW_STRATEGY_TABLE:
+            return {
+                ...state,
+                idRowStrategyTable: action.payload
+            }
+
+        case GET_ALL_STRATEGIES:
+            return {
+                ...state,
+                allStrategies: action.payload
+            }
+      
+
+
+
+
 
         case INSERT_MONITORING:
             return {
