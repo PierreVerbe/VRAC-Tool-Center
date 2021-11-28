@@ -1,4 +1,4 @@
-import React /*, { useEffect } */ from "react"
+import React, { useEffect } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import clsx from "clsx"
@@ -17,7 +17,7 @@ import GetAppIcon from '@material-ui/icons/GetApp'
 import CreateStrategy from "./step/create/CreateStrategy"
 import LoadDeleteStrategy from "./step/loadDelete/LoadDeleteStrategy"
 import StatisticStrategy from "./step/statistic/StatisticStrategy"
-import { setStrategyStepperActionCreator } from "./../../action/strategyAction"
+import { setStrategyStepperActionCreator, getAllStrategiesActionCreator } from "./../../action/strategyAction"
 import { ELEVATION_PAGE_CONTENT, ColorlibConnector, useColorlibStepIconStyles, useStyles } from "./../Style"
 import "./../Style.css"
 
@@ -62,8 +62,8 @@ const getStepContent = (step) => {
     }
 }
 
-const Strategy = ({ strategyStepper, setStrategyStepper }) => {
-    //useEffect(getAllMonitorings) // get all strategies
+const Strategy = ({ strategyStepper, getAllStrategies, setStrategyStepper }) => {
+    useEffect(getAllStrategies) // get all strategies
 
     const classes = useStyles()
     const steps = ["Create", "Load/Delete", "Statistic"]
@@ -122,6 +122,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+    getAllStrategies: () => dispatch(getAllStrategiesActionCreator()),
     setStrategyStepper: strategyStepper => dispatch(setStrategyStepperActionCreator(strategyStepper))
 })
 
