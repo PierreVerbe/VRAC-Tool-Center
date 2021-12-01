@@ -1,10 +1,5 @@
 import React, { useState, useRef } from 'react'
-import ReactFlow, {
-  ReactFlowProvider,
-  addEdge,
-  removeElements,
-  Controls,
-} from 'react-flow-renderer'
+import ReactFlow, {ReactFlowProvider, addEdge, removeElements, Controls} from 'react-flow-renderer'
 
 import SideBar from "./SideBar"
 
@@ -22,7 +17,7 @@ const initialElements = [
 let id = 0
 const getId = () => `dndnode_${id++}`
 
-const DnDFlow = () => {
+const GraphCreator = () => {
   const reactFlowWrapper = useRef(null)
   const [reactFlowInstance, setReactFlowInstance] = useState(null)
   const [elements, setElements] = useState(initialElements)
@@ -57,6 +52,8 @@ const DnDFlow = () => {
     setElements((es) => es.concat(newNode))
   }
 
+  const graphStyles = { width: "100%", height: "500px" };
+
   return (
     <div className="dndflow">
       <ReactFlowProvider>
@@ -68,6 +65,7 @@ const DnDFlow = () => {
             onLoad={onLoad}
             onDrop={onDrop}
             onDragOver={onDragOver}
+            style={graphStyles}
           >
             <Controls />
           </ReactFlow>
@@ -78,4 +76,4 @@ const DnDFlow = () => {
   )
 }
 
-export default DnDFlow
+export default GraphCreator

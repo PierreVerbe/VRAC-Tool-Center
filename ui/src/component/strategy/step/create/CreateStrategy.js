@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 
-import DnDFlow from "./right/GraphCreator"
+import GraphCreator from "./right/GraphCreator"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,7 +31,7 @@ const CreateStrategy = () => {
 
                 <Grid item xs={6}>
                     <Paper className={classes.paper} component="form">
-                        <DnDFlow/>
+                        <GraphCreator/>
                     </Paper>
                 </Grid>
             </Grid>
@@ -40,4 +40,3 @@ const CreateStrategy = () => {
 }
 
 export default CreateStrategy
-
