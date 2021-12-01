@@ -6,7 +6,7 @@ import ReactFlow, {
   Controls,
 } from 'react-flow-renderer';
 
-import Sidebar from "./Sidebar"
+import SideBar from "./SideBar"
 
 import './dnd.css';
 
@@ -72,7 +72,7 @@ const DnDFlow = () => {
             <Controls />
           </ReactFlow>
         </div>
-        <Sidebar />
+        <SideBar />
       </ReactFlowProvider>
     </div>
   );
