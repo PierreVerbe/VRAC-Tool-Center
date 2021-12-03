@@ -1,18 +1,14 @@
-import React, { useState, useRef } from 'react'
-import ReactFlow, {ReactFlowProvider, addEdge, removeElements, Controls,MiniMap} from 'react-flow-renderer'
+import React, { useState, useRef, useEffect } from 'react'
+import ReactFlow, {ReactFlowProvider, addEdge, removeElements, Controls,MiniMap,isEdge} from 'react-flow-renderer'
 
 import SideBar from "./SideBar"
 
+
+import DialogUpdateNode from "./DialogUpdateNode"
+
 import './dnd.css'
 
-const initialElements = [
-  {
-    id: '1',
-    type: 'input',
-    data: { label: 'input node' },
-    position: { x: 250, y: 5 },
-  },
-]
+
 
 let id = 0
 const getId = () => `dndnode_${id++}`
@@ -20,13 +16,44 @@ const getId = () => `dndnode_${id++}`
 const GraphCreator = () => {
   const reactFlowWrapper = useRef(null)
   const [reactFlowInstance, setReactFlowInstance] = useState(null)
-  const [elements, setElements] = useState(initialElements)
+  const [elements, setElements] = useState([])
+  const [openDialogMonitoring, setOpenDialogMonitoring] = useState(false)
+
+
+
+  useEffect(() => {
+
+
+    setElements([
+      {
+        id: '1',
+        type: 'input',
+        data: { label: 'input node' },
+        position: { x: 250, y: 5 },
+      },
+    ]);
+  }, []);
+
+
+
+
+
+
+
+  const handleUpdateElement = () => {
+    setOpenDialogMonitoring(true)
+}
+
+
+
+
+
   const onConnect = (params) => setElements((els) => addEdge(params, els))
   const onElementsRemove = (elementsToRemove) =>
     setElements((els) => removeElements(elementsToRemove, els))
 
-   
 
+    
   const onLoad = (_reactFlowInstance) =>
     setReactFlowInstance(_reactFlowInstance)
 
@@ -54,14 +81,16 @@ const GraphCreator = () => {
     setElements((es) => es.concat(newNode))
   }
 
-  const onClick = (event) => {
-    console.log(event)
+  const onElementClick = (event, element) => {
+    console.log('click', element);
+    setOpenDialogMonitoring(true)
   }
 
   const graphStyles = { width: "100%", height: "500px" };
 
   return (
     <div className="dndflow">
+      <DialogUpdateNode openDialogMonitoring={openDialogMonitoring}/>
       <ReactFlowProvider>
         <div className="reactflow-wrapper" ref={reactFlowWrapper}>
           <ReactFlow
@@ -72,7 +101,7 @@ const GraphCreator = () => {
             onDrop={onDrop}
             onDragOver={onDragOver}
             style={graphStyles}
-            onElementClick={onClick}
+            onElementClick={onElementClick}
           >
             <MiniMap
         nodeStrokeColor={(n) => {
