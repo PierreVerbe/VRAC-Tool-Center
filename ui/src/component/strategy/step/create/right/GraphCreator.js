@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import ReactFlow, {ReactFlowProvider, addEdge, removeElements, Controls} from 'react-flow-renderer'
+import ReactFlow, {ReactFlowProvider, addEdge, removeElements, Controls,MiniMap} from 'react-flow-renderer'
 
 import SideBar from "./SideBar"
 
@@ -24,6 +24,8 @@ const GraphCreator = () => {
   const onConnect = (params) => setElements((els) => addEdge(params, els))
   const onElementsRemove = (elementsToRemove) =>
     setElements((els) => removeElements(elementsToRemove, els))
+
+   
 
   const onLoad = (_reactFlowInstance) =>
     setReactFlowInstance(_reactFlowInstance)
@@ -52,6 +54,10 @@ const GraphCreator = () => {
     setElements((es) => es.concat(newNode))
   }
 
+  const onClick = (event) => {
+    console.log(event)
+  }
+
   const graphStyles = { width: "100%", height: "500px" };
 
   return (
@@ -66,7 +72,19 @@ const GraphCreator = () => {
             onDrop={onDrop}
             onDragOver={onDragOver}
             style={graphStyles}
+            onElementClick={onClick}
           >
+            <MiniMap
+        nodeStrokeColor={(n) => {
+          if (n.type === 'input') return '#0041d0';
+          if (n.type === 'default') return '#ff0072';
+          if (n.type === 'output') return '#ff0072';
+        }}
+        nodeColor={(n) => {
+          if (n.type === 'selectorNode') return '#1A192B';
+          return '#fff';
+        }}
+      />
             <Controls />
           </ReactFlow>
         </div>
