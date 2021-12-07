@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { connect } from "react-redux"
 import ReactFlow, {ReactFlowProvider, addEdge, removeElements, Controls,MiniMap,isEdge} from 'react-flow-renderer'
 
 import SideBar from "./SideBar"
@@ -8,23 +9,23 @@ import DialogUpdateNode from "./DialogUpdateNode"
 
 import './dnd.css'
 
+import { setReactFlowInstanceActionCreator, setFlowStrategyActionCreator, setOpenDialogNodeStrategyActionCreator } from "../../../../../action/strategyAction"
+
 
 
 let id = 0
-const getId = () => `dndnode_${id++}`
+const getId = () => `dndnode_${id++}` 
 
-const GraphCreator = () => {
+// flowStrategy, setFlowStrategy,
+const GraphCreator = ( { reactFlowInstance,  setReactFlowInstance,  setOpenDialogNodeStrategy} ) => {
   const reactFlowWrapper = useRef(null)
-  const [reactFlowInstance, setReactFlowInstance] = useState(null)
-  const [elements, setElements] = useState([])
-  const [openDialogMonitoring, setOpenDialogMonitoring] = useState(false)
+  
+  const [flowStrategy, setFlowStrategy] = useState([])
 
 
 
   useEffect(() => {
-
-
-    setElements([
+    setFlowStrategy([
       {
         id: '1',
         type: 'input',
@@ -39,18 +40,19 @@ const GraphCreator = () => {
 
 
 
-
+/*
   const handleUpdateElement = () => {
-    setOpenDialogMonitoring(true)
+    setOpenDialogNodeStrategy(true)
 }
+*/
 
 
 
 
 
-  const onConnect = (params) => setElements((els) => addEdge(params, els))
+  const onConnect = (params) => setFlowStrategy((els) => addEdge(params, els))
   const onElementsRemove = (elementsToRemove) =>
-    setElements((els) => removeElements(elementsToRemove, els))
+  setFlowStrategy((els) => removeElements(elementsToRemove, els))
 
 
     
@@ -60,6 +62,7 @@ const GraphCreator = () => {
   const onDragOver = (event) => {
     event.preventDefault()
     event.dataTransfer.dropEffect = 'move'
+    
   }
 
   const onDrop = (event) => {
@@ -78,23 +81,25 @@ const GraphCreator = () => {
       data: { label: `${type} node` },
     }
 
-    setElements((es) => es.concat(newNode))
+    setFlowStrategy((es) => es.concat(newNode))
+
+    console.log(flowStrategy)
   }
 
   const onElementClick = (event, element) => {
     console.log('click', element);
-    setOpenDialogMonitoring(true)
+    setOpenDialogNodeStrategy({open: true, node: element})
   }
 
   const graphStyles = { width: "100%", height: "500px" };
 
   return (
     <div className="dndflow">
-      <DialogUpdateNode openDialogMonitoring={openDialogMonitoring}/>
+      <DialogUpdateNode />
       <ReactFlowProvider>
         <div className="reactflow-wrapper" ref={reactFlowWrapper}>
           <ReactFlow
-            elements={elements}
+            elements={flowStrategy}
             onConnect={onConnect}
             onElementsRemove={onElementsRemove}
             onLoad={onLoad}
@@ -123,4 +128,15 @@ const GraphCreator = () => {
   )
 }
 
-export default GraphCreator
+const mapStateToProps = state => ({
+  reactFlowInstance: state.reactFlowInstance,
+  flowStrategy: state.flowStrategy
+})
+
+const mapDispatchToProps = dispatch => ({
+  setReactFlowInstance: reactFlowInstance => dispatch(setReactFlowInstanceActionCreator(reactFlowInstance)),
+  setFlowStrategy: flowStrategy => dispatch(setFlowStrategyActionCreator(flowStrategy)),
+  setOpenDialogNodeStrategy: openDialogNodeStrategy => dispatch(setOpenDialogNodeStrategyActionCreator(openDialogNodeStrategy))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(GraphCreator)

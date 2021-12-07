@@ -10,6 +10,9 @@ export const SET_STRATEGY_STEPPER = "SET_STRATEGY_STEPPER"
 export const SET_ID_ROW_STRATEGY_TABLE = "SET_ID_ROW_STRATEGY_TABLE"
 export const SET_STRATEGY = "SET_STRATEGY"
 export const SET_OPEN_DIALOG_STRATEGY = "SET_OPEN_DIALOG_MONITORING"
+export const SET_FLOW_STRATEGY = "SET_FLOW_STRATEGY"
+export const SET_OPEN_DIALOG_NODE_STRATEGY = "SET_OPEN_DIALOG_NODE_STRATEGY"
+export const SET_REACT_FLOW_INSTANCE = "SET_REACT_FLOW_INSTANCE"
 
 // REST call 
 export const insertStrategyActionCreator = strategyToInsert => {
@@ -99,6 +102,33 @@ export const setOpenDialogStrategyActionCreator = openDialogStrategy => {
         dispatch({
             type: SET_OPEN_DIALOG_STRATEGY,
             payload: openDialogStrategy
+        })
+    }
+}
+
+export const setFlowStrategyActionCreator = flowStrategy => {
+    return function (dispatch) {
+        dispatch({
+            type: SET_FLOW_STRATEGY,
+            payload: flowStrategy
+        })
+    }
+}
+
+export const setOpenDialogNodeStrategyActionCreator = openDialogNodeStrategy => {
+    return function (dispatch) {
+        dispatch({
+            type: SET_OPEN_DIALOG_NODE_STRATEGY,
+            payload: openDialogNodeStrategy
+        })
+    }
+}
+
+export const setReactFlowInstanceActionCreator = reactFlowInstance => {
+    return function (dispatch) {
+        dispatch({
+            type: SET_REACT_FLOW_INSTANCE,
+            payload: reactFlowInstance
         })
     }
 }

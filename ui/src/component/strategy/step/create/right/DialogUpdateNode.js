@@ -1,8 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import PropTypes from 'prop-types'
-
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -14,16 +12,18 @@ import Button from "@material-ui/core/Button"
 import ClearIcon from '@material-ui/icons/Clear'
 import PublishIcon from '@material-ui/icons/Publish'
 
-import { insertMonitoringActionCreator, setMonitoringActionCreator, setOpenDialogMonitoringActionCreator } from "../../../../../action/monitoringAction"
+import { insertMonitoringActionCreator, setMonitoringActionCreator } from "../../../../../action/monitoringAction"
+import { setOpenDialogNodeStrategyActionCreator } from "../../../../../action/strategyAction"
 
-const DialogUpdateNode = ( { openDialogMonitoring, monitoring, setMonitoring, insertMonitoring, setOpenDialogMonitoring }) => {
+
+const DialogUpdateNode = ( { openDialogNodeStrategy, setOpenDialogNodeStrategy, monitoring, setMonitoring, insertMonitoring, setOpenDialogMonitoring }) => {
     const handleCancel = () => {
-        setOpenDialogMonitoring(false)
+        setOpenDialogNodeStrategy({open: false, node: {}})
     }
 
     const handleSubmit = () => {
-        insertMonitoring(monitoring)
-        setOpenDialogMonitoring(false)
+        //insertMonitoring(monitoring)
+        setOpenDialogNodeStrategy({open: false, node: {}})
     }
 
     // Text field in dialog
@@ -43,11 +43,11 @@ const DialogUpdateNode = ( { openDialogMonitoring, monitoring, setMonitoring, in
     }
 
     return (
-        <Dialog open={openDialogMonitoring} onClose={handleCancel}>
-            <DialogTitle>Save VRAC monitoring</DialogTitle>
+        <Dialog open={openDialogNodeStrategy.open} onClose={handleCancel}>
+            <DialogTitle>Update Node id</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    To save monitoring, please enter the fields below.
+                    To save node, please enter the fields below.
                 </DialogContentText>
 
                 <TextField
@@ -109,19 +109,18 @@ const DialogUpdateNode = ( { openDialogMonitoring, monitoring, setMonitoring, in
     )
 }
 
-DialogUpdateNode.propTypes = {
-    openDialogMonitoring: PropTypes.bool.isRequired
-}
-
 const mapStateToProps = state => ({
     monitoring: state.monitoring,
-  
+    openDialogNodeStrategy: state.openDialogNodeStrategy,
 })
 
 const mapDispatchToProps = dispatch => ({
+    setOpenDialogNodeStrategy: openDialogNodeStrategy => dispatch(setOpenDialogNodeStrategyActionCreator(openDialogNodeStrategy)),
+
+
     insertMonitoring: monitoringToInsert => dispatch(insertMonitoringActionCreator(monitoringToInsert)),
     setMonitoring: monitoring => dispatch(setMonitoringActionCreator(monitoring)),
-  
+
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DialogUpdateNode)
