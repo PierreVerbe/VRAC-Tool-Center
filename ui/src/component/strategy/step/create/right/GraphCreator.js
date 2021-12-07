@@ -1,68 +1,27 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useRef } from 'react'
 import { connect } from "react-redux"
-import ReactFlow, {ReactFlowProvider, addEdge, removeElements, Controls,MiniMap,isEdge} from 'react-flow-renderer'
+import ReactFlow, {ReactFlowProvider, Controls, MiniMap} from 'react-flow-renderer'
 
 import SideBar from "./SideBar"
-
-
 import DialogUpdateNode from "./DialogUpdateNode"
+import { setReactFlowInstanceActionCreator, setFlowStrategyActionCreator, setOpenDialogNodeStrategyActionCreator } from "../../../../../action/strategyAction"
 
 import './dnd.css'
 
-import { setReactFlowInstanceActionCreator, setFlowStrategyActionCreator, setOpenDialogNodeStrategyActionCreator } from "../../../../../action/strategyAction"
+let idNode = 0
+let idEdge = 0
+const getIdNode = () => `dndnode_${idNode++}` 
+const getIdEdge = () => `dndnode_${idEdge++}` 
 
-
-
-let id = 0
-const getId = () => `dndnode_${id++}` 
-
-// flowStrategy, setFlowStrategy,
-const GraphCreator = ( { reactFlowInstance,  setReactFlowInstance,  setOpenDialogNodeStrategy} ) => {
+const GraphCreator = ( { reactFlowInstance,  setReactFlowInstance,  setOpenDialogNodeStrategy, flowStrategy, setFlowStrategy} ) => {
   const reactFlowWrapper = useRef(null)
-  
-  const [flowStrategy, setFlowStrategy] = useState([])
 
-
-
-  useEffect(() => {
-    setFlowStrategy([
-      {
-        id: '1',
-        type: 'input',
-        data: { label: 'input node' },
-        position: { x: 250, y: 5 },
-      },
-    ]);
-  }, []);
-
-
-
-
-
-
-/*
-  const handleUpdateElement = () => {
-    setOpenDialogNodeStrategy(true)
-}
-*/
-
-
-
-
-
-  const onConnect = (params) => setFlowStrategy((els) => addEdge(params, els))
-  const onElementsRemove = (elementsToRemove) =>
-  setFlowStrategy((els) => removeElements(elementsToRemove, els))
-
-
-    
   const onLoad = (_reactFlowInstance) =>
-    setReactFlowInstance(_reactFlowInstance)
+  setReactFlowInstance(_reactFlowInstance)
 
   const onDragOver = (event) => {
     event.preventDefault()
     event.dataTransfer.dropEffect = 'move'
-    
   }
 
   const onDrop = (event) => {
@@ -75,23 +34,28 @@ const GraphCreator = ( { reactFlowInstance,  setReactFlowInstance,  setOpenDialo
       y: event.clientY - reactFlowBounds.top,
     })
     const newNode = {
-      id: getId(),
+      id: getIdNode(),
       type,
       position,
       data: { label: `${type} node` },
     }
 
-    setFlowStrategy((es) => es.concat(newNode))
-
-    console.log(flowStrategy)
+    setFlowStrategy(flowStrategy.concat([newNode]))
   }
 
-  const onElementClick = (event, element) => {
-    console.log('click', element);
-    setOpenDialogNodeStrategy({open: true, node: element})
+  const onConnect = (params) => {
+    const newEdge = {
+      id: getIdEdge(),
+      source: params.source,
+      target: params.target,
+    }
+    setFlowStrategy(flowStrategy.concat([newEdge]))
   }
 
-  const graphStyles = { width: "100%", height: "500px" };
+  const onElementClick = (event, element) => 
+  setOpenDialogNodeStrategy({open: true, node: element})
+
+  const graphStyles = { width: "100%", height: "500px" }
 
   return (
     <div className="dndflow">
@@ -101,7 +65,6 @@ const GraphCreator = ( { reactFlowInstance,  setReactFlowInstance,  setOpenDialo
           <ReactFlow
             elements={flowStrategy}
             onConnect={onConnect}
-            onElementsRemove={onElementsRemove}
             onLoad={onLoad}
             onDrop={onDrop}
             onDragOver={onDragOver}
@@ -110,13 +73,13 @@ const GraphCreator = ( { reactFlowInstance,  setReactFlowInstance,  setOpenDialo
           >
             <MiniMap
         nodeStrokeColor={(n) => {
-          if (n.type === 'input') return '#0041d0';
-          if (n.type === 'default') return '#ff0072';
-          if (n.type === 'output') return '#ff0072';
+          if (n.type === 'input') return '#0041d0'
+          if (n.type === 'default') return '#ff0072'
+          if (n.type === 'output') return '#ff0072'
         }}
         nodeColor={(n) => {
-          if (n.type === 'selectorNode') return '#1A192B';
-          return '#fff';
+          if (n.type === 'selectorNode') return '#1A192B'
+          return '#fff'
         }}
       />
             <Controls />

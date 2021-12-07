@@ -15,6 +15,11 @@ import PublishIcon from '@material-ui/icons/Publish'
 import { insertMonitoringActionCreator, setMonitoringActionCreator } from "../../../../../action/monitoringAction"
 import { setOpenDialogNodeStrategyActionCreator } from "../../../../../action/strategyAction"
 
+  /*
+  Remove node and edge
+  const onElementsRemove = (elementsToRemove) =>
+  setFlowStrategy((els) => removeElements(elementsToRemove, els))
+  */
 
 const DialogUpdateNode = ( { openDialogNodeStrategy, setOpenDialogNodeStrategy, monitoring, setMonitoring, insertMonitoring, setOpenDialogMonitoring }) => {
     const handleCancel = () => {
