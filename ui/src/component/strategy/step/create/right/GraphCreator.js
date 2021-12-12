@@ -11,7 +11,7 @@ import './dnd.css'
 let idNode = 0
 let idEdge = 0
 const getIdNode = () => `dndnode_${idNode++}`
-const getIdEdge = () => `dndnode_${idEdge++}`
+const getIdEdge = () => `dndedge_${idEdge++}`
 
 const GraphCreator = ({ reactFlowInstance, flowStrategy, setOpenDialogNodeStrategy, setReactFlowInstance, setFlowStrategy }) => {
   const reactFlowWrapper = useRef(null)

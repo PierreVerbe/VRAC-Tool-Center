@@ -25,6 +25,13 @@ const DialogUpdateNode = ({ openDialogNodeStrategy, flowStrategy, setOpenDialogN
         setOpenDialogNodeStrategy({ open: false, node: {} })
     }
 
+    const handleDelete = () => {
+        const filteredNode = flowStrategy.filter(flow => flow.id !== openDialogNodeStrategy.node.id)
+        const filteredEdge = filteredNode.filter(flow => flow.source !== openDialogNodeStrategy.node.id && flow.target !== openDialogNodeStrategy.node.id)
+        setFlowStrategy(filteredEdge)
+        setOpenDialogNodeStrategy({ open: false, node: {} })
+    }
+
     const handleSubmit = () => {
         setOpenDialogNodeStrategy({ open: false, node: {} })
     }
@@ -95,6 +102,17 @@ const DialogUpdateNode = ({ openDialogNodeStrategy, flowStrategy, setOpenDialogN
                     style={{ backgroundColor: "orange" }}
                 >
                     Cancel
+                </Button>
+
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleDelete}
+                    startIcon={<ClearIcon />}
+                    //className={classes.button}
+                    style={{ backgroundColor: "red" }}
+                >
+                    Delete
                 </Button>
 
                 <Button
