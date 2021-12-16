@@ -11,7 +11,7 @@ const defaultState = {
         // Create
         flowStrategy : [],
         reactFlowInstance : null, // Serves for drag & drop
-        openDialogNodeStrategy: {open: false, node: {}},
+        openDialogNodeStrategy : {open: false, node: { data: { label : {}}}},
         // Load/Delete
         allStrategies: [],
         idRowStrategyTable: null,

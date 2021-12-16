@@ -7,7 +7,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import TextField from '@material-ui/core/TextField'
 import ClearIcon from '@material-ui/icons/Clear'
 import PublishIcon from '@material-ui/icons/Publish'
-import React from "react"
+import React, { useEffect } from "react"
 import { connect } from "react-redux"
 import { setFlowStrategyActionCreator, setOpenDialogNodeStrategyActionCreator } from "../../../../../action/strategyAction"
 
@@ -22,29 +22,37 @@ setFlowStrategy((els) => removeElements(elementsToRemove, els))
 
 const DialogUpdateNode = ({ openDialogNodeStrategy, flowStrategy, setOpenDialogNodeStrategy, setFlowStrategy }) => {
     const handleCancel = () => {
-        setOpenDialogNodeStrategy({ open: false, node: {} })
+        setOpenDialogNodeStrategy({ open: false, node: { data: { label: {} } } })
     }
 
     const handleDelete = () => {
         const filteredNode = flowStrategy.filter(flow => flow.id !== openDialogNodeStrategy.node.id)
         const filteredEdge = filteredNode.filter(flow => flow.source !== openDialogNodeStrategy.node.id && flow.target !== openDialogNodeStrategy.node.id)
         setFlowStrategy(filteredEdge)
-        setOpenDialogNodeStrategy({ open: false, node: {} })
+        setOpenDialogNodeStrategy({ open: false, node: { data: { label: {} } } })
     }
 
     const handleSubmit = () => {
-        setOpenDialogNodeStrategy({ open: false, node: {} })
+            const index = flowStrategy.map(item => item.id).indexOf(openDialogNodeStrategy.node.id)
+
+            if (index === -1) {
+                console.log("Item not in flowStrategy")
+            }
+            else {
+                var flowStrategyUpdated = flowStrategy
+                flowStrategyUpdated[index] = openDialogNodeStrategy.node
+                setFlowStrategy(flowStrategyUpdated)
+                console.log(flowStrategyUpdated)
+                setOpenDialogNodeStrategy({ open: false, node: { data: { label: {} } } })
+            }
+        
     }
 
     // Text field in dialog
-    const onTextNameChange = (name) => {
-        //const monitoringUpdated = { ...monitoring, name: name.target.value }
-        //setMonitoring(monitoringUpdated)
-    }
-
-    const onTextDescriptionChange = (description) => {
-        //const monitoringUpdated = { ...monitoring, description: description.target.value }
-        //setMonitoring(monitoringUpdated)
+    const onTextLabelChange = (label) => {
+        const nodeStrategyUpdated = { ...openDialogNodeStrategy.node, data: { label: label.target.value } }
+        const openDialogNodeStrategyUpdated = { open: true, node: nodeStrategyUpdated }
+        setOpenDialogNodeStrategy(openDialogNodeStrategyUpdated)
     }
 
     const onTextVersionChange = (version) => {
@@ -61,11 +69,11 @@ const DialogUpdateNode = ({ openDialogNodeStrategy, flowStrategy, setOpenDialogN
                 </DialogContentText>
 
                 <TextField
+                    disabled
                     autoFocus
                     margin="dense"
-                    onChange={onTextNameChange}
-                    id="name"
-                    label="Name"
+                    id="id"
+                    label="Id"
                     defaultValue={openDialogNodeStrategy.node.id}
                     fullWidth
                     variant="standard"
@@ -73,10 +81,10 @@ const DialogUpdateNode = ({ openDialogNodeStrategy, flowStrategy, setOpenDialogN
                 <TextField
                     autoFocus
                     margin="dense"
-                    onChange={onTextDescriptionChange}
-                    id="description"
-                    label="Description"
-                    defaultValue={openDialogNodeStrategy.node.id}
+                    onChange={onTextLabelChange}
+                    id="dataLabel"
+                    label="Data label"
+                    defaultValue={openDialogNodeStrategy.node.data.label}
                     fullWidth
                     variant="standard"
                 />

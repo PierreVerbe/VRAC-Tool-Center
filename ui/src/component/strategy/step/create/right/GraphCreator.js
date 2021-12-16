@@ -13,7 +13,7 @@ let idEdge = 0
 const getIdNode = () => `dndnode_${idNode++}`
 const getIdEdge = () => `dndedge_${idEdge++}`
 
-const GraphCreator = ({ reactFlowInstance, flowStrategy, setOpenDialogNodeStrategy, setReactFlowInstance, setFlowStrategy }) => {
+const GraphCreator = ({ reactFlowInstance, flowStrategy, openDialogNodeStrategy, setOpenDialogNodeStrategy, setReactFlowInstance, setFlowStrategy }) => {
   const reactFlowWrapper = useRef(null)
 
   const onLoad = (_reactFlowInstance) =>
@@ -52,8 +52,9 @@ const GraphCreator = ({ reactFlowInstance, flowStrategy, setOpenDialogNodeStrate
     setFlowStrategy(flowStrategy.concat([newEdge]))
   }
 
-  const onElementClick = (event, element) =>
+  const onElementClick = (event, element) => {
     setOpenDialogNodeStrategy({ open: true, node: element })
+  }
 
   const graphStyles = { width: "100%", height: "500px" }
 
@@ -93,7 +94,8 @@ const GraphCreator = ({ reactFlowInstance, flowStrategy, setOpenDialogNodeStrate
 
 const mapStateToProps = state => ({
   reactFlowInstance: state.reactFlowInstance,
-  flowStrategy: state.flowStrategy
+  flowStrategy: state.flowStrategy,
+  openDialogNodeStrategy: state.openDialogNodeStrategy
 })
 
 const mapDispatchToProps = dispatch => ({
