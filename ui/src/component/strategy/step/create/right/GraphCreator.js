@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { connect } from "react-redux"
 import ReactFlow, { ReactFlowProvider, Controls, MiniMap } from 'react-flow-renderer'
 
@@ -14,6 +14,12 @@ const getIdNode = () => `dndnode_${idNode++}`
 const getIdEdge = () => `dndedge_${idEdge++}`
 
 const GraphCreator = ({ reactFlowInstance, flowStrategy, openDialogNodeStrategy, setOpenDialogNodeStrategy, setReactFlowInstance, setFlowStrategy }) => {
+  /*
+  useEffect(() => {
+    
+  },[flowStrategy])
+  */
+  
   const reactFlowWrapper = useRef(null)
 
   const onLoad = (_reactFlowInstance) =>
@@ -49,6 +55,7 @@ const GraphCreator = ({ reactFlowInstance, flowStrategy, openDialogNodeStrategy,
       source: params.source,
       target: params.target,
     }
+    console.log(flowStrategy)
     setFlowStrategy(flowStrategy.concat([newEdge]))
   }
 

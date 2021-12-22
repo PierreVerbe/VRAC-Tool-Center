@@ -21,6 +21,7 @@ setFlowStrategy((els) => removeElements(elementsToRemove, els))
 */
 
 const DialogUpdateNode = ({ openDialogNodeStrategy, flowStrategy, setOpenDialogNodeStrategy, setFlowStrategy }) => {
+
     const handleCancel = () => {
         setOpenDialogNodeStrategy({ open: false, node: { data: { label: {} } } })
     }
