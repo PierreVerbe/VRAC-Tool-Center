@@ -14,11 +14,13 @@ const getIdNode = () => `dndnode_${idNode++}`
 const getIdEdge = () => `dndedge_${idEdge++}`
 
 const GraphCreator = ({ reactFlowInstance, flowStrategy, openDialogNodeStrategy, setOpenDialogNodeStrategy, setReactFlowInstance, setFlowStrategy }) => {
-  /*
+  
+  
   useEffect(() => {
-    
-  },[flowStrategy])
-  */
+    console.log("hello")
+  }, [flowStrategy])
+  
+  
   
   const reactFlowWrapper = useRef(null)
 
@@ -60,14 +62,18 @@ const GraphCreator = ({ reactFlowInstance, flowStrategy, openDialogNodeStrategy,
   }
 
   const onElementClick = (event, element) => {
+    event.preventDefault()
+
     setOpenDialogNodeStrategy({ open: true, node: element })
+ 
+    console.log(flowStrategy) // https://stackoverflow.com/questions/54069253/usestate-set-method-not-reflecting-change-immediately
+    console.log(openDialogNodeStrategy)
   }
 
   const graphStyles = { width: "100%", height: "500px" }
 
   return (
     <div className="dndflow">
-      <DialogUpdateNode />
       <ReactFlowProvider>
         <div className="reactflow-wrapper" ref={reactFlowWrapper}>
           <ReactFlow
@@ -94,7 +100,10 @@ const GraphCreator = ({ reactFlowInstance, flowStrategy, openDialogNodeStrategy,
           </ReactFlow>
         </div>
         <SideBar />
+
       </ReactFlowProvider>
+
+      <DialogUpdateNode isOpen={openDialogNodeStrategy.open}/>
     </div>
   )
 }

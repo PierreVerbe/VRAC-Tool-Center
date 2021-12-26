@@ -10,7 +10,7 @@ import PublishIcon from '@material-ui/icons/Publish'
 import React, { useEffect } from "react"
 import { connect } from "react-redux"
 import { setFlowStrategyActionCreator, setOpenDialogNodeStrategyActionCreator } from "../../../../../action/strategyAction"
-
+import PropTypes from 'prop-types'
 
 
 
@@ -20,7 +20,11 @@ const onElementsRemove = (elementsToRemove) =>
 setFlowStrategy((els) => removeElements(elementsToRemove, els))
 */
 
-const DialogUpdateNode = ({ openDialogNodeStrategy, flowStrategy, setOpenDialogNodeStrategy, setFlowStrategy }) => {
+const DialogUpdateNode = ({ isOpen, openDialogNodeStrategy, flowStrategy, setOpenDialogNodeStrategy, setFlowStrategy }) => {
+
+    useEffect(() => {
+        console.log("hello2")
+      }, [openDialogNodeStrategy, flowStrategy])
 
     const handleCancel = () => {
         setOpenDialogNodeStrategy({ open: false, node: { data: { label: {} } } })
@@ -43,7 +47,7 @@ const DialogUpdateNode = ({ openDialogNodeStrategy, flowStrategy, setOpenDialogN
                 var flowStrategyUpdated = flowStrategy
                 flowStrategyUpdated[index] = openDialogNodeStrategy.node
                 setFlowStrategy(flowStrategyUpdated)
-                console.log(flowStrategyUpdated)
+                //console.log(flowStrategyUpdated)
                 setOpenDialogNodeStrategy({ open: false, node: { data: { label: {} } } })
             }
         
@@ -62,7 +66,7 @@ const DialogUpdateNode = ({ openDialogNodeStrategy, flowStrategy, setOpenDialogN
     }
 
     return (
-        <Dialog open={openDialogNodeStrategy.open} onClose={handleCancel}>
+        <Dialog open={isOpen} onClose={handleCancel}>
             <DialogTitle>Update Node id</DialogTitle>
             <DialogContent>
                 <DialogContentText>
@@ -137,6 +141,10 @@ const DialogUpdateNode = ({ openDialogNodeStrategy, flowStrategy, setOpenDialogN
             </DialogActions>
         </Dialog>
     )
+}
+
+DialogUpdateNode.propTypes = {
+    isOpen: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = state => ({
