@@ -11,8 +11,19 @@ import React, { useEffect } from "react"
 import { connect } from "react-redux"
 import { setFlowStrategyActionCreator, setOpenDialogNodeStrategyActionCreator } from "../../../../../action/strategyAction"
 
-
-
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import ListItemText from "@material-ui/core/ListItemText";
+import Avatar from "@material-ui/core/Avatar";
+import IconButton from "@material-ui/core/IconButton";
+import FolderIcon from "@material-ui/icons/Folder";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 /*
 Remove node and edge
@@ -20,7 +31,59 @@ const onElementsRemove = (elementsToRemove) =>
 setFlowStrategy((els) => removeElements(elementsToRemove, els))
 */
 
+
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+        maxWidth: 752
+    },
+    demo: {
+        backgroundColor: theme.palette.background.paper
+    },
+    title: {
+        margin: theme.spacing(4, 0, 2)
+    }
+}));
+
+
+
+
 const DialogUpdateNode = ({ openDialogNodeStrategy, flowStrategy, setOpenDialogNodeStrategy, setFlowStrategy }) => {
+
+    useEffect(() => {
+        console.log("hello2")
+    }, [openDialogNodeStrategy])
+
+    const deleteEdge = (event, id) => {
+        event.preventDefault()
+        console.log("deleted edge " + id)
+    }
+
+    const listEdgesToDelete = () => {
+        const edges = flowStrategy.filter(element => element.id.startsWith("Edge"))
+        const filteredEdges = edges.filter(element => element.source === openDialogNodeStrategy.node.id || element.target === openDialogNodeStrategy.node.id)
+
+        return filteredEdges.map((value) => (
+            <ListItem>
+                <ListItemAvatar>
+                    <Avatar>
+                        <FolderIcon />
+                    </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                    primary={value.id}
+                    secondary={`Source : ${value.source} Target : ${value.target}`}
+                />
+                <ListItemSecondaryAction>
+                    <IconButton edge="end" aria-label="delete" onClick={(event) => deleteEdge(event, value.id)}>
+                        <DeleteIcon />
+                    </IconButton>
+                </ListItemSecondaryAction>
+            </ListItem>)
+
+        );
+    }
 
     const handleCancel = () => {
         setOpenDialogNodeStrategy({ open: false, node: { data: { label: {} } } })
@@ -34,19 +97,19 @@ const DialogUpdateNode = ({ openDialogNodeStrategy, flowStrategy, setOpenDialogN
     }
 
     const handleSubmit = () => {
-            const index = flowStrategy.map(item => item.id).indexOf(openDialogNodeStrategy.node.id)
+        const index = flowStrategy.map(item => item.id).indexOf(openDialogNodeStrategy.node.id)
 
-            if (index === -1) {
-                console.log("Item not in flowStrategy")
-            }
-            else {
-                var flowStrategyUpdated = flowStrategy
-                flowStrategyUpdated[index] = openDialogNodeStrategy.node
-                setFlowStrategy(flowStrategyUpdated)
-                console.log(flowStrategyUpdated)
-                setOpenDialogNodeStrategy({ open: false, node: { data: { label: {} } } })
-            }
-        
+        if (index === -1) {
+            console.log("Item not in flowStrategy")
+        }
+        else {
+            var flowStrategyUpdated = flowStrategy
+            flowStrategyUpdated[index] = openDialogNodeStrategy.node
+            setFlowStrategy(flowStrategyUpdated)
+            console.log(flowStrategyUpdated)
+            setOpenDialogNodeStrategy({ open: false, node: { data: { label: {} } } })
+        }
+
     }
 
     // Text field in dialog
@@ -60,6 +123,9 @@ const DialogUpdateNode = ({ openDialogNodeStrategy, flowStrategy, setOpenDialogN
         //const monitoringUpdated = { ...monitoring, version: version.target.value }
         //setMonitoring(monitoringUpdated)
     }
+
+
+
 
     return (
         <Dialog open={openDialogNodeStrategy.open} onClose={handleCancel}>
@@ -99,6 +165,18 @@ const DialogUpdateNode = ({ openDialogNodeStrategy, flowStrategy, setOpenDialogN
                     fullWidth
                     variant="standard"
                 />
+
+
+                <Typography variant="h6" >
+                    List of edge to delete
+                </Typography>
+                <div >
+                    <List dense={true}>
+                        {listEdgesToDelete()}
+                    </List>
+                </div>
+
+
             </DialogContent>
 
             <DialogActions>

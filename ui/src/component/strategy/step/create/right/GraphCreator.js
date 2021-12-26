@@ -10,15 +10,15 @@ import './dnd.css'
 
 let idNode = 0
 let idEdge = 0
-const getIdNode = () => `dndnode_${idNode++}`
-const getIdEdge = () => `dndedge_${idEdge++}`
+const getIdNode = () => `Node_${idNode++}`
+const getIdEdge = () => `Edge_${idEdge++}`
 
 const GraphCreator = ({ reactFlowInstance, flowStrategy, openDialogNodeStrategy, setOpenDialogNodeStrategy, setReactFlowInstance, setFlowStrategy }) => {
-  /*
+  
   useEffect(() => {
-    
-  },[flowStrategy])
-  */
+    console.log("hello1")
+  },[openDialogNodeStrategy])
+  
   
   const reactFlowWrapper = useRef(null)
 
@@ -60,6 +60,7 @@ const GraphCreator = ({ reactFlowInstance, flowStrategy, openDialogNodeStrategy,
   }
 
   const onElementClick = (event, element) => {
+    event.preventDefault()
     setOpenDialogNodeStrategy({ open: true, node: element })
   }
 
