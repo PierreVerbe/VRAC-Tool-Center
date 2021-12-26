@@ -5,22 +5,31 @@ import ReactFlow, { ReactFlowProvider, Controls, MiniMap } from 'react-flow-rend
 import SideBar from "./SideBar"
 import DialogUpdateNode from "./DialogUpdateNode"
 import { setReactFlowInstanceActionCreator, setFlowStrategyActionCreator, setOpenDialogNodeStrategyActionCreator } from "../../../../../action/strategyAction"
-
+import { SmartEdge } from '@tisoap/react-flow-smart-edge'
 import './dnd.css'
+
+import { ArrowHeadType } from 'react-flow-renderer'
 
 let idNode = 0
 let idEdge = 0
-const getIdNode = () => `dndnode_${idNode++}`
-const getIdEdge = () => `dndedge_${idEdge++}`
+const getIdNode = () => `Node_${idNode++}`
+const getIdEdge = () => `Edge_${idEdge++}`
 
 const GraphCreator = ({ reactFlowInstance, flowStrategy, openDialogNodeStrategy, setOpenDialogNodeStrategy, setReactFlowInstance, setFlowStrategy }) => {
-  
-  
   useEffect(() => {
-    console.log("hello")
-  }, [flowStrategy])
+    const startNode = flowStrategy.filter(item => item.id.startsWith('Node')).pop()
+    const startEdge = flowStrategy.filter(item => item.id.startsWith('Edge')).pop()
+   
+    idNode = startNode === undefined ? 0 : parseInt(startNode.id.split("_")[1]) + 1
+    idEdge = startEdge === undefined ? 0 : parseInt(startEdge.id.split("_")[1]) + 1
+    // eslint-disable-next-line
+  }, [])
+
+  useEffect(() => {
+    console.log("hello1")
+  },[openDialogNodeStrategy])
   
-  
+  const arrowHeadType = ArrowHeadType.Arrow
   
   const reactFlowWrapper = useRef(null)
 
@@ -56,18 +65,21 @@ const GraphCreator = ({ reactFlowInstance, flowStrategy, openDialogNodeStrategy,
       id: getIdEdge(),
       source: params.source,
       target: params.target,
+      type: 'smart',
+      arrowHeadType
     }
     console.log(flowStrategy)
     setFlowStrategy(flowStrategy.concat([newEdge]))
   }
 
   const onElementClick = (event, element) => {
-    event.preventDefault()
-
+    
     setOpenDialogNodeStrategy({ open: true, node: element })
  
     console.log(flowStrategy) // https://stackoverflow.com/questions/54069253/usestate-set-method-not-reflecting-change-immediately
     console.log(openDialogNodeStrategy)
+
+    event.preventDefault()
   }
 
   const graphStyles = { width: "100%", height: "500px" }
@@ -84,6 +96,9 @@ const GraphCreator = ({ reactFlowInstance, flowStrategy, openDialogNodeStrategy,
             onDragOver={onDragOver}
             style={graphStyles}
             onElementClick={onElementClick}
+            edgeTypes={{
+              smart: SmartEdge,
+            }}
           >
             <MiniMap
               nodeStrokeColor={(n) => {
