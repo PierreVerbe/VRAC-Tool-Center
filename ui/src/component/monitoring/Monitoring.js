@@ -158,7 +158,7 @@ const Monitoring = ({ getAllMonitorings, monitoringStepper, setMonitoringStepper
           ))}
         </Stepper>
 
-        <Typography className={classes.instructions}>
+        <Typography component={'span'} className={classes.instructions}>
           {getStepContent(monitoringStepper)}
         </Typography>
 

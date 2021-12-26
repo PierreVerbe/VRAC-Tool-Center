@@ -91,7 +91,7 @@ const Strategy = ({ strategyStepper, getAllStrategies, setStrategyStepper }) => 
                     ))}
                 </Stepper>
 
-                <Typography className={classes.instructions}>
+                <Typography component={'span'} className={classes.instructions}>
                     {getStepContent(strategyStepper)}
                 </Typography>
 
