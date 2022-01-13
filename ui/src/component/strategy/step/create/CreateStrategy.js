@@ -3,6 +3,7 @@ import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 
 import GraphCreator from "./right/GraphCreator"
+import StratCreator from "./right/StratCreator"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,7 +32,7 @@ const CreateStrategy = () => {
 
                 <Grid item xs={6}>
                     <Paper className={classes.paper} component="form">
-                        <GraphCreator/>
+                        <StratCreator/>
                     </Paper>
                 </Grid>
             </Grid>
