@@ -58,6 +58,37 @@ const MetaActionCreator = () => {
 
     const [open, setOpen] = React.useState(false);
     const [age, setAge] = React.useState("");
+    const [metaAction, setMetaAction] = React.useState([]);
+
+    const addNewMetaAction = (metaActionToAdd) => {
+      const newMetaAction = {
+        name : metaActionToAdd,
+        actions : [],
+        isSelected : false,
+      }
+      const metaActionUpdated = metaAction.concat([newMetaAction])
+      setMetaAction(metaActionUpdated)
+    }
+
+    const selectMetaAction = (metaActionName) => {
+      const selectedMetaAction = metaAction.filter((item) => item.isSelected === true)
+
+      if (selectedMetaAction.length === 0 || selectedMetaAction[0].name === metaActionName){
+        const updatedData = metaAction.map(x => (x.name === metaActionName ? { ...x, isSelected: ! x.isSelected } : x));
+        setMetaAction(updatedData)
+      }
+    }
+
+    const addNewActionToMetaAction = () => {
+      const selectedMetaAction = metaAction.filter((item) => item.isSelected === true)
+
+      if (selectedMetaAction.length !== 0) {
+        const updatedData = metaAction.map(x => (x.name === selectedMetaAction[0].name ? { ...x, actions: x.actions.concat(["t"]) } : x));
+        setMetaAction(updatedData)
+      }
+
+      console.log("Create new action")
+    }
 
     const handleChange = (event) => {
       setAge(event.target.value);
@@ -72,34 +103,42 @@ const MetaActionCreator = () => {
       setOpen(false);
     };
 
+    const isSelectedMetaAction = metaAction.filter((item) => item.isSelected === true)
+
     return (
         <div>
-           <Grid container spacing={3}>
-          <Grid item xs={6}>
-          
-            <List className={classes.root} subheader={<li />}>
+          <Grid container spacing={3}>
+            <Grid item xs={6}>
+
+              {isSelectedMetaAction.length === 0 ? (
+                <span>Please create or select meta action</span>
+              ) : (
+                <List className={classes.root} subheader={<li />}>
                 
-                <li key={`section`} className={classes.listSection}>
+              <li key={`section`} className={classes.listSection}>
                 <ul className={classes.ul}>
-                    <ListSubheader>{`Create Meta action`}</ListSubheader>
-                    {[0, 1, 2, 3, 4, 5, 6, 7].map((item) => (
+                    <ListSubheader>{`Meta action : ` + isSelectedMetaAction[0].name}</ListSubheader>
+                    {isSelectedMetaAction[0].actions.map((item) => (
                     <ListItem button key={`item-${item}`} onClick={handleClickOpen}>
                         <ListItemText primary={`action ${item}`} />
                     </ListItem>
                     
                     ))}
-                    <ListItem button key={`item`} onClick={() => console.log("Create new action")}>
+                    <ListItem button key={`item`} onClick={() => addNewActionToMetaAction()}>
                       <ListItemIcon>
                         <AddCircleIcon style={{ color: green[500] }}/>
                       </ListItemIcon>
                       <ListItemText primary={`Add new action`} />
                     </ListItem>
                 </ul>
-            </li>
-        
-    
-
+              </li>
             </List>
+                
+              )}
+          
+            
+            
+
         </Grid>
 
 
@@ -158,13 +197,13 @@ const MetaActionCreator = () => {
                 <li key={`section`} className={classes.listSection}>
                 <ul className={classes.ul}>
                     <ListSubheader>{`Create Meta action`}</ListSubheader>
-                    {[0, 1, 2, 3, 4, 5, 6, 7].map((item) => (
-                    <ListItem button key={`item-${item}`}>
-                        <ListItemText primary={`action ${item}`} />
+                    {metaAction.map((item) => (
+                    <ListItem button key={`item-${item.name}`} onClick={() => selectMetaAction(item.name)}>
+                        <ListItemText primary={`action ${item.name}`} />
                     </ListItem>
                     
                     ))}
-                    <ListItem button key={`item`} onClick={() => console.log("hello")}>
+                    <ListItem button key={`item`} onClick={() => addNewMetaAction("New meta Action " + metaAction.length)}>
                       <ListItemIcon>
                         <AddCircleIcon style={{ color: green[500] }}/>
                       </ListItemIcon>
