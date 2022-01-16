@@ -71,12 +71,17 @@ const MetaActionCreator = () => {
     }
 
     const selectMetaAction = (metaActionName) => {
+      setOpen(true)
+
+      
       const selectedMetaAction = metaAction.filter((item) => item.isSelected === true)
 
-      if (selectedMetaAction.length === 0 || selectedMetaAction[0].name === metaActionName){
+      
+      if (selectedMetaAction.length === 0 || selectedMetaAction[0].name === metaActionName) {
         const updatedData = metaAction.map(x => (x.name === metaActionName ? { ...x, isSelected: ! x.isSelected } : x));
         setMetaAction(updatedData)
       }
+      
     }
 
     const addNewActionToMetaAction = () => {
@@ -100,13 +105,17 @@ const MetaActionCreator = () => {
     };
   
     const handleClose = () => {
+      const updatedMetaAction = metaAction.map(metaAction =>  ({...metaAction, isSelected: false}))
+
+      setMetaAction(updatedMetaAction)
       setOpen(false);
     };
 
-    const isSelectedMetaAction = metaAction.filter((item) => item.isSelected === true)
+    const selectedMetaAction = metaAction.filter((item) => item.isSelected === true)
 
     return (
         <div>
+          {/*
           <Grid container spacing={3}>
             <Grid item xs={6}>
 
@@ -192,6 +201,7 @@ const MetaActionCreator = () => {
 
 
         <Grid item xs={6}>
+                    */}
         <List className={classes.root} subheader={<li />}>
                 
                 <li key={`section`} className={classes.listSection}>
@@ -216,10 +226,60 @@ const MetaActionCreator = () => {
 
             </List>
 
+
+
+        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Dialog edit meta action</DialogTitle>
+        <DialogContent>
+        <DialogContentText>
+          Please fill in the form and the graph.
+        </DialogContentText>
+
+        <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Name"
+            defaultValue={selectedMetaAction.length === 0 ? "Undefined" : selectedMetaAction[0].name}
+            fullWidth
+          />
         
+        <FormControl className={classes.formControl}>
+        <InputLabel id="demo-simple-select-label">Action Type</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={age}
+          onChange={handleChange}
+        >
+          <MenuItem value={10}>Homing</MenuItem>
+          <MenuItem value={20}>Line</MenuItem>
+          <MenuItem value={30}>Top arm get storage</MenuItem>
+          <MenuItem value={40}>XYT</MenuItem>
+          <MenuItem value={50}>End</MenuItem>
+        </Select>
+      </FormControl>
+         
+       
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleClose} color="primary">
+            Subscribe
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+        
+
+        {/*
 
         </Grid>
         </Grid>
+
+        */}
 
 
         </div>
