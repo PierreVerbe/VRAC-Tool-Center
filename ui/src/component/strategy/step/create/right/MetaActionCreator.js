@@ -10,6 +10,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { green } from '@material-ui/core/colors';
 import Grid from '@material-ui/core/Grid';
+import {FactoryAction} from './../../../../general/action/FactoryAction'
 
 
 import Dialog from '@material-ui/core/Dialog';
@@ -252,12 +253,17 @@ const MetaActionCreator = () => {
           value={age}
           onChange={handleChange}
         >
-          <MenuItem value={10}>Homing</MenuItem>
-          <MenuItem value={20}>Line</MenuItem>
-          <MenuItem value={30}>Top arm get storage</MenuItem>
-          <MenuItem value={40}>XYT</MenuItem>
-          <MenuItem value={50}>End</MenuItem>
+          <MenuItem value={"Homing"}>Homing</MenuItem>
+          <MenuItem value={"Line"}>Line</MenuItem>
+          <MenuItem value={"Top arm get storage"}>Top arm get storage</MenuItem>
+          <MenuItem value={"XYT"}>XYT</MenuItem>
+          <MenuItem value={"End"}>End</MenuItem>
         </Select>
+
+        {console.log(age)}
+
+        <FactoryAction component={age} />
+
       </FormControl>
          
        
