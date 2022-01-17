@@ -10,7 +10,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { green } from '@material-ui/core/colors';
 import Grid from '@material-ui/core/Grid';
-import {FactoryAction} from './../../../../general/action/FactoryAction'
+import ActionFactory from './../../../../general/actionFactory/ActionFactory'
+
+import Paper from '@material-ui/core/Paper';
 
 
 import Dialog from '@material-ui/core/Dialog';
@@ -51,6 +53,15 @@ const useStyles = makeStyles((theme) => ({
     },
     selectEmpty: {
       marginTop: theme.spacing(2)
+    },
+    actionFactoryPaper: {
+      display: 'flex',
+    '& > *': {
+      
+      padding: theme.spacing(3),
+      
+
+    },
     }
   }));
 
@@ -262,7 +273,10 @@ const MetaActionCreator = () => {
 
         {console.log(age)}
 
-        <FactoryAction component={age} />
+        <Paper variant="outlined" className={classes.actionFactoryPaper}>
+          <ActionFactory action={age} />
+        </Paper>
+     
 
       </FormControl>
          
