@@ -40,6 +40,7 @@ const MetaActionCreator = ({ metaActionArray, openDialogMetaAction, setMetaActio
     const newMetaAction = {
       name: metaActionName,
       flow: [],
+      reactFlowInstance: null,
       isSelected: false,
     }
     const updatedMetaActionArray = metaActionArray.concat([newMetaAction])
