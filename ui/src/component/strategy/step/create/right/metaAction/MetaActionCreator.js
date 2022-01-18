@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -29,81 +30,35 @@ const useStyles = makeStyles((theme) => ({
   ul: {
     backgroundColor: 'inherit',
     padding: 0,
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2)
-  },
-  actionFactoryPaper: {
-    display: 'flex',
-    '& > *': {
-
-      padding: theme.spacing(3),
-
-
-    },
   }
 }));
 
 const MetaActionCreator = ({ metaActionArray, openDialogMetaAction, setMetaActionArray, setOpenDialogMetaAction }) => {
   const classes = useStyles();
 
-
-
-  const addNewMetaAction = (metaActionToAdd) => {
+  const addNewMetaAction = (metaActionName) => {
     const newMetaAction = {
-      name: metaActionToAdd,
-      actions: [],
+      name: metaActionName,
+      flow: [],
       isSelected: false,
     }
-    const metaActionUpdated = metaActionArray.concat([newMetaAction])
-    setMetaActionArray(metaActionUpdated)
+    const updatedMetaActionArray = metaActionArray.concat([newMetaAction])
+    setMetaActionArray(updatedMetaActionArray)
   }
 
   const selectMetaAction = (metaActionName) => {
     setOpenDialogMetaAction(true)
-
-    console.log(openDialogMetaAction)
-
-
     const selectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)
-
 
     if (selectedMetaAction.length === 0 || selectedMetaAction[0].name === metaActionName) {
-      const updatedData = metaActionArray.map(x => (x.name === metaActionName ? { ...x, isSelected: !x.isSelected } : x));
-      setMetaActionArray(updatedData)
+      const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === metaActionName ? { ...metaAction, isSelected: !metaAction.isSelected } : metaAction));
+      setMetaActionArray(updatedMetaActionArray)
     }
-
   }
-
-  const addNewActionToMetaAction = () => {
-    const selectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)
-
-    if (selectedMetaAction.length !== 0) {
-      const updatedData = metaActionArray.map(x => (x.name === selectedMetaAction[0].name ? { ...x, actions: x.actions.concat(["t"]) } : x));
-      setMetaActionArray(updatedData)
-    }
-
-    console.log("Create new action")
-  }
-
-
-
-  const handleClickOpen = () => {
-    console.log("hello")
-    setOpenDialogMetaAction(true);
-  };
-
-
 
   return (
     <div>
-
       <List className={classes.root} subheader={<li />}>
-
         <li key={`section`} className={classes.listSection}>
           <ul className={classes.ul}>
             <ListSubheader>{`Meta Action List`}</ListSubheader>
@@ -120,7 +75,6 @@ const MetaActionCreator = ({ metaActionArray, openDialogMetaAction, setMetaActio
             </ListItem>
           </ul>
         </li>
-
       </List>
 
       <MetaActionDialog open={openDialogMetaAction} />

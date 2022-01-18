@@ -18,27 +18,29 @@ import Select from "@material-ui/core/Select";
 import ActionFactory from '../../../../../general/actionFactory/ActionFactory'
 
 import MenuItem from "@material-ui/core/MenuItem";
+import MetaActionGraph from "./MetaActionGraph";
 import { setMetaActionArrayActionCreator, setOpenDialogMetaActionActionCreator } from "../../../../../../action/strategyAction"
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120
+        margin: theme.spacing(1),
+        minWidth: 120
     },
-   
+
     actionFactoryPaper: {
-      display: 'flex',
-      '& > *': {
-  
-        padding: theme.spacing(3),
-  
-  
-      },
+        display: 'flex',
+        '& > *': {
+
+            padding: theme.spacing(3),
+
+
+        },
     }
-  }));
+}));
 
 const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDialogMetaAction }) => {
     const classes = useStyles();
+
     const handleClose = () => {
         const updatedMetaAction = metaActionArray.map(metaAction => ({ ...metaAction, isSelected: false }))
 
@@ -46,9 +48,22 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
         setOpenDialogMetaAction(false);
     };
 
+    const handleSubmit = () => {
+        // TODO
+
+        handleClose()
+    }
+
+    const onTextNameChange = (name) => {
+        const selectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
+        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === selectedMetaAction.name ? { ...metaAction, name: name.target.value } : metaAction));
+
+        setMetaActionArray(updatedMetaActionArray)
+    }
+
     const handleChange = (event) => {
         setAge(event.target.value);
-      };
+    };
 
     const [age, setAge] = React.useState("");
 
@@ -65,11 +80,15 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
                     <TextField
                         autoFocus
                         margin="dense"
+                        onChange={onTextNameChange}
                         id="name"
                         label="Name"
                         defaultValue={selectedMetaAction.length === 0 ? "Undefined" : selectedMetaAction[0].name}
                         fullWidth
+                        variant="standard"
                     />
+
+                    <MetaActionGraph />
 
                     <FormControl className={classes.formControl}>
                         <InputLabel id="demo-simple-select-label">Action Type</InputLabel>
@@ -101,8 +120,8 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
                     <Button onClick={handleClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handleClose} color="primary">
-                        Subscribe
+                    <Button onClick={handleSubmit} color="primary">
+                        Submit
                     </Button>
                 </DialogActions>
             </Dialog>
