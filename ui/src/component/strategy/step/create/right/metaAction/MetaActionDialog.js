@@ -53,11 +53,11 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
 
         handleClose()
     }
-
+    const selectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)
+    const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
+    
     const onTextNameChange = (name) => {
-        const selectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
-        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === selectedMetaAction.name ? { ...metaAction, name: name.target.value } : metaAction));
-
+        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? { ...metaAction, name: name.target.value } : metaAction));
         setMetaActionArray(updatedMetaActionArray)
     }
 
@@ -67,7 +67,6 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
 
     const [age, setAge] = React.useState("");
 
-    const selectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)
     return (
         <div>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -83,7 +82,7 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
                         onChange={onTextNameChange}
                         id="name"
                         label="Name"
-                        defaultValue={selectedMetaAction.length === 0 ? "Undefined" : selectedMetaAction[0].name}
+                        defaultValue={selectedMetaAction.length === 0 ? "Undefined" : getSelectedMetaAction.name}
                         fullWidth
                         variant="standard"
                     />
@@ -144,5 +143,3 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MetaActionDialog)
-
-

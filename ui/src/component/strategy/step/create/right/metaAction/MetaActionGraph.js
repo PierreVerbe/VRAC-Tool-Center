@@ -15,10 +15,12 @@ let idEdge = 0
 const getIdNode = () => `Node_${idNode++}`
 const getIdEdge = () => `Edge_${idEdge++}`
 
-const MetaActionGraph = ({ reactFlowInstance, flowStrategy, openDialogNodeStrategy, setOpenDialogNodeStrategy, setReactFlowInstance, setFlowStrategy }) => {
-  useEffect(() => {
-    const startNode = flowStrategy.filter(item => item.id.startsWith('Node')).pop()
-    const startEdge = flowStrategy.filter(item => item.id.startsWith('Edge')).pop()
+const MetaActionGraph = ({ metaActionArray, reactFlowInstance, flowStrategy, openDialogNodeStrategy, setOpenDialogNodeStrategy, setReactFlowInstance, setFlowStrategy }) => {
+    const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
+  
+    useEffect(() => {
+    const startNode = getSelectedMetaAction.flow.filter(item => item.id.startsWith('Node')).pop()
+    const startEdge = getSelectedMetaAction.flow.filter(item => item.id.startsWith('Edge')).pop()
    
     idNode = startNode === undefined ? 0 : parseInt(startNode.id.split("_")[1]) + 1
     idEdge = startEdge === undefined ? 0 : parseInt(startEdge.id.split("_")[1]) + 1
@@ -125,9 +127,10 @@ const MetaActionGraph = ({ reactFlowInstance, flowStrategy, openDialogNodeStrate
 }
 
 const mapStateToProps = state => ({
-  reactFlowInstance: state.reactFlowInstance,
-  flowStrategy: state.flowStrategy,
-  openDialogNodeStrategy: state.openDialogNodeStrategy
+    metaActionArray: state.metaActionArray,
+    reactFlowInstance: state.reactFlowInstance,
+    flowStrategy: state.flowStrategy,
+    openDialogNodeStrategy: state.openDialogNodeStrategy
 })
 
 const mapDispatchToProps = dispatch => ({

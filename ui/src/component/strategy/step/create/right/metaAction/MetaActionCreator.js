@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { connect } from "react-redux"
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,6 +14,9 @@ import { green } from '@material-ui/core/colors';
 import MetaActionDialog from "./MetaActionDialog";
 
 import { setMetaActionArrayActionCreator, setOpenDialogMetaActionActionCreator } from "../../../../../../action/strategyAction"
+
+let idMetaAction = 0
+const getIdMetaAction = () => `MetaAction_${idMetaAction++}`
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,8 +39,16 @@ const useStyles = makeStyles((theme) => ({
 const MetaActionCreator = ({ metaActionArray, openDialogMetaAction, setMetaActionArray, setOpenDialogMetaAction }) => {
   const classes = useStyles();
 
+  useEffect(() => {
+    const startMetaAction = metaActionArray.pop()
+
+    idMetaAction = startMetaAction === undefined ? 0 : parseInt(startMetaAction.id.split("_")[1]) + 1
+    // eslint-disable-next-line
+  }, [])
+
   const addNewMetaAction = (metaActionName) => {
     const newMetaAction = {
+      id: getIdMetaAction(),
       name: metaActionName,
       flow: [],
       reactFlowInstance: null,
