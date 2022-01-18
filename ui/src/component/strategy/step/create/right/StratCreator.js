@@ -11,7 +11,7 @@ import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 
 import GraphCreator from "./GraphCreator"
-import MetaActionCreator from "./MetaActionCreator"
+import MetaActionCreator from "./metaAction/MetaActionCreator"
 
 
 function TabPanel(props) {

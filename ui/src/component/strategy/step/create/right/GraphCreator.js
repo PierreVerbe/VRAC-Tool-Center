@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import { connect } from "react-redux"
 import ReactFlow, { ReactFlowProvider, Controls, MiniMap } from 'react-flow-renderer'
 
-import SideBar from "./SideBar"
+import SideBar from "./Sidebar"
 import DialogUpdateNode from "./DialogUpdateNode"
 import { setReactFlowInstanceActionCreator, setFlowStrategyActionCreator, setOpenDialogNodeStrategyActionCreator } from "../../../../../action/strategyAction"
 import { SmartEdge } from '@tisoap/react-flow-smart-edge'

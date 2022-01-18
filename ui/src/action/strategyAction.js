@@ -13,6 +13,8 @@ export const SET_OPEN_DIALOG_STRATEGY = "SET_OPEN_DIALOG_MONITORING"
 export const SET_FLOW_STRATEGY = "SET_FLOW_STRATEGY"
 export const SET_OPEN_DIALOG_NODE_STRATEGY = "SET_OPEN_DIALOG_NODE_STRATEGY"
 export const SET_REACT_FLOW_INSTANCE = "SET_REACT_FLOW_INSTANCE"
+export const SET_META_ACTION_ARRAY = "SET_META_ACTION_ARRAY"
+export const SET_OPEN_DIALOG_META_ACTION = "SET_OPEN_DIALOG_META_ACTION"
 
 // REST call 
 export const insertStrategyActionCreator = strategyToInsert => {
@@ -53,7 +55,7 @@ export const updateStrategyActionCreator = (strategy) => {
         const resultStrategy = await getStrategy(strategy)
         dispatch({
             type: UPDATE_STRATEGY,
-            payload: {allStrategies: resultAllStrategies, strategy: resultStrategy}
+            payload: { allStrategies: resultAllStrategies, strategy: resultStrategy }
         })
     }
 }
@@ -129,6 +131,24 @@ export const setReactFlowInstanceActionCreator = reactFlowInstance => {
         dispatch({
             type: SET_REACT_FLOW_INSTANCE,
             payload: reactFlowInstance
+        })
+    }
+}
+
+export const setMetaActionArrayActionCreator = metaActionArray => {
+    return function (dispatch) {
+        dispatch({
+            type: SET_META_ACTION_ARRAY,
+            payload: metaActionArray
+        })
+    }
+}
+
+export const setOpenDialogMetaActionActionCreator = openDialogMetaAction => {
+    return function (dispatch) {
+        dispatch({
+            type: SET_OPEN_DIALOG_META_ACTION,
+            payload: openDialogMetaAction
         })
     }
 }
