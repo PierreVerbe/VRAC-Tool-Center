@@ -2,7 +2,6 @@ import React from "react"
 
 import PropTypes from 'prop-types';
 
-import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 
 import Tabs from '@material-ui/core/Tabs';
@@ -10,7 +9,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 
-import GraphCreator from "./GraphCreator"
+import GraphCreator from "./strategy/StrategyCreator"
 import MetaActionCreator from "./metaAction/MetaActionCreator"
 
 

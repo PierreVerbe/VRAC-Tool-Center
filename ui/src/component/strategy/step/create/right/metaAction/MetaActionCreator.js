@@ -1,17 +1,17 @@
 import React, { useEffect } from "react"
 import { connect } from "react-redux"
 
-import { makeStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+import { makeStyles } from '@material-ui/core/styles'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import ListSubheader from '@material-ui/core/ListSubheader'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
 
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import { green } from '@material-ui/core/colors';
+import AddCircleIcon from '@material-ui/icons/AddCircle'
+import { green } from '@material-ui/core/colors'
 
-import MetaActionDialog from "./MetaActionDialog";
+import MetaActionDialog from "./MetaActionDialog"
 
 import { setMetaActionArrayActionCreator, setOpenDialogMetaActionActionCreator } from "../../../../../../action/strategyAction"
 
@@ -34,13 +34,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'inherit',
     padding: 0,
   }
-}));
+}))
 
 const MetaActionCreator = ({ metaActionArray, openDialogMetaAction, setMetaActionArray, setOpenDialogMetaAction }) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   useEffect(() => {
-    const startMetaAction = metaActionArray.pop()
+    const startMetaAction = metaActionArray.at(-1) // Get last metaAction
 
     idMetaAction = startMetaAction === undefined ? 0 : parseInt(startMetaAction.id.split("_")[1]) + 1
     // eslint-disable-next-line
@@ -63,7 +63,7 @@ const MetaActionCreator = ({ metaActionArray, openDialogMetaAction, setMetaActio
     const selectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)
 
     if (selectedMetaAction.length === 0 || selectedMetaAction[0].name === metaActionName) {
-      const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === metaActionName ? { ...metaAction, isSelected: !metaAction.isSelected } : metaAction));
+      const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === metaActionName ? { ...metaAction, isSelected: !metaAction.isSelected } : metaAction))
       setMetaActionArray(updatedMetaActionArray)
     }
   }

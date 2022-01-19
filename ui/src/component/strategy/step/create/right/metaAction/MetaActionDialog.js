@@ -1,24 +1,24 @@
 import React from "react"
 import { connect } from "react-redux"
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 import Paper from '@material-ui/core/Paper'
-import { makeStyles } from '@material-ui/core/styles';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
 
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
+import FormControl from "@material-ui/core/FormControl"
+import InputLabel from "@material-ui/core/InputLabel"
+import Select from "@material-ui/core/Select"
 import ActionFactory from '../../../../../general/actionFactory/ActionFactory'
 
-import MenuItem from "@material-ui/core/MenuItem";
-import MetaActionGraph from "./MetaActionGraph";
+import MenuItem from "@material-ui/core/MenuItem"
+import MetaActionGraph from "./MetaActionGraph"
 import { setMetaActionArrayActionCreator, setOpenDialogMetaActionActionCreator } from "../../../../../../action/strategyAction"
 
 const useStyles = makeStyles((theme) => ({
@@ -30,23 +30,20 @@ const useStyles = makeStyles((theme) => ({
     actionFactoryPaper: {
         display: 'flex',
         '& > *': {
-
-            padding: theme.spacing(3),
-
-
+            padding: theme.spacing(3)
         },
     }
-}));
+}))
 
 const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDialogMetaAction }) => {
-    const classes = useStyles();
+    const classes = useStyles()
 
     const handleClose = () => {
         const updatedMetaAction = metaActionArray.map(metaAction => ({ ...metaAction, isSelected: false }))
 
         setMetaActionArray(updatedMetaAction)
-        setOpenDialogMetaAction(false);
-    };
+        setOpenDialogMetaAction(false)
+    }
 
     const handleSubmit = () => {
         // TODO
@@ -57,15 +54,15 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
     
     const onTextNameChange = (name) => {
-        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? { ...metaAction, name: name.target.value } : metaAction));
+        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? { ...metaAction, name: name.target.value } : metaAction))
         setMetaActionArray(updatedMetaActionArray)
     }
 
     const handleChange = (event) => {
-        setAge(event.target.value);
-    };
+        setAge(event.target.value)
+    }
 
-    const [age, setAge] = React.useState("");
+    const [age, setAge] = React.useState("")
 
     return (
         <div>
@@ -130,7 +127,7 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
 
 ActionFactory.propTypes = {
     open: PropTypes.bool
-};
+}
 
 
 const mapStateToProps = state => ({
