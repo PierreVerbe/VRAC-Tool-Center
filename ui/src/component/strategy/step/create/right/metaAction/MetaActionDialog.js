@@ -63,6 +63,7 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
     }
     const selectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
+    //const getSelectedAction = getSelectedMetaAction.flow.filter(action => action.isSelected === true)[0]
     
     const onTextNameChange = (name) => {
         const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? { ...metaAction, name: name.target.value } : metaAction))
@@ -70,10 +71,13 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
     }
 
     const handleChange = (event) => {
-        setAge(event.target.value)
+        const updatedMetaActionArray = metaActionArray.map(metaAction => metaAction.isSelected === true ? 
+            {...metaAction, flow :metaAction.flow.map(action => (action.isSelected === true ? {...action, actionData: {...action.actionData, type: event.target.value}} : 
+                action))} :
+             metaAction)
+      
+        setMetaActionArray(updatedMetaActionArray)
     }
-
-    const [age, setAge] = React.useState("")
 
     return (
         <div>
@@ -104,7 +108,7 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={age}
+                            value={selectedMetaAction.length === 0 ? "Undefined" : getSelectedMetaAction.flow.filter(action => action.isSelected === true)[0].actionData.type}
                             onChange={handleChange}
                         >
                             <MenuItem value={"Homing"}>Homing</MenuItem>
@@ -114,10 +118,8 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
                             <MenuItem value={"End"}>End</MenuItem>
                         </Select>
 
-                        {console.log(age)}
-
                         <Paper variant="outlined" className={classes.actionFactoryPaper}>
-                            <ActionFactory action={age} />
+                            <ActionFactory action={selectedMetaAction.length === 0 ? "Undefined" : getSelectedMetaAction.flow.filter(action => action.isSelected === true)[0].actionData.type} />
                         </Paper>
 
                     </FormControl>

@@ -60,7 +60,9 @@ const MetaActionGraph = ({ metaActionArray, openDialogNodeStrategy, setOpenDialo
             type,
             position,
             data: { label: `${type} node` },
-            actionData: {},
+            actionData: {
+                type: ""
+            },
             isSelected: false
         }
 
@@ -83,25 +85,11 @@ const MetaActionGraph = ({ metaActionArray, openDialogNodeStrategy, setOpenDialo
     }
 
     const onElementClick = (event, element) => {
-        
-        console.log(element)
         const updatedSelectedMetaAction = getSelectedMetaAction.flow.map(nodeOrEdge => ({...nodeOrEdge, isSelected: false}))
             .map(nodeOrEdge => (nodeOrEdge.id === element.id ? {...nodeOrEdge, isSelected: true} : nodeOrEdge))
-        
-        //console.log(updatedSelectedMetaAction) 
-        const updatedMetaActionArray = metaActionArray.map(metaAction => (
-            metaAction.name === getSelectedMetaAction.name ? {...metaAction, flow :  updatedSelectedMetaAction} : metaAction)
-        )
-
-        console.log(updatedMetaActionArray)
+        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? {...metaAction, flow :  updatedSelectedMetaAction} : metaAction))
         
         setMetaActionArray(updatedMetaActionArray)
-
-        //setOpenDialogNodeStrategy({ open: true, node: element })
-
-        //console.log(flowStrategy) // https://stackoverflow.com/questions/54069253/usestate-set-method-not-reflecting-change-immediately
-        //console.log(openDialogNodeStrategy)
-
         event.preventDefault()
     }
 
