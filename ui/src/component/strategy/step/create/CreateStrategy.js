@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 
-import StratCreator from "./right/StrategyPanel"
+import StrategyPanel from "./right/StrategyPanel"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,7 +31,7 @@ const CreateStrategy = () => {
 
                 <Grid item xs={6}>
                     <Paper className={classes.paper} component="form">
-                        <StratCreator/>
+                        <StrategyPanel/>
                     </Paper>
                 </Grid>
             </Grid>

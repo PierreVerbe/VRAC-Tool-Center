@@ -21,6 +21,11 @@ import MenuItem from "@material-ui/core/MenuItem"
 import MetaActionGraph from "./MetaActionGraph"
 import { setMetaActionArrayActionCreator, setOpenDialogMetaActionActionCreator } from "../../../../../../action/strategyAction"
 
+
+import { useStoreState } from 'react-flow-renderer'
+import { Typography } from "@material-ui/core"
+
+
 const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(1),
@@ -38,14 +43,20 @@ const useStyles = makeStyles((theme) => ({
 const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDialogMetaAction }) => {
     const classes = useStyles()
 
-    const handleClose = () => {
-        const updatedMetaAction = metaActionArray.map(metaAction => ({ ...metaAction, isSelected: false }))
+    //const nodes = useStoreState((store) => store.nodes);
 
-        setMetaActionArray(updatedMetaAction)
+    const handleClose = () => {
+        const deselectedMetaAction = metaActionArray.map(metaAction => ({ ...metaAction, isSelected: false }))
+        const deselectedMetaActionAction = deselectedMetaAction.map(metaAction => (
+            {...metaAction, flow: metaAction.flow.map(nodeOrEdge => ({...nodeOrEdge, isSelected: false}))}
+        ))
+
+        setMetaActionArray(deselectedMetaActionAction)
         setOpenDialogMetaAction(false)
     }
 
     const handleSubmit = () => {
+        //nodes.forEach(node => console.log(node))
         // TODO
 
         handleClose()
@@ -85,7 +96,9 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
                     />
 
                     <MetaActionGraph />
-
+                    
+                    {selectedMetaAction.length === 0 || ! getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.isSelected).includes(true) ? 
+                    <Typography>Click on a node</Typography> :
                     <FormControl className={classes.formControl}>
                         <InputLabel id="demo-simple-select-label">Action Type</InputLabel>
                         <Select
@@ -107,10 +120,9 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
                             <ActionFactory action={age} />
                         </Paper>
 
-
                     </FormControl>
-
-
+                     }
+                    
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">

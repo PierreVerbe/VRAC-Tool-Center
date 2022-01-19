@@ -15,7 +15,7 @@ let idEdge = 0
 const getIdNode = () => `Node_${idNode++}`
 const getIdEdge = () => `Edge_${idEdge++}`
 
-const GraphCreator = ({ reactFlowInstance, flowStrategy, openDialogNodeStrategy, setOpenDialogNodeStrategy, setReactFlowInstance, setFlowStrategy }) => {
+const StrategyCreator = ({ reactFlowInstance, flowStrategy, openDialogNodeStrategy, setOpenDialogNodeStrategy, setReactFlowInstance, setFlowStrategy }) => {
   useEffect(() => {
     const startNode = flowStrategy.filter(item => item.id.startsWith('Node')).pop()
     const startEdge = flowStrategy.filter(item => item.id.startsWith('Edge')).pop()
@@ -136,4 +136,4 @@ const mapDispatchToProps = dispatch => ({
   setOpenDialogNodeStrategy: openDialogNodeStrategy => dispatch(setOpenDialogNodeStrategyActionCreator(openDialogNodeStrategy))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(GraphCreator)
+export default connect(mapStateToProps, mapDispatchToProps)(StrategyCreator)

@@ -9,7 +9,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 
-import GraphCreator from "./strategy/StrategyCreator"
+import StrategyCreator from "./strategy/StrategyCreator"
 import MetaActionCreator from "./metaAction/MetaActionCreator"
 
 
@@ -40,7 +40,7 @@ function TabPanel(props) {
   };
 
 
-const StratCreator = () => {
+const StrategyPanel = () => {
    
     
     const [value, setValue] = React.useState(0);
@@ -67,7 +67,7 @@ const StratCreator = () => {
             
       
         <TabPanel value={value} index={0} >
-          <GraphCreator/>
+          <StrategyCreator/>
         </TabPanel>
         <TabPanel value={value} index={1} >
           <MetaActionCreator/>
@@ -78,4 +78,4 @@ const StratCreator = () => {
     )
 }
 
-export default StratCreator
+export default StrategyPanel

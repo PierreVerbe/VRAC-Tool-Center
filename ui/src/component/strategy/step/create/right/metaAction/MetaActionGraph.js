@@ -20,8 +20,8 @@ const MetaActionGraph = ({ metaActionArray, openDialogNodeStrategy, setOpenDialo
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
 
     useEffect(() => {
-        const startNode = getSelectedMetaAction.flow.filter(item => item.id.startsWith('Node')).pop()
-        const startEdge = getSelectedMetaAction.flow.filter(item => item.id.startsWith('Edge')).pop()
+        const startNode = getSelectedMetaAction.flow.filter(item => item.id.startsWith('Node')).at(-1)
+        const startEdge = getSelectedMetaAction.flow.filter(item => item.id.startsWith('Edge')).at(-1)
 
         idNode = startNode === undefined ? 0 : parseInt(startNode.id.split("_")[1]) + 1
         idEdge = startEdge === undefined ? 0 : parseInt(startEdge.id.split("_")[1]) + 1
@@ -60,6 +60,8 @@ const MetaActionGraph = ({ metaActionArray, openDialogNodeStrategy, setOpenDialo
             type,
             position,
             data: { label: `${type} node` },
+            actionData: {},
+            isSelected: false
         }
 
         const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? { ...metaAction, flow: getSelectedMetaAction.flow.concat([newNode]) } : metaAction))
@@ -72,7 +74,8 @@ const MetaActionGraph = ({ metaActionArray, openDialogNodeStrategy, setOpenDialo
             source: params.source,
             target: params.target,
             type: 'smart',
-            arrowHeadType
+            arrowHeadType,
+            isSelected: false
         }
 
         const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? { ...metaAction, flow: getSelectedMetaAction.flow.concat([newEdge]) } : metaAction))
@@ -80,8 +83,21 @@ const MetaActionGraph = ({ metaActionArray, openDialogNodeStrategy, setOpenDialo
     }
 
     const onElementClick = (event, element) => {
+        
+        console.log(element)
+        const updatedSelectedMetaAction = getSelectedMetaAction.flow.map(nodeOrEdge => ({...nodeOrEdge, isSelected: false}))
+            .map(nodeOrEdge => (nodeOrEdge.id === element.id ? {...nodeOrEdge, isSelected: true} : nodeOrEdge))
+        
+        //console.log(updatedSelectedMetaAction) 
+        const updatedMetaActionArray = metaActionArray.map(metaAction => (
+            metaAction.name === getSelectedMetaAction.name ? {...metaAction, flow :  updatedSelectedMetaAction} : metaAction)
+        )
 
-        setOpenDialogNodeStrategy({ open: true, node: element })
+        console.log(updatedMetaActionArray)
+        
+        setMetaActionArray(updatedMetaActionArray)
+
+        //setOpenDialogNodeStrategy({ open: true, node: element })
 
         //console.log(flowStrategy) // https://stackoverflow.com/questions/54069253/usestate-set-method-not-reflecting-change-immediately
         //console.log(openDialogNodeStrategy)
