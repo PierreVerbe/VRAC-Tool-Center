@@ -46,10 +46,11 @@ const MetaActionCreator = ({ metaActionArray, openDialogMetaAction, setMetaActio
     // eslint-disable-next-line
   }, [])
 
-  const addNewMetaAction = (metaActionName) => {
+  const addNewMetaAction = () => {
+    const metaActionId = getIdMetaAction()
     const newMetaAction = {
-      id: getIdMetaAction(),
-      name: metaActionName,
+      id: metaActionId,
+      name: "New meta Action " + metaActionId,
       flow: [],
       reactFlowInstance: null,
       isSelected: false,
@@ -79,7 +80,7 @@ const MetaActionCreator = ({ metaActionArray, openDialogMetaAction, setMetaActio
                 <ListItemText primary={metaAction.name} />
               </ListItem>
             ))}
-            <ListItem button key={`item-button`} onClick={() => addNewMetaAction("New meta Action " + metaActionArray.length)}>
+            <ListItem button key={`item-button`} onClick={() => addNewMetaAction()}>
               <ListItemIcon>
                 <AddCircleIcon style={{ color: green[500] }} />
               </ListItemIcon>

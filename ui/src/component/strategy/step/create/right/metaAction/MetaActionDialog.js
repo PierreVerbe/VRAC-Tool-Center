@@ -67,7 +67,9 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
     }
 
     const handleDelete = (event) => {
-
+        const updatedMetaActionArray = metaActionArray.filter(metaAction => metaAction.isSelected === false)
+        setMetaActionArray(updatedMetaActionArray)
+        setOpenDialogMetaAction(false)
     }
 
     const handleSubmit = (event) => {
