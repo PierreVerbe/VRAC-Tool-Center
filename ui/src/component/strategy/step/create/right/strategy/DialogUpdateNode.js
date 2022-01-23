@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { connect } from "react-redux"
-import { setFlowStrategyActionCreator, setOpenDialogNodeStrategyActionCreator } from "../../../../../action/strategyAction"
+import { setFlowStrategyActionCreator, setOpenDialogNodeStrategyActionCreator } from "../../../../../../action/strategyAction"
 import PropTypes from 'prop-types'
 
 import Button from "@material-ui/core/Button"
