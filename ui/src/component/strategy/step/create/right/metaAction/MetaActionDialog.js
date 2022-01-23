@@ -46,6 +46,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
+const metaActionActionType = ["Homing", "Line", "Bottom Arms Out Double", "Bottom Arms In Double", "Top Arms Get Samples",
+    "Top Arm Stockage", "XYT", "Top Arm Galery Bottom", "Rotate", "Single Arm Out",
+    "Single Arm In", "Top Arm Get Single Sample", "Top Arm Buffer 1", "Top Arm Buffer 2", "Bezier", 
+    "End"]
+
 const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDialogMetaAction }) => {
     const classes = useStyles()
 
@@ -179,11 +184,9 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
                                 value={selectedMetaAction.length === 0 ? "Undefined" : getSelectedMetaAction.flow.filter(action => action.isSelected === true)[0].actionData.type}
                                 onChange={handleChange}
                             >
-                                <MenuItem value={"Homing"}>Homing</MenuItem>
-                                <MenuItem value={"Line"}>Line</MenuItem>
-                                <MenuItem value={"Top arm get storage"}>Top arm get storage</MenuItem>
-                                <MenuItem value={"XYT"}>XYT</MenuItem>
-                                <MenuItem value={"End"}>End</MenuItem>
+                                {metaActionActionType.map(actionType => 
+                                    <MenuItem value={actionType}>{actionType}</MenuItem>
+                                )}
                             </Select>
 
                             <Paper variant="outlined" className={classes.actionFactoryPaper}>
