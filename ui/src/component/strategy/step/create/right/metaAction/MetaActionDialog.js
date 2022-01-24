@@ -132,6 +132,14 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
         setMetaActionArray(updatedMetaActionArray)
     }
 
+    const onLabelNode = (event) => {
+        console.log(metaActionArray)
+        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.isSelected === true ? 
+            { ...metaAction, flow: metaAction.flow.map(action => (action.isSelected === true ? {...action, data: {label: event.target.value}} : action)) } : metaAction))
+        console.log(updatedMetaActionArray)
+        setMetaActionArray(updatedMetaActionArray)
+    }
+
     const handleChange = (event) => {
         const updatedMetaActionArray = metaActionArray.map(metaAction => metaAction.isSelected === true ? 
             {...metaAction, flow :metaAction.flow.map(action => (action.isSelected === true ? {...action, actionData: {...action.actionData, type: event.target.value}} : 
@@ -169,7 +177,17 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
 
                     <FormControl className={classes.formControl}>
                         <FormGroup>
-                            <FormLabel color='primary'>Delete Edges</FormLabel>
+                            <FormLabel color='primary'>Node information</FormLabel>
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                onChange={onLabelNode}
+                                id="name"
+                                label="Name"
+                                value={selectedMetaAction.length === 0 ? "Undefined" : getSelectedMetaAction.flow.filter(action => action.isSelected === true)[0].data.label}
+                                fullWidth
+                                variant="standard"
+                            />
                             <List dense={true}>
                                 {listEdgesToDelete()}
                             </List>

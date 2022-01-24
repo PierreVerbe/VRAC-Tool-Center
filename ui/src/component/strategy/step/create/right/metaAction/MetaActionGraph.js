@@ -51,11 +51,13 @@ const MetaActionGraph = ({ metaActionArray, setMetaActionArray }) => {
             x: event.clientX - reactFlowBounds.left,
             y: event.clientY - reactFlowBounds.top,
         })
+
+        const idNode = getIdNode()
         const newNode = {
-            id: getIdNode(),
+            id: idNode,
             type,
             position,
-            data: { label: `${type} node` },
+            data: { label: `${idNode} node` },
             actionData: {
                 type: ""
             },
