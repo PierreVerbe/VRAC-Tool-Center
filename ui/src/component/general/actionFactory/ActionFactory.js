@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 
 import Typography from '@material-ui/core/Typography'
 
-import { HomingAction } from "./action/HomingAction";
-import { LineAction } from "./action/LineAction"
+import HomingAction from "./action/HomingAction"
+import LineAction  from "./action/LineAction"
 
 const ActionFactory = ({action}) => {
-    switch (action) {
+    const actionType = action.actionData.type
+
+    switch (actionType) {
         case "Homing":
-            return <HomingAction />;
+            return <HomingAction action={action}/>;
         case "Line":
             return <LineAction />;
         case "Bottom Arms Out Double":

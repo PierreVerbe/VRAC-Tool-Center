@@ -4,7 +4,7 @@ import ReactFlow, { ReactFlowProvider, Controls, MiniMap } from 'react-flow-rend
 
 import SideBar from "./../Sidebar"
 
-import { setOpenDialogNodeStrategyActionCreator, setMetaActionArrayActionCreator } from "../../../../../../action/strategyAction"
+import { setMetaActionArrayActionCreator } from "../../../../../../action/strategyAction"
 import { SmartEdge } from '@tisoap/react-flow-smart-edge'
 import './../dnd.css'
 
@@ -15,7 +15,7 @@ let idEdge = 0
 const getIdNode = () => `Node_${idNode++}`
 const getIdEdge = () => `Edge_${idEdge++}`
 
-const MetaActionGraph = ({ metaActionArray, openDialogNodeStrategy, setOpenDialogNodeStrategy, setMetaActionArray }) => {
+const MetaActionGraph = ({ metaActionArray, setMetaActionArray }) => {
     const selectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
 
@@ -27,10 +27,6 @@ const MetaActionGraph = ({ metaActionArray, openDialogNodeStrategy, setOpenDialo
         idEdge = startEdge === undefined ? 0 : parseInt(startEdge.id.split("_")[1]) + 1
         // eslint-disable-next-line
     }, [])
-
-    useEffect(() => {
-        console.log("hello1")
-    }, [openDialogNodeStrategy])
 
     const arrowHeadType = ArrowHeadType.Arrow
 
@@ -67,6 +63,8 @@ const MetaActionGraph = ({ metaActionArray, openDialogNodeStrategy, setOpenDialo
         }
 
         const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? { ...metaAction, flow: getSelectedMetaAction.flow.concat([newNode]) } : metaAction))
+        console.log(updatedMetaActionArray)
+        
         setMetaActionArray(updatedMetaActionArray)
     }
 
@@ -136,12 +134,10 @@ const MetaActionGraph = ({ metaActionArray, openDialogNodeStrategy, setOpenDialo
 }
 
 const mapStateToProps = state => ({
-    metaActionArray: state.metaActionArray,
-    openDialogNodeStrategy: state.openDialogNodeStrategy
+    metaActionArray: state.metaActionArray
 })
 
 const mapDispatchToProps = dispatch => ({
-    setOpenDialogNodeStrategy: openDialogNodeStrategy => dispatch(setOpenDialogNodeStrategyActionCreator(openDialogNodeStrategy)),
     setMetaActionArray: metaActionArray => dispatch(setMetaActionArrayActionCreator(metaActionArray))
 })
 

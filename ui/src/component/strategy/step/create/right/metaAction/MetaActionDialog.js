@@ -10,7 +10,6 @@ import FormControl from "@material-ui/core/FormControl"
 import FormGroup from '@material-ui/core/FormGroup'
 import FormLabel from '@material-ui/core/FormLabel'
 import IconButton from "@material-ui/core/IconButton"
-import InputLabel from "@material-ui/core/InputLabel"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
 import ListItemAvatar from "@material-ui/core/ListItemAvatar"
@@ -192,7 +191,7 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
                             </Select>
 
                             <Paper variant="outlined" className={classes.actionFactoryPaper}>
-                                <ActionFactory action={selectedMetaAction.length === 0 ? "Undefined" : getSelectedMetaAction.flow.filter(action => action.isSelected === true)[0].actionData.type} />
+                                <ActionFactory action={selectedMetaAction.length === 0 ? "Undefined" : getSelectedMetaAction.flow.filter(action => action.isSelected === true)[0]} />
                             </Paper>
                         </FormGroup>
 

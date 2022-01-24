@@ -6,7 +6,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
 
-export const LineAction = () => {
+const LineAction = () => {
     const [state, setState] = React.useState({
         Forward: false,
         Axis: false,
