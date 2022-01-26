@@ -50,20 +50,13 @@ const HomingAction = ({action, metaActionArray, setMetaActionArray}) => {
 
         setMetaActionArray(updatedMetaActionArray)
     }
-    const deleteEdge = (event, id) => {
-        event.preventDefault()
 
-        const filteredEdge = getSelectedMetaAction.flow.filter(edge => edge.id === id).at(-1)
+    const truc = (event, id) => {
+        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? 
+            { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === id ? { ...nodeOrEdge, label: event.target.value } : nodeOrEdge) } :
+             metaAction))
 
-        console.log(filteredEdge)
-
-
-        const updatedMetaActionArray = metaActionArray.map(metaAction => metaAction.isSelected === true ? 
-            {...metaAction, flow :metaAction.flow.filter(nodeOrEdge => nodeOrEdge.id !== filteredEdge.id)} :
-             metaAction)
-
-             console.log(updatedMetaActionArray)
-        setMetaActionArray(updatedMetaActionArray)
+        setMetaActionArray(updatedMetaActionArray)        
     }
 
     const listEdgesToDelete = () => {
@@ -83,11 +76,10 @@ const HomingAction = ({action, metaActionArray, setMetaActionArray}) => {
                 </ListItemAvatar>
                 <ListItemText
                     primary={value.id}
-                    secondary={`Source : ${value.source} Target : ${value.target}`}
+                    secondary={`ActionName: ${getSelectedMetaAction.flow.filter(element => element.id === value.target)[0].data.label}`}
                 />
-                
+                <TextField id="standard-basic" label="Type transition" defaultValue={value.label} onChange={(event) => truc(event, value.id)}/>
             </ListItem>)
-
         )
         )
     }

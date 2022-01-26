@@ -75,8 +75,9 @@ const MetaActionGraph = ({ metaActionArray, setMetaActionArray }) => {
             id: getIdEdge(),
             source: params.source,
             target: params.target,
-            type: 'smart',
+            type: "smart",
             arrowHeadType,
+            label: "",
             isSelected: false
         }
 
