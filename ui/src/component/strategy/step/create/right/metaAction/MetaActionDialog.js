@@ -174,7 +174,7 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
                     {selectedMetaAction.length === 0 || ! getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.isSelected).includes(true) ? 
                     <Typography>Click on a node</Typography> :
                     <div>
-
+                    {/* TODO: Condition to print edge or node */}
                     <FormControl className={classes.formControl}>
                         <FormGroup>
                             <FormLabel color='primary'>Node information</FormLabel>

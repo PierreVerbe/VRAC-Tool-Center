@@ -86,8 +86,6 @@ const MetaActionGraph = ({ metaActionArray, setMetaActionArray }) => {
     }
 
     const onElementClick = (event, element) => {
-        console.log(element)
-
         const updatedSelectedMetaAction = getSelectedMetaAction.flow.map(nodeOrEdge => ({...nodeOrEdge, isSelected: false}))
             .map(nodeOrEdge => (nodeOrEdge.id === element.id ? {...nodeOrEdge, isSelected: true} : nodeOrEdge))
         const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? {...metaAction, flow :  updatedSelectedMetaAction} : metaAction))
@@ -98,6 +96,14 @@ const MetaActionGraph = ({ metaActionArray, setMetaActionArray }) => {
 
     const onNodeMove = (event, element) => {
         const updatedSelectedMetaAction = getSelectedMetaAction.flow.map(nodeOrEdge => (nodeOrEdge.id === element.id ? {...nodeOrEdge, position: element.position} : nodeOrEdge))
+        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? {...metaAction, flow :  updatedSelectedMetaAction} : metaAction))
+        
+        setMetaActionArray(updatedMetaActionArray)
+        event.preventDefault()
+    }
+
+    const onPanCLick = (event) => {
+        const updatedSelectedMetaAction = getSelectedMetaAction.flow.map(nodeOrEdge => ({...nodeOrEdge, isSelected: false}))
         const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? {...metaAction, flow :  updatedSelectedMetaAction} : metaAction))
         
         setMetaActionArray(updatedMetaActionArray)
@@ -120,6 +126,7 @@ const MetaActionGraph = ({ metaActionArray, setMetaActionArray }) => {
                         style={graphStyles}
                         onElementClick={onElementClick}
                         onNodeDragStop={onNodeMove}
+                        onPaneClick={onPanCLick}
                         edgeTypes={{
                             smart: SmartEdge,
                         }}
