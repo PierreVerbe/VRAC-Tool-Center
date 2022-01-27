@@ -86,8 +86,18 @@ const MetaActionGraph = ({ metaActionArray, setMetaActionArray }) => {
     }
 
     const onElementClick = (event, element) => {
+        console.log(element)
+
         const updatedSelectedMetaAction = getSelectedMetaAction.flow.map(nodeOrEdge => ({...nodeOrEdge, isSelected: false}))
             .map(nodeOrEdge => (nodeOrEdge.id === element.id ? {...nodeOrEdge, isSelected: true} : nodeOrEdge))
+        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? {...metaAction, flow :  updatedSelectedMetaAction} : metaAction))
+        
+        setMetaActionArray(updatedMetaActionArray)
+        event.preventDefault()
+    }
+
+    const onNodeMove = (event, element) => {
+        const updatedSelectedMetaAction = getSelectedMetaAction.flow.map(nodeOrEdge => (nodeOrEdge.id === element.id ? {...nodeOrEdge, position: element.position} : nodeOrEdge))
         const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? {...metaAction, flow :  updatedSelectedMetaAction} : metaAction))
         
         setMetaActionArray(updatedMetaActionArray)
@@ -109,6 +119,7 @@ const MetaActionGraph = ({ metaActionArray, setMetaActionArray }) => {
                         onDragOver={onDragOver}
                         style={graphStyles}
                         onElementClick={onElementClick}
+                        onNodeDragStop={onNodeMove}
                         edgeTypes={{
                             smart: SmartEdge,
                         }}
