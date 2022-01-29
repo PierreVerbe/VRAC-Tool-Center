@@ -149,32 +149,23 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
         setMetaActionArray(updatedMetaActionArray)
     }
 
-    return (
-        <div>
-            <Dialog open={open} onClose={event => handleCancel(event)} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Dialog edit meta action</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Please fill in the form and the graph.
-                    </DialogContentText>
+    const truc = (event, id) => {
+        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? 
+            { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === id ? { ...nodeOrEdge, label: event.target.value } : nodeOrEdge) } :
+             metaAction))
 
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        onChange={onTextNameChange}
-                        id="name"
-                        label="Name"
-                        defaultValue={selectedMetaAction.length === 0 ? "Undefined" : getSelectedMetaAction.name}
-                        fullWidth
-                        variant="standard"
-                    />
+        setMetaActionArray(updatedMetaActionArray)        
+    }
 
-                    <MetaActionGraph />
+    const dialogNodeOrEdge = () => {
+        const nodeOrEdge = selectedMetaAction.length === 0 || ! getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.isSelected) ? undefined : getSelectedMetaAction.flow.filter(action => action.isSelected === true)[0]
+    
+        if (nodeOrEdge === undefined)
+            return <Typography>Click on a node</Typography>
+        else if (nodeOrEdge.id.startsWith('Node'))
+            return (
+                <div>
                     
-                    {selectedMetaAction.length === 0 || ! getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.isSelected).includes(true) ? 
-                    <Typography>Click on a node</Typography> :
-                    <div>
-                    {/* TODO: Condition to print edge or node */}
                     <FormControl className={classes.formControl}>
                         <FormGroup>
                             <FormLabel color='primary'>Node information</FormLabel>
@@ -216,15 +207,54 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
                     </FormControl>
 
                     </div>
-                     }
+
+            )
+
+        else if (nodeOrEdge.id.startsWith('Edge'))
+            return (
+                <ListItem>
+                <ListItemAvatar>
+                    <Avatar>
+                        <LinearScaleIcon />
+                    </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                    primary={nodeOrEdge.id}
+                    secondary={`ActionName: ${nodeOrEdge.label}`}
+                />
+                <TextField id="standard-basic" label="Type transition" defaultValue={nodeOrEdge.label} onChange={(event) => truc(event, nodeOrEdge.id)}/>
+            </ListItem>
+            )
+          
+    }
+
+    return (
+        <div>
+            <Dialog open={open} onClose={event => handleCancel(event)} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Dialog edit meta action</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Please fill in the form and the graph.
+                    </DialogContentText>
+
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        onChange={onTextNameChange}
+                        id="name"
+                        label="Name"
+                        defaultValue={selectedMetaAction.length === 0 ? "Undefined" : getSelectedMetaAction.name}
+                        fullWidth
+                        variant="standard"
+                    />
+
+                    <MetaActionGraph />
+
+                    {dialogNodeOrEdge()}
+                
                     
                 </DialogContent>
-                
-
-
-
-
-
+            
                 <DialogActions>
                 <Button
                     variant="contained"
