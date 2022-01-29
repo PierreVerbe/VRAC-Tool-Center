@@ -3,9 +3,10 @@ import { connect } from "react-redux"
 import ReactFlow, { ReactFlowProvider, Controls, MiniMap } from 'react-flow-renderer'
 
 import SideBar from "../Sidebar"
-import DialogUpdateNode from "./DialogUpdateNode"
-import { setReactFlowInstanceActionCreator, setFlowStrategyActionCreator, setOpenDialogNodeStrategyActionCreator } from "../../../../../../action/strategyAction"
+import DialogUpdateNode from "./StrategyDialog"
+import { setOpenDialogNodeStrategyActionCreator, setStrategyCreatorActionCreator } from "../../../../../../action/strategyAction"
 import { SmartEdge } from '@tisoap/react-flow-smart-edge'
+import TextField from '@material-ui/core/TextField'
 import './../dnd.css'
 
 import { ArrowHeadType } from 'react-flow-renderer'
@@ -15,10 +16,10 @@ let idEdge = 0
 const getIdNode = () => `Node_${idNode++}`
 const getIdEdge = () => `Edge_${idEdge++}`
 
-const StrategyCreator = ({ reactFlowInstance, flowStrategy, openDialogNodeStrategy, setOpenDialogNodeStrategy, setReactFlowInstance, setFlowStrategy }) => {
+const StrategyCreator = ({ strategyCreator, openDialogNodeStrategy, setStrategyCreator, setOpenDialogNodeStrategy }) => {
   useEffect(() => {
-    const startNode = flowStrategy.filter(item => item.id.startsWith('Node')).pop()
-    const startEdge = flowStrategy.filter(item => item.id.startsWith('Edge')).pop()
+    const startNode = strategyCreator.flow.filter(item => item.id.startsWith('Node')).pop()
+    const startEdge = strategyCreator.flow.filter(item => item.id.startsWith('Edge')).pop()
    
     idNode = startNode === undefined ? 0 : parseInt(startNode.id.split("_")[1]) + 1
     idEdge = startEdge === undefined ? 0 : parseInt(startEdge.id.split("_")[1]) + 1
@@ -33,8 +34,10 @@ const StrategyCreator = ({ reactFlowInstance, flowStrategy, openDialogNodeStrate
   
   const reactFlowWrapper = useRef(null)
 
-  const onLoad = (_reactFlowInstance) =>
-    setReactFlowInstance(_reactFlowInstance)
+  const onLoad = (_reactFlowInstance) => {
+    const updatedStrategyCreator = {...strategyCreator, reactFlowInstance: _reactFlowInstance}
+    setStrategyCreator(updatedStrategyCreator)
+  }
 
   const onDragOver = (event) => {
     event.preventDefault()
@@ -46,7 +49,7 @@ const StrategyCreator = ({ reactFlowInstance, flowStrategy, openDialogNodeStrate
 
     const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
     const type = event.dataTransfer.getData('application/reactflow')
-    const position = reactFlowInstance.project({
+    const position = strategyCreator.reactFlowInstance.project({
       x: event.clientX - reactFlowBounds.left,
       y: event.clientY - reactFlowBounds.top,
     })
@@ -57,7 +60,8 @@ const StrategyCreator = ({ reactFlowInstance, flowStrategy, openDialogNodeStrate
       data: { label: `${type} node` },
     }
 
-    setFlowStrategy(flowStrategy.concat([newNode]))
+    const updatedStrategyCreator = {...strategyCreator, flow: strategyCreator.flow.concat([newNode])}
+    setStrategyCreator(updatedStrategyCreator)
   }
 
   const onConnect = (params) => {
@@ -68,29 +72,49 @@ const StrategyCreator = ({ reactFlowInstance, flowStrategy, openDialogNodeStrate
       type: 'smart',
       arrowHeadType
     }
-    console.log(flowStrategy)
-    setFlowStrategy(flowStrategy.concat([newEdge]))
+
+    const updatedStrategyCreator = {...strategyCreator, flow: strategyCreator.flow.concat([newEdge])}
+    setStrategyCreator(updatedStrategyCreator)
   }
 
   const onElementClick = (event, element) => {
     
     setOpenDialogNodeStrategy({ open: true, node: element })
  
-    console.log(flowStrategy) // https://stackoverflow.com/questions/54069253/usestate-set-method-not-reflecting-change-immediately
-    console.log(openDialogNodeStrategy)
+    //console.log(flowStrategy) // https://stackoverflow.com/questions/54069253/usestate-set-method-not-reflecting-change-immediately
+    //console.log(openDialogNodeStrategy)
 
     event.preventDefault()
   }
 
+  const onChangeStrategyCreatorName = (event) => {
+    const updatedStrategyCreator = {...strategyCreator, name: event.target.value}
+    setStrategyCreator(updatedStrategyCreator)
+}
+
   const graphStyles = { width: "100%", height: "500px" }
 
   return (
-    
+    <div>
+
+      <form >
+        <TextField
+          autoFocus
+          margin="dense"
+          onChange={onChangeStrategyCreatorName}
+          id="strategyName"
+          label="Strategy name"
+          value={strategyCreator.name}
+          fullWidth
+          variant="standard"
+        />
+      </form>
+
     <div className="dndflow">
       <ReactFlowProvider>
         <div className="reactflow-wrapper" ref={reactFlowWrapper}>
           <ReactFlow
-            elements={flowStrategy}
+            elements={strategyCreator.flow}
             onConnect={onConnect}
             onLoad={onLoad}
             onDrop={onDrop}
@@ -121,18 +145,17 @@ const StrategyCreator = ({ reactFlowInstance, flowStrategy, openDialogNodeStrate
 
       <DialogUpdateNode isOpen={openDialogNodeStrategy.open}/>
     </div>
+    </div>
   )
 }
 
 const mapStateToProps = state => ({
-  reactFlowInstance: state.reactFlowInstance,
-  flowStrategy: state.flowStrategy,
+  strategyCreator: state.strategyCreator,
   openDialogNodeStrategy: state.openDialogNodeStrategy
 })
 
 const mapDispatchToProps = dispatch => ({
-  setReactFlowInstance: reactFlowInstance => dispatch(setReactFlowInstanceActionCreator(reactFlowInstance)),
-  setFlowStrategy: flowStrategy => dispatch(setFlowStrategyActionCreator(flowStrategy)),
+  setStrategyCreator: strategyCreator => dispatch(setStrategyCreatorActionCreator(strategyCreator)),
   setOpenDialogNodeStrategy: openDialogNodeStrategy => dispatch(setOpenDialogNodeStrategyActionCreator(openDialogNodeStrategy))
 })
 

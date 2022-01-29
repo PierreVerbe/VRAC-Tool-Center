@@ -163,32 +163,3 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MetaActionGraph)
-
-/*
-
-ray(4) [ {…}, {…}, {…}, {…} ]
-​
-0: Object { id: "Node_0", type: "input", position: {…}, … }
-​
-1: Object { id: "Node_1", type: "default", position: {…}, … }
-​
-2: Object { id: "Edge_0", source: "Node_0", target: "Node_1", … }
-​
-3: Object { id: "Node_2", type: "default", position: {…}, … }
-​
-length: 4
-​
-<prototype>: Array []
-
-
-
-0: Object { id: "Node_0", type: "input", position: {…}, … }
- ​
-data: Object { label: "input node" }
- ​
-id: "Node_0"
- ​
-position: Object { x: 85.9666748046875, y: 127 }
- ​
-type: "input"
-*/

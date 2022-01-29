@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { connect } from "react-redux"
-import { setFlowStrategyActionCreator, setOpenDialogNodeStrategyActionCreator } from "../../../../../../action/strategyAction"
+import { setStrategyCreatorActionCreator, setOpenDialogNodeStrategyActionCreator } from "../../../../../../action/strategyAction"
 import PropTypes from 'prop-types'
 
 import Button from "@material-ui/core/Button"
@@ -29,7 +29,7 @@ import DeleteIcon from "@material-ui/icons/Delete"
 import LinearScaleIcon from '@material-ui/icons/LinearScale'
 
 
-const DialogUpdateNode = ({ isOpen, openDialogNodeStrategy, flowStrategy, setOpenDialogNodeStrategy, setFlowStrategy }) => {
+const DialogUpdateNode = ({ isOpen, strategyCreator, openDialogNodeStrategy, setStrategyCreator, setOpenDialogNodeStrategy }) => {
 
     useEffect(() => {
         console.log("hello2")
@@ -38,12 +38,12 @@ const DialogUpdateNode = ({ isOpen, openDialogNodeStrategy, flowStrategy, setOpe
     const deleteEdge = (event, id) => {
         event.preventDefault()
 
-        const filteredEdge = flowStrategy.filter(edge => edge.id !== id)
-        setFlowStrategy(filteredEdge)
+        const filteredEdge = strategyCreator.flow.filter(edge => edge.id !== id)
+        setStrategyCreator({...strategyCreator, flow: filteredEdge})
     }
 
     const listEdgesToDelete = () => {
-        const edges = flowStrategy.filter(element => element.id.startsWith("Edge"))
+        const edges = strategyCreator.flow.filter(element => element.id.startsWith("Edge"))
         const filteredEdges = edges.filter(element => element.source === openDialogNodeStrategy.node.id || element.target === openDialogNodeStrategy.node.id)
 
         return filteredEdges.map((value) => (
@@ -76,24 +76,22 @@ const DialogUpdateNode = ({ isOpen, openDialogNodeStrategy, flowStrategy, setOpe
     const handleDelete = (event) => {
         event.preventDefault()
 
-        const filteredNode = flowStrategy.filter(flow => flow.id !== openDialogNodeStrategy.node.id)
+        const filteredNode = strategyCreator.flow.filter(flow => flow.id !== openDialogNodeStrategy.node.id)
         const filteredEdge = filteredNode.filter(flow => flow.source !== openDialogNodeStrategy.node.id && flow.target !== openDialogNodeStrategy.node.id)
-        setFlowStrategy(filteredEdge)
+        setStrategyCreator({...strategyCreator, flow: filteredEdge})
         setOpenDialogNodeStrategy({ open: false, node: { data: { label: {} } } })
     }
 
     const handleSubmit = (event) => {
-        
-
-        const index = flowStrategy.map(item => item.id).indexOf(openDialogNodeStrategy.node.id)
+        const index = strategyCreator.flow.map(item => item.id).indexOf(openDialogNodeStrategy.node.id)
 
         if (index === -1) {
             console.log("Item not in flowStrategy")
         }
         else {
-            var flowStrategyUpdated = flowStrategy
+            var flowStrategyUpdated = strategyCreator.flow
             flowStrategyUpdated[index] = openDialogNodeStrategy.node
-            setFlowStrategy(flowStrategyUpdated)
+            setStrategyCreator({...strategyCreator, flow: flowStrategyUpdated})
             console.log(flowStrategyUpdated)
             setOpenDialogNodeStrategy({ open: false, node: { data: { label: {} } } })
         }
@@ -209,13 +207,13 @@ DialogUpdateNode.propTypes = {
 }
 
 const mapStateToProps = state => ({
-    openDialogNodeStrategy: state.openDialogNodeStrategy,
-    flowStrategy: state.flowStrategy
+    strategyCreator: state.strategyCreator,
+    openDialogNodeStrategy: state.openDialogNodeStrategy
 })
 
 const mapDispatchToProps = dispatch => ({
+    setStrategyCreator: strategyCreator => dispatch(setStrategyCreatorActionCreator(strategyCreator)),
     setOpenDialogNodeStrategy: openDialogNodeStrategy => dispatch(setOpenDialogNodeStrategyActionCreator(openDialogNodeStrategy)),
-    setFlowStrategy: flowStrategy => dispatch(setFlowStrategyActionCreator(flowStrategy))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DialogUpdateNode)
