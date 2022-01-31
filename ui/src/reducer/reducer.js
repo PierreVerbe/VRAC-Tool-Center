@@ -10,7 +10,7 @@ const defaultState = {
     strategyStepper: 0,
     // Create
     strategyCreator : {name: "Strategy name", flow: [], reactFlowInstance: null},  // reactFlowInstance Serves for drag & drop
-    openDialogNodeStrategy: { open: false, node: { data: { label: {} } } }, // to modify
+    openDialogNodeStrategy: false,
     metaActionArray: [], // to modify to metaActionArrayCreator
     openDialogMetaAction: false,
 

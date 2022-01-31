@@ -25,10 +25,6 @@ const StrategyCreator = ({ strategyCreator, openDialogNodeStrategy, setStrategyC
     idEdge = startEdge === undefined ? 0 : parseInt(startEdge.id.split("_")[1]) + 1
     // eslint-disable-next-line
   }, [])
-
-  useEffect(() => {
-    console.log("hello1")
-  },[openDialogNodeStrategy])
   
   const arrowHeadType = ArrowHeadType.Arrow
   
@@ -48,16 +44,19 @@ const StrategyCreator = ({ strategyCreator, openDialogNodeStrategy, setStrategyC
     event.preventDefault()
 
     const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
+    const idNode = getIdNode()
     const type = event.dataTransfer.getData('application/reactflow')
     const position = strategyCreator.reactFlowInstance.project({
       x: event.clientX - reactFlowBounds.left,
       y: event.clientY - reactFlowBounds.top,
     })
+
     const newNode = {
-      id: getIdNode(),
+      id: idNode,
       type,
       position,
-      data: { label: `${type} node` },
+      data: { label: `${idNode} node` },
+      isSelected: false,
     }
 
     const updatedStrategyCreator = {...strategyCreator, flow: strategyCreator.flow.concat([newNode])}
@@ -70,7 +69,9 @@ const StrategyCreator = ({ strategyCreator, openDialogNodeStrategy, setStrategyC
       source: params.source,
       target: params.target,
       type: 'smart',
-      arrowHeadType
+      arrowHeadType,
+      label: "",
+      isSelected: false
     }
 
     const updatedStrategyCreator = {...strategyCreator, flow: strategyCreator.flow.concat([newEdge])}
@@ -78,14 +79,30 @@ const StrategyCreator = ({ strategyCreator, openDialogNodeStrategy, setStrategyC
   }
 
   const onElementClick = (event, element) => {
-    
-    setOpenDialogNodeStrategy({ open: true, node: element })
- 
-    //console.log(flowStrategy) // https://stackoverflow.com/questions/54069253/usestate-set-method-not-reflecting-change-immediately
-    //console.log(openDialogNodeStrategy)
+    const updatedStrategyCreatorFlow = strategyCreator.flow.map(nodeOrEdge => ({...nodeOrEdge, isSelected: false}))
+      .map(nodeOrEdge => (nodeOrEdge.id === element.id ? {...nodeOrEdge, isSelected: true} : nodeOrEdge))
+    const updatedStrategyCreator = {...strategyCreator, flow: updatedStrategyCreatorFlow}
 
+    setOpenDialogNodeStrategy(true)
+    setStrategyCreator(updatedStrategyCreator)
     event.preventDefault()
   }
+
+  const onNodeMove = (event, element) => {
+    const updatedStrategyCreatorFlow = strategyCreator.flow.map(nodeOrEdge => (nodeOrEdge.id === element.id ? {...nodeOrEdge, position: element.position} : nodeOrEdge))
+    const updatedStrategyCreator = {...strategyCreator, flow: updatedStrategyCreatorFlow}
+
+    setStrategyCreator(updatedStrategyCreator)
+    event.preventDefault()
+  }
+
+  const onPanCLick = (event) => {
+    const updatedStrategyCreatorFlow = strategyCreator.flow.map(nodeOrEdge => ({...nodeOrEdge, isSelected: false}))
+    const updatedStrategyCreator = {...strategyCreator, flow: updatedStrategyCreatorFlow}
+    
+    setStrategyCreator(updatedStrategyCreator)
+    event.preventDefault()
+}
 
   const onChangeStrategyCreatorName = (event) => {
     const updatedStrategyCreator = {...strategyCreator, name: event.target.value}
@@ -121,6 +138,8 @@ const StrategyCreator = ({ strategyCreator, openDialogNodeStrategy, setStrategyC
             onDragOver={onDragOver}
             style={graphStyles}
             onElementClick={onElementClick}
+            onNodeDragStop={onNodeMove}
+            onPaneClick={onPanCLick}
             edgeTypes={{
               smart: SmartEdge,
             }}
@@ -143,7 +162,7 @@ const StrategyCreator = ({ strategyCreator, openDialogNodeStrategy, setStrategyC
 
       </ReactFlowProvider>
 
-      <DialogUpdateNode isOpen={openDialogNodeStrategy.open}/>
+      <DialogUpdateNode isOpen={openDialogNodeStrategy}/>
     </div>
     </div>
   )

@@ -161,7 +161,7 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
         const nodeOrEdge = selectedMetaAction.length === 0 || ! getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.isSelected) ? undefined : getSelectedMetaAction.flow.filter(action => action.isSelected === true)[0]
     
         if (nodeOrEdge === undefined)
-            return <Typography>Click on a node</Typography>
+            return <Typography>Click on a node or an edge</Typography>
         else if (nodeOrEdge.id.startsWith('Node'))
             return (
                 <div>

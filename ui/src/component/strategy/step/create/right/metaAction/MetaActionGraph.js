@@ -46,13 +46,13 @@ const MetaActionGraph = ({ metaActionArray, setMetaActionArray }) => {
         event.preventDefault()
 
         const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
+        const idNode = getIdNode()
         const type = event.dataTransfer.getData('application/reactflow')
         const position = getSelectedMetaAction.reactFlowInstance.project({
             x: event.clientX - reactFlowBounds.left,
             y: event.clientY - reactFlowBounds.top,
         })
 
-        const idNode = getIdNode()
         const newNode = {
             id: idNode,
             type,
@@ -64,9 +64,7 @@ const MetaActionGraph = ({ metaActionArray, setMetaActionArray }) => {
             isSelected: false
         }
 
-        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? { ...metaAction, flow: getSelectedMetaAction.flow.concat([newNode]) } : metaAction))
-        console.log(updatedMetaActionArray)
-        
+        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? { ...metaAction, flow: getSelectedMetaAction.flow.concat([newNode]) } : metaAction)) 
         setMetaActionArray(updatedMetaActionArray)
     }
 
@@ -96,7 +94,7 @@ const MetaActionGraph = ({ metaActionArray, setMetaActionArray }) => {
 
     const onNodeMove = (event, element) => {
         const updatedSelectedMetaAction = getSelectedMetaAction.flow.map(nodeOrEdge => (nodeOrEdge.id === element.id ? {...nodeOrEdge, position: element.position} : nodeOrEdge))
-        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? {...metaAction, flow :  updatedSelectedMetaAction} : metaAction))
+        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.id === getSelectedMetaAction.id ? {...metaAction, flow :  updatedSelectedMetaAction} : metaAction))
         
         setMetaActionArray(updatedMetaActionArray)
         event.preventDefault()
@@ -104,7 +102,7 @@ const MetaActionGraph = ({ metaActionArray, setMetaActionArray }) => {
 
     const onPanCLick = (event) => {
         const updatedSelectedMetaAction = getSelectedMetaAction.flow.map(nodeOrEdge => ({...nodeOrEdge, isSelected: false}))
-        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? {...metaAction, flow :  updatedSelectedMetaAction} : metaAction))
+        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.id === getSelectedMetaAction.id ? {...metaAction, flow :  updatedSelectedMetaAction} : metaAction))
         
         setMetaActionArray(updatedMetaActionArray)
         event.preventDefault()

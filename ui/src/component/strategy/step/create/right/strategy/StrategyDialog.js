@@ -30,11 +30,6 @@ import LinearScaleIcon from '@material-ui/icons/LinearScale'
 
 
 const DialogUpdateNode = ({ isOpen, strategyCreator, openDialogNodeStrategy, setStrategyCreator, setOpenDialogNodeStrategy }) => {
-
-    useEffect(() => {
-        console.log("hello2")
-    }, [openDialogNodeStrategy])
-
     const deleteEdge = (event, id) => {
         event.preventDefault()
 
@@ -43,9 +38,11 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, openDialogNodeStrategy, set
     }
 
     const listEdgesToDelete = () => {
-        const edges = strategyCreator.flow.filter(element => element.id.startsWith("Edge"))
-        const filteredEdges = edges.filter(element => element.source === openDialogNodeStrategy.node.id || element.target === openDialogNodeStrategy.node.id)
+        const selectedStrategyNode= strategyCreator.flow.filter(nodeOrEdge => nodeOrEdge.isSelected === true).at(-1)
 
+        const edges = strategyCreator.flow.filter(element => element.id.startsWith("Edge"))
+        const filteredEdges = edges.filter(edge => selectedStrategyNode.id === edge.source || selectedStrategyNode.id === edge.target)
+        
         return filteredEdges.map((value) => (
             <ListItem>
                 <ListItemAvatar>
@@ -70,88 +67,67 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, openDialogNodeStrategy, set
     const handleCancel = (event) => {
         event.preventDefault()
 
-        setOpenDialogNodeStrategy({ open: false, node: { data: { label: {} } } })
+        const updatedStrategyCreatorFlow = strategyCreator.flow.map(nodeOrEdge => ({...nodeOrEdge, isSelected: false}))
+        const updatedStrategyCreator = {...strategyCreator, flow: updatedStrategyCreatorFlow}
+        
+        setStrategyCreator(updatedStrategyCreator)
+        setOpenDialogNodeStrategy(false)
     }
 
     const handleDelete = (event) => {
         event.preventDefault()
 
-        const filteredNode = strategyCreator.flow.filter(flow => flow.id !== openDialogNodeStrategy.node.id)
-        const filteredEdge = filteredNode.filter(flow => flow.source !== openDialogNodeStrategy.node.id && flow.target !== openDialogNodeStrategy.node.id)
-        setStrategyCreator({...strategyCreator, flow: filteredEdge})
-        setOpenDialogNodeStrategy({ open: false, node: { data: { label: {} } } })
+        const selectedNodeOrEdge = strategyCreator.flow.filter(nodeOrEdge => nodeOrEdge.isSelected === true)[0]
+
+        if (selectedNodeOrEdge.id.startsWith('Node')) {
+            const updatedStrategyCreatorFlow = strategyCreator.flow.filter(node => node.isSelected === false && node.source !== selectedNodeOrEdge.id && node.target !== selectedNodeOrEdge.id)
+            const updatedStrategyCreator = {...strategyCreator, flow: updatedStrategyCreatorFlow}
+        
+            setStrategyCreator(updatedStrategyCreator)
+        }
+        else if (selectedNodeOrEdge.id.startsWith('Edge')) {
+            const updatedStrategyCreatorFlow = strategyCreator.flow.filter(edge => edge.isSelected === false)
+            const updatedStrategyCreator = {...strategyCreator, flow: updatedStrategyCreatorFlow}
+
+            setStrategyCreator(updatedStrategyCreator)
+        }
+
+        setOpenDialogNodeStrategy(false)
     }
 
     const handleSubmit = (event) => {
-        const index = strategyCreator.flow.map(item => item.id).indexOf(openDialogNodeStrategy.node.id)
+        handleCancel(event)
 
-        if (index === -1) {
-            console.log("Item not in flowStrategy")
-        }
-        else {
-            var flowStrategyUpdated = strategyCreator.flow
-            flowStrategyUpdated[index] = openDialogNodeStrategy.node
-            setStrategyCreator({...strategyCreator, flow: flowStrategyUpdated})
-            console.log(flowStrategyUpdated)
-            setOpenDialogNodeStrategy({ open: false, node: { data: { label: {} } } })
-        }
+        // TODO
 
         event.preventDefault()
     }
 
-    // Text field in dialog
-    const onTextLabelChange = (label) => {
-        const nodeStrategyUpdated = { ...openDialogNodeStrategy.node, data: { label: label.target.value } }
-        const openDialogNodeStrategyUpdated = { open: true, node: nodeStrategyUpdated }
-        setOpenDialogNodeStrategy(openDialogNodeStrategyUpdated)
+    const onTextLabelChange = (event) => {
+        const updatedStrategyCreatorFlow = strategyCreator.flow.map(nodeOrEdge => nodeOrEdge.isSelected === true ? {...nodeOrEdge, data: {label: event.target.value}} : nodeOrEdge)
+        const updatedStrategyCreator = { ...strategyCreator, flow: updatedStrategyCreatorFlow }
+        setStrategyCreator(updatedStrategyCreator)
     }
 
-    const onTextVersionChange = (version) => {
-        //const monitoringUpdated = { ...monitoring, version: version.target.value }
-        //setMonitoring(monitoringUpdated)
-    }
-
-
-    return (
-        <Dialog open={isOpen} onClose={handleCancel}>
-            <DialogTitle>Update Node id</DialogTitle>
-            <DialogContent>
-                <DialogContentText>
-                    To save node, please enter the fields below.
-                </DialogContentText>
-
-                <TextField
-                    disabled
-                    autoFocus
-                    margin="dense"
-                    id="id"
-                    label="Id"
-                    defaultValue={openDialogNodeStrategy.node.id}
-                    fullWidth
-                    variant="standard"
-                />
+    const dialogNodeOrEdge = () => {
+        const nodeOrEdge = strategyCreator.flow.filter(nodeOrEdge => nodeOrEdge.isSelected === true)[0]
+        
+        if (nodeOrEdge === undefined)
+            return <Typography>Click on a node or an edge</Typography>
+        else if (nodeOrEdge.id.startsWith('Node'))
+            return (
+                <div>
                 <TextField
                     autoFocus
                     margin="dense"
                     onChange={onTextLabelChange}
-                    id="dataLabel"
-                    label="Data label"
-                    defaultValue={openDialogNodeStrategy.node.data.label}
+                    id="name"
+                    label="Name"
+                    defaultValue={nodeOrEdge.data.label}
                     fullWidth
                     variant="standard"
                 />
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    onChange={onTextVersionChange}
-                    id="version"
-                    label="Version"
-                    defaultValue={openDialogNodeStrategy.node.id}
-                    fullWidth
-                    variant="standard"
-                />
-
-
+            
                 <Typography variant="h6" >
                     List of edge to delete
                 </Typography>
@@ -160,7 +136,21 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, openDialogNodeStrategy, set
                         {listEdgesToDelete()}
                     </List>
                 </div>
+                </div>
+            )
+        else if (nodeOrEdge.id.startsWith('Edge'))
+            return <Typography>EDGE</Typography>
+    }
 
+    return (
+        <Dialog open={isOpen} onClose={handleCancel}>
+            <DialogTitle>Dialog edit strategy node or edge</DialogTitle>
+            <DialogContent>
+                <DialogContentText>
+                    Please fill in the form.
+                </DialogContentText>
+
+                {dialogNodeOrEdge()}
 
             </DialogContent>
 
