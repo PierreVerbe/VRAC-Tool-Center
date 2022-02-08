@@ -1,0 +1,34 @@
+{
+    "strategy": {
+        "transition": [
+            "NoEvent",
+            "Jack",
+            "Finished",
+            "Blocked",
+            "Failed",
+            "Timeout",
+            "GameEnd"
+        ]
+    },
+    "metaAction": {
+        "transition": [
+            "NoEvent",
+            "Timeout",
+            "EmergencyBrake",
+            "Resume",
+            "SampleDetected",
+            "NewPathFound",
+            "AckMoveHoming",
+            "AckMoveLine",
+            "AckMoveRotate",
+            "AckMovePolar",
+            "AckMoveBezier",
+            "AckMoveXYT",
+            "AckEndMove",
+            "AckServo",
+            "Stock1_Filed",
+            "Stock2_Filed",
+            "Stock3_Filed"
+        ]
+    }
+}
