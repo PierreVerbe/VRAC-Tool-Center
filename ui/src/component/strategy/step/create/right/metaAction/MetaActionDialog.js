@@ -31,6 +31,8 @@ import MetaActionGraph from "./MetaActionGraph"
 import ClearIcon from '@material-ui/icons/Clear'
 import PublishIcon from '@material-ui/icons/Publish'
 
+import configData from "./../../../../../../resources/config.json";
+
 const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(1),
@@ -49,6 +51,8 @@ const metaActionActionType = ["Homing", "Line", "Bottom Arms Out Double", "Botto
     "Top Arm Stockage", "XYT", "Top Arm Galery Bottom", "Rotate", "Single Arm Out",
     "Single Arm In", "Top Arm Get Single Sample", "Top Arm Buffer 1", "Top Arm Buffer 2", "Bezier", 
     "End"]
+
+const ttt = configData.strategy.transition
 
 const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDialogMetaAction }) => {
     const classes = useStyles()
@@ -213,17 +217,33 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
         else if (nodeOrEdge.id.startsWith('Edge'))
             return (
                 <ListItem>
-                <ListItemAvatar>
-                    <Avatar>
-                        <LinearScaleIcon />
-                    </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                    primary={nodeOrEdge.id}
-                    secondary={`ActionName: ${nodeOrEdge.label}`}
-                />
-                <TextField id="standard-basic" label="Type transition" defaultValue={nodeOrEdge.label} onChange={(event) => truc(event, nodeOrEdge.id)}/>
-            </ListItem>
+                    <ListItemAvatar>
+                        <Avatar>
+                            <LinearScaleIcon />
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary={nodeOrEdge.id}
+                        secondary={`ActionName: ${nodeOrEdge.label}`}
+                    />
+                    
+                    <FormControl className={classes.formControl}>
+                        <FormGroup>
+                            <FormLabel color='primary'>Type transition</FormLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={nodeOrEdge.label}
+                                onChange={(event) => truc(event, nodeOrEdge.id)}
+                            >
+                                {ttt.map(actionType => 
+                                    <MenuItem value={actionType}>{actionType}</MenuItem>
+                                )}
+                            </Select>
+                            
+                        </FormGroup>
+                    </FormControl>
+                </ListItem>
             )
           
     }
