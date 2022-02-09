@@ -52,7 +52,7 @@ const metaActionActionType = ["Homing", "Line", "Bottom Arms Out Double", "Botto
     "Single Arm In", "Top Arm Get Single Sample", "Top Arm Buffer 1", "Top Arm Buffer 2", "Bezier", 
     "End"]
 
-const ttt = configData.strategy.transition
+const configMetaActionTransition = configData.strategy.transition
 
 const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDialogMetaAction }) => {
     const classes = useStyles()
@@ -236,7 +236,7 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
                                 value={nodeOrEdge.label}
                                 onChange={(event) => truc(event, nodeOrEdge.id)}
                             >
-                                {ttt.map(actionType => 
+                                {configMetaActionTransition.map(actionType => 
                                     <MenuItem value={actionType}>{actionType}</MenuItem>
                                 )}
                             </Select>

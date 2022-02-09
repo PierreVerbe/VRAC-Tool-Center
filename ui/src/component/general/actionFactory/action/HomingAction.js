@@ -17,7 +17,16 @@ import LinearScaleIcon from '@material-ui/icons/LinearScale'
 import IconButton from "@material-ui/core/IconButton"
 import DeleteIcon from "@material-ui/icons/Delete"
 
+import MenuItem from "@material-ui/core/MenuItem"
 import { setMetaActionArrayActionCreator } from "../../../../action/strategyAction"
+
+import FormControl from "@material-ui/core/FormControl"
+import FormLabel from '@material-ui/core/FormLabel'
+import Select from "@material-ui/core/Select"
+
+import configData from "./../../../../resources/config.json"
+
+const configMetaActionTransition = configData.strategy.transition
 
 const HomingAction = ({action, metaActionArray, setMetaActionArray}) => {
     const ACTION = "Homing"
@@ -78,7 +87,24 @@ const HomingAction = ({action, metaActionArray, setMetaActionArray}) => {
                     primary={value.id}
                     secondary={`ActionName: ${getSelectedMetaAction.flow.filter(element => element.id === value.target)[0].data.label}`}
                 />
-                <TextField id="standard-basic" label="Type transition" defaultValue={value.label} onChange={(event) => truc(event, value.id)}/>
+                
+                <FormControl >
+                        <FormGroup>
+                            <FormLabel color='primary'>Type transition</FormLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={value.label}
+                                onChange={(event) => truc(event, value.id)}
+                            >
+                                {configMetaActionTransition.map(actionType => 
+                                    <MenuItem value={actionType}>{actionType}</MenuItem>
+                                )}
+                            </Select>
+                            
+                        </FormGroup>
+                    </FormControl>
+    
             </ListItem>)
         )
         )
