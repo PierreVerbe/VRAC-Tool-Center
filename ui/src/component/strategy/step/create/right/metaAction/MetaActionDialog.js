@@ -52,7 +52,7 @@ const metaActionActionType = ["Homing", "Line", "Bottom Arms Out Double", "Botto
     "Single Arm In", "Top Arm Get Single Sample", "Top Arm Buffer 1", "Top Arm Buffer 2", "Bezier", 
     "End"]
 
-const configMetaActionTransition = configData.strategy.transition
+const configMetaActionTransition = configData.metaAction.transition
 
 const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDialogMetaAction }) => {
     const classes = useStyles()

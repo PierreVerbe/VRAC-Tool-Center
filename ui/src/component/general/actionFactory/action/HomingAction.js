@@ -26,7 +26,7 @@ import Select from "@material-ui/core/Select"
 
 import configData from "./../../../../resources/config.json"
 
-const configMetaActionTransition = configData.strategy.transition
+const configMetaActionTransition = configData.metaAction.transition
 
 const HomingAction = ({action, metaActionArray, setMetaActionArray}) => {
     const ACTION = "Homing"

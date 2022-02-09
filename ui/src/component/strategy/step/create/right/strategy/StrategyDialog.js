@@ -21,9 +21,18 @@ import ListItemText from "@material-ui/core/ListItemText"
 import Avatar from "@material-ui/core/Avatar"
 import IconButton from "@material-ui/core/IconButton"
 
+import FormControl from "@material-ui/core/FormControl"
+import FormGroup from '@material-ui/core/FormGroup'
+import FormLabel from '@material-ui/core/FormLabel'
+import MenuItem from "@material-ui/core/MenuItem"
+
+import Select from "@material-ui/core/Select"
 import DeleteIcon from "@material-ui/icons/Delete"
 import LinearScaleIcon from '@material-ui/icons/LinearScale'
 
+import configData from "./../../../../../../resources/config.json"
+
+const configMetaActionTransition = configData.strategy.transition
 
 const DialogUpdateNode = ({ isOpen, strategyCreator, openDialogNodeStrategy, setStrategyCreator, setOpenDialogNodeStrategy }) => {
     const deleteEdge = (event, id) => {
@@ -99,6 +108,12 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, openDialogNodeStrategy, set
         event.preventDefault()
     }
 
+    const truc = (event, id) => {
+        const updatedStrategyCreatorFlow = strategyCreator.flow.map(nodeOrEdge => nodeOrEdge.id === id ? { ...nodeOrEdge, label: event.target.value } : nodeOrEdge)
+
+        setStrategyCreator({...strategyCreator, flow: updatedStrategyCreatorFlow})
+    }
+
     const onTextLabelChange = (event) => {
         const updatedStrategyCreatorFlow = strategyCreator.flow.map(nodeOrEdge => nodeOrEdge.isSelected === true ? {...nodeOrEdge, data: {label: event.target.value}} : nodeOrEdge)
         const updatedStrategyCreator = { ...strategyCreator, flow: updatedStrategyCreatorFlow }
@@ -135,7 +150,44 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, openDialogNodeStrategy, set
                 </div>
             )
         else if (nodeOrEdge.id.startsWith('Edge'))
-            return <Typography>EDGE</Typography>
+            return (
+                <List>
+                <ListItem>
+                    <ListItemAvatar>
+                        <Avatar>
+                            <LinearScaleIcon />
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary={nodeOrEdge.id}
+                        secondary={`ActionName: ${nodeOrEdge.label}`}
+                    />
+                    
+                    <FormControl>
+                        <FormGroup>
+                            <FormLabel color='primary'>Type transition</FormLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={nodeOrEdge.label}
+                                onChange={(event) => truc(event, nodeOrEdge.id)}
+                            >
+                                {configMetaActionTransition.map(actionType => 
+                                    <MenuItem value={actionType}>{actionType}</MenuItem>
+                                )}
+                            </Select>
+                            
+                        </FormGroup>
+                    </FormControl>
+
+                    <ListItemSecondaryAction>
+                        <IconButton edge="end" aria-label="delete" onClick={(event) => deleteEdge(event, nodeOrEdge.id)}>
+                            <DeleteIcon style={{ color: "red" }}/>
+                        </IconButton>
+                    </ListItemSecondaryAction>
+                </ListItem>
+                </List>
+            )
     }
 
     return (
