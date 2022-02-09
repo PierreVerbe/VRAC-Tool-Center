@@ -9,9 +9,6 @@ import { SmartEdge } from '@tisoap/react-flow-smart-edge'
 import TextField from '@material-ui/core/TextField'
 import './../dnd.css'
 
-
-import configData from "./../../../../../../resources/config.json";
-
 import { ArrowHeadType } from 'react-flow-renderer'
 
 let idNode = 0
@@ -26,9 +23,6 @@ const StrategyCreator = ({ strategyCreator, openDialogNodeStrategy, setStrategyC
    
     idNode = startNode === undefined ? 0 : parseInt(startNode.id.split("_")[1]) + 1
     idEdge = startEdge === undefined ? 0 : parseInt(startEdge.id.split("_")[1]) + 1
-
-    console.log(configData.strategy.transition)
-
     // eslint-disable-next-line
   }, [])
   

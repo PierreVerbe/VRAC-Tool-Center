@@ -216,6 +216,7 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
 
         else if (nodeOrEdge.id.startsWith('Edge'))
             return (
+                <List>
                 <ListItem>
                     <ListItemAvatar>
                         <Avatar>
@@ -243,7 +244,14 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
                             
                         </FormGroup>
                     </FormControl>
+
+                    <ListItemSecondaryAction>
+                        <IconButton edge="end" aria-label="delete" onClick={(event) => deleteEdge(event, nodeOrEdge.id)}>
+                            <DeleteIcon style={{ color: "red" }}/>
+                        </IconButton>
+                    </ListItemSecondaryAction>
                 </ListItem>
+                </List>
             )
           
     }
