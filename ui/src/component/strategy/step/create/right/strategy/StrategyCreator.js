@@ -55,7 +55,7 @@ const StrategyCreator = ({ strategyCreator, openDialogNodeStrategy, setStrategyC
       id: idNode,
       type,
       position,
-      data: { label: `${idNode} node` },
+      data: { label: `${idNode} node`, id: undefined },
       isSelected: false,
     }
 

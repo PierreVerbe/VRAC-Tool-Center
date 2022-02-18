@@ -34,7 +34,7 @@ import configData from "./../../../../../../resources/config.json"
 
 const configMetaActionTransition = configData.strategy.transition
 
-const DialogUpdateNode = ({ isOpen, strategyCreator, openDialogNodeStrategy, setStrategyCreator, setOpenDialogNodeStrategy }) => {
+const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, openDialogNodeStrategy, setStrategyCreator, setOpenDialogNodeStrategy }) => {
     const deleteEdge = (event, id) => {
         event.preventDefault()
 
@@ -114,6 +114,13 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, openDialogNodeStrategy, set
         setStrategyCreator({...strategyCreator, flow: updatedStrategyCreatorFlow})
     }
 
+    const setLabelNode = (event, id) => {
+        console.log(event)
+        const updatedStrategyCreatorFlow = strategyCreator.flow.map(nodeOrEdge => nodeOrEdge.id === id ? { ...nodeOrEdge, data: {label: event.target.value.name, id: event.target.value.id}  } : nodeOrEdge)
+        console.log(updatedStrategyCreatorFlow)
+        setStrategyCreator({...strategyCreator, flow: updatedStrategyCreatorFlow})
+    }
+
     const onTextLabelChange = (event) => {
         const updatedStrategyCreatorFlow = strategyCreator.flow.map(nodeOrEdge => nodeOrEdge.isSelected === true ? {...nodeOrEdge, data: {label: event.target.value}} : nodeOrEdge)
         const updatedStrategyCreator = { ...strategyCreator, flow: updatedStrategyCreatorFlow }
@@ -128,16 +135,24 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, openDialogNodeStrategy, set
         else if (nodeOrEdge.id.startsWith('Node'))
             return (
                 <div>
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    onChange={onTextLabelChange}
-                    id="name"
-                    label="Name"
-                    defaultValue={nodeOrEdge.data.label}
-                    fullWidth
-                    variant="standard"
-                />
+               
+
+                <FormControl>
+                    <FormGroup>
+                        <FormLabel color='primary'>Type transition</FormLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={nodeOrEdge.data.label}
+                            onChange={(event) => setLabelNode(event, nodeOrEdge.id)}
+                        >
+                            {metaActionArray.map(metaAction => 
+                                <MenuItem value={metaAction}>{metaAction.name}</MenuItem>
+                            )}
+                        </Select>
+                        
+                    </FormGroup>
+                </FormControl>
             
                 <Typography variant="h6" >
                     List of edge to delete
@@ -246,6 +261,7 @@ DialogUpdateNode.propTypes = {
 
 const mapStateToProps = state => ({
     strategyCreator: state.strategyCreator,
+    metaActionArray: state.metaActionArray,
     openDialogNodeStrategy: state.openDialogNodeStrategy
 })
 

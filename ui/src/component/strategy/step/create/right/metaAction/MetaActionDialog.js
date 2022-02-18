@@ -25,7 +25,7 @@ import LinearScaleIcon from '@material-ui/icons/LinearScale'
 import PropTypes from 'prop-types'
 import React from "react"
 import { connect } from "react-redux"
-import { setMetaActionArrayActionCreator, setOpenDialogMetaActionActionCreator } from "../../../../../../action/strategyAction"
+import { setStrategyCreatorActionCreator, setMetaActionArrayActionCreator, setOpenDialogMetaActionActionCreator } from "../../../../../../action/strategyAction"
 import ActionFactory from '../../../../../general/actionFactory/ActionFactory'
 import MetaActionGraph from "./MetaActionGraph"
 import ClearIcon from '@material-ui/icons/Clear'
@@ -54,7 +54,7 @@ const metaActionActionType = ["Homing", "Line", "Bottom Arms Out Double", "Botto
 
 const configMetaActionTransition = configData.metaAction.transition
 
-const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDialogMetaAction }) => {
+const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyCreator, setMetaActionArray, setOpenDialogMetaAction }) => {
     const classes = useStyles()
 
     //const nodes = useStoreState((store) => store.nodes);
@@ -133,6 +133,9 @@ const MetaActionDialog = ({ open, metaActionArray, setMetaActionArray, setOpenDi
     
     const onTextNameChange = (name) => {
         const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? { ...metaAction, name: name.target.value } : metaAction))
+        const updatedStrategyCreator = strategyCreator.flow.map(nodeOrEdge => (nodeOrEdge.data.id === getSelectedMetaAction.id ? {...nodeOrEdge, data : {label: name.target.value, id: getSelectedMetaAction.id}} : nodeOrEdge))
+        
+        setStrategyCreator({...strategyCreator, flow:  updatedStrategyCreator})
         setMetaActionArray(updatedMetaActionArray)
     }
 
@@ -328,10 +331,12 @@ ActionFactory.propTypes = {
 
 
 const mapStateToProps = state => ({
+    strategyCreator: state.strategyCreator,
     metaActionArray: state.metaActionArray
 })
 
 const mapDispatchToProps = dispatch => ({
+    setStrategyCreator: strategyCreator => dispatch(setStrategyCreatorActionCreator(strategyCreator)),
     setMetaActionArray: metaActionArray => dispatch(setMetaActionArrayActionCreator(metaActionArray)),
     setOpenDialogMetaAction: openDialogMetaAction => dispatch(setOpenDialogMetaActionActionCreator(openDialogMetaAction))
 })
