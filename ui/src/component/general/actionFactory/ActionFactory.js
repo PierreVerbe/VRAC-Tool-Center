@@ -16,7 +16,12 @@ import RotateAction from "./action/RotateAction";
 import TopArmGaleryBottomAction from "./action/TopArmGaleryBottomAction";
 
 import EndAction from "./action/EndAction";
-
+import SingleArmOutAction from "./action/SingleArmOutAction";
+import SingleArmInAction from "./action/SingleArmInAction";
+import TopArmGetSingleSampleAction from "./action/TopArmGetSingleSampleAction";
+import TopArmBuffer1Action from "./action/TopArmBuffer1Action";
+import TopArmBuffer2Action from "./action/TopArmBuffer2Action";
+import BezierAction from "./action/BezierAction";
 
 const ActionFactory = ({action}) => {
     const actionType = action.actionData.type
@@ -41,18 +46,18 @@ const ActionFactory = ({action}) => {
         case "Rotate":
             return <RotateAction action={action}/>;
         case "Single Arm Out":
-            return <p>Single Arm Out</p>;
+            return <SingleArmOutAction action={action}/>;
 
         case "Single Arm In":
-            return <p>Single Arm In</p>;
+            return <SingleArmInAction action={action}/>;
         case "Top Arm Get Single Sample":
-            return <p>Top Arm Get Single Sample</p>;
+            return <TopArmGetSingleSampleAction action={action}/>;
         case "Top Arm Buffer 1":
-            return <p>Top Arm Buffer 1</p>;
+            return <TopArmBuffer1Action action={action}/>;
         case "Top Arm Buffer 2":
-            return <p>Top Arm Buffer 2</p>;
+            return <TopArmBuffer2Action action={action}/>;
         case "Bezier":
-            return <p>Bezier</p>;
+            return <BezierAction action={action}/>;
 
         case "End":
             return <EndAction action={action}/>;
