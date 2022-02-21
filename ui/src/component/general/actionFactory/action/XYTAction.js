@@ -9,10 +9,10 @@ import TextField from '@material-ui/core/TextField';
 
 import { setMetaActionArrayActionCreator } from "../../../../action/strategyAction"
 
-const LineAction = ({action, metaActionArray, setMetaActionArray}) => {
-    const ACTION = "Line"
+const XYTAction = ({action, metaActionArray, setMetaActionArray}) => {
+    const ACTION = "XYT"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
-    const defaultActionData = {type: action.actionData.type, Forward: false, Distance: 0, Speed: 0, Acceleration: 0}
+    const defaultActionData = {type: action.actionData.type, Forward: false, X: 0, Y: 0, T: 0}
 
     useEffect(() => {
         if (action.actionData.type !== ACTION) {
@@ -55,15 +55,15 @@ const LineAction = ({action, metaActionArray, setMetaActionArray}) => {
                 label="Enable forward"
                 />
 
-                <TextField id="standard-basic" label="Distance" type="number" defaultValue={action.actionData.Distance} onChange={handleChangeNumber} name="Distance"/>
-                <TextField id="standard-basic" label="Speed" type="number" defaultValue={action.actionData.Speed} onChange={handleChangeNumber} name="Speed"/>
-                <TextField id="standard-basic" label="Acceleration" type="number" defaultValue={action.actionData.Acceleration} onChange={handleChangeNumber} name="Acceleration"/>
+                <TextField id="standard-basic" label="X" type="number" defaultValue={action.actionData.X} onChange={handleChangeNumber} name="X"/>
+                <TextField id="standard-basic" label="Y" type="number" defaultValue={action.actionData.Y} onChange={handleChangeNumber} name="Y"/>
+                <TextField id="standard-basic" label="T" type="number" defaultValue={action.actionData.T} onChange={handleChangeNumber} name="T"/>
             </FormGroup> 
         </div>
     )
 }
 
-LineAction.propTypes = {
+XYTAction.propTypes = {
     action: PropTypes.object.isRequired
 }
 
@@ -75,4 +75,4 @@ const mapDispatchToProps = dispatch => ({
     setMetaActionArray: metaActionArray => dispatch(setMetaActionArrayActionCreator(metaActionArray))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(LineAction)
+export default connect(mapStateToProps, mapDispatchToProps)(XYTAction)

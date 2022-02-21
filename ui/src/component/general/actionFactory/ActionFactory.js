@@ -9,6 +9,8 @@ import BottomArmsOutDoubleAction from "./action/BottomArmsOutDoubleAction";
 import BottomArmsInDoubleAction from "./action/BottomArmsInDoubleAction";
 import TopArmsGetSamplesAction from "./action/TopArmsGetSamplesAction";
 import TopArmStockageAction from "./action/TopArmStockageAction";
+import XYTAction from "./action/XYTAction";
+import RotateAction from "./action/RotateAction";
 
 
 import TopArmGaleryBottomAction from "./action/TopArmGaleryBottomAction";
@@ -23,7 +25,7 @@ const ActionFactory = ({action}) => {
         case "Homing":
             return <HomingAction action={action}/>;
         case "Line":
-            return <LineAction />;
+            return <LineAction action={action}/>;
         case "Bottom Arms Out Double":
             return <BottomArmsOutDoubleAction action={action}/>;
         case "Bottom Arms In Double":
@@ -33,11 +35,11 @@ const ActionFactory = ({action}) => {
         case "Top Arm Stockage":
             return <TopArmStockageAction action={action}/>;
         case "XYT":
-            return <p>XYT</p>;
+            return <XYTAction action={action}/>; 
         case "Top Arm Galery Bottom":
             return <TopArmGaleryBottomAction action={action}/>;
         case "Rotate":
-            return <p>Rotate</p>;
+            return <RotateAction action={action}/>;
         case "Single Arm Out":
             return <p>Single Arm Out</p>;
 
