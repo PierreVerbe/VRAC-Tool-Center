@@ -6,6 +6,15 @@ import Typography from '@material-ui/core/Typography'
 import HomingAction from "./action/HomingAction"
 import LineAction  from "./action/LineAction"
 import BottomArmsOutDoubleAction from "./action/BottomArmsOutDoubleAction";
+import BottomArmsInDoubleAction from "./action/BottomArmsInDoubleAction";
+import TopArmsGetSamplesAction from "./action/TopArmsGetSamplesAction";
+import TopArmStockageAction from "./action/TopArmStockageAction";
+
+
+import TopArmGaleryBottomAction from "./action/TopArmGaleryBottomAction";
+
+import EndAction from "./action/EndAction";
+
 
 const ActionFactory = ({action}) => {
     const actionType = action.actionData.type
@@ -18,16 +27,15 @@ const ActionFactory = ({action}) => {
         case "Bottom Arms Out Double":
             return <BottomArmsOutDoubleAction action={action}/>;
         case "Bottom Arms In Double":
-            return <p>Bottom Arms In Double</p>;
+            return <BottomArmsInDoubleAction action={action}/>;
         case "Top Arms Get Samples":
-            return <p>Top Arms Get Samples</p>;
-
+            return <TopArmsGetSamplesAction action={action}/>; 
         case "Top Arm Stockage":
-            return <p>Top Arm Stockage</p>;
+            return <TopArmStockageAction action={action}/>;
         case "XYT":
             return <p>XYT</p>;
         case "Top Arm Galery Bottom":
-            return <p>Top Arm Galery Bottom</p>;
+            return <TopArmGaleryBottomAction action={action}/>;
         case "Rotate":
             return <p>Rotate</p>;
         case "Single Arm Out":
@@ -45,7 +53,7 @@ const ActionFactory = ({action}) => {
             return <p>Bezier</p>;
 
         case "End":
-            return <p>End</p>;
+            return <EndAction action={action}/>;
         default:
             return <Typography>Action type undefined</Typography>;
     }
