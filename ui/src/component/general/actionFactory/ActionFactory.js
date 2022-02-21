@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography'
 
 import HomingAction from "./action/HomingAction"
 import LineAction  from "./action/LineAction"
+import BottomArmsOutDoubleAction from "./action/BottomArmsOutDoubleAction";
 
 const ActionFactory = ({action}) => {
     const actionType = action.actionData.type
@@ -15,7 +16,7 @@ const ActionFactory = ({action}) => {
         case "Line":
             return <LineAction />;
         case "Bottom Arms Out Double":
-            return <p>Bottom Arms Out Double</p>;
+            return <BottomArmsOutDoubleAction action={action}/>;
         case "Bottom Arms In Double":
             return <p>Bottom Arms In Double</p>;
         case "Top Arms Get Samples":
