@@ -8,6 +8,9 @@ import BackGrippersDropLeftAction from "./action/BackGrippersDropLeftAction"
 import BackGrippersDropRightAction from "./action/BackGrippersDropRightAction"
 import BackGrippersGrabCenterAction from "./action/BackGrippersGrabCenterAction"
 import BackGrippersGrabLeftAction from "./action/BackGrippersGrabLeftAction"
+import BackGrippersGrabRightAction from "./action/BackGrippersGrabRightAction"
+import BackGrippersInAction from "./action/BackGrippersInAction"
+import BackGrippersOutAction from "./action/BackGrippersOutAction"
 
 
 
@@ -32,14 +35,12 @@ const ActionFactory = ({ action }) => {
     const actionType = action.actionData.type
 
     /*
-    const metaActionActionType = [
-    "BackGrippersDropCenter", "BackGrippersDropLeft", "BackGrippersDropRight", "BackGrippersGrabCenter", "BackGrippersGrabLeft",
-    "BackGrippersGrabRight", "BackGrippersIn", "BackGrippersOut", "Bezier", "BottomArmsIn_double",
-    "BottomArmsIn_single", "BottomArmsOut_double", "BottomArmsOut_single", "CalculateOdo", "End",
+  const metaActionActionType = ["BackGrippersDropCenter", "BackGrippersDropLeft", "BackGrippersDropRight", "BackGrippersGrabCenter", "BackGrippersGrabLeft",
+    "BackGrippersGrabRight", "BackGrippersIn", "BackGrippersOut", "Bezier", "BottomArmsInDouble",
+    "BottomArmsInSingle", "BottomArmsOutDouble", "BottomArmsOutSingle", "CalculateOdometry", "End",
     "Homing", "Line", "Rotate", "TopArmGaleryBottom", "TopArmGaleryTop",
     "TopArmGetSamples", "TopArmGetSingleSample", "TopArmSingleStockage", "TopArmStockage", "Wait",
-    "XYT"
-]
+    "XYT"]
 */
     switch (actionType) {
         case "BackGrippersDropCenter":
@@ -57,8 +58,22 @@ const ActionFactory = ({ action }) => {
         case "BackGrippersGrabLeft":
             return <BackGrippersGrabLeftAction action={action} />
 
+        case "BackGrippersGrabRight":
+            return <BackGrippersGrabRightAction action={action} />
 
-            
+        case "BackGrippersIn":
+            return <BackGrippersInAction action={action} />
+
+        case "BackGrippersOut":
+            return <BackGrippersOutAction action={action} />
+
+        case "Bezier":
+            return <BezierAction action={action} />
+
+        case "BottomArmsInDouble":
+            return <BottomArmsInDoubleAction action={action} />
+
+
 
         case "Homing":
             return <HomingAction action={action} />
@@ -68,9 +83,6 @@ const ActionFactory = ({ action }) => {
 
         case "BottomArmsOutDouble":
             return <BottomArmsOutDoubleAction action={action} />
-
-        case "BottomArmsInDouble":
-            return <BottomArmsInDoubleAction action={action} />
 
         case "TopArmsGetSamples":
             return <TopArmsGetSamplesAction action={action} />
@@ -102,8 +114,7 @@ const ActionFactory = ({ action }) => {
         case "TopArmBuffer2":
             return <TopArmBuffer2Action action={action} />
 
-        case "Bezier":
-            return <BezierAction action={action} />
+       
 
         case "End":
             return <EndAction action={action} />

@@ -48,8 +48,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const metaActionActionType = ["BackGrippersDropCenter", "BackGrippersDropLeft", "BackGrippersDropRight", "BackGrippersGrabCenter", "BackGrippersGrabLeft",
-    "BackGrippersGrabRight", "BackGrippersIn", "BackGrippersOut", "Bezier", "BottomArmsIn_double",
-    "BottomArmsIn_single", "BottomArmsOut_double", "BottomArmsOut_single", "CalculateOdo", "End",
+    "BackGrippersGrabRight", "BackGrippersIn", "BackGrippersOut", "Bezier", "BottomArmsInDouble",
+    "BottomArmsInSingle", "BottomArmsOutDouble", "BottomArmsOutSingle", "CalculateOdometry", "End",
     "Homing", "Line", "Rotate", "TopArmGaleryBottom", "TopArmGaleryTop",
     "TopArmGetSamples", "TopArmGetSingleSample", "TopArmSingleStockage", "TopArmStockage", "Wait",
     "XYT"]
