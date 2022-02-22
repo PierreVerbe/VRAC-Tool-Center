@@ -29,6 +29,18 @@
             "Stock1_Filed",
             "Stock2_Filed",
             "Stock3_Filed"
-        ]
+        ],
+        "Speed": {
+            "Values": [
+                "FUCKING_SLOW",
+                "VERY_SLOW",
+                "SLOW",
+                "NORMAL",
+                "FAST",
+                "VERY_FAST",
+                "FASTER_THAN_RCVA",
+                "I_AM_SPEED"
+            ]
+        }
     }
 }

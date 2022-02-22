@@ -10,9 +10,7 @@ import Select from "@material-ui/core/Select"
 import MenuItem from "@material-ui/core/MenuItem"
 
 import { setMetaActionArrayActionCreator } from "../../../../action/strategyAction"
-
-const speedValues = ["FUCKING_SLOW", "VERY_SLOW", "SLOW", "NORMAL", "FAST",
-    "VERY_FAST", "FASTER_THAN_RCVA", "I_AM_SPEED"]
+import configData from "./../../../../resources/config.json"
 
 const BezierAction = ({ action, metaActionArray, setMetaActionArray }) => {
     const ACTION = "Bezier"
@@ -51,8 +49,6 @@ const BezierAction = ({ action, metaActionArray, setMetaActionArray }) => {
     }
 
     const handleChangeList = (event) => {
-
-        console.log(event.target.value)
         const updatedActionData = { ...action.actionData, Speed: event.target.value }
         const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ?
             { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: updatedActionData } : nodeOrEdge) } :
@@ -79,7 +75,7 @@ const BezierAction = ({ action, metaActionArray, setMetaActionArray }) => {
                     value={action.actionData.Speed}
                     onChange={handleChangeList}
                 >
-                    {speedValues.map(actionType =>
+                    {configData.metaAction.Speed.Values.map(actionType =>
                         <MenuItem value={actionType}>{actionType}</MenuItem>
                     )}
                 </Select>
