@@ -47,10 +47,12 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const metaActionActionType = ["Homing", "Line", "Bottom Arms Out Double", "Bottom Arms In Double", "Top Arms Get Samples",
-    "Top Arm Stockage", "XYT", "Top Arm Galery Bottom", "Rotate", "Single Arm Out",
-    "Single Arm In", "Top Arm Get Single Sample", "Top Arm Buffer 1", "Top Arm Buffer 2", "Bezier", 
-    "End"]
+const metaActionActionType = ["BackGrippersDropCenter", "BackGrippersDropLeft", "BackGrippersDropRight", "BackGrippersGrabCenter", "BackGrippersGrabLeft",
+    "BackGrippersGrabRight", "BackGrippersIn", "BackGrippersOut", "Bezier", "BottomArmsIn_double",
+    "BottomArmsIn_single", "BottomArmsOut_double", "BottomArmsOut_single", "CalculateOdo", "End",
+    "Homing", "Line", "Rotate", "TopArmGaleryBottom", "TopArmGaleryTop",
+    "TopArmGetSamples", "TopArmGetSingleSample", "TopArmSingleStockage", "TopArmStockage", "Wait",
+    "XYT"]
 
 const configMetaActionTransition = configData.metaAction.transition
 
