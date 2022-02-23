@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField'
 
 import { setMetaActionArrayActionCreator } from "../../../../action/strategyAction"
 
-const TopArmGetSingleSample = ({action, metaActionArray, setMetaActionArray}) => {
+const TopArmSingleStockageAction = ({action, metaActionArray, setMetaActionArray}) => {
     const ACTION = "TopArmGetSingleSample"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
     const defaultActionData = {type: action.actionData.type, Side: 0}
@@ -43,7 +43,7 @@ const TopArmGetSingleSample = ({action, metaActionArray, setMetaActionArray}) =>
     )
 }
 
-TopArmGetSingleSample.propTypes = {
+TopArmSingleStockageAction.propTypes = {
     action: PropTypes.object.isRequired
 }
 
@@ -55,4 +55,4 @@ const mapDispatchToProps = dispatch => ({
     setMetaActionArray: metaActionArray => dispatch(setMetaActionArrayActionCreator(metaActionArray))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(TopArmGetSingleSample)
+export default connect(mapStateToProps, mapDispatchToProps)(TopArmSingleStockageAction)

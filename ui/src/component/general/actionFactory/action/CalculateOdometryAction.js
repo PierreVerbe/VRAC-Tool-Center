@@ -6,8 +6,8 @@ import Typography from '@material-ui/core/Typography'
 
 import { setMetaActionArrayActionCreator } from "../../../../action/strategyAction"
 
-const BottomArmsOutDoubleAction = ({ action, metaActionArray, setMetaActionArray }) => {
-    const ACTION = "BottomArmsOutDouble"
+const CalculateOdometryAction = ({ action, metaActionArray, setMetaActionArray }) => {
+    const ACTION = "BottomArmsInDouble"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
     const defaultActionData = { type: action.actionData.type }
 
@@ -27,7 +27,7 @@ const BottomArmsOutDoubleAction = ({ action, metaActionArray, setMetaActionArray
 
 }
 
-BottomArmsOutDoubleAction.propTypes = {
+CalculateOdometryAction.propTypes = {
     action: PropTypes.object.isRequired
 }
 
@@ -39,4 +39,4 @@ const mapDispatchToProps = dispatch => ({
     setMetaActionArray: metaActionArray => dispatch(setMetaActionArrayActionCreator(metaActionArray))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(BottomArmsOutDoubleAction)
+export default connect(mapStateToProps, mapDispatchToProps)(CalculateOdometryAction)

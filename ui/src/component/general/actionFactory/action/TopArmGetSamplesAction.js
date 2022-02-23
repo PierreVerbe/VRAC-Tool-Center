@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, {useEffect} from "react"
 import { connect } from "react-redux"
 import PropTypes from 'prop-types'
 
@@ -6,16 +6,16 @@ import Typography from '@material-ui/core/Typography'
 
 import { setMetaActionArrayActionCreator } from "../../../../action/strategyAction"
 
-const BottomArmsOutDoubleAction = ({ action, metaActionArray, setMetaActionArray }) => {
-    const ACTION = "BottomArmsOutDouble"
+const TopArmGetSamplesAction = ({action, metaActionArray, setMetaActionArray}) => {
+    const ACTION = "TopArmGaleryBottom"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
-    const defaultActionData = { type: action.actionData.type }
+    const defaultActionData = {type: action.actionData.type}
 
     useEffect(() => {
         if (action.actionData.type !== ACTION) {
-            const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ?
+            const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? 
                 { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: defaultActionData } : nodeOrEdge) } :
-                metaAction))
+                 metaAction))
             setMetaActionArray(updatedMetaActionArray)
         }
         // eslint-disable-next-line
@@ -27,7 +27,7 @@ const BottomArmsOutDoubleAction = ({ action, metaActionArray, setMetaActionArray
 
 }
 
-BottomArmsOutDoubleAction.propTypes = {
+TopArmGetSamplesAction.propTypes = {
     action: PropTypes.object.isRequired
 }
 
@@ -39,4 +39,4 @@ const mapDispatchToProps = dispatch => ({
     setMetaActionArray: metaActionArray => dispatch(setMetaActionArrayActionCreator(metaActionArray))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(BottomArmsOutDoubleAction)
+export default connect(mapStateToProps, mapDispatchToProps)(TopArmGetSamplesAction)
