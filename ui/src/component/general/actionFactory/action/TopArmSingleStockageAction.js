@@ -1,14 +1,14 @@
 import React, {useEffect} from "react"
 import { connect } from "react-redux"
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 
-import FormGroup from '@material-ui/core/FormGroup'
-import TextField from '@material-ui/core/TextField'
+import FormGroup from "@material-ui/core/FormGroup"
+import TextField from "@material-ui/core/TextField"
 
 import { setMetaActionArrayActionCreator } from "../../../../action/strategyAction"
 
 const TopArmSingleStockageAction = ({action, metaActionArray, setMetaActionArray}) => {
-    const ACTION = "TopArmGetSingleSample"
+    const ACTION = "TopArmSingleStockage"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
     const defaultActionData = {type: action.actionData.type, Side: 0}
 

@@ -1,11 +1,11 @@
 import React, { useEffect } from "react"
 import { connect } from "react-redux"
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 
-import Switch from '@material-ui/core/Switch'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import FormGroup from '@material-ui/core/FormGroup'
-import TextField from '@material-ui/core/TextField'
+import Switch from "@material-ui/core/Switch"
+import FormControlLabel from "@material-ui/core/FormControlLabel"
+import FormGroup from "@material-ui/core/FormGroup"
+import TextField from "@material-ui/core/TextField"
 import Select from "@material-ui/core/Select"
 import MenuItem from "@material-ui/core/MenuItem"
 
@@ -18,10 +18,12 @@ const BezierAction = ({ action, metaActionArray, setMetaActionArray }) => {
     const defaultActionData = { type: action.actionData.type, Chained: false, Radius: 0, X: 0, Y: 0, Speed: "" }
 
     useEffect(() => {
-        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ?
-            { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: defaultActionData } : nodeOrEdge) } :
-            metaAction))
-        setMetaActionArray(updatedMetaActionArray)
+        if (action.actionData.type !== ACTION) {
+            const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ?
+                { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: defaultActionData } : nodeOrEdge) } :
+                metaAction))
+            setMetaActionArray(updatedMetaActionArray)
+        }
 
         // eslint-disable-next-line
     }, [])

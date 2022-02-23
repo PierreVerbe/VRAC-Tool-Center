@@ -1,7 +1,7 @@
 import React from "react"
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 
-import Typography from '@material-ui/core/Typography'
+import Typography from "@material-ui/core/Typography"
 
 import BackGrippersDropCenterAction from "./action/BackGrippersDropCenterAction"
 import BackGrippersDropLeftAction from "./action/BackGrippersDropLeftAction"
@@ -26,34 +26,13 @@ import TopArmGaleryTopAction from "./action/TopArmGaleryTopAction"
 import TopArmGetSamplesAction from "./action/TopArmGetSamplesAction"
 import TopArmGetSingleSampleAction from "./action/TopArmGetSingleSampleAction"
 import TopArmSingleStockageAction from "./action/TopArmSingleStockageAction"
-
-
-
-import SingleArmInAction from "./action/SingleArmInAction"
-import SingleArmOutAction from "./action/SingleArmOutAction"
-import TopArmBuffer1Action from "./action/TopArmBuffer1Action"
-import TopArmBuffer2Action from "./action/TopArmBuffer2Action"
-
-
-import TopArmsGetSamplesAction from "./action/TopArmsGetSamplesAction"
 import TopArmStockageAction from "./action/TopArmStockageAction"
-import XYTAction from "./action/XYTAction"
 import WaitAction from "./action/WaitAction"
-
-
+import XYTAction from "./action/XYTAction"
 
 const ActionFactory = ({ action }) => {
     const actionType = action.actionData.type
 
-    /*
-  const metaActionActionType = [
-    "BackGrippersDropCenter", "BackGrippersDropLeft", "BackGrippersDropRight", "BackGrippersGrabCenter", "BackGrippersGrabLeft",
-    "BackGrippersGrabRight", "BackGrippersIn", "BackGrippersOut", "Bezier", "BottomArmsInDouble",
-    "BottomArmsInSingle", "BottomArmsOutDouble", "BottomArmsOutSingle", "CalculateOdometry", "End",
-    "Homing", "Line", "Rotate", "TopArmGaleryBottom", "TopArmGaleryTop",
-    "TopArmGetSamples", "TopArmGetSingleSample", "TopArmSingleStockage", "TopArmStockage", "Wait",
-    "XYT"]
-*/
     switch (actionType) {
         case "BackGrippersDropCenter":
             return <BackGrippersDropCenterAction action={action} />
@@ -131,40 +110,7 @@ const ActionFactory = ({ action }) => {
             return <WaitAction action={action} />
         
         case "XYT":
-            return <XYTAction action={action} />
-
-
-
-            
-
-
-        case "TopArmsGetSamples":
-            return <TopArmsGetSamplesAction action={action} />
-
-        case "TopArmStockage":
-            return <TopArmStockageAction action={action} />
-
-        case "Rotate":
-            return <RotateAction action={action} />
-
-        case "SingleArmOut":
-            return <SingleArmOutAction action={action} />
-
-        case "SingleArmIn":
-            return <SingleArmInAction action={action} />
-
-        case "TopArmGetSingleSample":
-            return <TopArmGetSingleSampleAction action={action} />
-
-        case "TopArmBuffer1":
-            return <TopArmBuffer1Action action={action} />
-
-        case "TopArmBuffer2":
-            return <TopArmBuffer2Action action={action} />
-
-       
-
-       
+            return <XYTAction action={action} />   
 
         default:
             return <Typography>Action type undefined</Typography>

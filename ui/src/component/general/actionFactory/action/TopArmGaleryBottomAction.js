@@ -1,8 +1,8 @@
 import React, {useEffect} from "react"
 import { connect } from "react-redux"
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 
-import Typography from '@material-ui/core/Typography'
+import Typography from "@material-ui/core/Typography"
 
 import { setMetaActionArrayActionCreator } from "../../../../action/strategyAction"
 

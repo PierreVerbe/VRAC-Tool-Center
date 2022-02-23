@@ -1,13 +1,13 @@
 import React, {useEffect} from "react"
 import { connect } from "react-redux"
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 
-import Typography from '@material-ui/core/Typography'
+import Typography from "@material-ui/core/Typography"
 
 import { setMetaActionArrayActionCreator } from "../../../../action/strategyAction"
 
 const WaitAction = ({action, metaActionArray, setMetaActionArray}) => {
-    const ACTION = "TopArmStockage"
+    const ACTION = "Wait"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
     const defaultActionData = {type: action.actionData.type}
 

@@ -1,10 +1,10 @@
 import React, { useEffect } from "react"
 import { connect } from "react-redux"
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 
-import Switch from '@material-ui/core/Switch'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import FormGroup from '@material-ui/core/FormGroup'
+import Switch from "@material-ui/core/Switch"
+import FormControlLabel from "@material-ui/core/FormControlLabel"
+import FormGroup from "@material-ui/core/FormGroup"
 
 import { setMetaActionArrayActionCreator } from "../../../../action/strategyAction"
 
@@ -42,7 +42,6 @@ const BottomArmsInSingleAction = ({ action, metaActionArray, setMetaActionArray 
             />
         </FormGroup>
     )
-
 }
 
 BottomArmsInSingleAction.propTypes = {

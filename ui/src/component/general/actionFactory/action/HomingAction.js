@@ -1,27 +1,12 @@
 import React, { useEffect } from "react"
 import { connect } from "react-redux"
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 
-import Switch from '@material-ui/core/Switch'
-import Typography from '@material-ui/core/Typography'
-import FormGroup from '@material-ui/core/FormGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import TextField from '@material-ui/core/TextField'
-import List from "@material-ui/core/List"
-import ListItem from "@material-ui/core/ListItem"
-import ListItemAvatar from "@material-ui/core/ListItemAvatar"
-import ListItemText from "@material-ui/core/ListItemText"
-import Avatar from "@material-ui/core/Avatar"
-import LinearScaleIcon from '@material-ui/icons/LinearScale'
-import MenuItem from "@material-ui/core/MenuItem"
-import FormControl from "@material-ui/core/FormControl"
-import FormLabel from '@material-ui/core/FormLabel'
-import Select from "@material-ui/core/Select"
+import Switch from "@material-ui/core/Switch"
+import FormGroup from "@material-ui/core/FormGroup"
+import FormControlLabel from "@material-ui/core/FormControlLabel"
 
 import { setMetaActionArrayActionCreator } from "../../../../action/strategyAction"
-import configData from "./../../../../resources/config.json"
-
-const configMetaActionTransition = configData.metaAction.transition
 
 const HomingAction = ({ action, metaActionArray, setMetaActionArray }) => {
     const ACTION = "Homing"

@@ -1,13 +1,13 @@
 import React, { useEffect } from "react"
 import { connect } from "react-redux"
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 
-import Typography from '@material-ui/core/Typography'
+import Typography from "@material-ui/core/Typography"
 
 import { setMetaActionArrayActionCreator } from "../../../../action/strategyAction"
 
 const BackGrippersInAction = ({ action, metaActionArray, setMetaActionArray }) => {
-    const ACTION = "BackGrippersGrabLeft"
+    const ACTION = "BackGrippersIn"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
     const defaultActionData = { type: action.actionData.type }
 
@@ -24,7 +24,6 @@ const BackGrippersInAction = ({ action, metaActionArray, setMetaActionArray }) =
     return (
         <Typography>No parameters</Typography>
     )
-
 }
 
 BackGrippersInAction.propTypes = {

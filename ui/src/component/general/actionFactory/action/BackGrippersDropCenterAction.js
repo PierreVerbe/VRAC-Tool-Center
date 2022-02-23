@@ -1,8 +1,8 @@
 import React, { useEffect } from "react"
 import { connect } from "react-redux"
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 
-import Typography from '@material-ui/core/Typography'
+import Typography from "@material-ui/core/Typography"
 
 import { setMetaActionArrayActionCreator } from "../../../../action/strategyAction"
 
@@ -12,18 +12,18 @@ const BackGrippersDropCenterAction = ({ action, metaActionArray, setMetaActionAr
     const defaultActionData = { type: action.actionData.type }
 
     useEffect(() => {
-        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ?
-            { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: defaultActionData } : nodeOrEdge) } :
-            metaAction))
-        setMetaActionArray(updatedMetaActionArray)
-
+        if (action.actionData.type !== ACTION) {
+            const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ?
+                { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: defaultActionData } : nodeOrEdge) } :
+                metaAction))
+            setMetaActionArray(updatedMetaActionArray)
+        }
         // eslint-disable-next-line
     }, [])
 
     return (
         <Typography>No parameters</Typography>
     )
-
 }
 
 BackGrippersDropCenterAction.propTypes = {
