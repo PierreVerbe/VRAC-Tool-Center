@@ -16,6 +16,7 @@ const WaitAction = ({action, metaActionArray, setMetaActionArray}) => {
             const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? 
                 { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: defaultActionData } : nodeOrEdge) } :
                  metaAction))
+                 
             setMetaActionArray(updatedMetaActionArray)
         }
         // eslint-disable-next-line

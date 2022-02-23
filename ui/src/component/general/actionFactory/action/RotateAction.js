@@ -22,9 +22,9 @@ const RotateAction = ({action, metaActionArray, setMetaActionArray}) => {
             const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? 
                 { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: defaultActionData } : nodeOrEdge) } :
                  metaAction))
+                 
             setMetaActionArray(updatedMetaActionArray)
         }
-        console.log("hiiii")
         // eslint-disable-next-line
     }, [])
 
@@ -34,8 +34,6 @@ const RotateAction = ({action, metaActionArray, setMetaActionArray}) => {
             { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: updatedActionData } : nodeOrEdge) } :
              metaAction))
 
-        console.log(updatedActionData)
-
         setMetaActionArray(updatedMetaActionArray)
     }
 
@@ -44,8 +42,6 @@ const RotateAction = ({action, metaActionArray, setMetaActionArray}) => {
         const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ?
             { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: updatedActionData } : nodeOrEdge) } :
             metaAction))
-
-        console.log(updatedActionData)
 
         setMetaActionArray(updatedMetaActionArray)
     }
