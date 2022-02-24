@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { connect } from "react-redux"
-import PropTypes from "@babel/generator"
+import PropTypes from "prop-types"
 
 import Typography from "@material-ui/core/Typography"
 
