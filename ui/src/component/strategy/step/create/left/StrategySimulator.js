@@ -6,6 +6,7 @@ import { saveAs } from 'file-saver';
 
 import Button from '@material-ui/core/Button';
 import parserStrategy from '../../../../../util/parserStrategy';
+import RobotSimulator from "./../../../../general/robotSimulator/RobotSimulator"
 
 const StrategySimulator = ({strategyCreator, metaActionArray}) => {
     const handleParser = () => {
@@ -33,6 +34,8 @@ const StrategySimulator = ({strategyCreator, metaActionArray}) => {
             >
                 Get Strategy
             </Button>
+
+            <RobotSimulator />
         </div>
     )
 }
