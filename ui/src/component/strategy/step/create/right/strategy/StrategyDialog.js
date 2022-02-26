@@ -116,7 +116,9 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, openDialog
 
     const setLabelNode = (event, id) => {
         console.log(event)
-        const updatedStrategyCreatorFlow = strategyCreator.flow.map(nodeOrEdge => nodeOrEdge.id === id ? { ...nodeOrEdge, data: {label: event.target.value.name, id: event.target.value.id}  } : nodeOrEdge)
+        const updatedDataNode = {label: event.target.value.name, id: event.target.value.id}
+        console.log(updatedDataNode)
+        const updatedStrategyCreatorFlow = strategyCreator.flow.map(nodeOrEdge => nodeOrEdge.id === id ? { ...nodeOrEdge, data: updatedDataNode } : nodeOrEdge)
         console.log(updatedStrategyCreatorFlow)
         setStrategyCreator({...strategyCreator, flow: updatedStrategyCreatorFlow})
     }
@@ -132,17 +134,18 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, openDialog
         
         if (nodeOrEdge === undefined)
             return <Typography>Click on a node or an edge</Typography>
-        else if (nodeOrEdge.id.startsWith('Node'))
+        else if (nodeOrEdge.id.startsWith('Node')) {
+            console.log("truc")
+            console.log(nodeOrEdge.data.label)
             return (
                 <div>
-               
-
+            
                 <FormControl>
                     <FormGroup>
                         <FormLabel color='primary'>Type transition</FormLabel>
                         <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
+                            labelId="demo-simple-select-label2"
+                            id="demo-simple-select2"
                             value={nodeOrEdge.data.label}
                             onChange={(event) => setLabelNode(event, nodeOrEdge.id)}
                         >
@@ -164,6 +167,7 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, openDialog
                 </div>
                 </div>
             )
+        }
         else if (nodeOrEdge.id.startsWith('Edge'))
             return (
                 <List>

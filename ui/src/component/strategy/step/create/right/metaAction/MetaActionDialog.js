@@ -57,6 +57,10 @@ const metaActionActionType = ["BackGrippersDropCenter", "BackGrippersDropLeft", 
 const configMetaActionTransition = configData.metaAction.transition
 
 const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyCreator, setMetaActionArray, setOpenDialogMetaAction }) => {
+    const selectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)
+    const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
+    //const getSelectedAction = getSelectedMetaAction.flow.filter(action => action.isSelected === true)[0]
+
     const classes = useStyles()
 
     //const nodes = useStoreState((store) => store.nodes);
@@ -72,8 +76,16 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
     }
 
     const handleDelete = (event) => {
-        const updatedMetaActionArray = metaActionArray.filter(metaAction => metaAction.isSelected === false)
+        event.preventDefault()
+
+        const updatedMetaActionArray = metaActionArray.filter(metaAction => metaAction.id !== getSelectedMetaAction.id)
         setMetaActionArray(updatedMetaActionArray)
+
+        const strategyCreatorFlowNode = strategyCreator.flow.filter(item => item.id.startsWith('Node')).map(node => node.data.id === getSelectedMetaAction.id ? {...node, data: {label: `${node.id} node`, id: undefined}  } : node)
+        const strategyCreatorFlowEdge = strategyCreator.flow.filter(item => item.id.startsWith('Edge'))
+        const strategyCreatorFlow = strategyCreatorFlowNode.concat(strategyCreatorFlowEdge)
+        setStrategyCreator({...strategyCreator, flow: strategyCreatorFlow})
+        
         setOpenDialogMetaAction(false)
     }
 
@@ -83,23 +95,25 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
 
         handleCancel(event)
     }
-    const selectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)
-    const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
-    //const getSelectedAction = getSelectedMetaAction.flow.filter(action => action.isSelected === true)[0]
+    
 
     const deleteEdge = (event, id) => {
         event.preventDefault()
 
-        const filteredEdge = getSelectedMetaAction.flow.filter(edge => edge.id === id).at(-1)
-
-        console.log(filteredEdge)
-
-
         const updatedMetaActionArray = metaActionArray.map(metaAction => metaAction.isSelected === true ? 
-            {...metaAction, flow :metaAction.flow.filter(nodeOrEdge => nodeOrEdge.id !== filteredEdge.id)} :
+            {...metaAction, flow :metaAction.flow.filter(nodeOrEdge => nodeOrEdge.id !== id)} :
              metaAction)
 
-             console.log(updatedMetaActionArray)
+        setMetaActionArray(updatedMetaActionArray)
+    }
+
+    const deleteNode = (event, id) => {
+        event.preventDefault()
+
+        const updatedMetaActionArray = metaActionArray.map(metaAction => metaAction.isSelected === true ? 
+            {...metaAction, flow :metaAction.flow.filter(nodeOrEdge => nodeOrEdge.id !== id && nodeOrEdge.source !== id && nodeOrEdge.target !== id)} :
+             metaAction)
+
         setMetaActionArray(updatedMetaActionArray)
     }
 
@@ -135,9 +149,11 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
     
     const onTextNameChange = (name) => {
         const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? { ...metaAction, name: name.target.value } : metaAction))
-        const updatedStrategyCreator = strategyCreator.flow.map(nodeOrEdge => (nodeOrEdge.data.id === getSelectedMetaAction.id ? {...nodeOrEdge, data : {label: name.target.value, id: getSelectedMetaAction.id}} : nodeOrEdge))
-        
-        setStrategyCreator({...strategyCreator, flow:  updatedStrategyCreator})
+        const updatedStrategyCreatorNode = strategyCreator.flow.filter(item => item.id.startsWith('Node')).map(nodeOrEdge => (nodeOrEdge.data.id === getSelectedMetaAction.id ? {...nodeOrEdge, data : {label: name.target.value, id: getSelectedMetaAction.id}} : nodeOrEdge))
+        const updatedStrategyCreatorEdge = strategyCreator.flow.filter(item => item.id.startsWith('Edge'))
+        const updatedStrategyCreatorFlow = updatedStrategyCreatorNode.concat(updatedStrategyCreatorEdge)
+
+        setStrategyCreator({...strategyCreator, flow:  updatedStrategyCreatorFlow})
         setMetaActionArray(updatedMetaActionArray)
     }
 
@@ -188,6 +204,18 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
                                 fullWidth
                                 variant="standard"
                             />
+
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={(event) => deleteNode(event, getSelectedMetaAction.flow.filter(action => action.isSelected === true)[0].id)}
+                                startIcon={<ClearIcon />}
+                                //className={classes.button}
+                                style={{ backgroundColor: "red" }}
+                            >
+                                Delete node
+                            </Button>
+
                             <List dense={true}>
                                 {listEdgesToDelete()}
                             </List>
