@@ -15,7 +15,7 @@ import configData from "./../../../../resources/config.json"
 const LineAction = ({ action, metaActionArray, setMetaActionArray }) => {
     const ACTION = "Line"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
-    const defaultActionData = { type: action.actionData.type, Distance: 0, Forward: false, Chained: false, Speed: "" }
+    const defaultActionData = { type: action.actionData.type, distance: 0, forward: false, chained: false, speed: "" }
 
     useEffect(() => {
         if (action.actionData.type !== ACTION) {
@@ -47,7 +47,7 @@ const LineAction = ({ action, metaActionArray, setMetaActionArray }) => {
     }
 
     const handleChangeList = (event) => {
-        const updatedActionData = { ...action.actionData, Speed: event.target.value }
+        const updatedActionData = { ...action.actionData, speed: event.target.value }
         const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ?
             { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: updatedActionData } : nodeOrEdge) } :
             metaAction))
@@ -59,23 +59,23 @@ const LineAction = ({ action, metaActionArray, setMetaActionArray }) => {
         <div>
             <FormGroup>
                 <FormControlLabel
-                    control={<Switch checked={action.actionData.Forward} onChange={handleChangeSwitch} color="primary" name="Forward" />}
+                    control={<Switch checked={action.actionData.forward} onChange={handleChangeSwitch} color="primary" name="forward" />}
                     label="Enable forward"
                 />
                 <FormControlLabel
-                    control={<Switch checked={action.actionData.Chained} onChange={handleChangeSwitch} color="primary" name="Chained" />}
+                    control={<Switch checked={action.actionData.chained} onChange={handleChangeSwitch} color="primary" name="chained" />}
                     label="Enable chained"
                 />
 
-                <TextField id="standard-basic" label="Distance" type="number" inputProps={{ min: -3000, max: 3000 }} defaultValue={action.actionData.Distance} onChange={handleChangeNumber} name="Distance" />
+                <TextField id="standard-basic" label="distance" type="number" inputProps={{ min: -3000, max: 3000 }} defaultValue={action.actionData.distance} onChange={handleChangeNumber} name="distance" />
                 
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={action.actionData.Speed}
+                    value={action.actionData.speed}
                     onChange={handleChangeList}
                 >
-                    {configData.metaAction.Speed.Values.map(actionType =>
+                    {configData.metaAction.speed.values.map(actionType =>
                         <MenuItem value={actionType}>{actionType}</MenuItem>
                     )}
                 </Select>

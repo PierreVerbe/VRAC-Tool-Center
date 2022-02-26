@@ -11,7 +11,7 @@ import { setMetaActionArrayActionCreator } from "../../../../action/strategyActi
 const HomingAction = ({ action, metaActionArray, setMetaActionArray }) => {
     const ACTION = "Homing"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
-    const defaultActionData = { type: action.actionData.type, Forward: false, Axis: false, Side: false }
+    const defaultActionData = { type: action.actionData.type, forward: false, axis: false, side: false }
 
     useEffect(() => {
         if (action.actionData.type !== ACTION) {
@@ -37,15 +37,15 @@ const HomingAction = ({ action, metaActionArray, setMetaActionArray }) => {
         <div>
             <FormGroup>
                 <FormControlLabel
-                    control={<Switch checked={action.actionData.Forward} onChange={handleChangeSwitch} color="primary" name="Forward" />}
+                    control={<Switch checked={action.actionData.forward} onChange={handleChangeSwitch} color="primary" name="forward" />}
                     label="Enable forward"
                 />
                 <FormControlLabel
-                    control={<Switch checked={action.actionData.Axis} onChange={handleChangeSwitch} color="primary" name="Axis" />}
+                    control={<Switch checked={action.actionData.axis} onChange={handleChangeSwitch} color="primary" name="axis" />}
                     label="Enable axis"
                 />
                 <FormControlLabel
-                    control={<Switch checked={action.actionData.Side} onChange={handleChangeSwitch} color="primary" name="Side" />}
+                    control={<Switch checked={action.actionData.side} onChange={handleChangeSwitch} color="primary" name="side" />}
                     label="Enable side"
                 />
             </FormGroup>

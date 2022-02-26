@@ -10,7 +10,7 @@ import { setMetaActionArrayActionCreator } from "../../../../action/strategyActi
 const TopArmGetSingleSampleAction = ({action, metaActionArray, setMetaActionArray}) => {
     const ACTION = "TopArmGetSingleSample"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
-    const defaultActionData = {type: action.actionData.type, Side: 0}
+    const defaultActionData = {type: action.actionData.type, side: 0}
 
     useEffect(() => {
         if (action.actionData.type !== ACTION) {
@@ -35,7 +35,7 @@ const TopArmGetSingleSampleAction = ({action, metaActionArray, setMetaActionArra
     return (
         <div>
             <FormGroup>
-                 <TextField id="standard-basic" label="Side" type="number" defaultValue={action.actionData.Side} onChange={handleChangeNumber} name="Side"/>
+                 <TextField id="standard-basic" label="side" type="number" defaultValue={action.actionData.side} onChange={handleChangeNumber} name="side"/>
             </FormGroup> 
         </div>
     )

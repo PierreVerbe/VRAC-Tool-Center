@@ -15,7 +15,7 @@ import configData from "./../../../../resources/config.json"
 const BezierAction = ({ action, metaActionArray, setMetaActionArray }) => {
     const ACTION = "Bezier"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
-    const defaultActionData = { type: action.actionData.type, Chained: false, Radius: 0, X: 0, Y: 0, Speed: "" }
+    const defaultActionData = { type: action.actionData.type, chained: false, radius: 0, X: 0, Y: 0, speed: "" }
 
     useEffect(() => {
         if (action.actionData.type !== ACTION) {
@@ -47,7 +47,7 @@ const BezierAction = ({ action, metaActionArray, setMetaActionArray }) => {
     }
 
     const handleChangeList = (event) => {
-        const updatedActionData = { ...action.actionData, Speed: event.target.value }
+        const updatedActionData = { ...action.actionData, speed: event.target.value }
         const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ?
             { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: updatedActionData } : nodeOrEdge) } :
             metaAction))
@@ -59,21 +59,21 @@ const BezierAction = ({ action, metaActionArray, setMetaActionArray }) => {
         <div>
             <FormGroup>
                 <FormControlLabel
-                    control={<Switch checked={action.actionData.Chained} onChange={handleChangeSwitch} color="primary" name="Chained" />}
-                    label="Enable Chained"
+                    control={<Switch checked={action.actionData.chained} onChange={handleChangeSwitch} color="primary" name="chained" />}
+                    label="Enable chained"
                 />
 
-                <TextField id="standard-basic" label="Radius" type="number" inputProps={{ min: -1000, max: 1000 }} defaultValue={action.actionData.Radius} onChange={handleChangeNumber} name="Radius" />
+                <TextField id="standard-basic" label="radius" type="number" inputProps={{ min: -1000, max: 1000 }} defaultValue={action.actionData.radius} onChange={handleChangeNumber} name="radius" />
                 <TextField id="standard-basic" label="X" type="number" inputProps={{ min: 0, max: 2000 }} defaultValue={action.actionData.X} onChange={handleChangeNumber} name="X" />
                 <TextField id="standard-basic" label="Y" type="number" inputProps={{ min: 0, max: 3000 }} defaultValue={action.actionData.Y} onChange={handleChangeNumber} name="Y" />
 
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={action.actionData.Speed}
+                    value={action.actionData.speed}
                     onChange={handleChangeList}
                 >
-                    {configData.metaAction.Speed.Values.map(actionType =>
+                    {configData.metaAction.speed.values.map(actionType =>
                         <MenuItem value={actionType}>{actionType}</MenuItem>
                     )}
                 </Select>

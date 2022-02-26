@@ -15,7 +15,7 @@ import configData from "./../../../../resources/config.json"
 const XYTAction = ({ action, metaActionArray, setMetaActionArray }) => {
     const ACTION = "XYT"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
-    const defaultActionData = { type: action.actionData.type, Forward: false, X: 0, Y: 0, Theta: 0, Speed: "" }
+    const defaultActionData = { type: action.actionData.type, forward: false, x: 0, y: 0, theta: 0, speed: "" }
 
     useEffect(() => {
         if (action.actionData.type !== ACTION) {
@@ -47,7 +47,7 @@ const XYTAction = ({ action, metaActionArray, setMetaActionArray }) => {
     }
 
     const handleChangeList = (event) => {
-        const updatedActionData = { ...action.actionData, Speed: event.target.value }
+        const updatedActionData = { ...action.actionData, speed: event.target.value }
         const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ?
             { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: updatedActionData } : nodeOrEdge) } :
             metaAction))
@@ -59,21 +59,21 @@ const XYTAction = ({ action, metaActionArray, setMetaActionArray }) => {
         <div>
             <FormGroup>
                 <FormControlLabel
-                    control={<Switch checked={action.actionData.Forward} onChange={handleChangeSwitch} color="primary" name="Forward" />}
+                    control={<Switch checked={action.actionData.forward} onChange={handleChangeSwitch} color="primary" name="forward" />}
                     label="Enable forward"
                 />
 
-                <TextField id="standard-basic" label="X" type="number" inputProps={{ min: 0, max: 2000 }} defaultValue={action.actionData.X} onChange={handleChangeNumber} name="X" />
-                <TextField id="standard-basic" label="Y" type="number" inputProps={{ min: 0, max: 3000 }} defaultValue={action.actionData.Y} onChange={handleChangeNumber} name="Y" />
-                <TextField id="standard-basic" label="Theta" type="number" inputProps={{ min: -3600, max: 3600 }}  defaultValue={action.actionData.Theta} onChange={handleChangeNumber} name="Theta" />
+                <TextField id="standard-basic" label="x" type="number" inputProps={{ min: 0, max: 2000 }} defaultValue={action.actionData.x} onChange={handleChangeNumber} name="x" />
+                <TextField id="standard-basic" label="y" type="number" inputProps={{ min: 0, max: 3000 }} defaultValue={action.actionData.y} onChange={handleChangeNumber} name="y" />
+                <TextField id="standard-basic" label="theta" type="number" inputProps={{ min: -3600, max: 3600 }}  defaultValue={action.actionData.theta} onChange={handleChangeNumber} name="theta" />
 
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={action.actionData.Speed}
+                    value={action.actionData.speed}
                     onChange={handleChangeList}
                 >
-                    {configData.metaAction.Speed.Values.map(actionType =>
+                    {configData.metaAction.speed.values.map(actionType =>
                         <MenuItem value={actionType}>{actionType}</MenuItem>
                     )}
                 </Select>

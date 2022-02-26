@@ -30,8 +30,8 @@
             "Stock2_Filed",
             "Stock3_Filed"
         ],
-        "Speed": {
-            "Values": [
+        "speed": {
+            "values": [
                 "FUCKING_SLOW",
                 "VERY_SLOW",
                 "SLOW",

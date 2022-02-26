@@ -11,7 +11,7 @@ import { setMetaActionArrayActionCreator } from "../../../../action/strategyActi
 const BottomArmsOutSingleAction = ({ action, metaActionArray, setMetaActionArray }) => {
     const ACTION = "BottomArmsOutSingle"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
-    const defaultActionData = { type: action.actionData.type, Side: false }
+    const defaultActionData = { type: action.actionData.type, side: false }
 
     useEffect(() => {
         if (action.actionData.type !== ACTION) {
@@ -36,7 +36,7 @@ const BottomArmsOutSingleAction = ({ action, metaActionArray, setMetaActionArray
     return (
         <FormGroup>
             <FormControlLabel
-                control={<Switch checked={action.actionData.Side} onChange={handleChangeSwitch} color="primary" name="Side" />}
+                control={<Switch checked={action.actionData.side} onChange={handleChangeSwitch} color="primary" name="side" />}
                 label="Enable Chained"
             />
         </FormGroup>

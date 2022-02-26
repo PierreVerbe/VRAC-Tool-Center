@@ -15,7 +15,7 @@ import configData from "./../../../../resources/config.json"
 const RotateAction = ({action, metaActionArray, setMetaActionArray}) => {
     const ACTION = "Rotate"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
-    const defaultActionData = {type: action.actionData.type, Relative: false, Theta: 0, Speed: ""}
+    const defaultActionData = {type: action.actionData.type, relative: false, theta: 0, speed: ""}
 
     useEffect(() => {
         if (action.actionData.type !== ACTION) {
@@ -47,7 +47,7 @@ const RotateAction = ({action, metaActionArray, setMetaActionArray}) => {
     }
 
     const handleChangeList = (event) => {
-        const updatedActionData = { ...action.actionData, Speed: event.target.value }
+        const updatedActionData = { ...action.actionData, speed: event.target.value }
         const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ?
             { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: updatedActionData } : nodeOrEdge) } :
             metaAction))
@@ -59,19 +59,19 @@ const RotateAction = ({action, metaActionArray, setMetaActionArray}) => {
         <div>
             <FormGroup>
                 <FormControlLabel
-                    control={<Switch checked={action.actionData.Relative} onChange={handleChangeSwitch} color="primary" name="Relative" />}
+                    control={<Switch checked={action.actionData.relative} onChange={handleChangeSwitch} color="primary" name="relative" />}
                     label="Enable relative"
                 />
 
-                 <TextField id="standard-basic" label="Theta" type="number" inputProps={{ min: -3600, max: 3600 }} defaultValue={action.actionData.Theta} onChange={handleChangeNumber} name="Theta"/>
+                 <TextField id="standard-basic" label="theta" type="number" inputProps={{ min: -3600, max: 3600 }} defaultValue={action.actionData.theta} onChange={handleChangeNumber} name="theta"/>
 
                  <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={action.actionData.Speed}
+                    value={action.actionData.speed}
                     onChange={handleChangeList}
                 >
-                    {configData.metaAction.Speed.Values.map(actionType =>
+                    {configData.metaAction.speed.values.map(actionType =>
                         <MenuItem value={actionType}>{actionType}</MenuItem>
                     )}
                 </Select>
