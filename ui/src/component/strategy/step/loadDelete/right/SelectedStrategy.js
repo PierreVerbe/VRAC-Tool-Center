@@ -24,24 +24,24 @@ const useStyles = makeStyles({
   })
 */
 
-const SelectedStrategy = ({ deleteStrategy, idRowStrategyTable, strategy, setIdRowStrategyTable, setStrategy, setOpenDialogStrategy }) => {
+const SelectedStrategy = ({ deleteStrategy, idRowStrategyTable, strategyCreator, setIdRowStrategyTable, setStrategy, setOpenDialogStrategy }) => {
     //const classes = useStyles()
 
     // Is button disabled
     const isSaveButtonDisabled = () => {
-        return (idRowStrategyTable !== null && idRowStrategyTable !== -1) || Object.entries(strategy).length === 0
+        return (idRowStrategyTable !== null && idRowStrategyTable !== -1) || Object.entries(strategyCreator).length === 0
     }
 
     const isDeleteButtonDisabled = () => {
-        return (idRowStrategyTable === null || idRowStrategyTable === -1) || Object.entries(strategy).length === 0
+        return (idRowStrategyTable === null || idRowStrategyTable === -1) || Object.entries(strategyCreator).length === 0
     }
 
     const isExportButtonDisabled = () => {
-        return Object.entries(strategy).length === 0
+        return Object.entries(strategyCreator).length === 0
     }
 
     const isClearButtonDisabled = () => {
-        return Object.entries(strategy).length === 0
+        return Object.entries(strategyCreator).length === 0
     }
 
     // OnClick function for button
@@ -59,8 +59,8 @@ const SelectedStrategy = ({ deleteStrategy, idRowStrategyTable, strategy, setIdR
     }
 
     const handleExport = async () => {
-        const fileName = strategy.name ? strategy.name : "exported_file"
-        const json = JSON.stringify(strategy)
+        const fileName = strategyCreator.name ? strategyCreator.name : "exported_file"
+        const json = JSON.stringify(strategyCreator)
         const blob = new Blob([json], { type: 'application/json' })
         const href = await URL.createObjectURL(blob)
         const link = document.createElement('a')
@@ -117,7 +117,7 @@ const SelectedStrategy = ({ deleteStrategy, idRowStrategyTable, strategy, setIdR
                 Export
             </Button>
 
-            <DropzoneOrReactJson isSelected={idRowStrategyTable !== null} strategy={strategy} setIdRowStrategyTable={setIdRowStrategyTable} setStrategy={setStrategy} />
+            <DropzoneOrReactJson isSelected={idRowStrategyTable !== null} strategy={strategyCreator} setIdRowStrategyTable={setIdRowStrategyTable} setStrategy={setStrategy} />
 
             <Button
                 variant="contained"
@@ -136,14 +136,14 @@ const SelectedStrategy = ({ deleteStrategy, idRowStrategyTable, strategy, setIdR
 
 const mapStateToProps = state => ({
     idRowStrategyTable: state.idRowStrategyTable,
-    strategy: state.strategy
+    strategyCreator: state.strategyCreator
 })
 
 const mapDispatchToProps = dispatch => ({
     setIdRowStrategyTable: idRowStrategyTable => dispatch(setIdRowStrategyTableActionCreator(idRowStrategyTable)),
     insertStrategy: strategyToInsert => dispatch(insertStrategyActionCreator(strategyToInsert)),
     deleteStrategy: strategyToDelete => dispatch(deleteStrategyActionCreator(strategyToDelete)),
-    setStrategy: strategy => dispatch(setStrategyActionCreator(strategy)),
+    setStrategy: strategyCreator => dispatch(setStrategyActionCreator(strategyCreator)),
     setOpenDialogStrategy: openDialogStrategy => dispatch(setOpenDialogStrategyActionCreator(openDialogStrategy))
 })
 
