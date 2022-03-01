@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react"
 import { connect } from "react-redux"
 
 import { TABLE_WIDTH, TABLE_HEIGHT, REDUCING_FACTOR, RobotField } from "./RobotField"
-import FieldImage from "./../../../resources/image/SailTheWorld/fondTable21.svg"
+import FieldImage from "./../../../resources/image/AgeOfBots/fondTable22.jpg"
 
 const RobotSimulator = ({ monitoring, activeStepMonitoring }) => {
     const fieldImage = new Image()
