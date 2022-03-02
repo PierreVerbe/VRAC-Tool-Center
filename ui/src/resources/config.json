@@ -1,0 +1,46 @@
+{
+    "strategy": {
+        "transition": [
+            "NoEvent",
+            "Jack",
+            "Finished",
+            "Blocked",
+            "Failed",
+            "Timeout",
+            "GameEnd"
+        ]
+    },
+    "metaAction": {
+        "transition": [
+            "NoEvent",
+            "Timeout",
+            "EmergencyBrake",
+            "Resume",
+            "SampleDetected",
+            "NewPathFound",
+            "AckMoveHoming",
+            "AckMoveLine",
+            "AckMoveRotate",
+            "AckMovePolar",
+            "AckMoveBezier",
+            "AckMoveXYT",
+            "AckEndMove",
+            "AckServo",
+            "Stock1_Filed",
+            "Stock2_Filed",
+            "Stock3_Filed"
+        ],
+        "speed": {
+            "values": [
+                "FUCKING_SLOW",
+                "VERY_SLOW",
+                "SLOW",
+                "NORMAL",
+                "FAST",
+                "VERY_FAST",
+                "FASTER_THAN_RCVA",
+                "I_AM_SPEED"
+            ]
+        }
+    }
+}

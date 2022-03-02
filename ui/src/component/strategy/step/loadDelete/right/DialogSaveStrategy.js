@@ -14,34 +14,34 @@ import PublishIcon from '@material-ui/icons/Publish'
 
 import { insertStrategyActionCreator, setStrategyActionCreator, setOpenDialogStrategyActionCreator } from "../../../../../action/strategyAction"
 
-const DialogSaveStrategy = ({ strategy, setStrategy, insertStrategy, openDialogStrategy, setOpenDialogStrategy }) => {
+const DialogSaveStrategy = ({ strategyCreator, setStrategy, insertStrategy, openDialogStrategy, setOpenDialogStrategy }) => {
     const handleCancel = () => {
         setOpenDialogStrategy(false)
     }
 
     const handleSubmit = () => {
-        insertStrategy(strategy)
+        insertStrategy(strategyCreator)
         setOpenDialogStrategy(false)
     }
 
     // Text field in dialog
     const onTextNameChange = (name) => {
-        const strategyUpdated = { ...strategy, name: name.target.value }
+        const strategyUpdated = { ...strategyCreator, name: name.target.value }
         setStrategy(strategyUpdated)
     }
 
     const onTextDescriptionChange = (description) => {
-        const strategyUpdated = { ...strategy, description: description.target.value }
+        const strategyUpdated = { ...strategyCreator, description: description.target.value }
         setStrategy(strategyUpdated)
     }
 
     const onTextSenderChange = (sender) => {
-        const strategyUpdated = { ...strategy, sender: sender.target.value }
+        const strategyUpdated = { ...strategyCreator, sender: sender.target.value }
         setStrategy(strategyUpdated)
     }
 
     const onTextVersionChange = (version) => {
-        const strategyUpdated = { ...strategy, version: version.target.value }
+        const strategyUpdated = { ...strategyCreator, version: version.target.value }
         setStrategy(strategyUpdated)
     }
 
@@ -59,7 +59,7 @@ const DialogSaveStrategy = ({ strategy, setStrategy, insertStrategy, openDialogS
                     onChange={onTextNameChange}
                     id="name"
                     label="Name"
-                    defaultValue={strategy.name}
+                    defaultValue={strategyCreator.name}
                     fullWidth
                     variant="standard"
                 />
@@ -69,7 +69,7 @@ const DialogSaveStrategy = ({ strategy, setStrategy, insertStrategy, openDialogS
                     onChange={onTextDescriptionChange}
                     id="description"
                     label="Description"
-                    defaultValue={strategy.description}
+                    defaultValue={strategyCreator.description}
                     fullWidth
                     variant="standard"
                 />
@@ -79,7 +79,7 @@ const DialogSaveStrategy = ({ strategy, setStrategy, insertStrategy, openDialogS
                     onChange={onTextSenderChange}
                     id="sender"
                     label="Sender"
-                    defaultValue={strategy.sender}
+                    defaultValue={strategyCreator.sender}
                     fullWidth
                     variant="standard"
                 />
@@ -89,7 +89,7 @@ const DialogSaveStrategy = ({ strategy, setStrategy, insertStrategy, openDialogS
                     onChange={onTextVersionChange}
                     id="version"
                     label="Version"
-                    defaultValue={strategy.version}
+                    defaultValue={strategyCreator.version}
                     fullWidth
                     variant="standard"
                 />
@@ -123,13 +123,13 @@ const DialogSaveStrategy = ({ strategy, setStrategy, insertStrategy, openDialogS
 }
 
 const mapStateToProps = state => ({
-    strategy: state.strategy,
+    strategyCreator: state.strategyCreator,
     openDialogStrategy: state.openDialogStrategy
 })
 
 const mapDispatchToProps = dispatch => ({
     insertStrategy: strategyToInsert => dispatch(insertStrategyActionCreator(strategyToInsert)),
-    setStrategy: strategy => dispatch(setStrategyActionCreator(strategy)),
+    setStrategy: strategyCreator => dispatch(setStrategyActionCreator(strategyCreator)),
     setOpenDialogStrategy: openDialogStrategy => dispatch(setOpenDialogStrategyActionCreator(openDialogStrategy))
 })
 

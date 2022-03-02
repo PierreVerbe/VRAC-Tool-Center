@@ -1,6 +1,6 @@
 import { SET_DARK_MODE } from "../action/generalAction"
 import { INSERT_MONITORING, GET_ALL_MONITORINGS, GET_MONITORING, UPDATE_MONITORING, DELETE_MONITORING, SET_MONITORING_STEPPER, SET_ID_ROW_MONITORING_TABLE, SET_MONITORING, SET_OPEN_DIALOG_MONITORING } from "../action/monitoringAction"
-import { INSERT_STRATEGY, GET_ALL_STRATEGIES, GET_STRATEGY, UPDATE_STRATEGY, DELETE_STRATEGY, SET_STRATEGY_STEPPER, SET_ID_ROW_STRATEGY_TABLE, SET_STRATEGY, SET_OPEN_DIALOG_STRATEGY } from "../action/strategyAction"
+import { INSERT_STRATEGY, GET_ALL_STRATEGIES, GET_STRATEGY, UPDATE_STRATEGY, DELETE_STRATEGY, SET_STRATEGY_STEPPER, SET_ID_ROW_STRATEGY_TABLE, SET_STRATEGY, SET_OPEN_DIALOG_STRATEGY, SET_OPEN_DIALOG_NODE_STRATEGY, SET_META_ACTION_ARRAY, SET_OPEN_DIALOG_META_ACTION, SET_STRATEGY_CREATOR } from "../action/strategyAction"
 
 const defaultState = {
     // General
@@ -8,10 +8,19 @@ const defaultState = {
 
     // Strategy
     strategyStepper: 0,
+    // Create
+    strategyCreator : {name: "Strategy name", flow: [], reactFlowInstance: null},  // reactFlowInstance Serves for drag & drop
+    openDialogNodeStrategy: false,
+    metaActionArray: [], // to modify to metaActionArrayCreator
+    openDialogMetaAction: false,
+
+    // Load/Delete
     allStrategies: [],
     idRowStrategyTable: null,
-    strategy: {},
+    //strategy: {},
     openDialogStrategy: false,
+    // Statistic
+
 
     // Monitoring
     monitoringStepper: 0,
@@ -41,7 +50,7 @@ export const reducer = (state = defaultState, action) => {
                 ...state,
                 allStrategies: action.payload
             }
-        
+
         case GET_STRATEGY:
             return {
                 ...state,
@@ -138,6 +147,30 @@ export const reducer = (state = defaultState, action) => {
             return {
                 ...state,
                 openDialogMonitoring: action.payload
+            }
+
+        case SET_OPEN_DIALOG_NODE_STRATEGY:
+            return {
+                ...state,
+                openDialogNodeStrategy: action.payload
+            }
+
+        case SET_META_ACTION_ARRAY:
+            return {
+                ...state,
+                metaActionArray: action.payload
+            }
+
+        case SET_OPEN_DIALOG_META_ACTION:
+            return {
+                ...state,
+                openDialogMetaAction: action.payload
+            }
+
+        case SET_STRATEGY_CREATOR:
+            return {
+                ...state,
+                strategyCreator: action.payload
             }
 
         default:
