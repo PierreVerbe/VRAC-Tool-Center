@@ -1,29 +1,43 @@
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom"
+import React from "react"
+import { connect } from "react-redux"
 
-import UIStudent from "./student/UIStudent"
-import './App.css';
+import Header from "./general/Header"
 
-const App = () => (
-  <div>
-    <Router>
-      <div id="header">
-        <nav>
-          <ul>
-            <Link to="/">
-              <p><span className="nav-btn">Home</span></p>
-            </Link>
-          </ul>
-        </nav>
-      </div>
-      <div>
-        <Switch>
-          <Route path="/">
-            <UIStudent />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-  </div>
-)
+import './Style.css'
+import { ThemeProvider, createTheme } from "@material-ui/core/styles"
+import Paper from '@material-ui/core/Paper'
+import { blue, green } from "@material-ui/core/colors"
 
-export default App;
+const App = ({ darkMode }) => {
+
+  const darkTheme = createTheme({
+    palette: {
+      type: "dark"
+    }
+  })
+
+  const ligthTheme = createTheme({
+    palette: {
+      primary: {
+        main: blue[500]
+      },
+      secondary: {
+        main: green[500]
+      }
+    }
+  })
+
+  return (
+    <ThemeProvider theme={darkMode ? darkTheme : ligthTheme}>
+      <Paper id="App" elevation={0} square={true}>
+        <Header />
+      </Paper>
+    </ThemeProvider>
+  )
+}
+
+const mapStateToProps = state => ({
+  darkMode: state.darkMode
+})
+
+export default connect(mapStateToProps)(App)

@@ -3,12 +3,30 @@
 ## About this repository
 This repository contains the several tools used by the VRAC association which participates in the "Coupe de France de robotique" every year.
 
+VRAC Tool Center is devided into 2 sub projects : 
+* [REST service](https://github.com/PierreVerbe/VRAC-Tool-Center-REST-API)
+* [Web application](https://github.com/PierreVerbe/VRAC-Tool-Center)
+ 
+## Technical Stack
+### Rest service
+<img alt="SpringFramework" src="resources/images/SpringFramework.png" height="100" /> 
+
+### User Interface
+<img alt="React" src="resources/images/React.png" height="100" /> 
+<img alt="Material UI" src="resources/images/Material-ui.png" height="100" /> 
+
+### Database
+<img alt="MongoDB" src="resources/images/MongoDB.png" height="100" /> 
+
+### Virtualizer
+<img alt="MongoDB" src="resources/images/Docker.png" height="100" /> 
+
 ## Prerequisite
 For rest service : <br>
 * Install Java 8 <br>
 * Install Maven <br>
 
-For ui : <br>
+For UI : <br>
 * Install Node.js <br>
 
 To launch containerized tool center : <br>
