@@ -1,18 +1,17 @@
-class parserStrategy {
+class parserGraph {
   static parse = (strategyCreator, metaActionArray) => {
     console.log(strategyCreator);
     console.log(metaActionArray);
 
-    const strategyParsed = parserStrategy.parseStrategyCreator(strategyCreator);
-    const metaActionParsed =
-      parserStrategy.parseMetaActionArray(metaActionArray);
+    const strategyParsed = parserGraph.parseStrategyGraph(strategyCreator);
+    const metaActionParsed = parserGraph.parseMetaActionGraph(metaActionArray);
 
-    const parsedContent = { strategy: strategyParsed, metaActions: metaActionParsed };
+    const parsedContent = { strategy: strategyParsed, meta: metaActionParsed };
 
     return parsedContent;
   };
 
-  static parseStrategyCreator = (strategyCreator) => {
+  static parseStrategyGraph = (strategyCreator) => {
     const edges = strategyCreator.flow.filter((item) =>
       item.id.startsWith("Edge")
     );
@@ -30,26 +29,15 @@ class parserStrategy {
 
           return { type: item.label, destination: target.data.label };
         });
-    
-        const result = { strategyName: strategyGraph.name, actions: nodesParsed };
-        return result;
-        */
-
-        console.log({name: strategyGraph.strategyName, flow: flow, reactFlowInstance: {} })
-        return {name: strategyGraph.strategyName, flow: flow, reactFlowInstance: {} }
-      };
-      
-
-      static parseMetaActionArray = (t) => {
 
       return { tag: node.data.label, transitions: edge };
     });
 
-    const result = { name: strategyCreator.name, actions: nodesParsed };
+    const result = { strategyName: strategyCreator.name, actions: nodesParsed };
     return result;
   };
 
-  static parseMetaActionArray = (metaActionArray) => {
+  static parseMetaActionGraph = (metaActionArray) => {
     const metaActionParsed = metaActionArray.map((metaAction) => {
       const edges = metaAction.flow.filter((item) =>
         item.id.startsWith("Edge")
@@ -77,11 +65,11 @@ class parserStrategy {
         };
       });
 
-      return { name: metaAction.name, actions: nodesParsed };
+      return { metaActionName: metaAction.id, actions: nodesParsed };
     });
 
     return metaActionParsed;
   };
 }
 
-export default parserStrategy;
+export default parserGraph;

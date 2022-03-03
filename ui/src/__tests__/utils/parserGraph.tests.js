@@ -1,100 +1,77 @@
-import parserStrategy from "./../../util/parserStrategy";
+import parserGraph from "./../../util/parserGraph";
 
 describe("Test parserGraph methods", () => {
-    test("Test of the parse method", () => {
-      expect(1).toBe(1);
-    });
-  
-    test("Test of the parseStrategyCreator method", () => {
-        const toParse = {
-            strategyName: "Strategy name",
-            actions: [
-              {
-                tag: "New meta Action MetaAction_0",
-                transitions: [
-                  { destination: "New meta Action MetaAction_1", type: "Jack" },
-                ],
-              },
-              {
-                tag: "New meta Action MetaAction_1",
-                transitions: [
-                  { destination: "New meta Action MetaAction_2", type: "Failed" },
-                ],
-              },
-              { tag: "New meta Action MetaAction_2", transitions: [] },
-            ],
-          };
-        const expectedResult = {
-            name: "Strategy name",
-            flow: [
-              {
-                id: "Node_0",
-                type: "input",
-                position: {
-                  x: 100,
-                  y: 100,
-                },
-                data: {
-                  label: "New meta Action MetaAction_0",
-                  id: "MetaAction_0",
-                },
-                isSelected: false,
-              },
-              {
-                id: "Node_1",
-                type: "default",
-                position: {
-                  x: 100,
-                  y: 200,
-                },
-                data: {
-                  label: "New meta Action MetaAction_1",
-                  id: "MetaAction_1",
-                },
-                isSelected: false,
-              },
-              {
-                id: "Node_2",
-                type: "output",
-                position: {
-                  x: 100,
-                  y: 300,
-                },
-                data: {
-                  label: "New meta Action MetaAction_2",
-                  id: "MetaAction_2",
-                },
-                isSelected: false,
-              },
-              {
-                id: "Edge_0",
-                source: "Node_0",
-                target: "Node_1",
-                type: "smart",
-                arrowHeadType: "arrow",
-                label: "Jack",
-                isSelected: false,
-              },
-              {
-                id: "Edge_1",
-                source: "Node_1",
-                target: "Node_2",
-                type: "smart",
-                arrowHeadType: "arrow",
-                label: "Failed",
-                isSelected: false,
-              },
-            ],
-            reactFlowInstance: {},
-          };
-        const result = parserStrategy.parseStrategyCreator(toParse);
-        expect(result).toStrictEqual(expectedResult);
-    })
+  test("Test of the parse method", () => {
+    expect(1).toBe(1);
+  });
 
-    /*
+  test("Test of the parseStrategyGraph method", () => {
+    const toParse = {
+      name: "Strategy name",
+      flow: [
+        {
+          id: "Node_0",
+          type: "input",
+          position: {
+            x: 190,
+            y: 30.98333740234375,
+          },
+          data: {
+            label: "New meta Action MetaAction_0",
+            id: "MetaAction_0",
+          },
+          isSelected: false,
+        },
+        {
+          id: "Node_1",
+          type: "default",
+          position: {
+            x: 62,
+            y: 132.98333740234375,
+          },
+          data: {
+            label: "New meta Action MetaAction_1",
+            id: "MetaAction_1",
+          },
+          isSelected: false,
+        },
+        {
+          id: "Node_2",
+          type: "output",
+          position: {
+            x: 251,
+            y: 227.98333740234375,
+          },
+          data: {
+            label: "New meta Action MetaAction_2",
+            id: "MetaAction_2",
+          },
+          isSelected: false,
+        },
+        {
+          id: "Edge_0",
+          source: "Node_0",
+          target: "Node_1",
+          type: "smart",
+          arrowHeadType: "arrow",
+          label: "Jack",
+          isSelected: false,
+        },
+        {
+          id: "Edge_1",
+          source: "Node_1",
+          target: "Node_2",
+          type: "smart",
+          arrowHeadType: "arrow",
+          label: "Failed",
+          isSelected: false,
+        },
+      ],
+      reactFlowInstance: {},
+    };
 
     const expectedResult = {
-      name: "Strategy name",
+      strategyName: "Strategy name",
       actions: [
         {
           tag: "New meta Action MetaAction_0",
@@ -112,12 +89,11 @@ describe("Test parserGraph methods", () => {
       ],
     };
 
-        const expectedResult = {}
-        const result = parserStrategy.parseMetaActionArray(toParse);
-        expect(result).toStrictEqual(expectedResult);
-})
+    const result = parserGraph.parseStrategyGraph(toParse);
+    expect(result).toStrictEqual(expectedResult);
+  });
 
-  test("Test of the parseMetaActionArray method", () => {
+  test("Test of the parseMetaActionGraph method", () => {
     const toParse = [
       {
         id: "MetaAction_0",
@@ -322,7 +298,7 @@ describe("Test parserGraph methods", () => {
 
     const expectedResult = [
       {
-        name: "New meta Action MetaAction_0",
+        metaActionName: "MetaAction_0",
         actions: [
           {
             action: "Bezier",
@@ -346,7 +322,7 @@ describe("Test parserGraph methods", () => {
         ],
       },
       {
-        name: "New meta Action MetaAction_1",
+        metaActionName: "MetaAction_1",
         actions: [
           {
             action: "Line",
@@ -364,7 +340,7 @@ describe("Test parserGraph methods", () => {
         ],
       },
       {
-        name: "New meta Action MetaAction_2",
+        metaActionName: "MetaAction_2",
         actions: [
           {
             action: "CalculateOdometry",
@@ -377,4 +353,7 @@ describe("Test parserGraph methods", () => {
       },
     ];
 
-})
+    const result = parserGraph.parseMetaActionGraph(toParse);
+    expect(result).toStrictEqual(expectedResult);
+  });
+});
