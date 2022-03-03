@@ -5,7 +5,7 @@ import * as JSZip from 'jszip'
 import { saveAs } from 'file-saver';
 
 import Button from '@material-ui/core/Button';
-import parserStrategy from '../../../../../util/parserStrategy';
+import parserStrategy from '../../../../../util/parserGraph';
 import RobotSimulator from "./../../../../general/robotSimulator/RobotSimulator"
 
 const StrategySimulator = ({strategyCreator, metaActionArray}) => {
