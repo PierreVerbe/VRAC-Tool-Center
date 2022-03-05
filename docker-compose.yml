@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   react-app:
-    image: pierreverbe/vrac-tool-center-ui:0.1.0-SNAPSHOT
+    image: pierreverbe/vrac-tool-center-ui:0.2.0
     stdin_open: true
     ports: 
       - "3000:3000"
