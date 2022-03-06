@@ -1,100 +1,119 @@
 class parserStrategy {
-    static parse = (strategyCreator, metaActionArray) => {
-     
-    }
+  static parse = (strategyGraph, metaActionArrayGraph) => {
+    const strategyCreator = parserGraph.parseStrategyCreator(strategyGraph)
+    const metaActionArray = parserGraph.parseMetaActionArray(metaActionArrayGraph)
 
-    static parseStrategyCreator = (strategyGraph) => {
-        let nodeId = 0
-        let edgeId = 0
-        let metaActionId = 0
-        const idMap = new Map()
-        const actionMap = new Map();
-    
-        const flowNode = strategyGraph.actions.map((action) => {
-            const id = `Node_${nodeId++}`
-            const type = action.transitions.length === 0 ? "output" : "default" // TODO input
-            const dataId = `MetaAction_${metaActionId++}`
-            const position = {x: 100, y: nodeId * 100}
-            const data = {label: action.tag, id: dataId}
+    return { strategyCreator: strategyCreator, metaActionArray: metaActionArray }
+  }
 
-            // Define id mapping
-            idMap.set(action.tag, id) 
+  static parseStrategyCreator = (strategyGraph) => {
+    let nodeIdNumber = 0
+    let edgeIdNumber = 0
+    let metaActionIdNumber = 0
+    const nodeTagIdMap = new Map()
+    const transitionMap = new Map()
 
-            // Define type node input
-            action.transitions.map((transition) => {
-              const numberSource = actionMap.get(action.tag)
-              if (numberSource === undefined) actionMap.set(action.tag, 0)
+    const flowNode = strategyGraph.actions.map((action) => {
+      const position = { x: 100, y: nodeIdNumber * 100 }
+      const nodeId = `Node_${nodeIdNumber++}`
+      const type = action.transitions.length === 0 ? "output" : "default"
+      const metaActionId = `MetaAction_${metaActionIdNumber++}`
+      const data = { label: action.tag, id: metaActionId }
 
-              const numberTarget = actionMap.get(transition.destination)
-              if (numberTarget === undefined) actionMap.set(transition.destination, 1)
-              else actionMap.set(transition.destination, numberTarget +1 )
-            })
+      nodeTagIdMap.set(action.tag, nodeId)
+      action.transitions.map((transition) => {
+        const numberSource = transitionMap.get(action.tag)
+        if (numberSource === undefined) transitionMap.set(action.tag, 0)
 
-            return {id: id, type: type, position: position, data: data, isSelected: false}
-        }
-        )
+        const numberTarget = transitionMap.get(transition.destination)
+        if (numberTarget === undefined) transitionMap.set(transition.destination, 1)
+        else transitionMap.set(transition.destination, numberTarget + 1)
+      })
 
+      return { id: nodeId, type: type, position: position, data: data, isSelected: false }
+    })
+      .map((action) => {
+        const numberTarget = transitionMap.get(action.data.label)
+        if (numberTarget === 0) return { ...action, type: "input" }
+        else return action
+      })
 
-        const flowNode2 = flowNode.map((action) => {
-          const numberTarget = actionMap.get(action.data.label)
-          if (numberTarget === 0) return {...action, type: "input"}
+    const flowEdge = strategyGraph.actions.flatMap((action) => {
+      const sourdeId = nodeTagIdMap.get(action.tag)
+
+      const edges = action.transitions.map((transition) => {
+        const edgeId = `Edge_${edgeIdNumber++}`
+        const targetId = nodeTagIdMap.get(transition.destination)
+
+        return { id: edgeId, source: sourdeId, target: targetId, type: "smart", arrowHeadType: "arrow", label: transition.type, isSelected: false }
+      })
+
+      if (action.transitions.length !== 0) return edges
+
+    })
+      .filter(action => action !== undefined)
+
+    const flow = flowNode.concat(flowEdge)
+
+    return { name: strategyGraph.strategyName, flow: flow, reactFlowInstance: {} }
+  }
+
+  static parseMetaActionArray = (metaActionArrayGraph) => {
+    let metaActionNumber = 0
+
+    const metaActionArray = metaActionArrayGraph.map((metaAction) => {
+      const metaActionId = `MetaAction_${metaActionNumber++}`
+
+      let nodeIdNumber = 0
+      let edgeIdNumber = 0
+      const nodeTagIdMap = new Map()
+      const transitionMap = new Map()
+      const flowNode = metaAction.actions.map((action) => {
+        const position = { x: 100, y: nodeIdNumber * 100 }
+        const nodeId = `Node_${nodeIdNumber++}`
+        const type = action.transitions.length === 0 ? "output" : "default"
+        const data = { label: action.tag }
+        const actionData = { type: action.action, ...action.parameters }
+
+        nodeTagIdMap.set(action.tag, nodeId)
+        action.transitions.map((transition) => {
+          const numberSource = transitionMap.get(action.tag)
+          if (numberSource === undefined) transitionMap.set(action.tag, 0)
+
+          const numberTarget = transitionMap.get(transition.destination)
+          if (numberTarget === undefined) transitionMap.set(transition.destination, 1)
+          else transitionMap.set(transition.destination, numberTarget + 1)
+        })
+
+        return { id: nodeId, type: type, position: position, data: data, actionData: actionData, isSelected: false }
+      })
+        .map((action) => {
+          const numberTarget = transitionMap.get(action.data.label)
+          if (numberTarget === 0) return { ...action, type: "input" }
           else return action
         })
 
-        // node travailler type
-        //data.id
+      const flowEdge = metaAction.actions.flatMap((action) => {
+        const sourdeId = nodeTagIdMap.get(action.tag)
 
-        const flowEdge = strategyGraph.actions.flatMap((action) => {
-            const sourdeId = idMap.get(action.tag)
+        const edges = action.transitions.map((transition) => {
+          const edgeId = `Edge_${edgeIdNumber++}`
+          const targetId = nodeTagIdMap.get(transition.destination)
 
-            const edges = action.transitions.map((transition) => {
-              const id = `Edge_${edgeId++}`
-              const targetId = idMap.get(transition.destination)
+          return { id: edgeId, source: sourdeId, target: targetId, type: "smart", arrowHeadType: "arrow", label: transition.type, isSelected: false }
+        })
 
-              return {id: id, source: sourdeId, target: targetId, type: "smart", arrowHeadType: "arrow", label: transition.type, isSelected: false}
-            })
+        if (action.transitions.length !== 0) return edges
+      })
+        .filter(action => action !== undefined)
 
-            if (action.transitions.length !== 0) return edges
+      const flow = flowNode.concat(flowEdge)
 
-        }).filter(x => x !== undefined)
+      return { id: metaActionId, name: metaAction.metaActionName, flow: flow, reactFlowInstance: {}, isSelected: false }
+    })
 
-        const flow = flowNode2.concat(flowEdge)
-
-        /*
-
-        const edges = strategyGraph.flow.filter((item) =>
-          item.id.startsWith("Edge")
-        );
-        const nodes = strategyGraph.flow.filter((item) =>
-          item.id.startsWith("Node")
-        );
-    
-        const nodesParsed = nodes.map((node) => {
-          const edge = edges
-            .filter((item) => item.source === node.id)
-            .map((item) => {
-              const target = nodes.filter(
-                (findItem) => item.target === findItem.id
-              )[0];
-    
-              return { type: item.label, destination: target.data.label };
-            });
-    
-          return { tag: node.data.label, transitions: edge };
-        });
-    
-        const result = { strategyName: strategyGraph.name, actions: nodesParsed };
-        return result;
-        */
-
-        console.log({name: strategyGraph.strategyName, flow: flow, reactFlowInstance: {} })
-        return {name: strategyGraph.strategyName, flow: flow, reactFlowInstance: {} }
-      };
-      
-
-      static parseMetaActionArray = (t) => {
-
-      }
+    return metaActionArray
+  }
 }
 
-export default parserStrategy;
+export default parserStrategy
