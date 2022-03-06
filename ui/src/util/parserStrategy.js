@@ -84,4 +84,4 @@ class parserStrategy {
   };
 }
 
-export default parserStrategy;
+export default parserStrategy

@@ -1,10 +1,6 @@
-import parserGraph from "./../../util/parserGraph";
+import parserGraph from "./../../util/parserGraph"
 
 describe("Test parserGraph methods", () => {
-  test("Test of the parse method", () => {
-    expect(1).toBe(1);
-  });
-
   test("Test of the parseStrategyGraph method", () => {
     const toParse = {
       name: "Strategy name",
@@ -68,7 +64,7 @@ describe("Test parserGraph methods", () => {
         },
       ],
       reactFlowInstance: {},
-    };
+    }
 
     const expectedResult = {
       strategyName: "Strategy name",
@@ -87,11 +83,11 @@ describe("Test parserGraph methods", () => {
         },
         { tag: "New meta Action MetaAction_2", transitions: [] },
       ],
-    };
+    }
 
-    const result = parserGraph.parseStrategyGraph(toParse);
-    expect(result).toStrictEqual(expectedResult);
-  });
+    const result = parserGraph.parseStrategyGraph(toParse)
+    expect(result).toStrictEqual(expectedResult)
+  })
 
   test("Test of the parseMetaActionGraph method", () => {
     const toParse = [
@@ -294,11 +290,11 @@ describe("Test parserGraph methods", () => {
         reactFlowInstance: {},
         isSelected: false,
       },
-    ];
+    ]
 
     const expectedResult = [
       {
-        metaActionName: "MetaAction_0",
+        metaActionName: "New meta Action MetaAction_0",
         actions: [
           {
             action: "Bezier",
@@ -322,7 +318,7 @@ describe("Test parserGraph methods", () => {
         ],
       },
       {
-        metaActionName: "MetaAction_1",
+        metaActionName: "New meta Action MetaAction_1",
         actions: [
           {
             action: "Line",
@@ -340,7 +336,7 @@ describe("Test parserGraph methods", () => {
         ],
       },
       {
-        metaActionName: "MetaAction_2",
+        metaActionName: "New meta Action MetaAction_2",
         actions: [
           {
             action: "CalculateOdometry",
@@ -351,9 +347,9 @@ describe("Test parserGraph methods", () => {
           { action: "End", parameters: {}, tag: "Stop", transitions: [] },
         ],
       },
-    ];
+    ]
 
-    const result = parserGraph.parseMetaActionGraph(toParse);
-    expect(result).toStrictEqual(expectedResult);
-  });
-});
+    const result = parserGraph.parseMetaActionGraph(toParse)
+    expect(result).toStrictEqual(expectedResult)
+  })
+})
