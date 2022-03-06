@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import { connect } from "react-redux"
-import ReactFlow, { ReactFlowProvider, Controls, MiniMap } from 'react-flow-renderer'
+import ReactFlow, { ReactFlowProvider, Controls } from 'react-flow-renderer'
 
 import SideBar from "../Sidebar"
 import DialogUpdateNode from "./StrategyDialog"
@@ -144,17 +144,6 @@ const StrategyCreator = ({ strategyCreator, openDialogNodeStrategy, setStrategyC
               smart: SmartEdge,
             }}
           >
-            <MiniMap
-              nodeStrokeColor={(n) => {
-                if (n.type === 'input') return '#0041d0'
-                if (n.type === 'default') return '#ff0072'
-                if (n.type === 'output') return '#ff0072'
-              }}
-              nodeColor={(n) => {
-                if (n.type === 'selectorNode') return '#1A192B'
-                return '#fff'
-              }}
-            />
             <Controls />
           </ReactFlow>
         </div>
