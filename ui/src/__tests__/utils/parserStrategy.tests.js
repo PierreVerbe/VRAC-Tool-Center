@@ -71,7 +71,7 @@ describe("Test parserStrategy methods", () => {
     };
 
     const expectedResult = {
-      strategyName: "Strategy name",
+      name: "Strategy name",
       actions: [
         {
           tag: "New meta Action MetaAction_0",
@@ -298,7 +298,7 @@ describe("Test parserStrategy methods", () => {
 
     const expectedResult = [
       {
-        metaActionName: "MetaAction_0",
+        name: "New meta Action MetaAction_0",
         actions: [
           {
             action: "Bezier",
@@ -322,7 +322,7 @@ describe("Test parserStrategy methods", () => {
         ],
       },
       {
-        metaActionName: "MetaAction_1",
+        name: "New meta Action MetaAction_1",
         actions: [
           {
             action: "Line",
@@ -340,7 +340,7 @@ describe("Test parserStrategy methods", () => {
         ],
       },
       {
-        metaActionName: "MetaAction_2",
+        name: "New meta Action MetaAction_2",
         actions: [
           {
             action: "CalculateOdometry",
