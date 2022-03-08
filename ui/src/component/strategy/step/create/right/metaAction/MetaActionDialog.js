@@ -31,6 +31,8 @@ import MetaActionGraph from "./MetaActionGraph"
 import ClearIcon from '@material-ui/icons/Clear'
 import PublishIcon from '@material-ui/icons/Publish'
 
+import Grid from '@material-ui/core/Grid';
+
 import configData from "./../../../../../../resources/config.json";
 
 const useStyles = makeStyles((theme) => ({
@@ -291,10 +293,19 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
 
     return (
         <div>
-            <Dialog open={open} onClose={event => handleCancel(event)} aria-labelledby="form-dialog-title">
+            
+            <Dialog 
+                fullWidth={true}
+                maxWidth="xl"  // lg ou xl
+                open={open} 
+                onClose={event => handleCancel(event)} 
+                aria-labelledby="form-dialog-title"
+            >
                 <DialogTitle id="form-dialog-title">Dialog edit meta action</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
+                    <Grid container spacing={3}>
+                        <Grid item xs={8}>
+                        <DialogContentText>
                         Please fill in the form and the graph.
                     </DialogContentText>
 
@@ -309,9 +320,21 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
                         variant="standard"
                     />
 
+                
                     <MetaActionGraph />
 
-                    {dialogNodeOrEdge()}
+                    
+                        </Grid>
+                        <Grid item xs={4}>
+                        {dialogNodeOrEdge()}
+                        </Grid>
+                    </Grid>
+
+
+
+
+
+                    
                 
                     
                 </DialogContent>

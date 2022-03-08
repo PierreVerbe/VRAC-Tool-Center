@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import { connect } from "react-redux"
-import ReactFlow, { ReactFlowProvider, Controls, MiniMap } from 'react-flow-renderer'
+import ReactFlow, { ReactFlowProvider, Controls } from 'react-flow-renderer'
 
 import SideBar from "../Sidebar"
 import DialogUpdateNode from "./StrategyDialog"
@@ -9,8 +9,11 @@ import { SmartEdge } from '@tisoap/react-flow-smart-edge'
 import TextField from '@material-ui/core/TextField'
 import './../dnd.css'
 
+import configData from "./../../../../../../resources/config.json"
+
 import { ArrowHeadType } from 'react-flow-renderer'
 
+const strategyTransition = configData.strategy.transition
 let idNode = 0
 let idEdge = 0
 const getIdNode = () => `Node_${idNode++}`
@@ -70,7 +73,7 @@ const StrategyCreator = ({ strategyCreator, openDialogNodeStrategy, setStrategyC
       target: params.target,
       type: 'smart',
       arrowHeadType,
-      label: "",
+      label: strategyTransition[0],
       isSelected: false
     }
 
@@ -144,17 +147,6 @@ const StrategyCreator = ({ strategyCreator, openDialogNodeStrategy, setStrategyC
               smart: SmartEdge,
             }}
           >
-            <MiniMap
-              nodeStrokeColor={(n) => {
-                if (n.type === 'input') return '#0041d0'
-                if (n.type === 'default') return '#ff0072'
-                if (n.type === 'output') return '#ff0072'
-              }}
-              nodeColor={(n) => {
-                if (n.type === 'selectorNode') return '#1A192B'
-                return '#fff'
-              }}
-            />
             <Controls />
           </ReactFlow>
         </div>

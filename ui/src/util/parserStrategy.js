@@ -34,7 +34,7 @@ class parserStrategy {
       return { tag: node.data.label, transitions: edge };
     });
 
-    const result = { strategyName: strategyCreator.name, actions: nodesParsed };
+    const result = { name: strategyCreator.name, actions: nodesParsed };
     return result;
   };
 
@@ -66,7 +66,7 @@ class parserStrategy {
         };
       });
 
-      return { metaActionName: metaAction.id, actions: nodesParsed };
+      return { name: metaAction.name, actions: nodesParsed };
     });
 
     return metaActionParsed;
