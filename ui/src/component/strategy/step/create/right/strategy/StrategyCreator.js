@@ -9,8 +9,11 @@ import { SmartEdge } from '@tisoap/react-flow-smart-edge'
 import TextField from '@material-ui/core/TextField'
 import './../dnd.css'
 
+import configData from "./../../../../../../resources/config.json"
+
 import { ArrowHeadType } from 'react-flow-renderer'
 
+const strategyTransition = configData.strategy.transition
 let idNode = 0
 let idEdge = 0
 const getIdNode = () => `Node_${idNode++}`
@@ -70,7 +73,7 @@ const StrategyCreator = ({ strategyCreator, openDialogNodeStrategy, setStrategyC
       target: params.target,
       type: 'smart',
       arrowHeadType,
-      label: "",
+      label: strategyTransition[0],
       isSelected: false
     }
 

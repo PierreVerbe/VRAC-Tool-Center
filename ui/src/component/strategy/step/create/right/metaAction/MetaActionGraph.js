@@ -8,7 +8,11 @@ import { setMetaActionArrayActionCreator } from "../../../../../../action/strate
 import { SmartEdge } from '@tisoap/react-flow-smart-edge'
 import './../dnd.css'
 
+import configData from "./../../../../../../resources/config.json"
+
 import { ArrowHeadType } from 'react-flow-renderer'
+
+const metaActionTransition = configData.metaAction.transition
 
 let idNode = 0
 let idEdge = 0
@@ -75,7 +79,7 @@ const MetaActionGraph = ({ metaActionArray, setMetaActionArray }) => {
             target: params.target,
             type: "smart",
             arrowHeadType,
-            label: "",
+            label: metaActionTransition[0],
             isSelected: false
         }
 
@@ -108,9 +112,16 @@ const MetaActionGraph = ({ metaActionArray, setMetaActionArray }) => {
         event.preventDefault()
     }
 
-    const graphStyles = { width: "500px", height: "500px" }
+    const pixelBorderWindow = 32
+    const pixelBorderDialog = 20
+    const spacingPixel = 3 * 8
+    const sideBarPixel = 234
+    const dialogPixel = window.innerWidth - (2 * pixelBorderWindow) - (2 * pixelBorderDialog) - spacingPixel - sideBarPixel
+    const widthReactFlow = dialogPixel * 8 / 12
+    const graphStyles = { width: widthReactFlow, height: "500px" }
 
     return (
+        <div>
         <div className="dndflow">
 
             <ReactFlowProvider>
@@ -129,7 +140,6 @@ const MetaActionGraph = ({ metaActionArray, setMetaActionArray }) => {
                             smart: SmartEdge,
                         }}
                     >
-            
                         <Controls />
                     </ReactFlow>
                 </div>
@@ -138,6 +148,7 @@ const MetaActionGraph = ({ metaActionArray, setMetaActionArray }) => {
             </ReactFlowProvider>
 
 
+        </div>
         </div>
     )
 }
