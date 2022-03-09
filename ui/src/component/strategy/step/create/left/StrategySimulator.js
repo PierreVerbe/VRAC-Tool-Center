@@ -15,14 +15,14 @@ const StrategySimulator = ({strategyCreator, metaActionArray}) => {
 
         var zip = new JSZip();
         zip.file("strategy.json", JSON.stringify(contentParser.strategy, null, ' '))
-        contentParser.meta.forEach(element => {
-            zip.file(element.metaActionName + ".json", JSON.stringify(element, null, ' '));
+        contentParser.metaActions.forEach(metaAction => {
+            zip.file(metaAction.name + ".json", JSON.stringify(metaAction, null, ' '));
         });
         
         zip.generateAsync({type:"blob"})
         .then(function(content) {
         // see FileSaver.js
-        saveAs(content, "example.zip");
+        saveAs(content, contentParser.strategy.name + ".zip");
 });
     }
 

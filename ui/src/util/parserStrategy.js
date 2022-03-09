@@ -7,7 +7,7 @@ class parserStrategy {
     const metaActionParsed =
       parserStrategy.parseMetaActionArray(metaActionArray);
 
-    const parsedContent = { strategy: strategyParsed, meta: metaActionParsed };
+    const parsedContent = { strategy: strategyParsed, metaActions: metaActionParsed };
 
     return parsedContent;
   };
