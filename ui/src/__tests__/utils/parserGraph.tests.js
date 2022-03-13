@@ -1,4 +1,4 @@
-import parserGraph from "./../../util/parserGraph"
+import parserGraph from "./../../utils/parserGraph"
 
 describe("Test parserGraph methods", () => {
   test("Test of the parseStrategyGraph method", () => {
@@ -67,7 +67,7 @@ describe("Test parserGraph methods", () => {
     }
 
     const expectedResult = {
-      strategyName: "Strategy name",
+      name: "Strategy name",
       actions: [
         {
           tag: "New meta Action MetaAction_0",
@@ -294,11 +294,11 @@ describe("Test parserGraph methods", () => {
 
     const expectedResult = [
       {
-        metaActionName: "New meta Action MetaAction_0",
+        name: "New meta Action MetaAction_0",
         actions: [
           {
-            action: "Bezier",
             parameters: {
+              action: "Bezier",
               chained: true,
               radius: 999,
               speed: "FUCKING_SLOW",
@@ -309,42 +309,38 @@ describe("Test parserGraph methods", () => {
             transitions: [{ destination: "World", type: "NoEvent" }],
           },
           {
-            action: "Homing",
-            parameters: { forward: true, side: true },
+            parameters: { action: "Homing", forward: true, side: true },
             tag: "World",
             transitions: [{ destination: "!", type: "AckServo" }],
           },
-          { action: "End", parameters: {}, tag: "!", transitions: [] },
+          { parameters: { action: "End" }, tag: "!", transitions: [] },
         ],
       },
       {
-        metaActionName: "New meta Action MetaAction_1",
+        name: "New meta Action MetaAction_1",
         actions: [
           {
-            action: "Line",
-            parameters: { distance: 300, forward: true, speed: "VERY_SLOW" },
+            parameters: { action: "Line", distance: 300, forward: true, speed: "VERY_SLOW" },
             tag: "This",
             transitions: [{ destination: "Is", type: "" }],
           },
           {
-            action: "End",
-            parameters: {},
+            parameters: { action: "End" },
             tag: "Is",
             transitions: [{ destination: "A test", type: "" }],
           },
-          { action: "End", parameters: {}, tag: "A test", transitions: [] },
+          { parameters: { action: "End" }, tag: "A test", transitions: [] },
         ],
       },
       {
-        metaActionName: "New meta Action MetaAction_2",
+        name: "New meta Action MetaAction_2",
         actions: [
           {
-            action: "CalculateOdometry",
-            parameters: {},
+            parameters: { action: "CalculateOdometry" },
             tag: "Start",
             transitions: [{ destination: "Stop", type: "Timeout" }],
           },
-          { action: "End", parameters: {}, tag: "Stop", transitions: [] },
+          { parameters: { action: "End" }, tag: "Stop", transitions: [] },
         ],
       },
     ]

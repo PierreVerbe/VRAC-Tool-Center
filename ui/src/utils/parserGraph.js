@@ -3,7 +3,7 @@ class parserGraph {
     const strategyParsed = parserGraph.parseStrategyGraph(strategyCreator)
     const metaActionParsed = parserGraph.parseMetaActionGraph(metaActionArray)
 
-    return { strategy: strategyParsed, meta: metaActionParsed }
+    return { strategy: strategyParsed, metaActions: metaActionParsed }
   }
 
   static parseStrategyGraph = (strategyCreator) => {
@@ -25,7 +25,7 @@ class parserGraph {
       return { tag: node.data.label, transitions: edge }
     })
 
-    return { strategyName: strategyCreator.name, actions: nodesParsed }
+    return { name: strategyCreator.name, actions: nodesParsed }
   }
 
   static parseMetaActionGraph = (metaActionArray) => {
@@ -46,12 +46,13 @@ class parserGraph {
 
             return { type: item.label, destination: target.data.label }
           })
-        const { type, ...params } = node.actionData
+        const { type, ...partialParameters } = node.actionData
+        const parameters = { ...partialParameters, action: node.actionData.type }
 
-        return { tag: node.data.label, action: node.actionData.type, parameters: params, transitions: edge }
+        return { tag: node.data.label, parameters: parameters, transitions: edge }
       })
 
-      return { metaActionName: metaAction.name, actions: nodesParsed }
+      return { name: metaAction.name, actions: nodesParsed }
     })
 
     return metaActionParsed

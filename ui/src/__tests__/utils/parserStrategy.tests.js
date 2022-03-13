@@ -1,4 +1,4 @@
-import parserStrategy from "./../../util/parserStrategy"
+import parserStrategy from "./../../utils/parserStrategy"
 
 describe("Test parserStrategy methods", () => {
   test("Test of the parseStrategyCreator method", () => {
@@ -85,24 +85,9 @@ describe("Test parserStrategy methods", () => {
       reactFlowInstance: {},
     }
 
-    const expectedResult = {
-      name: "Strategy name",
-      actions: [
-        {
-          tag: "New meta Action MetaAction_0",
-          transitions: [
-            { destination: "New meta Action MetaAction_1", type: "Jack" },
-          ],
-        },
-        {
-          tag: "New meta Action MetaAction_1",
-          transitions: [
-            { destination: "New meta Action MetaAction_2", type: "Failed" },
-          ],
-        },
-        { tag: "New meta Action MetaAction_2", transitions: [] },
-      ],
-    };
+    const result = parserStrategy.parseStrategyCreator(toParse)
+    expect(result).toStrictEqual(expectedResult)
+  })
 
   test("Test of the parseMetaActionArray method", () => {
     const toParse = [
@@ -110,8 +95,8 @@ describe("Test parserStrategy methods", () => {
         metaActionName: "New meta Action MetaAction_0",
         actions: [
           {
-            action: "Bezier",
             parameters: {
+              action: "Bezier",
               chained: true,
               radius: 999,
               speed: "FUCKING_SLOW",
@@ -122,48 +107,44 @@ describe("Test parserStrategy methods", () => {
             transitions: [{ destination: "World", type: "NoEvent" }],
           },
           {
-            action: "Homing",
-            parameters: { forward: true, side: true },
+            parameters: { action: "Homing", forward: true, side: true },
             tag: "World",
             transitions: [{ destination: "!", type: "AckServo" }],
           },
-          { action: "End", parameters: {}, tag: "!", transitions: [] },
+          { parameters: { action: "End" }, tag: "!", transitions: [] },
         ],
       },
       {
         metaActionName: "New meta Action MetaAction_1",
         actions: [
           {
-            action: "Line",
-            parameters: { distance: 300, forward: true, speed: "VERY_SLOW" },
+            parameters: { action: "Line", distance: 300, forward: true, speed: "VERY_SLOW" },
             tag: "This",
             transitions: [{ destination: "Is", type: "" }],
           },
           {
-            action: "End",
-            parameters: {},
+
+            parameters: { action: "End" },
             tag: "Is",
             transitions: [{ destination: "A test", type: "" }],
           },
-          { action: "End", parameters: {}, tag: "A test", transitions: [] },
+          { parameters: { action: "End" }, tag: "A test", transitions: [] },
         ],
       },
       {
         metaActionName: "New meta Action MetaAction_2",
         actions: [
           {
-            action: "CalculateOdometry",
-            parameters: {},
+            parameters: { action: "CalculateOdometry" },
             tag: "Start",
             transitions: [{ destination: "Stop", type: "Timeout" }],
           },
-          { action: "End", parameters: {}, tag: "Stop", transitions: [] },
+          { parameters: { action: "End" }, tag: "Stop", transitions: [] },
         ],
       },
     ]
 
-  test("Test of the parseMetaActionArray method", () => {
-    const toParse = [
+    const expectedResult = [
       {
         id: "MetaAction_0",
         name: "New meta Action MetaAction_0",
@@ -172,8 +153,8 @@ describe("Test parserStrategy methods", () => {
             id: "Node_0",
             type: "input",
             position: {
-              x: 116,
-              y: 67.25,
+              x: 100,
+              y: 0,
             },
             data: {
               label: "Hello",
@@ -192,8 +173,8 @@ describe("Test parserStrategy methods", () => {
             id: "Node_1",
             type: "default",
             position: {
-              x: 141,
-              y: 191.25,
+              x: 100,
+              y: 100,
             },
             data: {
               label: "World",
@@ -209,8 +190,8 @@ describe("Test parserStrategy methods", () => {
             id: "Node_2",
             type: "output",
             position: {
-              x: 144,
-              y: 303.25,
+              x: 100,
+              y: 200,
             },
             data: {
               label: "!",
@@ -250,8 +231,8 @@ describe("Test parserStrategy methods", () => {
             id: "Node_0",
             type: "input",
             position: {
-              x: 140,
-              y: 89.25,
+              x: 100,
+              y: 0,
             },
             data: {
               label: "This",
@@ -268,8 +249,8 @@ describe("Test parserStrategy methods", () => {
             id: "Node_1",
             type: "default",
             position: {
-              x: 187,
-              y: 206.25,
+              x: 100,
+              y: 100,
             },
             data: {
               label: "Is",
@@ -283,8 +264,8 @@ describe("Test parserStrategy methods", () => {
             id: "Node_2",
             type: "output",
             position: {
-              x: 170,
-              y: 307.25,
+              x: 100,
+              y: 200,
             },
             data: {
               label: "A test",
@@ -324,8 +305,8 @@ describe("Test parserStrategy methods", () => {
             id: "Node_0",
             type: "input",
             position: {
-              x: 174,
-              y: 163.25,
+              x: 100,
+              y: 0,
             },
             data: {
               label: "Start",
@@ -339,8 +320,8 @@ describe("Test parserStrategy methods", () => {
             id: "Node_1",
             type: "output",
             position: {
-              x: 167,
-              y: 261.25,
+              x: 100,
+              y: 100,
             },
             data: {
               label: "Stop",
@@ -363,64 +344,7 @@ describe("Test parserStrategy methods", () => {
         reactFlowInstance: {},
         isSelected: false,
       },
-    ];
-
-    const expectedResult = [
-      {
-        name: "New meta Action MetaAction_0",
-        actions: [
-          {
-            action: "Bezier",
-            parameters: {
-              chained: true,
-              radius: 999,
-              speed: "FUCKING_SLOW",
-              x: 99,
-              y: 9,
-            },
-            tag: "Hello",
-            transitions: [{ destination: "World", type: "NoEvent" }],
-          },
-          {
-            action: "Homing",
-            parameters: { forward: true, side: true },
-            tag: "World",
-            transitions: [{ destination: "!", type: "AckServo" }],
-          },
-          { action: "End", parameters: {}, tag: "!", transitions: [] },
-        ],
-      },
-      {
-        name: "New meta Action MetaAction_1",
-        actions: [
-          {
-            action: "Line",
-            parameters: { distance: 300, forward: true, speed: "VERY_SLOW" },
-            tag: "This",
-            transitions: [{ destination: "Is", type: "" }],
-          },
-          {
-            action: "End",
-            parameters: {},
-            tag: "Is",
-            transitions: [{ destination: "A test", type: "" }],
-          },
-          { action: "End", parameters: {}, tag: "A test", transitions: [] },
-        ],
-      },
-      {
-        name: "New meta Action MetaAction_2",
-        actions: [
-          {
-            action: "CalculateOdometry",
-            parameters: {},
-            tag: "Start",
-            transitions: [{ destination: "Stop", type: "Timeout" }],
-          },
-          { action: "End", parameters: {}, tag: "Stop", transitions: [] },
-        ],
-      },
-    ];
+    ]
 
     const result = parserStrategy.parseMetaActionArray(toParse)
     expect(result).toStrictEqual(expectedResult)
