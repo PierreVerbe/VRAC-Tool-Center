@@ -27,8 +27,9 @@ const RobotSimulator = ({ monitoring, activeStepMonitoring }) => {
 
         canvasRef.current.addEventListener("mousemove", function(e) { 
             var cRect = canvasRef.current.getBoundingClientRect()
-            setCanvasX(Math.round((e.clientX - cRect.left) * REDUCING_FACTOR) )
-            setCanvasY(Math.round((e.clientY - cRect.top) * REDUCING_FACTOR) )   
+            
+            setCanvasX(Math.round((e.clientY - cRect.top) * REDUCING_FACTOR))   
+            setCanvasY(Math.round((e.clientX - cRect.left) * REDUCING_FACTOR))
         })
     }, [])
 
