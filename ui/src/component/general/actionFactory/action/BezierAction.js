@@ -15,7 +15,7 @@ import configData from "./../../../../resources/config.json"
 const BezierAction = ({ action, metaActionArray, setMetaActionArray }) => {
     const ACTION = "Bezier"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
-    const defaultActionData = { type: action.actionData.type, chained: false, radius: 0, X: 0, Y: 0, speed: "" }
+    const defaultActionData = { type: action.actionData.type, chained: false, radius: 0, x: 0, y: 0, speed: "" }
 
     useEffect(() => {
         if (action.actionData.type !== ACTION) {
@@ -64,8 +64,8 @@ const BezierAction = ({ action, metaActionArray, setMetaActionArray }) => {
                 />
 
                 <TextField id="standard-basic" label="radius" type="number" inputProps={{ min: -1000, max: 1000 }} defaultValue={action.actionData.radius} onChange={handleChangeNumber} name="radius" />
-                <TextField id="standard-basic" label="X" type="number" inputProps={{ min: 0, max: 2000 }} defaultValue={action.actionData.X} onChange={handleChangeNumber} name="X" />
-                <TextField id="standard-basic" label="Y" type="number" inputProps={{ min: 0, max: 3000 }} defaultValue={action.actionData.Y} onChange={handleChangeNumber} name="Y" />
+                <TextField id="standard-basic" label="x" type="number" inputProps={{ min: 0, max: 2000 }} defaultValue={action.actionData.x} onChange={handleChangeNumber} name="x" />
+                <TextField id="standard-basic" label="y" type="number" inputProps={{ min: 0, max: 3000 }} defaultValue={action.actionData.y} onChange={handleChangeNumber} name="y" />
 
                 <Select
                     labelId="demo-simple-select-label"
