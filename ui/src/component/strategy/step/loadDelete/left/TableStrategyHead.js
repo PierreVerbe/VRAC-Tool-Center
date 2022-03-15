@@ -9,9 +9,7 @@ import Checkbox from '@material-ui/core/Checkbox'
 export const columns = [
     { id: 'id', label: 'Id', minWidth: 10 },
     { id: 'name', label: 'Name', minWidth: 10 },
-    { id: 'date', label: 'Date', minWidth: 10 },
-    { id: 'description', label: 'Description', minWidth: 10 },
-    { id: 'version', label: 'Version', minWidth: 10 }
+    { id: 'date', label: 'Date', minWidth: 10 }
 ]
 
 export const TableStrategyHead = (props) => {

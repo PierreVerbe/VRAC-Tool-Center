@@ -15,6 +15,8 @@ export const SET_OPEN_DIALOG_NODE_STRATEGY = "SET_OPEN_DIALOG_NODE_STRATEGY"
 export const SET_META_ACTION_ARRAY = "SET_META_ACTION_ARRAY"
 export const SET_OPEN_DIALOG_META_ACTION = "SET_OPEN_DIALOG_META_ACTION"
 
+export const SET_STRATEGY_LOADER = "SET_STRATEGY_LOADER"
+
 // REST call 
 export const insertStrategyActionCreator = strategyToInsert => {
     return async function (dispatch) {
@@ -139,6 +141,15 @@ export const setStrategyCreatorActionCreator = strategyCreator => {
         dispatch({
             type: SET_STRATEGY_CREATOR,
             payload: strategyCreator
+        })
+    }
+}
+
+export const setStrategyLoaderActionCreator = strategyLoader => {
+    return function (dispatch) {
+        dispatch({
+            type: SET_STRATEGY_LOADER,
+            payload: strategyLoader
         })
     }
 }

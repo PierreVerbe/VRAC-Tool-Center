@@ -7,11 +7,8 @@ export const insertStrategy = async (strategy) => {
     try {
         const result = await Axios.post(baseURL + "/insert/strategy",
         {   
-           name: strategy.name,
-           description: strategy.description,
-           sender: strategy.sender,
-           strategy: strategy.monitoring,
-           version: strategy.version
+           strategy: strategy.strategy,
+           metaActions: strategy.metaActions
         })
         return result.data
     } catch (error) {
