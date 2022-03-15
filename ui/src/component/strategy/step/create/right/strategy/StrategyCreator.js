@@ -112,7 +112,7 @@ const StrategyCreator = ({ strategyCreator, openDialogNodeStrategy, setStrategyC
     setStrategyCreator(updatedStrategyCreator)
 }
 
-  const graphStyles = { width: "100%", height: "500px" }
+  const graphStyles = { width: "100%", height: "450px" }
 
   return (
     <div>
