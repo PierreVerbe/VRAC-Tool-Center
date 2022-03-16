@@ -8,11 +8,15 @@ import SaveIcon from '@material-ui/icons/Save'
 import DeleteIcon from '@material-ui/icons/Delete'
 import GetAppIcon from '@material-ui/icons/GetApp'
 import ClearIcon from '@material-ui/icons/Clear'
+import ReactJson from 'react-json-view'
 
 import DropzoneOrReactJson from "./DropzoneOrReactJson"
 import DialogSaveStrategy from "./DialogSaveStrategy"
-import { insertStrategyActionCreator, deleteStrategyActionCreator, setIdRowStrategyTableActionCreator, setStrategyActionCreator, setOpenDialogStrategyActionCreator } from "../../../../../action/strategyAction"
+import DialogLoadStrategyFromFile from "./DialogLoadStrategyFromFile"
+import { setStrategyLoaderActionCreator, insertStrategyActionCreator, deleteStrategyActionCreator, setIdRowStrategyTableActionCreator, setStrategyActionCreator, setOpenDialogStrategyActionCreator } from "../../../../../action/strategyAction"
 
+
+import parserGraph from '../../../../../utils/parserGraph'
 /*
 const useStyles = makeStyles({
     root: {
@@ -24,29 +28,43 @@ const useStyles = makeStyles({
   })
 */
 
-const SelectedStrategy = ({ deleteStrategy, idRowStrategyTable, strategyCreator, setIdRowStrategyTable, setStrategy, setOpenDialogStrategy }) => {
+const SelectedStrategy = ({insertStrategy, setStrategyLoader, strategyCreator, metaActionArray, deleteStrategy, idRowStrategyTable, strategyLoader, setIdRowStrategyTable, setStrategy, setOpenDialogStrategy }) => {
     //const classes = useStyles()
+    console.log("Hello")
+    console.log(strategyLoader)
 
     // Is button disabled
     const isSaveButtonDisabled = () => {
-        return (idRowStrategyTable !== null && idRowStrategyTable !== -1) || Object.entries(strategyCreator).length === 0
+        return (idRowStrategyTable !== null && idRowStrategyTable !== -1) || Object.entries(strategyLoader).length === 0
     }
 
     const isDeleteButtonDisabled = () => {
-        return (idRowStrategyTable === null || idRowStrategyTable === -1) || Object.entries(strategyCreator).length === 0
+        return (idRowStrategyTable === null || idRowStrategyTable === -1) || Object.entries(strategyLoader).length === 0
     }
 
     const isExportButtonDisabled = () => {
-        return Object.entries(strategyCreator).length === 0
+        return Object.entries(strategyLoader).length === 0
     }
 
     const isClearButtonDisabled = () => {
-        return Object.entries(strategyCreator).length === 0
+        return Object.entries(strategyLoader).length === 0
     }
 
     // OnClick function for button
-    const handleSave = () => {
+    const handleLoadFromCreator = () => {
+        const contentParser = parserGraph.parse(strategyCreator, metaActionArray)
+        console.log(contentParser)
+        setIdRowStrategyTable(-1)
+        setStrategyLoader(contentParser)
+    }
+
+    const handleLoadStrategyFromFile = () => {
         setOpenDialogStrategy(true)
+    }
+
+    const handleSave = () => {
+        insertStrategy(strategyLoader)
+        //setOpenDialogStrategy(true)
     }
 
     const handleDelete = () => {
@@ -59,8 +77,8 @@ const SelectedStrategy = ({ deleteStrategy, idRowStrategyTable, strategyCreator,
     }
 
     const handleExport = async () => {
-        const fileName = strategyCreator.name ? strategyCreator.name : "exported_file"
-        const json = JSON.stringify(strategyCreator)
+        const fileName = strategyLoader.name ? strategyLoader.name : "exported_file"
+        const json = JSON.stringify(strategyLoader)
         const blob = new Blob([json], { type: 'application/json' })
         const href = await URL.createObjectURL(blob)
         const link = document.createElement('a')
@@ -73,11 +91,38 @@ const SelectedStrategy = ({ deleteStrategy, idRowStrategyTable, strategyCreator,
 
     const handleClear = () => {
         setIdRowStrategyTable(null)
-        setStrategy({})
+        setStrategyLoader({})
     }
 
     return (
         <div>
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={handleLoadFromCreator}
+                //disabled={isSaveButtonDisabled()}
+            >
+                Load from creator
+            </Button>
+
+            <Button
+                variant="contained"
+                color="primary"
+                //onClick={handleLoadFromCreator}
+                //disabled={isSaveButtonDisabled()}
+            >
+                Load to creator
+            </Button>
+
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={handleLoadStrategyFromFile}
+                //disabled={isSaveButtonDisabled()}
+            >
+                Load from file
+            </Button>
+    
             <Button
                 variant="contained"
                 color="primary"
@@ -89,9 +134,11 @@ const SelectedStrategy = ({ deleteStrategy, idRowStrategyTable, strategyCreator,
             >
                 Save
             </Button>
+            <DialogLoadStrategyFromFile />
 
+{/* 
             <DialogSaveStrategy />
-
+ */}
             <Button
                 variant="contained"
                 color="primary"
@@ -117,8 +164,11 @@ const SelectedStrategy = ({ deleteStrategy, idRowStrategyTable, strategyCreator,
                 Export
             </Button>
 
-            <DropzoneOrReactJson isSelected={idRowStrategyTable !== null} strategy={strategyCreator} setIdRowStrategyTable={setIdRowStrategyTable} setStrategy={setStrategy} />
+            <ReactJson src={strategyLoader} collapsed={1} />
 
+            {/* 
+            <DropzoneOrReactJson isSelected={idRowStrategyTable !== null} strategy={strategyLoader} setIdRowStrategyTable={setIdRowStrategyTable} setStrategy={setStrategyLoader} />
+            */}
             <Button
                 variant="contained"
                 color="primary"
@@ -135,13 +185,16 @@ const SelectedStrategy = ({ deleteStrategy, idRowStrategyTable, strategyCreator,
 }
 
 const mapStateToProps = state => ({
+    strategyCreator: state.strategyCreator,
+    metaActionArray: state.metaActionArray,
     idRowStrategyTable: state.idRowStrategyTable,
-    strategyCreator: state.strategyCreator
+    strategyLoader: state.strategyLoader
 })
 
 const mapDispatchToProps = dispatch => ({
-    setIdRowStrategyTable: idRowStrategyTable => dispatch(setIdRowStrategyTableActionCreator(idRowStrategyTable)),
     insertStrategy: strategyToInsert => dispatch(insertStrategyActionCreator(strategyToInsert)),
+    setStrategyLoader: strategyLoader => dispatch(setStrategyLoaderActionCreator(strategyLoader)),
+    setIdRowStrategyTable: idRowStrategyTable => dispatch(setIdRowStrategyTableActionCreator(idRowStrategyTable)),
     deleteStrategy: strategyToDelete => dispatch(deleteStrategyActionCreator(strategyToDelete)),
     setStrategy: strategyCreator => dispatch(setStrategyActionCreator(strategyCreator)),
     setOpenDialogStrategy: openDialogStrategy => dispatch(setOpenDialogStrategyActionCreator(openDialogStrategy))

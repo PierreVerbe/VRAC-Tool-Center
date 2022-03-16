@@ -14,13 +14,13 @@ import PublishIcon from '@material-ui/icons/Publish'
 
 import { insertStrategyActionCreator, setStrategyActionCreator, setOpenDialogStrategyActionCreator } from "../../../../../action/strategyAction"
 
-const DialogSaveStrategy = ({ strategyCreator, setStrategy, insertStrategy, openDialogStrategy, setOpenDialogStrategy }) => {
+const DialogSaveStrategy = ({ strategyLoader, strategyCreator, setStrategy, insertStrategy, openDialogStrategy, setOpenDialogStrategy }) => {
     const handleCancel = () => {
         setOpenDialogStrategy(false)
     }
 
     const handleSubmit = () => {
-        insertStrategy(strategyCreator)
+        insertStrategy(strategyLoader)
         setOpenDialogStrategy(false)
     }
 
@@ -123,6 +123,7 @@ const DialogSaveStrategy = ({ strategyCreator, setStrategy, insertStrategy, open
 }
 
 const mapStateToProps = state => ({
+    strategyLoader: state.strategyLoader,
     strategyCreator: state.strategyCreator,
     openDialogStrategy: state.openDialogStrategy
 })
