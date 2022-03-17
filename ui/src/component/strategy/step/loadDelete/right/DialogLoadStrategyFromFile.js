@@ -17,7 +17,7 @@ import PublishIcon from '@material-ui/icons/Publish'
 import { setStrategyLoaderActionCreator, insertStrategyActionCreator, setStrategyActionCreator, setOpenDialogStrategyActionCreator } from "../../../../../action/strategyAction"
 
 
-const DialogLoadStrategyFromFile = ({ strategyLoader, setStrategyLoader,  strategyCreator, setStrategy, insertStrategy, openDialogStrategy, setOpenDialogStrategy }) => {
+const DialogLoadStrategyFromFile = ({ strategyLoader, setStrategyLoader, strategyCreator, setStrategy, insertStrategy, openDialogStrategy, setOpenDialogStrategy }) => {
 
     const handleCancel = () => {
         setOpenDialogStrategy(false)
@@ -28,35 +28,29 @@ const DialogLoadStrategyFromFile = ({ strategyLoader, setStrategyLoader,  strate
     }
 
     const LoadJsonFile = (files) => {
-        if (files.length > 0) {
-            var file = files[0]
-            var fileReader = new FileReader()
+        let updatedStrategyLoader = strategyLoader
+
+        files.forEach(file => {
+            let fileReader = new FileReader()
 
             fileReader.onload = function (progressEvent) {
-                var stringData = progressEvent.target.result
-                console.log("name")
-                console.log(file.path)
+                const stringData = progressEvent.target.result
                 const obj = JSON.parse(stringData)
 
                 if (file.path === "strategy.json") {
-                    setStrategyLoader({...strategyLoader, strategy: obj})
+                    updatedStrategyLoader = { ...updatedStrategyLoader, strategy: obj }
+                    setStrategyLoader(updatedStrategyLoader)
                 }
                 else {
-                    const metaActions = strategyLoader.metaActions === undefined ? [] : strategyLoader.metaActions
-                    console.log("name")
-                    console.log(obj)
+                    const metaActions = updatedStrategyLoader.metaActions === undefined ? [] : updatedStrategyLoader.metaActions
                     const updatedMetaActions = metaActions.concat([obj])
-                    console.log(updatedMetaActions)
-                    setStrategyLoader({...strategyLoader, metaActions: updatedMetaActions})
+                    updatedStrategyLoader = { ...updatedStrategyLoader, metaActions: updatedMetaActions }
+                    setStrategyLoader(updatedStrategyLoader)
                 }
-
-                //setStrategyLoader(obj)
-                //setIdRowStrategyTable(-1)
-                //setStrategy(obj)
 
             }
             fileReader.readAsText(file, "UTF-8")
-        }
+        })
     }
 
     return (
@@ -67,7 +61,7 @@ const DialogLoadStrategyFromFile = ({ strategyLoader, setStrategyLoader,  strate
                     To load strategy, please drag and drop files.
                 </DialogContentText>
 
-                <DropzoneArea onChange={LoadJsonFile.bind(this)} showAlerts={false}/>
+                <DropzoneArea onChange={LoadJsonFile.bind(this)} showAlerts={false} />
 
             </DialogContent>
 

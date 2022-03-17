@@ -30,8 +30,7 @@ const useStyles = makeStyles({
 
 const SelectedStrategy = ({insertStrategy, setStrategyLoader, strategyCreator, metaActionArray, deleteStrategy, idRowStrategyTable, strategyLoader, setIdRowStrategyTable, setStrategy, setOpenDialogStrategy }) => {
     //const classes = useStyles()
-    console.log("Hello")
-    console.log(strategyLoader)
+  
 
     // Is button disabled
     const isSaveButtonDisabled = () => {
@@ -53,7 +52,6 @@ const SelectedStrategy = ({insertStrategy, setStrategyLoader, strategyCreator, m
     // OnClick function for button
     const handleLoadFromCreator = () => {
         const contentParser = parserGraph.parse(strategyCreator, metaActionArray)
-        console.log(contentParser)
         setIdRowStrategyTable(-1)
         setStrategyLoader(contentParser)
     }
