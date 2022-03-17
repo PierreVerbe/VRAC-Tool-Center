@@ -18,6 +18,7 @@ import { setStrategyLoaderActionCreator, insertStrategyActionCreator, setStrateg
 
 
 const DialogLoadStrategyFromFile = ({ strategyLoader, setStrategyLoader, strategyCreator, setStrategy, insertStrategy, openDialogStrategy, setOpenDialogStrategy }) => {
+    const [fileLoaded, setFileLoaded] = React.useState([]);
 
     const handleCancel = () => {
         setOpenDialogStrategy(false)
@@ -53,6 +54,31 @@ const DialogLoadStrategyFromFile = ({ strategyLoader, setStrategyLoader, strateg
         })
     }
 
+    const DeleteJsonFile = (file) => {
+        let updatedStrategyLoader = strategyLoader
+
+        /*
+        if (file.path === "strategy.json") {
+            //updatedStrategyLoader = {metaActions : updatedStrategyLoader}
+            delete updatedStrategyLoader.strategy
+            console.log(updatedStrategyLoader)
+            setStrategyLoader(updatedStrategyLoader)
+            //updatedStrategyLoader.metaActions === undefined ? setStrategyLoader({}) : setStrategyLoader({ metaActions: updatedStrategyLoader.metaActions })
+        }
+
+        else {
+            const metaActionName = file.path.replace(".json", "")
+            console.log(metaActionName)
+            updatedStrategyLoader = { ...updatedStrategyLoader, metaActions: updatedStrategyLoader.metaActions.filter(metaAction => metaAction.name !== metaActionName) }
+
+            //updatedStrategyLoader = { ...updatedStrategyLoader, metaActions: updatedMetaActions }
+            console.log(updatedStrategyLoader)
+            setStrategyLoader(updatedStrategyLoader)
+            //updatedStrategyLoader.strategy === undefined ? setStrategyLoader({}) : setStrategyLoader({ strategy: updatedStrategyLoader.strategy })
+        }
+        */
+    }
+
     return (
         <Dialog open={openDialogStrategy} onClose={handleCancel}>
             <DialogTitle>Load VRAC strategy from files</DialogTitle>
@@ -61,7 +87,7 @@ const DialogLoadStrategyFromFile = ({ strategyLoader, setStrategyLoader, strateg
                     To load strategy, please drag and drop files.
                 </DialogContentText>
 
-                <DropzoneArea onChange={LoadJsonFile.bind(this)} showAlerts={false} />
+                <DropzoneArea initialFiles={fileLoaded} onChange={LoadJsonFile.bind(this)} onDelete={DeleteJsonFile.bind(this)} showAlerts={false} />
 
             </DialogContent>
 
