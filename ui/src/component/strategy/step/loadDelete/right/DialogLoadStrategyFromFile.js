@@ -30,53 +30,69 @@ const DialogLoadStrategyFromFile = ({ strategyLoader, setStrategyLoader, strateg
 
     const LoadJsonFile = (files) => {
         let updatedStrategyLoader = strategyLoader
+        let updatedFileLoaded = fileLoaded
 
         files.forEach(file => {
+            const fileName = file.path.replace(".json", "")
             let fileReader = new FileReader()
 
             fileReader.onload = function (progressEvent) {
                 const stringData = progressEvent.target.result
                 const obj = JSON.parse(stringData)
 
-                if (file.path === "strategy.json") {
-                    updatedStrategyLoader = { ...updatedStrategyLoader, strategy: obj }
-                    setStrategyLoader(updatedStrategyLoader)
+                if (fileName === "strategy") {
+                    if (updatedStrategyLoader.strategy === undefined) {
+                        updatedFileLoaded.push(file)
+
+                        updatedStrategyLoader = { ...updatedStrategyLoader, strategy: obj }
+                        
+                        setFileLoaded(updatedFileLoaded)
+                        setStrategyLoader(updatedStrategyLoader)
+                    }
                 }
                 else {
-                    const metaActions = updatedStrategyLoader.metaActions === undefined ? [] : updatedStrategyLoader.metaActions
-                    const updatedMetaActions = metaActions.concat([obj])
-                    updatedStrategyLoader = { ...updatedStrategyLoader, metaActions: updatedMetaActions }
-                    setStrategyLoader(updatedStrategyLoader)
+                    if (updatedStrategyLoader.metaActions === undefined || !updatedStrategyLoader.metaActions.some(metaAction => metaAction.name === fileName)) {
+                        updatedFileLoaded.push(file)
+            
+                        const metaActions = updatedStrategyLoader.metaActions === undefined ? [] : updatedStrategyLoader.metaActions
+                        const updatedMetaActions = metaActions.concat([obj])
+                        updatedStrategyLoader = { ...updatedStrategyLoader, metaActions: updatedMetaActions }
+                        
+                        setFileLoaded(updatedFileLoaded)
+                        setStrategyLoader(updatedStrategyLoader)
+                    }
                 }
-
             }
             fileReader.readAsText(file, "UTF-8")
         })
     }
 
     const DeleteJsonFile = (file) => {
+        const fileName = file.path.replace(".json", "")
+
         let updatedStrategyLoader = strategyLoader
+        let updatedFileLoaded = fileLoaded
 
-        /*
-        if (file.path === "strategy.json") {
-            //updatedStrategyLoader = {metaActions : updatedStrategyLoader}
+        console.log(file.path)
+
+
+        if (fileName === "strategy") {
             delete updatedStrategyLoader.strategy
-            console.log(updatedStrategyLoader)
             setStrategyLoader(updatedStrategyLoader)
-            //updatedStrategyLoader.metaActions === undefined ? setStrategyLoader({}) : setStrategyLoader({ metaActions: updatedStrategyLoader.metaActions })
+            setFileLoaded(updatedFileLoaded.filter(item => item.path !== "strategy.json"))
         }
-
-        else {
-            const metaActionName = file.path.replace(".json", "")
-            console.log(metaActionName)
-            updatedStrategyLoader = { ...updatedStrategyLoader, metaActions: updatedStrategyLoader.metaActions.filter(metaAction => metaAction.name !== metaActionName) }
-
-            //updatedStrategyLoader = { ...updatedStrategyLoader, metaActions: updatedMetaActions }
-            console.log(updatedStrategyLoader)
-            setStrategyLoader(updatedStrategyLoader)
-            //updatedStrategyLoader.strategy === undefined ? setStrategyLoader({}) : setStrategyLoader({ strategy: updatedStrategyLoader.strategy })
-        }
-        */
+        /*
+                else {
+                    const metaActionName = file.path.replace(".json", "")
+                    console.log(metaActionName)
+                    updatedStrategyLoader = { ...updatedStrategyLoader, metaActions: updatedStrategyLoader.metaActions.filter(metaAction => metaAction.name !== metaActionName) }
+        
+                    //updatedStrategyLoader = { ...updatedStrategyLoader, metaActions: updatedMetaActions }
+                    console.log(updatedStrategyLoader)
+                    setStrategyLoader(updatedStrategyLoader)
+                    //updatedStrategyLoader.strategy === undefined ? setStrategyLoader({}) : setStrategyLoader({ strategy: updatedStrategyLoader.strategy })
+                }
+                */
     }
 
     return (
