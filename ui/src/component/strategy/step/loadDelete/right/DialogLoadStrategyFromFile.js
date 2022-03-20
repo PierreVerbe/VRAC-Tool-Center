@@ -45,7 +45,7 @@ const DialogLoadStrategyFromFile = ({ strategyLoader, setStrategyLoader, strateg
                         updatedFileLoaded.push(file)
 
                         updatedStrategyLoader = { ...updatedStrategyLoader, strategy: obj }
-                        
+
                         setFileLoaded(updatedFileLoaded)
                         setStrategyLoader(updatedStrategyLoader)
                     }
@@ -53,11 +53,11 @@ const DialogLoadStrategyFromFile = ({ strategyLoader, setStrategyLoader, strateg
                 else {
                     if (updatedStrategyLoader.metaActions === undefined || !updatedStrategyLoader.metaActions.some(metaAction => metaAction.name === fileName)) {
                         updatedFileLoaded.push(file)
-            
+
                         const metaActions = updatedStrategyLoader.metaActions === undefined ? [] : updatedStrategyLoader.metaActions
                         const updatedMetaActions = metaActions.concat([obj])
                         updatedStrategyLoader = { ...updatedStrategyLoader, metaActions: updatedMetaActions }
-                        
+
                         setFileLoaded(updatedFileLoaded)
                         setStrategyLoader(updatedStrategyLoader)
                     }
@@ -68,31 +68,31 @@ const DialogLoadStrategyFromFile = ({ strategyLoader, setStrategyLoader, strateg
     }
 
     const DeleteJsonFile = (file) => {
-        const fileName = file.path.replace(".json", "")
-
         let updatedStrategyLoader = strategyLoader
         let updatedFileLoaded = fileLoaded
 
-        console.log(file.path)
-
+        const fileName = file.path.replace(".json", "")
 
         if (fileName === "strategy") {
-            delete updatedStrategyLoader.strategy
+            const { strategy, ...EndStrategyLoader } = updatedStrategyLoader
+            updatedStrategyLoader = EndStrategyLoader
+
             setStrategyLoader(updatedStrategyLoader)
             setFileLoaded(updatedFileLoaded.filter(item => item.path !== "strategy.json"))
         }
-        /*
-                else {
-                    const metaActionName = file.path.replace(".json", "")
-                    console.log(metaActionName)
-                    updatedStrategyLoader = { ...updatedStrategyLoader, metaActions: updatedStrategyLoader.metaActions.filter(metaAction => metaAction.name !== metaActionName) }
-        
-                    //updatedStrategyLoader = { ...updatedStrategyLoader, metaActions: updatedMetaActions }
-                    console.log(updatedStrategyLoader)
-                    setStrategyLoader(updatedStrategyLoader)
-                    //updatedStrategyLoader.strategy === undefined ? setStrategyLoader({}) : setStrategyLoader({ strategy: updatedStrategyLoader.strategy })
-                }
-                */
+        else {
+            updatedFileLoaded = updatedFileLoaded.filter(item => item.path !== file.path)
+
+            const updatedMetaActions = updatedStrategyLoader.metaActions.filter(metaAction => metaAction.name !== fileName)
+            if (updatedMetaActions.length === 0) {
+                const { metaActions, ...EndStrategyLoader } = updatedStrategyLoader
+                updatedStrategyLoader = EndStrategyLoader
+            }
+            else updatedStrategyLoader = { ...updatedStrategyLoader, metaActions: updatedMetaActions }
+
+            setFileLoaded(updatedFileLoaded)
+            setStrategyLoader(updatedStrategyLoader)
+        }
     }
 
     return (
