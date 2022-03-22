@@ -11,10 +11,12 @@ import ClearIcon from '@material-ui/icons/Clear'
 import ReactJson from 'react-json-view'
 
 import DialogLoadStrategyFromFile from "./DialogLoadStrategyFromFile"
-import { setFileUploadedActionCreator, setStrategyLoaderActionCreator, insertStrategyActionCreator, deleteStrategyActionCreator, setIdRowStrategyTableActionCreator, setStrategyActionCreator, setOpenDialogStrategyActionCreator } from "../../../../../action/strategyAction"
+import { setMetaActionArrayActionCreator, setStrategyCreatorActionCreator, setFileUploadedActionCreator, setStrategyLoaderActionCreator, insertStrategyActionCreator, deleteStrategyActionCreator, setIdRowStrategyTableActionCreator, setStrategyActionCreator, setOpenDialogStrategyActionCreator } from "../../../../../action/strategyAction"
 
 
 import parserGraph from '../../../../../utils/parserGraph'
+import parserStrategy from '../../../../../utils/parserStrategy'
+
 /*
 const useStyles = makeStyles({
     root: {
@@ -26,7 +28,7 @@ const useStyles = makeStyles({
   })
 */
 
-const SelectedStrategy = ({setFileUploaded, insertStrategy, setStrategyLoader, strategyCreator, metaActionArray, deleteStrategy, idRowStrategyTable, strategyLoader, setIdRowStrategyTable, setStrategy, setOpenDialogStrategy }) => {
+const SelectedStrategy = ({setMetaActionArray, setStrategyCreator, setFileUploaded, insertStrategy, setStrategyLoader, strategyCreator, metaActionArray, deleteStrategy, idRowStrategyTable, strategyLoader, setIdRowStrategyTable, setStrategy, setOpenDialogStrategy }) => {
     //const classes = useStyles()
   
 
@@ -52,6 +54,26 @@ const SelectedStrategy = ({setFileUploaded, insertStrategy, setStrategyLoader, s
         const contentParser = parserGraph.parse(strategyCreator, metaActionArray)
         setIdRowStrategyTable(-1)
         setStrategyLoader(contentParser)
+    }
+
+    const handleLoadToCreator = () => {
+        if (strategyLoader.strategy !== undefined) {
+            const strategyCreatorParsed = parserStrategy.parseStrategyCreator(strategyLoader.strategy)
+            setStrategyCreator(strategyCreatorParsed)
+        }
+
+        if (strategyLoader.metaActions !== undefined) {
+            const metaActionArrayParsed = parserStrategy.parseMetaActionArray(strategyLoader.metaActions)
+            console.log(metaActionArrayParsed)
+            setMetaActionArray(metaActionArrayParsed)
+        }
+        
+
+        
+
+        //const contentParser = parserGraph.parse(strategyCreator, metaActionArray)
+        //setIdRowStrategyTable(-1)
+        //setStrategyLoader(contentParser)
     }
 
     const handleLoadStrategyFromFile = () => {
@@ -105,7 +127,7 @@ const SelectedStrategy = ({setFileUploaded, insertStrategy, setStrategyLoader, s
             <Button
                 variant="contained"
                 color="primary"
-                //onClick={handleLoadFromCreator}
+                onClick={handleLoadToCreator}
                 //disabled={isSaveButtonDisabled()}
             >
                 Load to creator
@@ -195,7 +217,9 @@ const mapDispatchToProps = dispatch => ({
     deleteStrategy: strategyToDelete => dispatch(deleteStrategyActionCreator(strategyToDelete)),
     setStrategy: strategyCreator => dispatch(setStrategyActionCreator(strategyCreator)),
     setOpenDialogStrategy: openDialogStrategy => dispatch(setOpenDialogStrategyActionCreator(openDialogStrategy)),
-    setFileUploaded: fileUploaded => dispatch(setFileUploadedActionCreator(fileUploaded))
+    setFileUploaded: fileUploaded => dispatch(setFileUploadedActionCreator(fileUploaded)),
+    setStrategyCreator: strategyCreator => dispatch(setStrategyCreatorActionCreator(strategyCreator)),
+    setMetaActionArray: metaActionArray => dispatch(setMetaActionArrayActionCreator(metaActionArray))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectedStrategy)

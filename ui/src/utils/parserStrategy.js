@@ -1,7 +1,7 @@
 class parserStrategy {
   static parse = (strategyGraph, metaActionArrayGraph) => {
-    const strategyCreator = parserGraph.parseStrategyCreator(strategyGraph)
-    const metaActionArray = parserGraph.parseMetaActionArray(metaActionArrayGraph)
+    const strategyCreator = parserStrategy.parseStrategyCreator(strategyGraph)
+    const metaActionArray = parserStrategy.parseMetaActionArray(metaActionArrayGraph)
 
     return { strategyCreator: strategyCreator, metaActionArray: metaActionArray }
   }
@@ -55,7 +55,7 @@ class parserStrategy {
 
     const flow = flowNode.concat(flowEdge)
 
-    return { name: strategyGraph.strategyName, flow: flow, reactFlowInstance: {} }
+    return { name: strategyGraph.name, flow: flow, reactFlowInstance: null }
   }
 
   static parseMetaActionArray = (metaActionArrayGraph) => {
@@ -110,7 +110,7 @@ class parserStrategy {
 
       const flow = flowNode.concat(flowEdge)
 
-      return { id: metaActionId, name: metaAction.metaActionName, flow: flow, reactFlowInstance: {}, isSelected: false }
+      return { id: metaActionId, name: metaAction.name, flow: flow, reactFlowInstance: null, isSelected: false }
     })
 
     return metaActionArray
@@ -118,3 +118,8 @@ class parserStrategy {
 }
 
 export default parserStrategy
+
+/*
+  Issue
+  Graph one node -> end node
+*/
