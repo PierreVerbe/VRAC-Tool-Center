@@ -16,6 +16,7 @@ export const SET_META_ACTION_ARRAY = "SET_META_ACTION_ARRAY"
 export const SET_OPEN_DIALOG_META_ACTION = "SET_OPEN_DIALOG_META_ACTION"
 
 export const SET_STRATEGY_LOADER = "SET_STRATEGY_LOADER"
+export const SET_FILE_UPLOADED = "SET_FILE_UPLOADED"
 
 // REST call 
 export const insertStrategyActionCreator = strategyToInsert => {
@@ -150,6 +151,15 @@ export const setStrategyLoaderActionCreator = strategyLoader => {
         dispatch({
             type: SET_STRATEGY_LOADER,
             payload: strategyLoader
+        })
+    }
+}
+
+export const setFileUploadedActionCreator = fileUploaded => {
+    return function (dispatch) {
+        dispatch({
+            type: SET_FILE_UPLOADED,
+            payload: fileUploaded
         })
     }
 }

@@ -10,10 +10,8 @@ import GetAppIcon from '@material-ui/icons/GetApp'
 import ClearIcon from '@material-ui/icons/Clear'
 import ReactJson from 'react-json-view'
 
-import DropzoneOrReactJson from "./DropzoneOrReactJson"
-import DialogSaveStrategy from "./DialogSaveStrategy"
 import DialogLoadStrategyFromFile from "./DialogLoadStrategyFromFile"
-import { setStrategyLoaderActionCreator, insertStrategyActionCreator, deleteStrategyActionCreator, setIdRowStrategyTableActionCreator, setStrategyActionCreator, setOpenDialogStrategyActionCreator } from "../../../../../action/strategyAction"
+import { setFileUploadedActionCreator, setStrategyLoaderActionCreator, insertStrategyActionCreator, deleteStrategyActionCreator, setIdRowStrategyTableActionCreator, setStrategyActionCreator, setOpenDialogStrategyActionCreator } from "../../../../../action/strategyAction"
 
 
 import parserGraph from '../../../../../utils/parserGraph'
@@ -28,7 +26,7 @@ const useStyles = makeStyles({
   })
 */
 
-const SelectedStrategy = ({insertStrategy, setStrategyLoader, strategyCreator, metaActionArray, deleteStrategy, idRowStrategyTable, strategyLoader, setIdRowStrategyTable, setStrategy, setOpenDialogStrategy }) => {
+const SelectedStrategy = ({setFileUploaded, insertStrategy, setStrategyLoader, strategyCreator, metaActionArray, deleteStrategy, idRowStrategyTable, strategyLoader, setIdRowStrategyTable, setStrategy, setOpenDialogStrategy }) => {
     //const classes = useStyles()
   
 
@@ -90,6 +88,7 @@ const SelectedStrategy = ({insertStrategy, setStrategyLoader, strategyCreator, m
     const handleClear = () => {
         setIdRowStrategyTable(null)
         setStrategyLoader({})
+        setFileUploaded([])
     }
 
     return (
@@ -195,7 +194,8 @@ const mapDispatchToProps = dispatch => ({
     setIdRowStrategyTable: idRowStrategyTable => dispatch(setIdRowStrategyTableActionCreator(idRowStrategyTable)),
     deleteStrategy: strategyToDelete => dispatch(deleteStrategyActionCreator(strategyToDelete)),
     setStrategy: strategyCreator => dispatch(setStrategyActionCreator(strategyCreator)),
-    setOpenDialogStrategy: openDialogStrategy => dispatch(setOpenDialogStrategyActionCreator(openDialogStrategy))
+    setOpenDialogStrategy: openDialogStrategy => dispatch(setOpenDialogStrategyActionCreator(openDialogStrategy)),
+    setFileUploaded: fileUploaded => dispatch(setFileUploadedActionCreator(fileUploaded))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectedStrategy)

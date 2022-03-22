@@ -14,11 +14,11 @@ import { DropzoneArea } from 'material-ui-dropzone'
 import ClearIcon from '@material-ui/icons/Clear'
 import PublishIcon from '@material-ui/icons/Publish'
 
-import { setStrategyLoaderActionCreator, insertStrategyActionCreator, setStrategyActionCreator, setOpenDialogStrategyActionCreator } from "../../../../../action/strategyAction"
+import { setStrategyLoaderActionCreator, setFileUploadedActionCreator, insertStrategyActionCreator, setStrategyActionCreator, setOpenDialogStrategyActionCreator } from "../../../../../action/strategyAction"
 
 
-const DialogLoadStrategyFromFile = ({ strategyLoader, setStrategyLoader, strategyCreator, setStrategy, insertStrategy, openDialogStrategy, setOpenDialogStrategy }) => {
-    const [fileLoaded, setFileLoaded] = React.useState([]);
+const DialogLoadStrategyFromFile = ({ fileUploaded, setFileUploaded, strategyLoader, setStrategyLoader, strategyCreator, setStrategy, insertStrategy, openDialogStrategy, setOpenDialogStrategy }) => {
+    //const [fileUploaded, setfileUploaded] = React.useState([]);
 
     const handleCancel = () => {
         setOpenDialogStrategy(false)
@@ -30,7 +30,7 @@ const DialogLoadStrategyFromFile = ({ strategyLoader, setStrategyLoader, strateg
 
     const LoadJsonFile = (files) => {
         let updatedStrategyLoader = strategyLoader
-        let updatedFileLoaded = fileLoaded
+        let updatedFileUploaded = fileUploaded
 
         files.forEach(file => {
             const fileName = file.path.replace(".json", "")
@@ -42,23 +42,23 @@ const DialogLoadStrategyFromFile = ({ strategyLoader, setStrategyLoader, strateg
 
                 if (fileName === "strategy") {
                     if (updatedStrategyLoader.strategy === undefined) {
-                        updatedFileLoaded.push(file)
+                        updatedFileUploaded.push(file)
 
                         updatedStrategyLoader = { ...updatedStrategyLoader, strategy: obj }
 
-                        setFileLoaded(updatedFileLoaded)
+                        setFileUploaded(updatedFileUploaded)
                         setStrategyLoader(updatedStrategyLoader)
                     }
                 }
                 else {
                     if (updatedStrategyLoader.metaActions === undefined || !updatedStrategyLoader.metaActions.some(metaAction => metaAction.name === fileName)) {
-                        updatedFileLoaded.push(file)
+                        updatedFileUploaded.push(file)
 
                         const metaActions = updatedStrategyLoader.metaActions === undefined ? [] : updatedStrategyLoader.metaActions
                         const updatedMetaActions = metaActions.concat([obj])
                         updatedStrategyLoader = { ...updatedStrategyLoader, metaActions: updatedMetaActions }
 
-                        setFileLoaded(updatedFileLoaded)
+                        setFileUploaded(updatedFileUploaded)
                         setStrategyLoader(updatedStrategyLoader)
                     }
                 }
@@ -69,7 +69,7 @@ const DialogLoadStrategyFromFile = ({ strategyLoader, setStrategyLoader, strateg
 
     const DeleteJsonFile = (file) => {
         let updatedStrategyLoader = strategyLoader
-        let updatedFileLoaded = fileLoaded
+        let updatedFileUploaded = fileUploaded
 
         const fileName = file.path.replace(".json", "")
 
@@ -78,10 +78,10 @@ const DialogLoadStrategyFromFile = ({ strategyLoader, setStrategyLoader, strateg
             updatedStrategyLoader = EndStrategyLoader
 
             setStrategyLoader(updatedStrategyLoader)
-            setFileLoaded(updatedFileLoaded.filter(item => item.path !== "strategy.json"))
+            setFileUploaded(updatedFileUploaded.filter(item => item.path !== "strategy.json"))
         }
         else {
-            updatedFileLoaded = updatedFileLoaded.filter(item => item.path !== file.path)
+            updatedFileUploaded = updatedFileUploaded.filter(item => item.path !== file.path)
 
             const updatedMetaActions = updatedStrategyLoader.metaActions.filter(metaAction => metaAction.name !== fileName)
             if (updatedMetaActions.length === 0) {
@@ -90,7 +90,7 @@ const DialogLoadStrategyFromFile = ({ strategyLoader, setStrategyLoader, strateg
             }
             else updatedStrategyLoader = { ...updatedStrategyLoader, metaActions: updatedMetaActions }
 
-            setFileLoaded(updatedFileLoaded)
+            setFileUploaded(updatedFileUploaded)
             setStrategyLoader(updatedStrategyLoader)
         }
     }
@@ -103,7 +103,7 @@ const DialogLoadStrategyFromFile = ({ strategyLoader, setStrategyLoader, strateg
                     To load strategy, please drag and drop files.
                 </DialogContentText>
 
-                <DropzoneArea initialFiles={fileLoaded} onChange={LoadJsonFile.bind(this)} onDelete={DeleteJsonFile.bind(this)} showAlerts={false} />
+                <DropzoneArea initialFiles={fileUploaded} onChange={LoadJsonFile.bind(this)} onDelete={DeleteJsonFile.bind(this)} showAlerts={false} />
 
             </DialogContent>
 
@@ -136,12 +136,14 @@ const DialogLoadStrategyFromFile = ({ strategyLoader, setStrategyLoader, strateg
 
 const mapStateToProps = state => ({
     strategyLoader: state.strategyLoader,
-    openDialogStrategy: state.openDialogStrategy
+    openDialogStrategy: state.openDialogStrategy,
+    fileUploaded: state.fileUploaded
 })
 
 const mapDispatchToProps = dispatch => ({
     setStrategyLoader: strategyLoader => dispatch(setStrategyLoaderActionCreator(strategyLoader)),
-    setOpenDialogStrategy: openDialogStrategy => dispatch(setOpenDialogStrategyActionCreator(openDialogStrategy))
+    setOpenDialogStrategy: openDialogStrategy => dispatch(setOpenDialogStrategyActionCreator(openDialogStrategy)),
+    setFileUploaded: fileUploaded => dispatch(setFileUploadedActionCreator(fileUploaded))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DialogLoadStrategyFromFile)
