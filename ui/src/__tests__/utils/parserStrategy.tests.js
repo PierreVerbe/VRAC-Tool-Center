@@ -3,7 +3,7 @@ import parserStrategy from "./../../utils/parserStrategy"
 describe("Test parserStrategy methods", () => {
   test("Test of the parseStrategyCreator method", () => {
     const toParse = {
-      strategyName: "Strategy name",
+      name: "Strategy name",
       actions: [
         {
           tag: "New meta Action MetaAction_0",
@@ -82,7 +82,7 @@ describe("Test parserStrategy methods", () => {
           isSelected: false,
         },
       ],
-      reactFlowInstance: {},
+      reactFlowInstance: null,
     }
 
     const result = parserStrategy.parseStrategyCreator(toParse)
@@ -92,7 +92,7 @@ describe("Test parserStrategy methods", () => {
   test("Test of the parseMetaActionArray method", () => {
     const toParse = [
       {
-        metaActionName: "New meta Action MetaAction_0",
+        name: "New meta Action MetaAction_0",
         actions: [
           {
             parameters: {
@@ -115,7 +115,7 @@ describe("Test parserStrategy methods", () => {
         ],
       },
       {
-        metaActionName: "New meta Action MetaAction_1",
+        name: "New meta Action MetaAction_1",
         actions: [
           {
             parameters: { action: "Line", distance: 300, forward: true, speed: "VERY_SLOW" },
@@ -132,7 +132,7 @@ describe("Test parserStrategy methods", () => {
         ],
       },
       {
-        metaActionName: "New meta Action MetaAction_2",
+        name: "New meta Action MetaAction_2",
         actions: [
           {
             parameters: { action: "CalculateOdometry" },
@@ -220,7 +220,7 @@ describe("Test parserStrategy methods", () => {
             isSelected: false,
           },
         ],
-        reactFlowInstance: {},
+        reactFlowInstance: null,
         isSelected: false,
       },
       {
@@ -294,7 +294,7 @@ describe("Test parserStrategy methods", () => {
             isSelected: false,
           },
         ],
-        reactFlowInstance: {},
+        reactFlowInstance: null,
         isSelected: false,
       },
       {
@@ -341,7 +341,7 @@ describe("Test parserStrategy methods", () => {
             isSelected: false,
           },
         ],
-        reactFlowInstance: {},
+        reactFlowInstance: null,
         isSelected: false,
       },
     ]
