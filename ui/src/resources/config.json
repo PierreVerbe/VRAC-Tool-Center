@@ -28,7 +28,8 @@
             "AckServo",
             "Stock1_Filed",
             "Stock2_Filed",
-            "Stock3_Filed"
+            "Stock3_Filed",
+            "AckConfig"
         ],
         "speed": {
             "values": [

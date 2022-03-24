@@ -118,8 +118,3 @@ class parserStrategy {
 }
 
 export default parserStrategy
-
-/*
-  Issue
-  Graph one node -> end node
-*/

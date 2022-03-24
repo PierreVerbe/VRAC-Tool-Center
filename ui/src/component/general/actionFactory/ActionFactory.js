@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 
 import Typography from "@material-ui/core/Typography"
 
+import ActivateBackGripperAutoGrabAction from "./action/ActivateBackGripperAutoGrabAction"
 import BackGrippersDropCenterAction from "./action/BackGrippersDropCenterAction"
 import BackGrippersDropLeftAction from "./action/BackGrippersDropLeftAction"
 import BackGrippersDropRightAction from "./action/BackGrippersDropRightAction"
@@ -21,6 +22,8 @@ import EndAction from "./action/EndAction"
 import HomingAction from "./action/HomingAction"
 import LineAction from "./action/LineAction"
 import RotateAction from "./action/RotateAction"
+import SetDetectionRangeAction from "./action/SetDetectionRangeAction"
+import SetOdometryAction from "./action/SetOdometryAction"
 import TopArmGaleryBottomAction from "./action/TopArmGaleryBottomAction"
 import TopArmGaleryTopAction from "./action/TopArmGaleryTopAction"
 import TopArmGetSamplesAction from "./action/TopArmGetSamplesAction"
@@ -34,6 +37,9 @@ const ActionFactory = ({ action }) => {
     const actionType = action.actionData.type
 
     switch (actionType) {
+        case "ActivateBackGripperAutoGrab":
+            return <ActivateBackGripperAutoGrabAction action={action} />
+
         case "BackGrippersDropCenter":
             return <BackGrippersDropCenterAction action={action} />
 
@@ -88,6 +94,12 @@ const ActionFactory = ({ action }) => {
         case "Rotate":
             return <RotateAction action={action} />
 
+        case "SetDetectionRange":
+            return <SetDetectionRangeAction action={action} />
+
+        case "SetOdometry":
+            return <SetOdometryAction action={action} />
+
         case "TopArmGaleryBottom":
             return <TopArmGaleryBottomAction action={action} />
 
@@ -108,9 +120,9 @@ const ActionFactory = ({ action }) => {
 
         case "Wait":
             return <WaitAction action={action} />
-        
+
         case "XYT":
-            return <XYTAction action={action} />   
+            return <XYTAction action={action} />
 
         default:
             return <Typography>Action type undefined</Typography>
