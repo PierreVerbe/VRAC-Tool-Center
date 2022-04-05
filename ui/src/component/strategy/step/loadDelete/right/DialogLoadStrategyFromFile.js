@@ -103,7 +103,7 @@ const DialogLoadStrategyFromFile = ({ fileUploaded, setFileUploaded, strategyLoa
                     To load strategy, please drag and drop files.
                 </DialogContentText>
 
-                <DropzoneArea initialFiles={fileUploaded} onChange={LoadJsonFile.bind(this)} onDelete={DeleteJsonFile.bind(this)} showAlerts={false} />
+                <DropzoneArea  useChipsForPreview initialFiles={fileUploaded} onChange={LoadJsonFile.bind(this)} onDelete={DeleteJsonFile.bind(this)} showAlerts={false} />
 
             </DialogContent>
 
