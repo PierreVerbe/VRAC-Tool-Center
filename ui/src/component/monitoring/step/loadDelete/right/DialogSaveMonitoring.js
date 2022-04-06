@@ -54,7 +54,7 @@ const DialogSaveMonitoring = ({ monitoring, setMonitoring, insertMonitoring, ope
                     onChange={onTextNameChange}
                     id="name"
                     label="Name"
-                    defaultValue={monitoring.name}
+                    value={monitoring.name}
                     fullWidth
                     variant="standard"
                 />
@@ -64,7 +64,7 @@ const DialogSaveMonitoring = ({ monitoring, setMonitoring, insertMonitoring, ope
                     onChange={onTextDescriptionChange}
                     id="description"
                     label="Description"
-                    defaultValue={monitoring.description}
+                    value={monitoring.description}
                     fullWidth
                     variant="standard"
                 />
@@ -74,7 +74,7 @@ const DialogSaveMonitoring = ({ monitoring, setMonitoring, insertMonitoring, ope
                     onChange={onTextVersionChange}
                     id="version"
                     label="Version"
-                    defaultValue={monitoring.version}
+                    value={monitoring.version}
                     fullWidth
                     variant="standard"
                 />
