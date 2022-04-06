@@ -7,12 +7,14 @@ import Typography from "@material-ui/core/Typography"
 import { setMetaActionArrayActionCreator } from "../../../../action/strategyAction"
 
 const WaitAction = ({action, metaActionArray, setMetaActionArray}) => {
-    const ACTION = "Wait"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
+    const getSelectedNode = getSelectedMetaAction.flow.filter(nodeOrEdge => nodeOrEdge.id === action.id)[0]
     const defaultActionData = {type: action.actionData.type}
 
     useEffect(() => {
-        if (action.actionData.type !== ACTION) {
+        const hasAllFields = Object.keys(defaultActionData).map(key => key in (getSelectedNode.actionData)).reduce((acc, next) => acc && next)
+
+        if (! hasAllFields) {
             const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? 
                 { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: defaultActionData } : nodeOrEdge) } :
                  metaAction))

@@ -8,12 +8,14 @@ import TextField from "@material-ui/core/TextField"
 import { setMetaActionArrayActionCreator } from "../../../../action/strategyAction"
 
 const SetDetectionRangeAction = ({ action, metaActionArray, setMetaActionArray }) => {
-    const ACTION = "SetOdometry"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
+    const getSelectedNode = getSelectedMetaAction.flow.filter(nodeOrEdge => nodeOrEdge.id === action.id)[0]
     const defaultActionData = { type: action.actionData.type, distance: 0 }
 
     useEffect(() => {
-        if (action.actionData.type !== ACTION) {
+        const hasAllFields = Object.keys(defaultActionData).map(key => key in (getSelectedNode.actionData)).reduce((acc, next) => acc && next)
+
+        if (! hasAllFields) {
             const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ?
                 { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: defaultActionData } : nodeOrEdge) } :
                 metaAction))
@@ -35,7 +37,7 @@ const SetDetectionRangeAction = ({ action, metaActionArray, setMetaActionArray }
     return (
         <div>
             <FormGroup>
-                <TextField id="standard-basic" label="distance" type="number" inputProps={{ min: 0, max: 3000 }} defaultValue={action.actionData.distance} onChange={handleChangeNumber} name="distance" />
+                <TextField id="standard-basic" label="distance" type="number" inputProps={{ min: 0, max: 3000 }} value={action.actionData.distance} onChange={handleChangeNumber} name="distance" />
             </FormGroup>
         </div>
     )

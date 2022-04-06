@@ -9,12 +9,14 @@ import FormGroup from "@material-ui/core/FormGroup"
 import { setMetaActionArrayActionCreator } from "../../../../action/strategyAction"
 
 const BottomArmsOutSingleAction = ({ action, metaActionArray, setMetaActionArray }) => {
-    const ACTION = "BottomArmsOutSingle"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
+    const getSelectedNode = getSelectedMetaAction.flow.filter(nodeOrEdge => nodeOrEdge.id === action.id)[0]
     const defaultActionData = { type: action.actionData.type, side: false }
 
     useEffect(() => {
-        if (action.actionData.type !== ACTION) {
+        const hasAllFields = Object.keys(defaultActionData).map(key => key in (getSelectedNode.actionData)).reduce((acc, next) => acc && next)
+
+        if (! hasAllFields) {
             const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ?
                 { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: defaultActionData } : nodeOrEdge) } :
                 metaAction))

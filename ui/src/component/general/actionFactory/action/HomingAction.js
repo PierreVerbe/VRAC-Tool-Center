@@ -10,15 +10,14 @@ import FormControlLabel from "@material-ui/core/FormControlLabel"
 import { setMetaActionArrayActionCreator } from "../../../../action/strategyAction"
 
 const HomingAction = ({ action, metaActionArray, setMetaActionArray }) => {
-    const ACTION = "Homing"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
+    const getSelectedNode = getSelectedMetaAction.flow.filter(nodeOrEdge => nodeOrEdge.id === action.id)[0]
     const defaultActionData = { type: action.actionData.type, forward: false, axis: false, offset: 0 }
 
     useEffect(() => {
-        console.log("action.actionData.type")
-        console.log(action.actionData.type)
-        if (action.actionData.type !== ACTION) {
-            console.log("herrrrreee")
+        const hasAllFields = Object.keys(defaultActionData).map(key => key in (getSelectedNode.actionData)).reduce((acc, next) => acc && next)
+
+        if (! hasAllFields) {
             const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ?
                 { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: defaultActionData } : nodeOrEdge) } :
                 metaAction))
@@ -51,14 +50,14 @@ const HomingAction = ({ action, metaActionArray, setMetaActionArray }) => {
         <div>
             <FormGroup>
                 <FormControlLabel
-                    control={<Switch checked={action.actionData.forward} onChange={handleChangeSwitch} color="primary" name="forward" />}
+                    control={<Switch checked={getSelectedNode.actionData.forward} onChange={handleChangeSwitch} color="primary" name="forward" />}
                     label="Enable forward"
                 />
                 <FormControlLabel
-                    control={<Switch checked={action.actionData.axis} onChange={handleChangeSwitch} color="primary" name="axis" />}
+                    control={<Switch checked={getSelectedNode.actionData.axis} onChange={handleChangeSwitch} color="primary" name="axis" />}
                     label="Enable axis"
                 />
-                <TextField id="standard-basic" label="offset" type="number" inputProps={{ min: 0, max: 3000 }} defaultValue={action.actionData.offset} onChange={handleChangeNumber} name="offset" />
+                <TextField id="standard-basic" label="offset" type="number" inputProps={{ min: 0, max: 3000 }} value={getSelectedNode.actionData.offset} onChange={handleChangeNumber} name="offset" />
             </FormGroup>
         </div>
     )

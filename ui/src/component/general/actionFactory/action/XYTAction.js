@@ -13,12 +13,14 @@ import { setMetaActionArrayActionCreator } from "../../../../action/strategyActi
 import configData from "./../../../../resources/config.json"
 
 const XYTAction = ({ action, metaActionArray, setMetaActionArray }) => {
-    const ACTION = "XYT"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
+    const getSelectedNode = getSelectedMetaAction.flow.filter(nodeOrEdge => nodeOrEdge.id === action.id)[0]
     const defaultActionData = { type: action.actionData.type, forward: false, x: 0, y: 0, theta: 0, speed: "" }
 
     useEffect(() => {
-        if (action.actionData.type !== ACTION) {
+        const hasAllFields = Object.keys(defaultActionData).map(key => key in (getSelectedNode.actionData)).reduce((acc, next) => acc && next)
+
+        if (! hasAllFields) {
             const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ?
                 { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: defaultActionData } : nodeOrEdge) } :
                 metaAction))
@@ -63,9 +65,9 @@ const XYTAction = ({ action, metaActionArray, setMetaActionArray }) => {
                     label="Enable forward"
                 />
 
-                <TextField id="standard-basic" label="x" type="number" inputProps={{ min: 0, max: 2000 }} defaultValue={action.actionData.x} onChange={handleChangeNumber} name="x" />
-                <TextField id="standard-basic" label="y" type="number" inputProps={{ min: 0, max: 3000 }} defaultValue={action.actionData.y} onChange={handleChangeNumber} name="y" />
-                <TextField id="standard-basic" label="theta" type="number" inputProps={{ min: -3600, max: 3600 }}  defaultValue={action.actionData.theta} onChange={handleChangeNumber} name="theta" />
+                <TextField id="standard-basic" label="x" type="number" inputProps={{ min: 0, max: 2000 }} value={action.actionData.x} onChange={handleChangeNumber} name="x" />
+                <TextField id="standard-basic" label="y" type="number" inputProps={{ min: 0, max: 3000 }} value={action.actionData.y} onChange={handleChangeNumber} name="y" />
+                <TextField id="standard-basic" label="theta" type="number" inputProps={{ min: -3600, max: 3600 }}  value={action.actionData.theta} onChange={handleChangeNumber} name="theta" />
 
                 <Select
                     labelId="demo-simple-select-label"
