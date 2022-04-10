@@ -316,7 +316,7 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
                                 margin="dense"
                                 onChange={onTextNameChange}
                                 id="name"
-                                label="Name"
+                                label="Meta action name"
                                 value={selectedMetaAction.length === 0 ? "Undefined" : getSelectedMetaAction.name}
                                 fullWidth
                                 variant="standard"

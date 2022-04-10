@@ -7,6 +7,7 @@ import DialogUpdateNode from "./StrategyDialog"
 import { setOpenDialogNodeStrategyActionCreator, setStrategyCreatorActionCreator } from "../../../../../../action/strategyAction"
 import { SmartEdge } from '@tisoap/react-flow-smart-edge'
 import TextField from '@material-ui/core/TextField'
+import FormGroup from "@material-ui/core/FormGroup"
 import './../dnd.css'
 
 import configData from "./../../../../../../resources/config.json"
@@ -117,7 +118,7 @@ const StrategyCreator = ({ strategyCreator, openDialogNodeStrategy, setStrategyC
   return (
     <div>
 
-      <form >
+      <FormGroup >
         <TextField
           autoFocus
           margin="dense"
@@ -127,8 +128,9 @@ const StrategyCreator = ({ strategyCreator, openDialogNodeStrategy, setStrategyC
           value={strategyCreator.name}
           fullWidth
           variant="standard"
+          onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault() }} // Disable enter key
         />
-      </form>
+      </FormGroup>
 
     <div className="dndflow">
       <ReactFlowProvider>
