@@ -49,7 +49,9 @@ export const RobotActionFactory = (robot, action) => {
             return {x:xSetOdometry, y:ySetOdometry, t:action.theta}
 
         case "XYT":
-            
+            const thetaXYT = - action.theta
+            const xXYT = action.x/REDUCING_FACTOR
+            const yXYT = action.y/REDUCING_FACTOR
             
             return {x:xXYT, y:yXYT, t:thetaXYT}
 
