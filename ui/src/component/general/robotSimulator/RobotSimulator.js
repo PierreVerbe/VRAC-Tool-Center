@@ -2,9 +2,11 @@ import React, { useRef, useEffect } from "react"
 import { connect } from "react-redux"
 import Typography from '@material-ui/core/Typography';
 
-import { TABLE_WIDTH, TABLE_HEIGHT, REDUCING_FACTOR, ROBOT_HEIGHT, RobotActionFactory } from "./RobotActionFactory"
+import { DEFAULT_ROBOT_X, DEFAULT_ROBOT_Y, DEFAULT_ROBOT_T, TABLE_WIDTH, TABLE_HEIGHT, REDUCING_FACTOR, ROBOT_HEIGHT, RobotActionFactory } from "./RobotActionFactory"
 import FieldImage from "./../../../resources/image/AgeOfBots/fondTable22.jpg"
-import RobotCloseImage from "./../../../resources/image/Robot/robot_close.png"
+import RobotOpenImage from "./../../../resources/image/Robot/robot_open.png"
+
+import {searchInputStrategy, searchNextStrategy} from "./RobotSearchGraph"
 
 import { Stage, Sprite, Graphics } from '@inlet/react-pixi'
 import Button from '@material-ui/core/Button'
@@ -14,7 +16,8 @@ import PropTypes from "prop-types"
 
 const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeStepMonitoring }) => {
     const [pointerSimulator, setPointerSimulator] = React.useState({x:undefined, y:undefined});
-    const [simulatedRobot, setSimulatedRobot] = React.useState({angle: 90, x: ROBOT_HEIGHT/REDUCING_FACTOR/2, y:700/REDUCING_FACTOR, actual: {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}, previous: []}); // {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}
+    //const [simulatedRobot, setSimulatedRobot] = React.useState({angle: 0, x: 700/REDUCING_FACTOR, y:700/REDUCING_FACTOR, actual: {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}, previous: []}); // {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}
+    const [simulatedRobot, setSimulatedRobot] = React.useState({angle: DEFAULT_ROBOT_T, x: DEFAULT_ROBOT_X, y:DEFAULT_ROBOT_Y, actual: {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}, previous: [], render: undefined}); // {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}
 
    console.log(strategyToSimulate)
    console.log(metaActionArrayToSimulate)
@@ -48,84 +51,64 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
         g.endFill()
       }, [])
 
-      const draw2 = React.useCallback(g => {
+      const testt = simulatedRobot.render === undefined ? g => {
         g.clear()
-        g.lineStyle(4, 0xffffff, 1)
-        g.moveTo(500/4, 500/4)
-        g.lineTo(700 /4, 700/4)
+        g.lineStyle(3, 0xFFFFFF, 1)
+        //g.lineStyle(3, 0x000000, 1)
+       
+        g.moveTo(700/4, 700/4)
+        g.bezierCurveTo(600/4, 400/4, 600/4, 400/4, 1800/4, 450/4) // pts de controles les mêmes == quadratique
+        
+       
+
         g.endFill()
-      }, [])
+      } : simulatedRobot.render
+
+
+      
     
     const handleNextAction = () => {
         let nextAction = {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}
         let actionData = undefined
 
-        if(simulatedRobot.actual.strategyNode.id === undefined  && simulatedRobot.actual.metaActionNode.id === undefined){ // strategyToSimulate.flow.length != 0
-            const strategyInputNode = strategyToSimulate.flow.filter(nodeStrategy => nodeStrategy.type === "input")[0]
-            const inputNodeLabel = strategyInputNode.data.label
+        // Start simulator 
+        if(simulatedRobot.x === DEFAULT_ROBOT_X  && simulatedRobot.y === DEFAULT_ROBOT_Y){ // strategyToSimulate.flow.length != 0
+           let inputNode = undefined
 
-            const metaAction = metaActionArrayToSimulate.filter(itemMetaAction => itemMetaAction.name === inputNodeLabel)[0]
-            const metaActionInputNode = metaAction.flow.filter(nodeMetaAction => nodeMetaAction.type === "input")[0]
-
-            nextAction = {strategyNode: {id: strategyInputNode.id, name: strategyInputNode.data.label}, metaActionNode: {id: metaActionInputNode.id, name: metaActionInputNode.data.label}}
-            actionData = metaActionInputNode.actionData
-        }
-        else {
+            // Search first strategy node & first meta action
+           if(simulatedRobot.actual.strategyNode.id === undefined  && simulatedRobot.actual.metaActionNode.id === undefined){
+            inputNode = searchInputStrategy(strategyToSimulate, metaActionArrayToSimulate)
             
-            const actualStrategyNode = strategyToSimulate.flow.filter(nodeStrategy => nodeStrategy.id === simulatedRobot.actual.strategyNode.id)[0]
-            const actualMetaActionNode = metaActionArrayToSimulate.filter(itemMetaAction => itemMetaAction.name === simulatedRobot.actual.strategyNode.name)[0]
+            nextAction = inputNode.nextAction
+            console.log("hello1")
+           }
+           else {
+            console.log("hello2")
+               inputNode = searchNextStrategy(strategyToSimulate, metaActionArrayToSimulate, simulatedRobot)
+               nextAction = inputNode.nextAction
+           }
+           // Search "SetOdometry" action to place robot
+            if (inputNode.actionData.type === "SetOdometry") actionData = inputNode.actionData        
+        }
 
-            console.log("actualStrategyNode")
-            console.log(actualStrategyNode)
-            console.log(actualMetaActionNode)
-
-            // Check if End node in metaAction
-            if (actualStrategyNode.type === "output" && actualMetaActionNode.type === "output") {
-                console.log("A")
-
-            }
-            else if (actualMetaActionNode.type === "output") {
-                console.log("B")
-                const actualStrategyEdge = strategyToSimulate.flow.filter(edgeStrategy => edgeStrategy.source === actualStrategyNode.id)[0] // select one
-                
-                const nextStrategyNode = strategyToSimulate.flow.filter(nodeStrategy => nodeStrategy.id === actualStrategyEdge.target)[0]
-                const nextMetaActionNode = metaActionArrayToSimulate
-                    .filter(itemMetaAction => itemMetaAction.name === nextStrategyNode.data.label)[0]
-                    .flow
-                    .filter(nodeMetaAction => nodeMetaAction.type === "input")
-
-                    console.log("nextMetaActionNode")
-                    console.log(nextMetaActionNode)
-                actionData = nextMetaActionNode.actionData
-            }
-            else {
-                console.log("C")
-                const nextMetaActionEdge = actualMetaActionNode.flow.filter(edgeMetaAction => edgeMetaAction.source === simulatedRobot.actual.metaActionNode.id)[0] // select one
-                const nextMetaActionNode = actualMetaActionNode.flow.filter(nodeMetaAction => nodeMetaAction.id === nextMetaActionEdge.target)[0]
-                    
-                    console.log("nextMetaActionEdge")
-                    console.log(nextMetaActionEdge)
-                    console.log("nextMetaActionNode")
-                    console.log(nextMetaActionNode)
-
-                    nextAction = {strategyNode: {id: actualStrategyNode.id, name: actualStrategyNode.data.label}, metaActionNode: {id: nextMetaActionNode.id, name: nextMetaActionNode.data.label}}
-                    actionData = nextMetaActionNode.actionData
-            }
-
+        // Search next node 
+        else {
+            const nextNode = searchNextStrategy(strategyToSimulate, metaActionArrayToSimulate, simulatedRobot)
+            nextAction = nextNode.nextAction
+            actionData = nextNode.actionData
         }
 
         const result = RobotActionFactory(simulatedRobot, actionData)
-        
-        setSimulatedRobot({...simulatedRobot, angle: simulatedRobot.angle + 10, x: simulatedRobot.x + 100, y:simulatedRobot.y + 100, actual: nextAction, previous: []})
-
-
-
-
+        console.log("result")
+        console.log(result)
+    
+        setSimulatedRobot({...simulatedRobot, angle: result.t, x: result.x, y:result.y, actual: nextAction, previous: [], render: result.render})
     }
 
     const handleResetSimulator = () => {
-        setSimulatedRobot({angle: 90, x: ROBOT_HEIGHT/REDUCING_FACTOR/2, y:700/REDUCING_FACTOR, actual: {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}, previous: []})
+        setSimulatedRobot({angle: DEFAULT_ROBOT_T, x: DEFAULT_ROBOT_X, y: DEFAULT_ROBOT_X, actual: {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}, previous: [], render: undefined})
     }
+    const draw2 = testt
 
     return (
         <div>
@@ -138,14 +121,14 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
                     x={0}
                     y={0}/>
                 <Sprite 
-                    image={RobotCloseImage}
+                    image={RobotOpenImage}
                     scale={{ x: 0.25, y: 0.25 }}
                     anchor={0.5}
                     angle={simulatedRobot.angle}
-                    x={simulatedRobot.x}
-                    y={simulatedRobot.y}
+                    x={simulatedRobot.y}
+                    y={simulatedRobot.x}
                     />
-                <Graphics draw={draw} />
+                {/* <Graphics draw={draw} /> */}
                 <Graphics draw={draw2} />
     
             </Stage>
