@@ -1,4 +1,7 @@
 import PropTypes from "prop-types"
+export const DEFAULT_ROBOT_X = -1000
+export const DEFAULT_ROBOT_Y = -1000
+export const DEFAULT_ROBOT_T = 0
 
 export const TABLE_WIDTH = 3000 //mm
 export const TABLE_HEIGHT = 2000 //mm
@@ -8,34 +11,58 @@ export const ROBOT_HEIGHT = 220 //mm
 
 export const REDUCING_FACTOR = 4
 
+const outsideLine = 0x0000FF
+const insideLine = 0x000000
+
 export const RobotActionFactory = (robot, action) => {
-    const actionType = action.type
+    const actionType = action !== undefined ? action.type : undefined
 
     switch (actionType) {
         case "Bezier":
-            console.log("je suis un bezier")
+            console.log("Bezier")
             console.log(robot)
-            return 
+            console.log()
 
+            
+            
+            return {x:xBezier, y:yBezier, t:angleBezier, render: renderBezier}
         
         case "Homing":
 
             return
 
         case "Line":
-
-            return
+           
+            
+            return {x:xLine, y:yLine, t:robot.angle, render: renderLine}
 
         case "Rotate":
+           
+        
+            return {x:robot.x, y:robot.y, t: thetaRotate}
 
-            return 
+        case "SetOdometry":
+            console.log("SetOdometry")
+            const xSetOdometry = action.x/ REDUCING_FACTOR
+            const ySetOdometry = action.y/ REDUCING_FACTOR
+
+            return {x:xSetOdometry, y:ySetOdometry, t:action.theta}
 
         case "XYT":
-
-            return 
+            
+            
+            return {x:xXYT, y:yXYT, t:thetaXYT}
 
         default:
-            return
+            return {x:robot.x, y:robot.y, t:robot.t}
     }
 
+}
+
+const degreeToRadian = (degree) => {
+    return degree * Math.PI /180
+}
+
+const calculateAngleDegrees = (x, y)  => {
+    return Math.atan2(y, x) * 180 / Math.PI;
 }
