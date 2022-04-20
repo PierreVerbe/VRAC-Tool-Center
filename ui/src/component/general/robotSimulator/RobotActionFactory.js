@@ -19,10 +19,6 @@ export const RobotActionFactory = (robot, action) => {
 
     switch (actionType) {
         case "Bezier":
-            console.log("Bezier")
-            console.log(robot)
-            console.log()
-
             
             
             return {x:xBezier, y:yBezier, t:angleBezier, render: renderBezier}
@@ -32,12 +28,12 @@ export const RobotActionFactory = (robot, action) => {
             return
 
         case "Line":
-           
+            
             
             return {x:xLine, y:yLine, t:robot.angle, render: renderLine}
 
         case "Rotate":
-           
+            const thetaRotate = action.relative ? robot.t - action.theta : - action.theta
         
             return {x:robot.x, y:robot.y, t: thetaRotate}
 
