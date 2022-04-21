@@ -8,6 +8,7 @@ export const TABLE_HEIGHT = 2000 //mm
 
 export const ROBOT_WIDTH = 320 //mm
 export const ROBOT_HEIGHT = 220 //mm
+export const ROBOT_DIAGONAL = Math.hypot(ROBOT_WIDTH, ROBOT_HEIGHT)
 
 export const REDUCING_FACTOR = 4
 
@@ -139,7 +140,22 @@ export const RobotActionFactory = (robot, action) => {
         case "Rotate":
             const thetaRotate = action.relative ? robot.t - action.theta : - action.theta
         
-            return {x:robot.x, y:robot.y, t: thetaRotate}
+            const renderRotate = g => {
+                g.clear()
+                g.lineStyle(3, insideLine, 1)
+               
+                g.moveTo(robot.x, robot.y)
+                g.drawCircle(robot.x, robot.x, 1/4)
+                
+                g.lineStyle(3, outsideLine, 1)
+                g.drawCircle(robot.x, robot.x, (ROBOT_DIAGONAL /2)/4)
+                //g.moveTo(xLineRenderInitial1, yLineRenderInitial1)
+                //g.lineTo(xLineRenderArrival1, yLineRenderArrival1) 
+                
+                g.endFill()
+              }
+
+            return {x:robot.x, y:robot.y, t: thetaRotate, render: renderRotate}
 
         case "SetOdometry":
             console.log("SetOdometry")
