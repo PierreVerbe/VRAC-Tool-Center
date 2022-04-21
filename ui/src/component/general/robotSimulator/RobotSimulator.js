@@ -29,44 +29,6 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
         setPointerSimulator({x: x, y: y})
     }
 
-    const draw = React.useCallback(g => {
-        g.clear()
-        g.beginFill(0xff3300)
-        g.lineStyle(4, 0xffd900, 1)
-        g.moveTo(50, 50)
-        g.lineTo(250, 50)
-        g.lineTo(100, 100)
-        g.lineTo(50, 50)
-        g.endFill()
-        g.lineStyle(2, 0x0000ff, 1)
-        g.beginFill(0xff700b, 1)
-        g.drawRect(50, 150, 120, 120)
-        g.lineStyle(2, 0xff00ff, 1)
-        g.beginFill(0xff00bb, 0.25)
-        g.drawRoundedRect(150, 100, 300, 100, 15)
-        g.endFill()
-        g.lineStyle(0)
-        g.beginFill(0xffff0b, 0.5)
-        g.drawCircle(470, 90, 60)
-        g.endFill()
-      }, [])
-
-      const testt = simulatedRobot.render === undefined ? g => {
-        g.clear()
-        g.lineStyle(3, 0xFFFFFF, 1)
-        //g.lineStyle(3, 0x000000, 1)
-       
-        g.moveTo(700/4, 700/4)
-        g.bezierCurveTo(600/4, 400/4, 600/4, 400/4, 1800/4, 450/4) // pts de controles les mêmes == quadratique
-        
-       
-
-        g.endFill()
-      } : simulatedRobot.render
-
-
-      
-    
     const handleNextAction = () => {
         let nextAction = {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}
         let actionData = undefined
@@ -108,7 +70,7 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
     const handleResetSimulator = () => {
         setSimulatedRobot({angle: DEFAULT_ROBOT_T, x: DEFAULT_ROBOT_X, y: DEFAULT_ROBOT_X, actual: {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}, previous: [], render: undefined})
     }
-    const draw2 = testt
+
 
     return (
         <div>
@@ -128,8 +90,8 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
                     x={simulatedRobot.y}
                     y={simulatedRobot.x}
                     />
-                {/* <Graphics draw={draw} /> */}
-                <Graphics draw={draw2} />
+              
+                <Graphics draw={simulatedRobot.render} />
     
             </Stage>
             <Typography variant="body1">Simulator: Strategy node={simulatedRobot.actual.strategyNode.name} | Meta action node={simulatedRobot.actual.metaActionNode.name}</Typography>

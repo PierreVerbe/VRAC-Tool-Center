@@ -145,12 +145,10 @@ export const RobotActionFactory = (robot, action) => {
                 g.lineStyle(3, insideLine, 1)
                
                 g.moveTo(robot.x, robot.y)
-                g.drawCircle(robot.x, robot.x, 1/4)
+                g.drawCircle(robot.x, robot.y, 1/4)
                 
                 g.lineStyle(3, outsideLine, 1)
-                g.drawCircle(robot.x, robot.x, (ROBOT_DIAGONAL /2)/4)
-                //g.moveTo(xLineRenderInitial1, yLineRenderInitial1)
-                //g.lineTo(xLineRenderArrival1, yLineRenderArrival1) 
+                g.drawCircle(robot.x, robot.y, (ROBOT_DIAGONAL /2)/4)
                 
                 g.endFill()
               }
@@ -169,8 +167,58 @@ export const RobotActionFactory = (robot, action) => {
             const thetaXYT = - action.theta
             const xXYT = action.x/REDUCING_FACTOR
             const yXYT = action.y/REDUCING_FACTOR
+
+            console.log(xXYT)
+            console.log(yXYT)
+
+            // Line 1
+            const radianXYT1 = degreeToRadian(robot.angle + 90 + 90)
+            //const radianXYT11 = degreeToRadian(action.theta + 90)
+        
+            const xXYTRenderInitial1 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.cos(radianXYT1) + robot.x
+            const yXYTRenderInitial1 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.sin(radianXYT1) + robot.y
+
+            const xXYTRenderArrival1 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.cos(radianXYT1) + xXYT
+            const yXYTRenderArrival1 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.sin(radianXYT1) + yXYT
+
+            //line 2
+            const radianXYT2 = degreeToRadian(robot.angle )
+            //const radianXYT22 = degreeToRadian(action.theta -90)
             
-            return {x:xXYT, y:yXYT, t:thetaXYT}
+            const xXYTRenderInitial2 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.cos(radianXYT2) + robot.x
+            const yXYTRenderInitial2 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.sin(radianXYT2) + robot.y
+
+            const xXYTRenderArrival2 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.cos(radianXYT2) + xXYT
+            const yXYTRenderArrival2 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.sin(radianXYT2) + yXYT
+
+
+            const renderXYT = g => {
+                g.clear()
+                g.lineStyle(3, insideLine, 1)
+
+                g.moveTo(robot.x, robot.y)
+                g.lineTo(yXYT, xXYT)
+                
+                g.lineStyle(3, outsideLine, 1)
+                g.moveTo(yXYTRenderInitial1, xXYTRenderInitial1)
+                g.lineTo(yXYTRenderArrival1, xXYTRenderArrival1) 
+                
+                g.lineStyle(3, outsideLine, 1)
+                g.moveTo(yXYTRenderInitial2, xXYTRenderInitial2 )
+                g.lineTo(yXYTRenderArrival2, xXYTRenderArrival2) 
+               
+                g.lineStyle(3, insideLine, 1)
+                g.moveTo(action.x, action.y)
+                g.drawCircle(action.y/REDUCING_FACTOR, action.x /REDUCING_FACTOR , 1/4)
+                
+                g.lineStyle(3, outsideLine, 1)
+                g.lineStyle(3, outsideLine, 1)
+                g.drawCircle(action.y/REDUCING_FACTOR, action.x/REDUCING_FACTOR,  (ROBOT_DIAGONAL /2)/4)
+             
+                g.endFill()
+              }
+            
+            return {x:xXYT, y:yXYT, t:thetaXYT, render: renderXYT}
 
         default:
             return {x:robot.x, y:robot.y, t:robot.t}
