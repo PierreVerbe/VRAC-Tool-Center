@@ -94,25 +94,42 @@ export const RobotActionFactory = (robot, action) => {
             return
 
         case "Line":
-            const radianLine = action.forward ? degreeToRadian(robot.angle +90) : degreeToRadian(robot.angle + 270)
+            const radianLine = action.forward ? degreeToRadian(robot.angle + 90) : degreeToRadian(robot.angle + 270)
             const xLine = (action.distance / REDUCING_FACTOR) * Math.cos(radianLine) + robot.x
             const yLine = (action.distance / REDUCING_FACTOR) * Math.sin(radianLine) + robot.y
 
+            // Line 1
+            const radianLine1 = degreeToRadian(robot.angle + 90 + 90)
+        
+            const xLineRenderInitial1 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.cos(radianLine1) + robot.x
+            const yLineRenderInitial1 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.sin(radianLine1) + robot.y
+
+            const xLineRenderArrival1 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.cos(radianLine1) + xLine
+            const yLineRenderArrival1 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.sin(radianLine1) + yLine
+
+            //line 2
+            const radianLine2 = degreeToRadian(robot.angle )
+            
+            const xLineRenderInitial2 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.cos(radianLine2) + robot.x
+            const yLineRenderInitial2 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.sin(radianLine2) + robot.y
+
+            const xLineRenderArrival2 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.cos(radianLine2) + xLine
+            const yLineRenderArrival2 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.sin(radianLine2) + yLine
+
             const renderLine = g => {
                 g.clear()
-                g.lineStyle(3, 0x000000, 1)
+                g.lineStyle(3, insideLine, 1)
                
-                g.moveTo(700/4, 700/4)
-                g.bezierCurveTo(600/4, 400/4, 600/4, 400/4, 1800/4, 450/4) // pts de controles les mêmes == quadratique
+                g.moveTo(robot.x, robot.y)
+                g.lineTo(xLine, yLine)
                 
-                g.lineStyle(3, 0x0000FF, 1)
-                g.moveTo((700 + 200)/4, 700/4)
-                g.bezierCurveTo(800/4, 600/4, 800/4, 600/4, 1800 /4, (450 +200 )/4) // pts de controles les mêmes == quadratique
+                g.lineStyle(3, outsideLine, 1)
+                g.moveTo(xLineRenderInitial1, yLineRenderInitial1)
+                g.lineTo(xLineRenderArrival1, yLineRenderArrival1) 
                 
-                g.lineStyle(3, 0x0000FF, 1)
-                g.moveTo((700 - 200)/4, 700/4)
-                g.bezierCurveTo(400/4, 200/4, 400/4, 200/4, 1800/4, (450 - 200)/4) // pts de controles les mêmes == quadratique
-                
+                g.lineStyle(3, outsideLine, 1)
+                g.moveTo(xLineRenderInitial2, yLineRenderInitial2)
+                g.lineTo(xLineRenderArrival2, yLineRenderArrival2) 
         
                 g.endFill()
               }
@@ -128,8 +145,9 @@ export const RobotActionFactory = (robot, action) => {
             console.log("SetOdometry")
             const xSetOdometry = action.x/ REDUCING_FACTOR
             const ySetOdometry = action.y/ REDUCING_FACTOR
+            const tSetOdometry = - action.theta
 
-            return {x:xSetOdometry, y:ySetOdometry, t:action.theta}
+            return {x:xSetOdometry, y:ySetOdometry, t: tSetOdometry}
 
         case "XYT":
             const thetaXYT = - action.theta
