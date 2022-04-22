@@ -66,10 +66,6 @@ export const RobotActionFactory = (robot, action) => {
             //const xBezierRender11 = (action.radius / REDUCING_FACTOR) * Math.cos(radianBezier) + xBezierRenderInitial1
             //const yBezierRender11 = (action.radius / REDUCING_FACTOR) * Math.sin(radianBezier) + yBezierRenderInitial1
             
-
-            
-
-
             const renderBezier = g => {
                 g.clear()
                 g.lineStyle(3, insideLine, 1)
@@ -95,42 +91,30 @@ export const RobotActionFactory = (robot, action) => {
             return
 
         case "Line":
-            const radianLine = action.forward ? degreeToRadian(robot.angle + 90) : degreeToRadian(robot.angle + 270)
+            const radianLine = action.forward ? degreeToRadian(- robot.angle) : degreeToRadian(robot.angle)
             const xLine = (action.distance / REDUCING_FACTOR) * Math.cos(radianLine) + robot.x
             const yLine = (action.distance / REDUCING_FACTOR) * Math.sin(radianLine) + robot.y
 
-            // Line 1
-            const radianLine1 = degreeToRadian(robot.angle + 90 + 90)
-        
-            const xLineRenderInitial1 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.cos(radianLine1) + robot.x
-            const yLineRenderInitial1 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.sin(radianLine1) + robot.y
-
-            const xLineRenderArrival1 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.cos(radianLine1) + xLine
-            const yLineRenderArrival1 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.sin(radianLine1) + yLine
-
-            //line 2
-            const radianLine2 = degreeToRadian(robot.angle )
-            
-            const xLineRenderInitial2 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.cos(radianLine2) + robot.x
-            const yLineRenderInitial2 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.sin(radianLine2) + robot.y
-
-            const xLineRenderArrival2 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.cos(radianLine2) + xLine
-            const yLineRenderArrival2 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.sin(radianLine2) + yLine
+            // Graphic rendering
+            const radianLine1 = degreeToRadian(-robot.angle - 90 )
+            const renderedLine1 = calculateStartStopRenderedPoint({x: robot.x, y: robot.y}, {x: xLine, y: yLine}, radianLine1)
+            const radianLine2 = degreeToRadian(-robot.angle - 270)
+            const renderedLine2 = calculateStartStopRenderedPoint({x: robot.x, y: robot.y}, {x: xLine, y: yLine}, radianLine2)
 
             const renderLine = g => {
                 g.clear()
                 g.lineStyle(3, insideLine, 1)
                
-                g.moveTo(robot.x, robot.y)
-                g.lineTo(xLine, yLine)
+                g.moveTo(robot.y, robot.x)
+                g.lineTo(yLine, xLine)
                 
                 g.lineStyle(3, outsideLine, 1)
-                g.moveTo(xLineRenderInitial1, yLineRenderInitial1)
-                g.lineTo(xLineRenderArrival1, yLineRenderArrival1) 
+                g.moveTo(renderedLine1.start.y, renderedLine1.start.x)
+                g.lineTo(renderedLine1.stop.y, renderedLine1.stop.x) 
                 
                 g.lineStyle(3, outsideLine, 1)
-                g.moveTo(xLineRenderInitial2, yLineRenderInitial2)
-                g.lineTo(xLineRenderArrival2, yLineRenderArrival2) 
+                g.moveTo(renderedLine2.start.y, renderedLine2.start.x)
+                g.lineTo(renderedLine2.stop.y, renderedLine2.stop.x) 
         
                 g.endFill()
               }
@@ -144,11 +128,11 @@ export const RobotActionFactory = (robot, action) => {
                 g.clear()
                 g.lineStyle(3, insideLine, 1)
                
-                g.moveTo(robot.x, robot.y)
-                g.drawCircle(robot.x, robot.y, 1/4)
+                g.moveTo(robot.y, robot.x)
+                g.drawCircle(robot.y, robot.x, 1/REDUCING_FACTOR)
                 
                 g.lineStyle(3, outsideLine, 1)
-                g.drawCircle(robot.x, robot.y, (ROBOT_DIAGONAL /2)/4)
+                g.drawCircle(robot.y, robot.x, (ROBOT_DIAGONAL /2)/REDUCING_FACTOR)
                 
                 g.endFill()
               }
@@ -156,7 +140,6 @@ export const RobotActionFactory = (robot, action) => {
             return {x:robot.x, y:robot.y, t: thetaRotate, render: renderRotate}
 
         case "SetOdometry":
-            console.log("SetOdometry")
             const xSetOdometry = action.x/ REDUCING_FACTOR
             const ySetOdometry = action.y/ REDUCING_FACTOR
             const tSetOdometry = - action.theta
@@ -168,44 +151,33 @@ export const RobotActionFactory = (robot, action) => {
             const xXYT = action.x/REDUCING_FACTOR
             const yXYT = action.y/REDUCING_FACTOR
 
-            console.log(xXYT)
-            console.log(yXYT)
+            // Graphic rendering
+            const radianXYTStart1 = degreeToRadian(-robot.angle - 270)
+            const radianXYTStop1 = degreeToRadian(thetaXYT - 90)
+            const renderedXYTStart1 = calculateRenderedPoint({x: robot.x, y: robot.y}, radianXYTStart1)
+            const renderedXYTStop1 = calculateRenderedPoint({x: xXYT, y: yXYT}, radianXYTStop1)
+            const renderedXYT1 = {start: {x:renderedXYTStart1.x, y: renderedXYTStart1.y}, stop:{x: renderedXYTStop1.x, y:renderedXYTStop1.y}}
 
-            // Line 1
-            const radianXYT1 = degreeToRadian(robot.angle + 90 + 90)
-            //const radianXYT11 = degreeToRadian(action.theta + 90)
-        
-            const xXYTRenderInitial1 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.cos(radianXYT1) + robot.x
-            const yXYTRenderInitial1 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.sin(radianXYT1) + robot.y
-
-            const xXYTRenderArrival1 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.cos(radianXYT1) + xXYT
-            const yXYTRenderArrival1 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.sin(radianXYT1) + yXYT
-
-            //line 2
-            const radianXYT2 = degreeToRadian(robot.angle )
-            //const radianXYT22 = degreeToRadian(action.theta -90)
-            
-            const xXYTRenderInitial2 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.cos(radianXYT2) + robot.x
-            const yXYTRenderInitial2 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.sin(radianXYT2) + robot.y
-
-            const xXYTRenderArrival2 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.cos(radianXYT2) + xXYT
-            const yXYTRenderArrival2 = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.sin(radianXYT2) + yXYT
-
+            const radianXYTStart2 = degreeToRadian(-robot.angle - 90)
+            const radianXYTStop2 = degreeToRadian(thetaXYT - 270)
+            const renderedXYTStart2 = calculateRenderedPoint({x: robot.x, y: robot.y}, radianXYTStart2)
+            const renderedXYTStop2 = calculateRenderedPoint({x: xXYT, y: yXYT}, radianXYTStop2)
+            const renderedXYT2 = {start: {x:renderedXYTStart2.x, y: renderedXYTStart2.y}, stop:{x: renderedXYTStop2.x, y:renderedXYTStop2.y}}
 
             const renderXYT = g => {
                 g.clear()
                 g.lineStyle(3, insideLine, 1)
 
-                g.moveTo(robot.x, robot.y)
+                g.moveTo(robot.y, robot.x)
                 g.lineTo(yXYT, xXYT)
                 
                 g.lineStyle(3, outsideLine, 1)
-                g.moveTo(yXYTRenderInitial1, xXYTRenderInitial1)
-                g.lineTo(yXYTRenderArrival1, xXYTRenderArrival1) 
+                g.moveTo(renderedXYT1.start.y, renderedXYT1.start.x)
+                g.lineTo(renderedXYT1.stop.y, renderedXYT1.stop.x) 
                 
                 g.lineStyle(3, outsideLine, 1)
-                g.moveTo(yXYTRenderInitial2, xXYTRenderInitial2 )
-                g.lineTo(yXYTRenderArrival2, xXYTRenderArrival2) 
+                g.moveTo(renderedXYT2.start.y, renderedXYT2.start.x)
+                g.lineTo(renderedXYT2.stop.y, renderedXYT2.stop.x) 
                
                 g.lineStyle(3, insideLine, 1)
                 g.moveTo(action.x, action.y)
@@ -232,4 +204,18 @@ const degreeToRadian = (degree) => {
 
 const calculateAngleDegrees = (x, y)  => {
     return Math.atan2(y, x) * 180 / Math.PI;
+}
+
+const calculateRenderedPoint = (point, radian) => {
+    const xRendered = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.cos(radian) + point.x
+    const yRendered = ((ROBOT_WIDTH /2) / REDUCING_FACTOR) * Math.sin(radian) + point.y
+
+    return {x: xRendered, y: yRendered}
+}
+
+const calculateStartStopRenderedPoint = (start, stop, radian) => {
+    const startRendered = calculateRenderedPoint(start, radian)
+    const stopRendered = calculateRenderedPoint(stop, radian)
+
+    return {start: startRendered, stop: stopRendered}
 }
