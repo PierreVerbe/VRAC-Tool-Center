@@ -12,8 +12,6 @@ import { Stage, Sprite, Graphics } from '@inlet/react-pixi'
 import Button from '@material-ui/core/Button'
 import PropTypes from "prop-types"
 
-
-
 const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeStepMonitoring }) => {
     const [pointerSimulator, setPointerSimulator] = React.useState({x:undefined, y:undefined});
     //const [simulatedRobot, setSimulatedRobot] = React.useState({angle: 0, x: 700/REDUCING_FACTOR, y:700/REDUCING_FACTOR, actual: {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}, previous: []}); // {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}
@@ -64,7 +62,7 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
         console.log("result")
         console.log(result)
     
-        setSimulatedRobot({...simulatedRobot, angle: result.t, x: result.x, y:result.y, actual: nextAction, previous: [], render: result.render})
+        setSimulatedRobot({...simulatedRobot, x: result.x, y:result.y, angle: result.t, actual: nextAction, previous: [], render: result.render})
     }
 
     const handleResetSimulator = () => {
@@ -76,19 +74,19 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
         <div>
             <Typography variant="body1">Position on Canvas: x={pointerSimulator.x} y={pointerSimulator.y}</Typography>
 
-            <Stage onPointerMove={testFunction} width={3000/4} height={2000/4}>
+            <Stage onPointerMove={testFunction} width={TABLE_WIDTH/REDUCING_FACTOR} height={TABLE_HEIGHT/REDUCING_FACTOR}>
                 <Sprite 
                     image={FieldImage} 
-                    scale={{ x: 0.25, y: 0.25 }}
+                    scale={{ x: 1/REDUCING_FACTOR, y: 1/REDUCING_FACTOR }}
                     x={0}
                     y={0}/>
                 <Sprite 
                     image={RobotOpenImage}
-                    scale={{ x: 0.25, y: 0.25 }}
+                    scale={{ x: 1/REDUCING_FACTOR, y: 1/REDUCING_FACTOR }}
                     anchor={0.5}
                     angle={simulatedRobot.angle}
-                    x={simulatedRobot.y}
-                    y={simulatedRobot.x}
+                    x={simulatedRobot.y }
+                    y={simulatedRobot.x }
                     />
               
                 <Graphics draw={simulatedRobot.render} />
