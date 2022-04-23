@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react"
 import { connect } from "react-redux"
-import Typography from '@material-ui/core/Typography';
+import Typography from '@material-ui/core/Typography'
 
 import { DEFAULT_ROBOT_X, DEFAULT_ROBOT_Y, DEFAULT_ROBOT_T, TABLE_WIDTH, TABLE_HEIGHT, REDUCING_FACTOR, ROBOT_HEIGHT, RobotActionFactory } from "./RobotActionFactory"
 import FieldImage from "./../../../resources/image/AgeOfBots/fondTable22.jpg"
@@ -13,9 +13,9 @@ import Button from '@material-ui/core/Button'
 import PropTypes from "prop-types"
 
 const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeStepMonitoring }) => {
-    const [pointerSimulator, setPointerSimulator] = React.useState({x:undefined, y:undefined});
-    //const [simulatedRobot, setSimulatedRobot] = React.useState({angle: 0, x: 700/REDUCING_FACTOR, y:700/REDUCING_FACTOR, actual: {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}, previous: []}); // {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}
-    const [simulatedRobot, setSimulatedRobot] = React.useState({angle: DEFAULT_ROBOT_T, x: DEFAULT_ROBOT_X, y:DEFAULT_ROBOT_Y, actual: {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}, previous: [], render: undefined}); // {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}
+    const [pointerSimulator, setPointerSimulator] = React.useState({x:undefined, y:undefined})
+    //const [simulatedRobot, setSimulatedRobot] = React.useState({angle: 0, x: 700/REDUCING_FACTOR, y:700/REDUCING_FACTOR, actual: {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}, previous: []}) // {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}
+    const [simulatedRobot, setSimulatedRobot] = React.useState({angle: DEFAULT_ROBOT_T, x: DEFAULT_ROBOT_X, y:DEFAULT_ROBOT_Y, actual: {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}, previous: [], render: undefined}) // {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}
 
    console.log(strategyToSimulate)
    console.log(metaActionArrayToSimulate)
