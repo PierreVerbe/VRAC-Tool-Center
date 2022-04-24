@@ -17,7 +17,9 @@ import BottomArmsInDoubleAction from "./action/BottomArmsInDoubleAction"
 import BottomArmsInSingleAction from "./action/BottomArmsInSingleAction"
 import BottomArmsOutDoubleAction from "./action/BottomArmsOutDoubleAction"
 import BottomArmsOutSingleAction from "./action/BottomArmsOutSingleAction"
+import BottomArmsRetrieveDoubleAction from "./action/BottomArmsRetrieveDoubleAction"
 import CalculateOdometryAction from "./action/CalculateOdometryAction"
+import CheckStockageAction from "./action/checkStockageAction"
 import EndAction from "./action/EndAction"
 import HomingAction from "./action/HomingAction"
 import LineAction from "./action/LineAction"
@@ -29,7 +31,11 @@ import TopArmGaleryTopAction from "./action/TopArmGaleryTopAction"
 import TopArmGetSamplesAction from "./action/TopArmGetSamplesAction"
 import TopArmGetSingleSampleAction from "./action/TopArmGetSingleSampleAction"
 import TopArmSingleStockageAction from "./action/TopArmSingleStockageAction"
+import TopArmPreStockageAction from "./action/TopArmPreStockageAction"
+import TopArmPreStockage2Action  from "./action/TopArmPreStockage2Action"
+import TopArmIdleAction from "./action/TopArmIdleAction"
 import TopArmStockageAction from "./action/TopArmStockageAction"
+import TopArmStockage2Action from "./action/TopArmStockage2Action"
 import WaitAction from "./action/WaitAction"
 import XYTAction from "./action/XYTAction"
 
@@ -78,9 +84,15 @@ const ActionFactory = ({ action }) => {
 
         case "BottomArmsOutSingle":
             return <BottomArmsOutSingleAction action={action} />
+        
+        case "BottomArmsRetrieveDouble":
+            return <BottomArmsRetrieveDoubleAction action={action} />
 
         case "CalculateOdometry":
             return <CalculateOdometryAction action={action} />
+
+        case "CheckStockage":
+            return <CheckStockageAction action={action} />
 
         case "End":
             return <EndAction action={action} />
@@ -112,11 +124,23 @@ const ActionFactory = ({ action }) => {
         case "TopArmGetSingleSample":
             return <TopArmGetSingleSampleAction action={action} />
 
+        case "TopArmIdle":
+            return <TopArmIdleAction action={action} />
+
         case "TopArmSingleStockage":
             return <TopArmSingleStockageAction action={action} />
-
+        
         case "TopArmStockage":
-            return <TopArmStockageAction action={action} />
+            return <TopArmStockageAction action = {action} />
+
+        case "TopArmStockage2":
+            return <TopArmStockage2Action action = {action} />
+
+        case "TopArmPreStockage":
+            return <TopArmPreStockageAction action={action} />
+
+        case "TopArmPreStockage2":
+            return <TopArmPreStockage2Action action={action} />
 
         case "Wait":
             return <WaitAction action={action} />
