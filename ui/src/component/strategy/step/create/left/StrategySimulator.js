@@ -41,7 +41,7 @@ const StrategySimulator = ({ strategyCreator, setStrategyCreator, metaActionArra
                 Clear Strategy
             </Button>
 
-            <RobotSimulator />
+            <RobotSimulator strategyToSimulate={strategyCreator} metaActionArrayToSimulate={metaActionArray}/>
         </div>
     )
 }
