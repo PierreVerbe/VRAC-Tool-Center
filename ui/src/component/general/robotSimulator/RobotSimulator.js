@@ -66,14 +66,12 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
     }
 
     const handleResetSimulator = () => {
-        /*
         const clearRender = (g) => {
             g.clear()
             g.endFill()
         }
-        */
 
-        setSimulatedRobot({ angle: DEFAULT_ROBOT_T, x: DEFAULT_ROBOT_X, y: DEFAULT_ROBOT_X, actual: { strategyNode: { id: undefined, name: undefined }, metaActionNode: { id: undefined, name: undefined } }, previous: [], render: undefined })
+        setSimulatedRobot({ angle: DEFAULT_ROBOT_T, x: DEFAULT_ROBOT_X, y: DEFAULT_ROBOT_X, actual: { strategyNode: { id: undefined, name: undefined }, metaActionNode: { id: undefined, name: undefined } }, previous: [], render: clearRender })
     }
 
     const controlSimulator = () => {
