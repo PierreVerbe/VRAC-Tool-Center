@@ -19,22 +19,32 @@ export const RobotActionFactory = (robot, action) => {
 
     switch (actionType) {
         case 'Bezier':
-            //const thetaXYT = - action.theta
             const xBezier = action.x / REDUCING_FACTOR
             const yBezier = action.y / REDUCING_FACTOR
 
-            const radianBezier = degreeToRadian(robot.angle + 90)
+            const radianBezier = degreeToRadian(- robot.angle)
             const xBezierRender = (action.radius / REDUCING_FACTOR) * Math.cos(radianBezier) + robot.x
             const yBezierRender = (action.radius / REDUCING_FACTOR) * Math.sin(radianBezier) + robot.y
 
             // Graphic rendering
             // Control point
-            const angleBezier = calculateAngleDegrees(xBezier - xBezierRender, yBezier - yBezierRender) + 90
+            const angleBezier = - calculateAngleDegrees(xBezier - xBezierRender, yBezier - yBezierRender)
 
-            const radianBezier2 = degreeToRadian(robot.angle)
-            const radianBezier22 = degreeToRadian(angleBezier)
+            // Bezier 1
+            const radianBezier1 = degreeToRadian(-robot.angle - 90)
+            const radianBezier11 = degreeToRadian(- angleBezier - 90)
+            const bezierRenderStart1 = calculateRenderedPoint({ x: robot.x, y: robot.y }, radianBezier1)
+            const bezierRenderStop1 = calculateRenderedPoint({ x: xBezier, y: yBezier }, radianBezier11)
 
-            const bezierRenderStart2 = calculateRenderedPoint({ x: robot.x, y: robot.x }, radianBezier2)
+            const xBezierRenderControlPoint1 =
+                (action.radius / REDUCING_FACTOR) * Math.cos(radianBezier) + bezierRenderStart1.x
+            const yBezierRenderControlPoint1 =
+                (action.radius / REDUCING_FACTOR) * Math.sin(radianBezier) + bezierRenderStart1.y
+
+            // Bezier 2
+            const radianBezier2 = degreeToRadian(-robot.angle - 270)
+            const radianBezier22 = degreeToRadian(-angleBezier - 270)
+            const bezierRenderStart2 = calculateRenderedPoint({ x: robot.x, y: robot.y }, radianBezier2)
             const bezierRenderStop2 = calculateRenderedPoint({ x: xBezier, y: yBezier }, radianBezier22)
 
             const xBezierRenderControlPoint2 =
@@ -42,36 +52,20 @@ export const RobotActionFactory = (robot, action) => {
             const yBezierRenderControlPoint2 =
                 (action.radius / REDUCING_FACTOR) * Math.sin(radianBezier) + bezierRenderStart2.y
 
-            // outside line 2
-            const radianBezier1 = degreeToRadian(robot.angle - 90 )
-            const radianBezier11 = degreeToRadian(angleBezier - 270)
-
-            const bezierRenderStart1 = calculateRenderedPoint({ x: robot.x, y: robot.x }, radianBezier1)
-            const bezierRenderStop1 = calculateRenderedPoint({ x: xBezier, y: yBezier }, radianBezier11)
-
-            const xBezierRenderControlPoint1 =
-                (action.radius / REDUCING_FACTOR) * Math.cos(radianBezier) + bezierRenderStart1.x
-            const yBezierRenderControlPoint1 =
-                (action.radius / REDUCING_FACTOR) * Math.sin(radianBezier) + bezierRenderStart1.y
-            //const xBezierRender11 = (action.radius / REDUCING_FACTOR) * Math.cos(radianBezier) + xBezierRenderInitial1
-            //const yBezierRender11 = (action.radius / REDUCING_FACTOR) * Math.sin(radianBezier) + yBezierRenderInitial1
-
-            //const radianLine1 = degreeToRadian(-robot.angle - 90)
-
             const renderBezier = (g) => {
                 g.clear()
-                g.lineStyle(3, insideLine, 1)
 
+                g.lineStyle(3, insideLine, 1)
                 g.moveTo(robot.y, robot.x)
-                g.bezierCurveTo(yBezierRender, xBezierRender, yBezierRender, xBezierRender, yBezier, xBezier) // Quadratic bezier, the 2 control points are the same
+                g.bezierCurveTo(yBezierRender, xBezierRender, yBezier, xBezier, yBezier, xBezier) // Quadratic bezier, the 2 control points are the same
 
                 g.lineStyle(3, outsideLine, 1)
                 g.moveTo(bezierRenderStart1.y, bezierRenderStart1.x)
                 g.bezierCurveTo(
                     yBezierRenderControlPoint1,
                     xBezierRenderControlPoint1,
-                    yBezierRenderControlPoint1,
-                    xBezierRenderControlPoint1,
+                    bezierRenderStop1.y,
+                    bezierRenderStop1.x,
                     bezierRenderStop1.y,
                     bezierRenderStop1.x
                 ) // Quadratic bezier, the 2 control points are the same
@@ -81,8 +75,8 @@ export const RobotActionFactory = (robot, action) => {
                 g.bezierCurveTo(
                     yBezierRenderControlPoint2,
                     xBezierRenderControlPoint2,
-                    yBezierRenderControlPoint2,
-                    xBezierRenderControlPoint2,
+                    bezierRenderStop2.y,
+                    bezierRenderStop2.x,
                     bezierRenderStop2.y,
                     bezierRenderStop2.x
                 ) // Quadratic bezier, the 2 control points are the same
@@ -93,10 +87,90 @@ export const RobotActionFactory = (robot, action) => {
             return { x: xBezier, y: yBezier, t: angleBezier, render: renderBezier }
 
         case 'Homing':
-            return
+            // Axis: true -> Y
+            // Axis: false -> X
+            let thetaHoming = undefined
+            let xHoming = undefined
+            let yHoming = undefined
+            let radianHoming1 = undefined
+            let renderedHoming1 = undefined
+            let radianHoming2 = undefined
+            let renderedHoming2 = undefined
+
+            if (action.axis) {
+                thetaHoming = -270
+
+                if (action.forward) {
+                    xHoming = robot.x
+                    yHoming = robot.y - (action.offset / REDUCING_FACTOR)
+                }
+                else {
+                    xHoming = robot.x
+                    yHoming = robot.y + (action.offset / REDUCING_FACTOR)
+                }
+
+                radianHoming1 = degreeToRadian(thetaHoming - 90)
+                renderedHoming1 = calculateStartStopRenderedPoint(
+                    { x: robot.x, y: robot.y },
+                    { x: xHoming, y: yHoming },
+                    radianHoming1
+                )
+                radianHoming2 = degreeToRadian(thetaHoming - 270)
+                renderedHoming2 = calculateStartStopRenderedPoint(
+                    { x: robot.x, y: robot.y },
+                    { x: xHoming, y: yHoming },
+                    radianHoming2
+                )
+            }
+            else {
+                thetaHoming = -180
+
+                if (action.forward) {
+                    xHoming = robot.x - (action.offset / REDUCING_FACTOR)
+                    yHoming = robot.y
+                }
+                else {
+                    xHoming = robot.x + (action.offset / REDUCING_FACTOR)
+                    yHoming = robot.y
+                }
+
+                radianHoming1 = degreeToRadian(thetaHoming - 90)
+                renderedHoming1 = calculateStartStopRenderedPoint(
+                    { x: robot.x, y: robot.y },
+                    { x: xHoming, y: yHoming },
+                    radianHoming1
+                )
+                radianHoming2 = degreeToRadian(thetaHoming - 270)
+                renderedHoming2 = calculateStartStopRenderedPoint(
+                    { x: robot.x, y: robot.y },
+                    { x: xHoming, y: yHoming },
+                    radianHoming2
+                )
+            }
+
+            const renderHoming = (g) => {
+                g.clear()
+
+                g.lineStyle(3, insideLine, 1)
+                g.moveTo(robot.y, robot.x)
+                g.lineTo(yHoming, xHoming)
+
+
+                g.lineStyle(3, outsideLine, 1)
+                g.moveTo(renderedHoming1.start.y, renderedHoming1.start.x)
+                g.lineTo(renderedHoming1.stop.y, renderedHoming1.stop.x)
+
+                g.lineStyle(3, outsideLine, 1)
+                g.moveTo(renderedHoming2.start.y, renderedHoming2.start.x)
+                g.lineTo(renderedHoming2.stop.y, renderedHoming2.stop.x)
+
+                g.endFill()
+            }
+
+            return { x: xHoming, y: yHoming, t: thetaHoming, render: renderHoming }
 
         case 'Line':
-            const radianLine = action.forward ? degreeToRadian(-robot.angle) : degreeToRadian(robot.angle)
+            const radianLine = action.forward ? degreeToRadian(-robot.angle) : degreeToRadian(-robot.angle - 180)
             const xLine = (action.distance / REDUCING_FACTOR) * Math.cos(radianLine) + robot.x
             const yLine = (action.distance / REDUCING_FACTOR) * Math.sin(radianLine) + robot.y
 
@@ -116,8 +190,8 @@ export const RobotActionFactory = (robot, action) => {
 
             const renderLine = (g) => {
                 g.clear()
-                g.lineStyle(3, insideLine, 1)
 
+                g.lineStyle(3, insideLine, 1)
                 g.moveTo(robot.y, robot.x)
                 g.lineTo(yLine, xLine)
 
@@ -139,8 +213,8 @@ export const RobotActionFactory = (robot, action) => {
 
             const renderRotate = (g) => {
                 g.clear()
-                g.lineStyle(3, insideLine, 1)
 
+                g.lineStyle(3, insideLine, 1)
                 g.moveTo(robot.y, robot.x)
                 g.drawCircle(robot.y, robot.x, 1 / REDUCING_FACTOR)
 
@@ -166,27 +240,33 @@ export const RobotActionFactory = (robot, action) => {
 
             // Graphic rendering
             const radianXYTStart1 = degreeToRadian(-robot.angle - 270)
-            const radianXYTStop1 = degreeToRadian(thetaXYT - 90)
+            const renderedXYT1 = calculateStartStopRenderedPoint({x: robot.x, y: robot.y}, {x: xXYT, y: yXYT}, radianXYTStart1)
+            /*
+            //const radianXYTStop1 = degreeToRadian(thetaXYT - 90)
             const renderedXYTStart1 = calculateRenderedPoint({ x: robot.x, y: robot.y }, radianXYTStart1)
-            const renderedXYTStop1 = calculateRenderedPoint({ x: xXYT, y: yXYT }, radianXYTStop1)
+            const renderedXYTStop1 = calculateRenderedPoint({ x: xXYT, y: yXYT }, radianXYTStart1)
             const renderedXYT1 = {
                 start: { x: renderedXYTStart1.x, y: renderedXYTStart1.y },
                 stop: { x: renderedXYTStop1.x, y: renderedXYTStop1.y },
             }
+            */
 
             const radianXYTStart2 = degreeToRadian(-robot.angle - 90)
+            const renderedXYT2 = calculateStartStopRenderedPoint({x: robot.x, y: robot.y}, {x: xXYT, y: yXYT}, radianXYTStart2)
+            /*
             const radianXYTStop2 = degreeToRadian(thetaXYT - 270)
             const renderedXYTStart2 = calculateRenderedPoint({ x: robot.x, y: robot.y }, radianXYTStart2)
-            const renderedXYTStop2 = calculateRenderedPoint({ x: xXYT, y: yXYT }, radianXYTStop2)
+            const renderedXYTStop2 = calculateRenderedPoint({ x: xXYT, y: yXYT }, radianXYTStart2)
             const renderedXYT2 = {
                 start: { x: renderedXYTStart2.x, y: renderedXYTStart2.y },
                 stop: { x: renderedXYTStop2.x, y: renderedXYTStop2.y },
             }
+            */
 
             const renderXYT = (g) => {
                 g.clear()
-                g.lineStyle(3, insideLine, 1)
 
+                g.lineStyle(3, insideLine, 1)
                 g.moveTo(robot.y, robot.x)
                 g.lineTo(yXYT, xXYT)
 
