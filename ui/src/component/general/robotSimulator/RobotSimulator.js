@@ -30,6 +30,8 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
     const handleNextAction = (e, nextNodeId) => {
         let nextAction = { strategyNode: { id: undefined, name: undefined }, metaActionNode: { id: undefined, name: undefined } }
         let actionData = undefined
+        let previous = simulatedRobot.previous
+        let result = undefined
 
         // Start simulator 
         if (simulatedRobot.x === DEFAULT_ROBOT_X && simulatedRobot.y === DEFAULT_ROBOT_Y) { // strategyToSimulate.flow.length != 0
@@ -43,12 +45,15 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
                 console.log("hello1")
             }
             else {
-                console.log("hello2")
+                console.log("hello ")
                 inputNode = searchNextStrategy(strategyToSimulate, metaActionArrayToSimulate, simulatedRobot)
                 nextAction = inputNode.nextAction
             }
             // Search "SetOdometry" action to place robot
             if (inputNode.actionData.type === "SetOdometry") actionData = inputNode.actionData
+
+            result = RobotActionFactory(simulatedRobot, actionData)
+            previous.push({action: simulatedRobot.actual, x:simulatedRobot.x, y: simulatedRobot.y, angle: simulatedRobot.angle, render: simulatedRobot.render})
         }
 
         // Search next node 
@@ -56,13 +61,29 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
             const nextNode = searchNextStrategy(strategyToSimulate, metaActionArrayToSimulate, simulatedRobot, nextNodeId)
             nextAction = nextNode.nextAction
             actionData = nextNode.actionData
+            result = RobotActionFactory(simulatedRobot, actionData)
+
+            previous.push({action: simulatedRobot.actual, x:simulatedRobot.x, y: simulatedRobot.y, angle: simulatedRobot.angle, render: simulatedRobot.render})
         }
 
-        const result = RobotActionFactory(simulatedRobot, actionData)
-        console.log("result")
-        console.log(result)
+        setSimulatedRobot({ ...simulatedRobot, x: result.x, y: result.y, angle: result.t, actual: nextAction, previous: previous, render: result.render })
+        console.log("shows simulatedRobot")
+        console.log(simulatedRobot)
+    }
 
-        setSimulatedRobot({ ...simulatedRobot, x: result.x, y: result.y, angle: result.t, actual: nextAction, previous: [], render: result.render })
+    const handlePreviousAction = (e) => {
+        console.log("simulatedRobot")
+        console.log(simulatedRobot)
+
+        let arrayPrevious = simulatedRobot.previous
+        const previousAction = arrayPrevious.pop()
+
+
+        console.log("previousAction")
+        console.log(previousAction)
+        console.log(arrayPrevious)
+
+        setSimulatedRobot({ ...simulatedRobot, x: previousAction.x, y: previousAction.y, angle: previousAction.angle, actual: previousAction.action, previous: arrayPrevious, render: previousAction.render })
     }
 
     const handleResetSimulator = () => {
@@ -75,15 +96,24 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
     }
 
     const controlSimulator = () => {
+        /*
+            previous
+
+            next
+
+            reset
+        */
+
+
         if (simulatedRobot.actual.strategyNode.name === undefined && simulatedRobot.actual.metaActionNode.name === undefined) {
             return (
                 <div>
                     <Button variant="contained" onClick={handleResetSimulator}>
-                        Reset simulator
+                        Reset
                     </Button>
 
                     <Button variant="contained" onClick={e => handleNextAction(e)}>
-                        First Action
+                        Start
                     </Button>
                 </div>
             )
@@ -99,18 +129,19 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
                 )
             })
 
-            const t =
-                <Button variant="contained" onClick={e => handleNextAction(e)}>
-                        Next Action
+            const prev = 
+                <Button variant="contained" onClick={e => handlePreviousAction(e)}>
+                        Previous
                 </Button>
             
             return (
                 <div>
                     <Button variant="contained" onClick={e => handleResetSimulator(e)}>
-                        Reset simulator
+                        Reset
                     </Button>
-
-                    {arrayNextMetaAction.lentgh === 0 ? t : arrayNextMetaAction}
+                    {prev}
+                    
+                    {arrayNextMetaAction}
                 </div>
             )
         }

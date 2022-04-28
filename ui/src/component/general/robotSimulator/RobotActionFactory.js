@@ -89,64 +89,21 @@ export const RobotActionFactory = (robot, action) => {
         case 'Homing':
             // Axis: true -> Y
             // Axis: false -> X
-            let thetaHoming = undefined
-            let xHoming = undefined
-            let yHoming = undefined
-            let radianHoming1 = undefined
-            let renderedHoming1 = undefined
-            let radianHoming2 = undefined
-            let renderedHoming2 = undefined
+            const xHoming = action.axis ? robot.x : action.offset / REDUCING_FACTOR
+            const yHoming = action.axis ? action.offset / REDUCING_FACTOR : robot.y
 
-            if (action.axis) {
-                thetaHoming = -270
-
-                if (action.forward) {
-                    xHoming = robot.x
-                    yHoming = robot.y - (action.offset / REDUCING_FACTOR)
-                }
-                else {
-                    xHoming = robot.x
-                    yHoming = robot.y + (action.offset / REDUCING_FACTOR)
-                }
-
-                radianHoming1 = degreeToRadian(thetaHoming - 90)
-                renderedHoming1 = calculateStartStopRenderedPoint(
-                    { x: robot.x, y: robot.y },
-                    { x: xHoming, y: yHoming },
-                    radianHoming1
-                )
-                radianHoming2 = degreeToRadian(thetaHoming - 270)
-                renderedHoming2 = calculateStartStopRenderedPoint(
-                    { x: robot.x, y: robot.y },
-                    { x: xHoming, y: yHoming },
-                    radianHoming2
-                )
-            }
-            else {
-                thetaHoming = -180
-
-                if (action.forward) {
-                    xHoming = robot.x - (action.offset / REDUCING_FACTOR)
-                    yHoming = robot.y
-                }
-                else {
-                    xHoming = robot.x + (action.offset / REDUCING_FACTOR)
-                    yHoming = robot.y
-                }
-
-                radianHoming1 = degreeToRadian(thetaHoming - 90)
-                renderedHoming1 = calculateStartStopRenderedPoint(
-                    { x: robot.x, y: robot.y },
-                    { x: xHoming, y: yHoming },
-                    radianHoming1
-                )
-                radianHoming2 = degreeToRadian(thetaHoming - 270)
-                renderedHoming2 = calculateStartStopRenderedPoint(
-                    { x: robot.x, y: robot.y },
-                    { x: xHoming, y: yHoming },
-                    radianHoming2
-                )
-            }
+            const radianHoming1 = degreeToRadian(-robot.angle - 90)
+            const renderedHoming1 = calculateStartStopRenderedPoint(
+                { x: robot.x, y: robot.y },
+                { x: xHoming, y: yHoming },
+                radianHoming1
+            )
+            const radianHoming2 = degreeToRadian(-robot.angle - 270)
+            const renderedHoming2 = calculateStartStopRenderedPoint(
+                { x: robot.x, y: robot.y },
+                { x: xHoming, y: yHoming },
+                radianHoming2
+            )
 
             const renderHoming = (g) => {
                 g.clear()
@@ -154,7 +111,6 @@ export const RobotActionFactory = (robot, action) => {
                 g.lineStyle(3, insideLine, 1)
                 g.moveTo(robot.y, robot.x)
                 g.lineTo(yHoming, xHoming)
-
 
                 g.lineStyle(3, outsideLine, 1)
                 g.moveTo(renderedHoming1.start.y, renderedHoming1.start.x)
@@ -167,7 +123,10 @@ export const RobotActionFactory = (robot, action) => {
                 g.endFill()
             }
 
-            return { x: xHoming, y: yHoming, t: thetaHoming, render: renderHoming }
+            console.log("Homing")
+            console.log({ x: xHoming, y: yHoming, t: robot.angle })
+
+            return { x: xHoming, y: yHoming, t: robot.angle, render: renderHoming }
 
         case 'Line':
             const radianLine = action.forward ? degreeToRadian(-robot.angle) : degreeToRadian(-robot.angle - 180)
@@ -240,7 +199,7 @@ export const RobotActionFactory = (robot, action) => {
 
             // Graphic rendering
             const radianXYTStart1 = degreeToRadian(-robot.angle - 270)
-            const renderedXYT1 = calculateStartStopRenderedPoint({x: robot.x, y: robot.y}, {x: xXYT, y: yXYT}, radianXYTStart1)
+            const renderedXYT1 = calculateStartStopRenderedPoint({ x: robot.x, y: robot.y }, { x: xXYT, y: yXYT }, radianXYTStart1)
             /*
             //const radianXYTStop1 = degreeToRadian(thetaXYT - 90)
             const renderedXYTStart1 = calculateRenderedPoint({ x: robot.x, y: robot.y }, radianXYTStart1)
@@ -252,7 +211,7 @@ export const RobotActionFactory = (robot, action) => {
             */
 
             const radianXYTStart2 = degreeToRadian(-robot.angle - 90)
-            const renderedXYT2 = calculateStartStopRenderedPoint({x: robot.x, y: robot.y}, {x: xXYT, y: yXYT}, radianXYTStart2)
+            const renderedXYT2 = calculateStartStopRenderedPoint({ x: robot.x, y: robot.y }, { x: xXYT, y: yXYT }, radianXYTStart2)
             /*
             const radianXYTStop2 = degreeToRadian(thetaXYT - 270)
             const renderedXYTStart2 = calculateRenderedPoint({ x: robot.x, y: robot.y }, radianXYTStart2)
@@ -292,7 +251,12 @@ export const RobotActionFactory = (robot, action) => {
             return { x: xXYT, y: yXYT, t: thetaXYT, render: renderXYT }
 
         default:
-            return { x: robot.x, y: robot.y, t: robot.t }
+            const renderDefault = (g) => {
+                g.clear()
+                g.endFill()
+            }
+
+            return { x: robot.x, y: robot.y, t: robot.t, render: renderDefault }
     }
 }
 
