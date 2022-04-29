@@ -51,10 +51,10 @@ const useStyles = makeStyles((theme) => ({
 
 const metaActionActionType = ["ActivateBackGripperAutoGrab", "BackGrippersDropCenter", "BackGrippersDropLeft", "BackGrippersDropRight", "BackGrippersGrabCenter",
     "BackGrippersGrabLeft", "BackGrippersGrabRight", "BackGrippersIn", "BackGrippersOut", "Bezier",
-    "BottomArmsInDouble", "BottomArmsInSingle", "BottomArmsOutDouble", "BottomArmsOutSingle", "CalculateOdometry",
+    "BottomArmsInDouble", "BottomArmsInSingle", "BottomArmsOutDouble", "BottomArmsOutSingle", "BottomArmRetrieveDouble", "CalculateOdometry", "CheckStockage",
     "End", "Homing", "Line", "Rotate", "SetDetectionRange",
-    "SetOdometry", "TopArmGaleryBottom", "TopArmGaleryTop", "TopArmGetSamples", "TopArmGetSingleSample",
-    "TopArmSingleStockage", "TopArmStockage", "Wait", "XYT"]
+    "SetOdometry", "TopArmGaleryBottom", "TopArmGaleryTop", "TopArmGetSamples", "TopArmGetSingleSample", "TopArmIdle",
+    "TopArmSingleStockage", "TopArmPreStockage", "TopArmPreStockage2","TopArmStockage", "TopArmStockage2", "Wait", "XYT"]
 
 const configMetaActionTransition = configData.metaAction.transition
 
