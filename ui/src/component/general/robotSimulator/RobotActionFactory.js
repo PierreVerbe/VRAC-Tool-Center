@@ -57,7 +57,7 @@ export const RobotActionFactory = (robot, action) => {
 
                 g.lineStyle(3, insideLine, 1)
                 g.moveTo(robot.y, robot.x)
-                g.bezierCurveTo(yBezierRender, xBezierRender, yBezier, xBezier, yBezier, xBezier) // Quadratic bezier, the 2 control points are the same
+                g.bezierCurveTo(yBezierRender, xBezierRender, yBezier, xBezier, yBezier, xBezier)
 
                 g.lineStyle(3, outsideLine, 1)
                 g.moveTo(bezierRenderStart1.y, bezierRenderStart1.x)
@@ -68,7 +68,7 @@ export const RobotActionFactory = (robot, action) => {
                     bezierRenderStop1.x,
                     bezierRenderStop1.y,
                     bezierRenderStop1.x
-                ) // Quadratic bezier, the 2 control points are the same
+                )
 
                 g.lineStyle(3, outsideLine, 1)
                 g.moveTo(bezierRenderStart2.y, bezierRenderStart2.x)
@@ -79,7 +79,7 @@ export const RobotActionFactory = (robot, action) => {
                     bezierRenderStop2.x,
                     bezierRenderStop2.y,
                     bezierRenderStop2.x
-                ) // Quadratic bezier, the 2 control points are the same
+                )
 
                 g.endFill()
             }
@@ -87,8 +87,10 @@ export const RobotActionFactory = (robot, action) => {
             return { x: xBezier, y: yBezier, t: angleBezier, render: renderBezier }
 
         case 'Homing':
-            // Axis: true -> Y
-            // Axis: false -> X
+            /*
+                Axis: true -> Y
+                Axis: false -> X
+            */
             const xHoming = action.axis ? robot.x : action.offset / REDUCING_FACTOR
             const yHoming = action.axis ? action.offset / REDUCING_FACTOR : robot.y
 
@@ -122,9 +124,6 @@ export const RobotActionFactory = (robot, action) => {
 
                 g.endFill()
             }
-
-            console.log("Homing")
-            console.log({ x: xHoming, y: yHoming, t: robot.angle })
 
             return { x: xHoming, y: yHoming, t: robot.angle, render: renderHoming }
 

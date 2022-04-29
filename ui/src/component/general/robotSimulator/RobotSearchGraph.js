@@ -1,11 +1,35 @@
 export const searchInputStrategy = (strategyToSimulate, metaActionArrayToSimulate) => {
-    const strategyInputNode = strategyToSimulate.flow.filter(nodeStrategy => nodeStrategy.type === "input")[0]
-    const metaAction = metaActionArrayToSimulate.filter(itemMetaAction => itemMetaAction.name === strategyInputNode.data.label)[0]
-    const metaActionInputNode = metaAction.flow.filter(nodeMetaAction => nodeMetaAction.type === "input")[0]
+    // Check if there is input node in strategy
+    const strategyInputNodes = strategyToSimulate.flow.filter(nodeStrategy => nodeStrategy.type === "input")
+    if (strategyInputNodes.length === 0) {
 
-    const nextAction = { strategyNode: { id: strategyInputNode.id, name: strategyInputNode.data.label }, metaActionNode: { id: metaActionInputNode.id, name: metaActionInputNode.data.label } }
+    }
+    else {
+        const strategyInputNode = strategyInputNodes[0]
 
-    return { actionData: metaActionInputNode.actionData, nextAction: nextAction }
+        // Check if input node as been completed
+        console.log("strategyInputNode.data.id")
+        console.log(strategyInputNode.data.id)
+
+        if (strategyInputNode.data.id === undefined) return { actionData: undefined, nextAction: undefined }
+
+
+        const metaAction = metaActionArrayToSimulate.filter(itemMetaAction => itemMetaAction.name === strategyInputNode.data.label)[0]
+        const metaActionInputNodes = metaAction.flow.filter(nodeMetaAction => nodeMetaAction.type === "input")
+
+        // Check if there is input node in metaAction
+        if (metaActionInputNodes.length === 0) {
+
+        } else {
+            const metaActionInputNode = metaActionInputNodes[0]
+
+        const nextAction = { strategyNode: { id: strategyInputNode.id, name: strategyInputNode.data.label }, metaActionNode: { id: metaActionInputNode.id, name: metaActionInputNode.data.label } }
+
+        return { actionData: metaActionInputNode.actionData, nextAction: nextAction }
+
+        }
+        
+    }
 }
 
 export const searchNextStrategy = (strategyToSimulate, metaActionArrayToSimulate, simulatedRobot, nextNodeId) => {

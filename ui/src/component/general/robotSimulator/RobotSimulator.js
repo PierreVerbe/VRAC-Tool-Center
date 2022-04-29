@@ -14,61 +14,62 @@ import PropTypes from "prop-types"
 
 const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeStepMonitoring }) => {
     const [pointerSimulator, setPointerSimulator] = React.useState({ x: undefined, y: undefined })
-    //const [simulatedRobot, setSimulatedRobot] = React.useState({angle: 0, x: 700/REDUCING_FACTOR, y:700/REDUCING_FACTOR, actual: {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}, previous: []}) // {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}
-    const [simulatedRobot, setSimulatedRobot] = React.useState({ angle: DEFAULT_ROBOT_T, x: DEFAULT_ROBOT_X, y: DEFAULT_ROBOT_Y, actual: { strategyNode: { id: undefined, name: undefined }, metaActionNode: { id: undefined, name: undefined } }, previous: [], render: undefined }) // {strategyNode: {id: undefined, name: undefined}, metaActionNode: {id: undefined, name: undefined}}
+    const [simulatedRobot, setSimulatedRobot] = React.useState({ angle: DEFAULT_ROBOT_T, x: DEFAULT_ROBOT_X, y: DEFAULT_ROBOT_Y, actual: { strategyNode: { id: undefined, name: undefined }, metaActionNode: { id: undefined, name: undefined } }, previous: [], render: undefined })
 
-    console.log(strategyToSimulate)
-    console.log(metaActionArrayToSimulate)
-
-    const testFunction = (e) => {
-        //console.log(e)
+    const handleCursorPosition = (e) => {
         const x = Math.round((e.clientY - e.nativeEvent.originalTarget.offsetTop) * REDUCING_FACTOR)
         const y = Math.round((e.clientX - e.nativeEvent.originalTarget.offsetLeft) * REDUCING_FACTOR)
         setPointerSimulator({ x: x, y: y })
     }
 
-    const handleNextAction = (e, nextNodeId) => {
+    const handleActionIdButtonSimulator = (e, nextNodeId) => {
         let nextAction = { strategyNode: { id: undefined, name: undefined }, metaActionNode: { id: undefined, name: undefined } }
         let actionData = undefined
         let previous = simulatedRobot.previous
         let result = undefined
 
         // Start simulator 
-        if (simulatedRobot.x === DEFAULT_ROBOT_X && simulatedRobot.y === DEFAULT_ROBOT_Y) { // strategyToSimulate.flow.length != 0
-            let inputNode = undefined
+        try {
+            if (simulatedRobot.x === DEFAULT_ROBOT_X && simulatedRobot.y === DEFAULT_ROBOT_Y) {
+                let inputNode = undefined
 
-            // Search first strategy node & first meta action
-            if (simulatedRobot.actual.strategyNode.id === undefined && simulatedRobot.actual.metaActionNode.id === undefined) {
-                inputNode = searchInputStrategy(strategyToSimulate, metaActionArrayToSimulate)
+                // Search first strategy node & first meta action
+                if (simulatedRobot.actual.strategyNode.id === undefined && simulatedRobot.actual.metaActionNode.id === undefined) {
+                    inputNode = searchInputStrategy(strategyToSimulate, metaActionArrayToSimulate)
 
-                nextAction = inputNode.nextAction
-                console.log("hello1")
+                    if (inputNode.actionData === undefined && inputNode.nextAction === undefined) throw "Input node in strategy graph need to be completed"
+
+                    nextAction = inputNode.nextAction
+                }
+                else {
+                    console.log("hello ")
+                    inputNode = searchNextStrategy(strategyToSimulate, metaActionArrayToSimulate, simulatedRobot)
+                    nextAction = inputNode.nextAction
+                }
+                // Search "SetOdometry" action to place robot
+                if (inputNode.actionData.type === "SetOdometry") actionData = inputNode.actionData
+
+                result = RobotActionFactory(simulatedRobot, actionData)
+                previous.push({ action: simulatedRobot.actual, x: simulatedRobot.x, y: simulatedRobot.y, angle: simulatedRobot.angle, render: simulatedRobot.render })
             }
+
+            // Search next node 
             else {
-                console.log("hello ")
-                inputNode = searchNextStrategy(strategyToSimulate, metaActionArrayToSimulate, simulatedRobot)
-                nextAction = inputNode.nextAction
+                const nextNode = searchNextStrategy(strategyToSimulate, metaActionArrayToSimulate, simulatedRobot, nextNodeId)
+                nextAction = nextNode.nextAction
+                actionData = nextNode.actionData
+                result = RobotActionFactory(simulatedRobot, actionData)
+
+                previous.push({ action: simulatedRobot.actual, x: simulatedRobot.x, y: simulatedRobot.y, angle: simulatedRobot.angle, render: simulatedRobot.render })
             }
-            // Search "SetOdometry" action to place robot
-            if (inputNode.actionData.type === "SetOdometry") actionData = inputNode.actionData
 
-            result = RobotActionFactory(simulatedRobot, actionData)
-            previous.push({action: simulatedRobot.actual, x:simulatedRobot.x, y: simulatedRobot.y, angle: simulatedRobot.angle, render: simulatedRobot.render})
+            setSimulatedRobot({ ...simulatedRobot, x: result.x, y: result.y, angle: result.t, actual: nextAction, previous: previous, render: result.render })
+            console.log("shows simulatedRobot")
+            console.log(simulatedRobot)
+        } catch (e) {
+            console.log(e)
         }
 
-        // Search next node 
-        else {
-            const nextNode = searchNextStrategy(strategyToSimulate, metaActionArrayToSimulate, simulatedRobot, nextNodeId)
-            nextAction = nextNode.nextAction
-            actionData = nextNode.actionData
-            result = RobotActionFactory(simulatedRobot, actionData)
-
-            previous.push({action: simulatedRobot.actual, x:simulatedRobot.x, y: simulatedRobot.y, angle: simulatedRobot.angle, render: simulatedRobot.render})
-        }
-
-        setSimulatedRobot({ ...simulatedRobot, x: result.x, y: result.y, angle: result.t, actual: nextAction, previous: previous, render: result.render })
-        console.log("shows simulatedRobot")
-        console.log(simulatedRobot)
     }
 
     const handlePreviousAction = (e) => {
@@ -112,7 +113,7 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
                         Reset
                     </Button>
 
-                    <Button variant="contained" onClick={e => handleNextAction(e)}>
+                    <Button variant="contained" onClick={e => handleActionIdButtonSimulator(e)} disabled={strategyToSimulate.flow.length === 0}>
                         Start
                     </Button>
                 </div>
@@ -123,24 +124,24 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
             const arrayNextMetaActionId = actualMetaActionNode.flow.filter(edgeMetaAction => edgeMetaAction.source === simulatedRobot.actual.metaActionNode.id).map(node => node.target)
             const arrayNextMetaAction = actualMetaActionNode.flow.filter(node => arrayNextMetaActionId.includes(node.id)).map(node => {
                 return (
-                    <Button variant="contained" onClick={e => handleNextAction(e, node.id)}>
+                    <Button variant="contained" onClick={e => handleActionIdButtonSimulator(e, node.id)}>
                         {node.data.label}
                     </Button>
                 )
             })
 
-            const prev = 
+            const prev =
                 <Button variant="contained" onClick={e => handlePreviousAction(e)}>
-                        Previous
+                    Previous
                 </Button>
-            
+
             return (
                 <div>
                     <Button variant="contained" onClick={e => handleResetSimulator(e)}>
                         Reset
                     </Button>
                     {prev}
-                    
+
                     {arrayNextMetaAction}
                 </div>
             )
@@ -151,7 +152,7 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
         <div>
             <Typography variant="body1">Position on Canvas: x={pointerSimulator.x} y={pointerSimulator.y}</Typography>
 
-            <Stage onPointerMove={testFunction} width={TABLE_WIDTH / REDUCING_FACTOR} height={TABLE_HEIGHT / REDUCING_FACTOR}>
+            <Stage onPointerMove={handleCursorPosition} width={TABLE_WIDTH / REDUCING_FACTOR} height={TABLE_HEIGHT / REDUCING_FACTOR}>
                 <Sprite
                     image={FieldImage}
                     scale={{ x: 1 / REDUCING_FACTOR, y: 1 / REDUCING_FACTOR }}
