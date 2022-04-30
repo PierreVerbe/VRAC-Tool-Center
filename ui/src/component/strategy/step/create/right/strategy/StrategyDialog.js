@@ -142,7 +142,7 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, openDialog
             
                 <FormControl>
                     <FormGroup>
-                        <FormLabel color='primary'>Type transition</FormLabel>
+                        <FormLabel color='primary'>Select meta action</FormLabel>
                         <Select
                             labelId="demo-simple-select-label2"
                             id="demo-simple-select2"

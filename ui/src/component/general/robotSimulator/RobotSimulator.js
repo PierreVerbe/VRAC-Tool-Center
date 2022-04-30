@@ -7,17 +7,15 @@ import FieldImage from "./../../../resources/image/AgeOfBots/fondTable22.jpg"
 import RobotOpenImage from "./../../../resources/image/Robot/robot_open.png"
 
 import { searchInputStrategy, searchNextStrategy } from "./RobotSearchGraph"
+import { setSnackBarCreator } from "../../../action/generalAction"
 
 import { Stage, Sprite, Graphics } from '@inlet/react-pixi'
 import Button from '@material-ui/core/Button'
 import PropTypes from "prop-types"
 
-const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeStepMonitoring }) => {
+const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, setSnackBar }) => {
     const [pointerSimulator, setPointerSimulator] = React.useState({ x: undefined, y: undefined })
     const [simulatedRobot, setSimulatedRobot] = React.useState({ angle: DEFAULT_ROBOT_T, x: DEFAULT_ROBOT_X, y: DEFAULT_ROBOT_Y, actual: { strategyNode: { id: undefined, name: undefined }, metaActionNode: { id: undefined, name: undefined } }, previous: [], render: undefined })
-
-    console.log("strategyToSimulate")
-    console.log(strategyToSimulate)
 
     const handleCursorPosition = (e) => {
         const x = Math.round((e.clientY - e.target.offsetTop) * REDUCING_FACTOR)
@@ -40,7 +38,7 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
                 if (simulatedRobot.actual.strategyNode.id === undefined && simulatedRobot.actual.metaActionNode.id === undefined) {
                     inputNode = searchInputStrategy(strategyToSimulate, metaActionArrayToSimulate)
 
-                    if (inputNode.actionData === undefined && inputNode.nextAction === undefined) throw "Input node in strategy graph need to be completed"
+                    //if (inputNode.actionData === undefined && inputNode.nextAction === undefined) throw "Input node in strategy graph need to be completed"
 
                     nextAction = inputNode.nextAction
                 }
@@ -70,6 +68,8 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
             console.log("shows simulatedRobot")
             console.log(simulatedRobot)
         } catch (e) {
+            const snackBar = { isOpen: true, severity: "error", message: e }
+            setSnackBar(snackBar)
             console.log(e)
         }
 
@@ -124,11 +124,11 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
         }
         else {
             const strategyNextNodes = strategyToSimulate.flow.filter(edgeStrategyAction => edgeStrategyAction.source === simulatedRobot.actual.strategyNode.id).map(node => node.target)
-            const strategyNextNodesButtons = strategyToSimulate.flow.filter(strategyNode => strategyNextNodes.includes(strategyNode.id) && strategyNode.data.id !== undefined ).map(strategyNode => {
+            const strategyNextNodesButtons = strategyToSimulate.flow.filter(strategyNode => strategyNextNodes.includes(strategyNode.id) && strategyNode.data.id !== undefined).map(strategyNode => {
                 return (
-                <Button variant="contained" onClick={e => handleActionIdButtonSimulator(e, strategyNode.id, undefined)}>
+                    <Button variant="contained" onClick={e => handleActionIdButtonSimulator(e, strategyNode.id, undefined)}>
                         {strategyNode.data.label}
-                </Button>
+                    </Button>
                 )
             })
 
@@ -159,7 +159,7 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
                     </Button>
                     {prev}
 
-                    {arrayNextMetaAction.length === 0 ? strategyNextNodesButtons : arrayNextMetaAction }
+                    {arrayNextMetaAction.length === 0 ? strategyNextNodesButtons : arrayNextMetaAction}
                 </div>
             )
         }
@@ -199,9 +199,10 @@ RobotSimulator.propTypes = {
     metaActionArrayToSimulate: PropTypes.array
 }
 
-const mapStateToProps = state => ({
-    monitoring: state.monitoring,
-    activeStepMonitoring: state.activeStepMonitoring
+const mapStateToProps = state => ({})
+
+const mapDispatchToProps = dispatch => ({
+    setSnackBar: snackBar => dispatch(setSnackBarCreator(snackBar))
 })
 
-export default connect(mapStateToProps)(RobotSimulator)
+export default connect(mapStateToProps, mapDispatchToProps)(RobotSimulator)

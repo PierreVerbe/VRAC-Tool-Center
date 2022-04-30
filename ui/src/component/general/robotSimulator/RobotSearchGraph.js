@@ -2,7 +2,7 @@ export const searchInputStrategy = (strategyToSimulate, metaActionArrayToSimulat
     // Check if there is input node in strategy
     const strategyInputNodes = strategyToSimulate.flow.filter(nodeStrategy => nodeStrategy.type === "input")
     if (strategyInputNodes.length === 0) {
-
+        throw "No input node found in strategy graph"
     }
     else {
         const strategyInputNode = strategyInputNodes[0]
@@ -11,7 +11,7 @@ export const searchInputStrategy = (strategyToSimulate, metaActionArrayToSimulat
         console.log("strategyInputNode.data.id")
         console.log(strategyInputNode.data.id)
 
-        if (strategyInputNode.data.id === undefined) return { actionData: undefined, nextAction: undefined }
+        if (strategyInputNode.data.id === undefined) throw "Input node in strategy graph need to be completed"
 
 
         const metaAction = metaActionArrayToSimulate.filter(itemMetaAction => itemMetaAction.name === strategyInputNode.data.label)[0]
@@ -97,4 +97,3 @@ export const searchNextStrategy = (strategyToSimulate, metaActionArrayToSimulate
     }
 
 }
-
