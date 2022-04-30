@@ -14,7 +14,8 @@ export const insertMonitoring = async (monitoring) => {
         })
         return result.data
     } catch (error) {
-        alert("The API is potentially down: " + error)
+        console.log("The API is potentially down: " + error)
+        //alert("The API is potentially down: " + error)
     }
 }
 
@@ -24,7 +25,8 @@ export const getAllMonitorings = async () => {
         const result = await Axios.get(baseURL + "/find/allMonitorings")
         return result.data
     } catch (error) {
-        alert("The API is potentially down: " + error)
+        console.log("The API is potentially down: " + error)
+        //alert("The API is potentially down: " + error)
         return []
     }
 }
@@ -42,7 +44,8 @@ export const getMonitoring = async (monitoring) => {
         })
         return result.data
     } catch (error) {
-        alert("The API is potentially down: " + error)
+        console.log("The API is potentially down: " + error)
+        //alert("The API is potentially down: " + error)
         return []
     }
 }
@@ -60,7 +63,8 @@ export const updateMonitoring = async (monitoring) => {
         })
         return result.data
     } catch (error) {
-        alert("The API is potentially down: " + error)
+        console.log("The API is potentially down: " + error)
+        //alert("The API is potentially down: " + error)
         return []
     }
 }
@@ -79,7 +83,8 @@ export const deleteMonitoring = async (monitoring) => {
         })
         return result.data
     } catch (error) {
-        alert("The API is potentially down: " + error)
+        console.log("The API is potentially down: " + error)
+        //alert("The API is potentially down: " + error)
         return []
     }
 }
