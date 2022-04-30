@@ -32,21 +32,22 @@ export const searchInputStrategy = (strategyToSimulate, metaActionArrayToSimulat
     }
 }
 
-export const searchNextStrategy = (strategyToSimulate, metaActionArrayToSimulate, simulatedRobot, nextNodeId) => {
+export const searchNextStrategy = (strategyToSimulate, metaActionArrayToSimulate, simulatedRobot, nextStrategyNodeId, nextMetaActionNodeId) => {
     console.log("actualStrategyNode")
-    console.log(strategyToSimulate)
-    console.log(metaActionArrayToSimulate)
+    //console.log(strategyToSimulate)
+    //console.log(metaActionArrayToSimulate)
     console.log(simulatedRobot)
 
-    console.log("nextNodeId")
-    console.log(nextNodeId)
+    console.log("nextMetaActionNodeId")
+    console.log(nextMetaActionNodeId)
 
     const actualStrategyNode = strategyToSimulate.flow.filter(nodeStrategy => nodeStrategy.id === simulatedRobot.actual.strategyNode.id)[0]
-    const actualMetaActionNode = metaActionArrayToSimulate.filter(itemMetaAction => itemMetaAction.name === simulatedRobot.actual.strategyNode.name)[0]
+    const actualMetaAction = metaActionArrayToSimulate.filter(itemMetaAction => itemMetaAction.name === simulatedRobot.actual.strategyNode.name)[0]
+    const actualMetaActionNode = actualMetaAction.flow.filter(nodeMetaAction => nodeMetaAction.id === simulatedRobot.actual.metaActionNode.id)[0]
 
     console.log("actualStrategyNode")
     console.log(actualStrategyNode)
-
+    console.log(actualMetaAction)
     console.log(actualMetaActionNode)
 
     // Check if End node in metaAction
@@ -56,26 +57,37 @@ export const searchNextStrategy = (strategyToSimulate, metaActionArrayToSimulate
     }
     else if (actualMetaActionNode.type === "output") {
         console.log("B")
-        const actualStrategyEdge = strategyToSimulate.flow.filter(edgeStrategy => edgeStrategy.source === actualStrategyNode.id)[0] // select one
+        //const actualStrategyEdge = strategyToSimulate.flow.filter(edgeStrategy => edgeStrategy.source === actualStrategyNode.id)[0] // select one
 
-        const nextStrategyNode = strategyToSimulate.flow.filter(nodeStrategy => nodeStrategy.id === actualStrategyEdge.target)[0]
+        const nextStrategyNode = strategyToSimulate.flow.filter(nodeStrategy => nodeStrategy.id === nextStrategyNodeId)[0]
         const nextMetaActionNode = metaActionArrayToSimulate
             .filter(itemMetaAction => itemMetaAction.name === nextStrategyNode.data.label)[0]
-            .flow
-            .filter(nodeMetaAction => nodeMetaAction.type === "input")
+            .flow.filter(nodeMetaAction => nodeMetaAction.type === "input")[0] // complete with not input
 
+
+
+
+
+        console.log("nextStrategyNode")
+        console.log(nextStrategyNode)
         console.log("nextMetaActionNode")
         console.log(nextMetaActionNode)
-        return { actionData: nextMetaActionNode.actionData, nextAction: undefined }
+
+        const nextAction = { strategyNode: { id: nextStrategyNode.id, name: nextStrategyNode.data.label }, metaActionNode: { id: nextMetaActionNode.id, name: nextMetaActionNode.data.label } }
+
+
+
+
+        return { actionData: nextMetaActionNode.actionData, nextAction: nextAction }
 
     }
     else {
         console.log("C")
-        const nextMetaActionEdge = actualMetaActionNode.flow.filter(edgeMetaAction => edgeMetaAction.source === simulatedRobot.actual.metaActionNode.id)[0] // select one
-        const nextMetaActionNode = actualMetaActionNode.flow.filter(nodeMetaAction => nodeMetaAction.id === nextNodeId)[0]
+        //const nextMetaActionEdge = actualMetaAction.flow.filter(edgeMetaAction => edgeMetaAction.source === simulatedRobot.actual.metaActionNode.id)[0] // select one
+        const nextMetaActionNode = actualMetaAction.flow.filter(nodeMetaAction => nodeMetaAction.id === nextMetaActionNodeId)[0]
 
-        console.log("nextMetaActionEdge")
-        console.log(nextMetaActionEdge)
+        //console.log("nextMetaActionEdge")
+        //console.log(nextMetaActionEdge)
         console.log("nextMetaActionNode")
         console.log(nextMetaActionNode)
 

@@ -16,13 +16,16 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
     const [pointerSimulator, setPointerSimulator] = React.useState({ x: undefined, y: undefined })
     const [simulatedRobot, setSimulatedRobot] = React.useState({ angle: DEFAULT_ROBOT_T, x: DEFAULT_ROBOT_X, y: DEFAULT_ROBOT_Y, actual: { strategyNode: { id: undefined, name: undefined }, metaActionNode: { id: undefined, name: undefined } }, previous: [], render: undefined })
 
+    console.log("strategyToSimulate")
+    console.log(strategyToSimulate)
+
     const handleCursorPosition = (e) => {
         const x = Math.round((e.clientY - e.target.offsetTop) * REDUCING_FACTOR)
         const y = Math.round((e.clientX - e.target.offsetLeft) * REDUCING_FACTOR)
         setPointerSimulator({ x: x, y: y })
     }
 
-    const handleActionIdButtonSimulator = (e, nextNodeId) => {
+    const handleActionIdButtonSimulator = (e, nextStrategyNodeId, nextMetaActionNodeId) => {
         let nextAction = { strategyNode: { id: undefined, name: undefined }, metaActionNode: { id: undefined, name: undefined } }
         let actionData = undefined
         let previous = simulatedRobot.previous
@@ -55,7 +58,7 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
 
             // Search next node 
             else {
-                const nextNode = searchNextStrategy(strategyToSimulate, metaActionArrayToSimulate, simulatedRobot, nextNodeId)
+                const nextNode = searchNextStrategy(strategyToSimulate, metaActionArrayToSimulate, simulatedRobot, nextStrategyNodeId, nextMetaActionNodeId)
                 nextAction = nextNode.nextAction
                 actionData = nextNode.actionData
                 result = RobotActionFactory(simulatedRobot, actionData)
@@ -113,22 +116,36 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
                         Reset
                     </Button>
 
-                    <Button variant="contained" onClick={e => handleActionIdButtonSimulator(e)} disabled={strategyToSimulate.flow.length === 0}>
+                    <Button variant="contained" onClick={e => handleActionIdButtonSimulator(e, undefined, undefined)} disabled={strategyToSimulate.flow.length === 0}>
                         Start
                     </Button>
                 </div>
             )
         }
         else {
+            const strategyNextNodes = strategyToSimulate.flow.filter(edgeStrategyAction => edgeStrategyAction.source === simulatedRobot.actual.strategyNode.id).map(node => node.target)
+            const strategyNextNodesButtons = strategyToSimulate.flow.filter(strategyNode => strategyNextNodes.includes(strategyNode.id) && strategyNode.data.id !== undefined ).map(strategyNode => {
+                return (
+                <Button variant="contained" onClick={e => handleActionIdButtonSimulator(e, strategyNode.id, undefined)}>
+                        {strategyNode.data.label}
+                </Button>
+                )
+            })
+
             const actualMetaActionNode = metaActionArrayToSimulate.filter(itemMetaAction => itemMetaAction.name === simulatedRobot.actual.strategyNode.name)[0]
             const arrayNextMetaActionId = actualMetaActionNode.flow.filter(edgeMetaAction => edgeMetaAction.source === simulatedRobot.actual.metaActionNode.id).map(node => node.target)
             const arrayNextMetaAction = actualMetaActionNode.flow.filter(node => arrayNextMetaActionId.includes(node.id)).map(node => {
                 return (
-                    <Button variant="contained" onClick={e => handleActionIdButtonSimulator(e, node.id)}>
+                    <Button variant="contained" onClick={e => handleActionIdButtonSimulator(e, undefined, node.id)}>
                         {node.data.label}
                     </Button>
                 )
             })
+
+            console.log("strategyNextNodes")
+            console.log(strategyNextNodes)
+            console.log("strategyNextNodesButtons")
+            console.log(strategyNextNodesButtons)
 
             const prev =
                 <Button variant="contained" onClick={e => handlePreviousAction(e)}>
@@ -142,7 +159,7 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
                     </Button>
                     {prev}
 
-                    {arrayNextMetaAction}
+                    {arrayNextMetaAction.length === 0 ? strategyNextNodesButtons : arrayNextMetaAction }
                 </div>
             )
         }
