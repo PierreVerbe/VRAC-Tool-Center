@@ -17,8 +17,8 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, activeS
     const [simulatedRobot, setSimulatedRobot] = React.useState({ angle: DEFAULT_ROBOT_T, x: DEFAULT_ROBOT_X, y: DEFAULT_ROBOT_Y, actual: { strategyNode: { id: undefined, name: undefined }, metaActionNode: { id: undefined, name: undefined } }, previous: [], render: undefined })
 
     const handleCursorPosition = (e) => {
-        const x = Math.round((e.clientY - e.nativeEvent.originalTarget.offsetTop) * REDUCING_FACTOR)
-        const y = Math.round((e.clientX - e.nativeEvent.originalTarget.offsetLeft) * REDUCING_FACTOR)
+        const x = Math.round((e.clientY - e.target.offsetTop) * REDUCING_FACTOR)
+        const y = Math.round((e.clientX - e.target.offsetLeft) * REDUCING_FACTOR)
         setPointerSimulator({ x: x, y: y })
     }
 
