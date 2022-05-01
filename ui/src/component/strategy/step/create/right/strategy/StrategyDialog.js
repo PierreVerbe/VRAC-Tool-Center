@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { connect } from "react-redux"
 import { setStrategyCreatorActionCreator, setOpenDialogNodeStrategyActionCreator } from "../../../../../../action/strategyAction"
 import PropTypes from 'prop-types'
@@ -9,7 +9,6 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import TextField from '@material-ui/core/TextField'
 import ClearIcon from '@material-ui/icons/Clear'
 import PublishIcon from '@material-ui/icons/Publish'
 import Typography from "@material-ui/core/Typography"
@@ -123,11 +122,13 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, openDialog
         setStrategyCreator({...strategyCreator, flow: updatedStrategyCreatorFlow})
     }
 
+    /*
     const onTextLabelChange = (event) => {
         const updatedStrategyCreatorFlow = strategyCreator.flow.map(nodeOrEdge => nodeOrEdge.isSelected === true ? {...nodeOrEdge, data: {label: event.target.value}} : nodeOrEdge)
         const updatedStrategyCreator = { ...strategyCreator, flow: updatedStrategyCreatorFlow }
         setStrategyCreator(updatedStrategyCreator)
     }
+    */
 
     const dialogNodeOrEdge = () => {
         const nodeOrEdge = strategyCreator.flow.filter(nodeOrEdge => nodeOrEdge.isSelected === true)[0]

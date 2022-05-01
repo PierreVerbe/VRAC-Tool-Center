@@ -1,8 +1,8 @@
-import React, { useRef, useEffect } from "react"
+import React from "react"
 import { connect } from "react-redux"
 import Typography from '@material-ui/core/Typography'
 
-import { DEFAULT_ROBOT_X, DEFAULT_ROBOT_Y, DEFAULT_ROBOT_T, TABLE_WIDTH, TABLE_HEIGHT, REDUCING_FACTOR, ROBOT_HEIGHT, RobotActionFactory } from "./RobotActionFactory"
+import { DEFAULT_ROBOT_X, DEFAULT_ROBOT_Y, DEFAULT_ROBOT_T, TABLE_WIDTH, TABLE_HEIGHT, REDUCING_FACTOR, RobotActionFactory } from "./RobotActionFactory"
 import FieldImage from "./../../../resources/image/AgeOfBots/fondTable22.jpg"
 import RobotOpenImage from "./../../../resources/image/Robot/robot_open.png"
 
@@ -37,13 +37,9 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, setSnac
                 // Search first strategy node & first meta action
                 if (simulatedRobot.actual.strategyNode.id === undefined && simulatedRobot.actual.metaActionNode.id === undefined) {
                     inputNode = searchInputStrategy(strategyToSimulate, metaActionArrayToSimulate)
-
-                    //if (inputNode.actionData === undefined && inputNode.nextAction === undefined) throw "Input node in strategy graph need to be completed"
-
                     nextAction = inputNode.nextAction
                 }
                 else {
-                    console.log("hello ")
                     inputNode = searchNextStrategy(strategyToSimulate, metaActionArrayToSimulate, simulatedRobot)
                     nextAction = inputNode.nextAction
                 }
@@ -65,10 +61,8 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, setSnac
             }
 
             setSimulatedRobot({ ...simulatedRobot, x: result.x, y: result.y, angle: result.t, actual: nextAction, previous: previous, render: result.render })
-            console.log("shows simulatedRobot")
-            console.log(simulatedRobot)
         } catch (e) {
-            const snackBar = { isOpen: true, severity: "error", message: e }
+            const snackBar = { isOpen: true, severity: "error", message: e.message }
             setSnackBar(snackBar)
             console.log(e)
         }
@@ -76,16 +70,8 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, setSnac
     }
 
     const handlePreviousAction = (e) => {
-        console.log("simulatedRobot")
-        console.log(simulatedRobot)
-
         let arrayPrevious = simulatedRobot.previous
         const previousAction = arrayPrevious.pop()
-
-
-        console.log("previousAction")
-        console.log(previousAction)
-        console.log(arrayPrevious)
 
         setSimulatedRobot({ ...simulatedRobot, x: previousAction.x, y: previousAction.y, angle: previousAction.angle, actual: previousAction.action, previous: arrayPrevious, render: previousAction.render })
     }
@@ -102,12 +88,9 @@ const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, setSnac
     const controlSimulator = () => {
         /*
             previous
-
             next
-
             reset
         */
-
 
         if (simulatedRobot.actual.strategyNode.name === undefined && simulatedRobot.actual.metaActionNode.name === undefined) {
             return (

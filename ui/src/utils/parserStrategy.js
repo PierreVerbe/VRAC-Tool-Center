@@ -26,8 +26,8 @@ class parserStrategy {
         if (numberSource === undefined) transitionMap.set(action.tag, 0)
 
         const numberTarget = transitionMap.get(transition.destination)
-        if (numberTarget === undefined) transitionMap.set(transition.destination, 1)
-        else transitionMap.set(transition.destination, numberTarget + 1)
+        if (numberTarget === undefined) return transitionMap.set(transition.destination, 1)
+        else return transitionMap.set(transition.destination, numberTarget + 1)
       })
 
       return { id: nodeId, type: type, position: position, data: data, isSelected: false }
@@ -49,7 +49,7 @@ class parserStrategy {
       })
 
       if (action.transitions.length !== 0) return edges
-
+      else return undefined
     })
       .filter(action => action !== undefined)
 
@@ -73,7 +73,7 @@ class parserStrategy {
         const nodeId = `Node_${nodeIdNumber++}`
         const type2 = action.transitions.length === 0 ? "output" : "default"
         const data = { label: action.tag }
-        const { ['action']: removedProperty, ...partialActionData } = action.parameters
+        const { 'action': removedProperty, ...partialActionData } = action.parameters
         const actionData = { ...partialActionData, type: action.parameters.action }
 
         nodeTagIdMap.set(action.tag, nodeId)
@@ -82,8 +82,8 @@ class parserStrategy {
           if (numberSource === undefined) transitionMap.set(action.tag, 0)
 
           const numberTarget = transitionMap.get(transition.destination)
-          if (numberTarget === undefined) transitionMap.set(transition.destination, 1)
-          else transitionMap.set(transition.destination, numberTarget + 1)
+          if (numberTarget === undefined) return transitionMap.set(transition.destination, 1)
+          else return transitionMap.set(transition.destination, numberTarget + 1)
         })
 
         return { id: nodeId, type: type2, position: position, data: data, actionData: actionData, isSelected: false }
@@ -105,6 +105,7 @@ class parserStrategy {
         })
 
         if (action.transitions.length !== 0) return edges
+        else return undefined
       })
         .filter(action => action !== undefined)
 

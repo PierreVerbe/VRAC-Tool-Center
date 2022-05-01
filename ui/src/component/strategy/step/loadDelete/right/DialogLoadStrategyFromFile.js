@@ -1,7 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -14,7 +13,7 @@ import { DropzoneArea } from 'material-ui-dropzone'
 import ClearIcon from '@material-ui/icons/Clear'
 import PublishIcon from '@material-ui/icons/Publish'
 
-import { setStrategyLoaderActionCreator, setFileUploadedActionCreator, insertStrategyActionCreator, setStrategyActionCreator, setOpenDialogStrategyActionCreator } from "../../../../../action/strategyAction"
+import { setStrategyLoaderActionCreator, setFileUploadedActionCreator, setOpenDialogStrategyActionCreator } from "../../../../../action/strategyAction"
 
 
 const DialogLoadStrategyFromFile = ({ fileUploaded, setFileUploaded, strategyLoader, setStrategyLoader, strategyCreator, setStrategy, insertStrategy, openDialogStrategy, setOpenDialogStrategy }) => {
