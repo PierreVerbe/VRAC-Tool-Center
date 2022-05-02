@@ -54,7 +54,7 @@ const metaActionActionType = ["ActivateBackGripperAutoGrab", "BackGrippersDropCe
     "BottomArmsInDouble", "BottomArmsInSingle", "BottomArmsOutDouble", "BottomArmsOutSingle", "BottomArmRetrieveDouble", "CalculateOdometry", "CheckStockage",
     "End", "Homing", "Line", "Rotate", "SetDetectionRange",
     "SetOdometry", "TopArmGaleryBottom", "TopArmGaleryTop", "TopArmGetSamples", "TopArmGetSingleSample", "TopArmIdle",
-    "TopArmSingleStockage", "TopArmPreStockage", "TopArmPreStockage2","TopArmStockage", "TopArmStockage2", "Wait", "XYT"]
+    "TopArmSingleStockage", "TopArmPreStockage", "TopArmPreStockage2", "TopArmStockage", "TopArmStockage2", "Wait", "XYT"]
 
 const configMetaActionTransition = configData.metaAction.transition
 
@@ -120,7 +120,8 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
     }
 
     const listEdgesToDelete = () => {
-        const metaActionActionSelected = getSelectedMetaAction.flow.filter(element => element.isSelected === true).at(-1)
+        const metaActionActionFiltered = getSelectedMetaAction.flow.filter(element => element.isSelected === true)
+        const metaActionActionSelected = metaActionActionFiltered[metaActionActionFiltered.length - 1]
 
         const edges = getSelectedMetaAction.flow.filter(element => element.id.startsWith("Edge"))
         const filteredEdges = edges.filter(element => metaActionActionSelected.id === element.source || metaActionActionSelected.id === element.target)

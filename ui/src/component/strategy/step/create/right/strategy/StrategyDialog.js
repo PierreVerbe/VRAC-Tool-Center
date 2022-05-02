@@ -43,7 +43,8 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, setStrateg
     }
 
     const listEdgesToDelete = () => {
-        const selectedStrategyNode = strategyCreator.flow.filter(nodeOrEdge => nodeOrEdge.isSelected === true).at(-1)
+        const strategyCreatorFiltered = strategyCreator.flow.filter(nodeOrEdge => nodeOrEdge.isSelected === true)
+        const selectedStrategyNode = strategyCreatorFiltered[strategyCreatorFiltered.length - 1]
 
         const edges = strategyCreator.flow.filter(element => element.id.startsWith("Edge"))
         const filteredEdges = edges.filter(edge => selectedStrategyNode.id === edge.source || selectedStrategyNode.id === edge.target)
