@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import Typography from '@material-ui/core/Typography'
 
 import { DEFAULT_ROBOT_X, DEFAULT_ROBOT_Y, DEFAULT_ROBOT_T, TABLE_WIDTH, TABLE_HEIGHT, REDUCING_FACTOR, RobotActionFactory } from "./RobotActionFactory"
-import FieldImage from "./../../../resources/image/AgeOfBots/fondTable22.jpg"
+import FieldImage from "./../../../resources/image/AgeOfBots/fondTable22v2.jpg"
 import RobotOpenImage from "./../../../resources/image/Robot/robot_open.png"
 
 import { searchInputStrategy, searchNextStrategy } from "./RobotSearchGraph"
