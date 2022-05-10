@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography"
 
 import { setMetaActionArrayActionCreator } from "../../../../action/strategyAction"
 
-const BackGrippersDropLeftAction = ({ action, metaActionArray, setMetaActionArray }) => {
+const CheckStockageAction = ({ action, metaActionArray, setMetaActionArray }) => {
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
     const getSelectedNode = getSelectedMetaAction.flow.filter(nodeOrEdge => nodeOrEdge.id === action.id)[0]
     const defaultActionData = { type: action.actionData.type }
@@ -29,7 +29,7 @@ const BackGrippersDropLeftAction = ({ action, metaActionArray, setMetaActionArra
     )
 }
 
-BackGrippersDropLeftAction.propTypes = {
+CheckStockageAction.propTypes = {
     action: PropTypes.object.isRequired
 }
 
@@ -41,4 +41,4 @@ const mapDispatchToProps = dispatch => ({
     setMetaActionArray: metaActionArray => dispatch(setMetaActionArrayActionCreator(metaActionArray))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(BackGrippersDropLeftAction)
+export default connect(mapStateToProps, mapDispatchToProps)(CheckStockageAction)

@@ -2,40 +2,46 @@ import React from "react"
 import { connect } from "react-redux"
 
 import * as JSZip from 'jszip'
-import { saveAs } from 'file-saver';
+import { saveAs } from 'file-saver'
 
-import Button from '@material-ui/core/Button';
-import parserStrategy from '../../../../../util/parserStrategy';
+import Button from '@material-ui/core/Button'
+import parserGraph from './../../../../../utils/parserGraph'
 import RobotSimulator from "./../../../../general/robotSimulator/RobotSimulator"
 
-const StrategySimulator = ({strategyCreator, metaActionArray}) => {
-    const handleParser = () => {
-        const contentParser = parserStrategy.parse(strategyCreator, metaActionArray)
-        console.log(contentParser)
+import { setStrategyCreatorActionCreator, setMetaActionArrayActionCreator } from "./../../../../../action/strategyAction"
 
-        var zip = new JSZip();
+const StrategySimulator = ({ strategyCreator, setStrategyCreator, metaActionArray,setMetaActionArray }) => {
+    const handleParseStrategy = () => {
+        const contentParser = parserGraph.parse(strategyCreator, metaActionArray)
+
+        var zip = new JSZip()
         zip.file("strategy.json", JSON.stringify(contentParser.strategy, null, ' '))
         contentParser.metaActions.forEach(metaAction => {
-            zip.file(metaAction.name + ".json", JSON.stringify(metaAction, null, ' '));
-        });
-        
-        zip.generateAsync({type:"blob"})
-        .then(function(content) {
-        // see FileSaver.js
-        saveAs(content, contentParser.strategy.name + ".zip");
-});
+            zip.file(metaAction.name + ".json", JSON.stringify(metaAction, null, ' '))
+        })
+
+        zip.generateAsync({ type: "blob" })
+            .then(function (content) {
+                saveAs(content, contentParser.strategy.name + ".zip")
+            })
+    }
+
+    const handleClearStrategy = () => {
+        setStrategyCreator({...strategyCreator, name: "Strategy name", flow: []})
+        setMetaActionArray([])
     }
 
     return (
         <div >
-            <p>Simulator here</p>
-            <Button variant="contained"
-            onClick={handleParser}
-            >
+            <Button variant="contained" onClick={handleParseStrategy}>
                 Get Strategy
             </Button>
 
-            <RobotSimulator />
+            <Button variant="contained" onClick={handleClearStrategy}>
+                Clear Strategy
+            </Button>
+
+            <RobotSimulator strategyToSimulate={strategyCreator} metaActionArrayToSimulate={metaActionArray}/>
         </div>
     )
 }
@@ -45,4 +51,9 @@ const mapStateToProps = state => ({
     metaActionArray: state.metaActionArray
 })
 
-export default connect(mapStateToProps)(StrategySimulator)
+const mapDispatchToProps = dispatch => ({
+    setStrategyCreator: strategyCreator => dispatch(setStrategyCreatorActionCreator(strategyCreator)),
+    setMetaActionArray: metaActionArray => dispatch(setMetaActionArrayActionCreator(metaActionArray))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(StrategySimulator)

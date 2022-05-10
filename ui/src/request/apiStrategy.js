@@ -7,15 +7,13 @@ export const insertStrategy = async (strategy) => {
     try {
         const result = await Axios.post(baseURL + "/insert/strategy",
         {   
-           name: strategy.name,
-           description: strategy.description,
-           sender: strategy.sender,
-           strategy: strategy.monitoring,
-           version: strategy.version
+           strategy: strategy.strategy,
+           metaActions: strategy.metaActions
         })
         return result.data
     } catch (error) {
-        alert("The API is potentially down: " + error)
+        console.log("The API is potentially down: " + error)
+        //alert("The API is potentially down: " + error)
     }
 }
 
@@ -25,7 +23,8 @@ export const getAllStrategies = async () => {
         const result = await Axios.get(baseURL + "/find/allStrategies")
         return result.data
     } catch (error) {
-        alert("The API is potentially down: " + error)
+        console.log("The API is potentially down: " + error)
+        //alert("The API is potentially down: " + error)
         return []
     }
 }
@@ -44,7 +43,8 @@ export const getStrategy = async (strategy) => {
         })
         return result.data
     } catch (error) {
-        alert("The API is potentially down: " + error)
+        console.log("The API is potentially down: " + error)
+        //alert("The API is potentially down: " + error)
         return []
     }
 }
@@ -63,7 +63,8 @@ export const updateStrategy = async (strategy) => {
         })
         return result.data
     } catch (error) {
-        alert("The API is potentially down: " + error)
+        console.log("The API is potentially down: " + error)
+        //alert("The API is potentially down: " + error)
         return []
     }
 }
@@ -83,7 +84,8 @@ export const deleteStrategy = async (strategy) => {
         })
         return result.data
     } catch (error) {
-        alert("The API is potentially down: " + error)
+        console.log("The API is potentially down: " + error)
+        //alert("The API is potentially down: " + error)
         return []
     }
 }

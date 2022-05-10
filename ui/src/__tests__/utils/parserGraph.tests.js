@@ -1,35 +1,16 @@
-import parserStrategy from "./../../utils/parserStrategy"
+import parserGraph from "./../../utils/parserGraph"
 
-describe("Test parserStrategy methods", () => {
-  test("Test of the parseStrategyCreator method", () => {
+describe("Test parserGraph methods", () => {
+  test("Test of the parseStrategyGraph method", () => {
     const toParse = {
-      name: "Strategy name",
-      actions: [
-        {
-          tag: "New meta Action MetaAction_0",
-          transitions: [
-            { destination: "New meta Action MetaAction_1", type: "Jack" },
-          ],
-        },
-        {
-          tag: "New meta Action MetaAction_1",
-          transitions: [
-            { destination: "New meta Action MetaAction_2", type: "Failed" },
-          ],
-        },
-        { tag: "New meta Action MetaAction_2", transitions: [] },
-      ],
-    }
-
-    const expectedResult = {
       name: "Strategy name",
       flow: [
         {
           id: "Node_0",
           type: "input",
           position: {
-            x: 100,
-            y: 0,
+            x: 190,
+            y: 30.98333740234375,
           },
           data: {
             label: "New meta Action MetaAction_0",
@@ -41,8 +22,8 @@ describe("Test parserStrategy methods", () => {
           id: "Node_1",
           type: "default",
           position: {
-            x: 100,
-            y: 100,
+            x: 62,
+            y: 132.98333740234375,
           },
           data: {
             label: "New meta Action MetaAction_1",
@@ -54,8 +35,8 @@ describe("Test parserStrategy methods", () => {
           id: "Node_2",
           type: "output",
           position: {
-            x: 100,
-            y: 200,
+            x: 251,
+            y: 227.98333740234375,
           },
           data: {
             label: "New meta Action MetaAction_2",
@@ -82,15 +63,236 @@ describe("Test parserStrategy methods", () => {
           isSelected: false,
         },
       ],
-      reactFlowInstance: null,
+      reactFlowInstance: {},
     }
 
-    const result = parserStrategy.parseStrategyCreator(toParse)
+    const expectedResult = {
+      name: "Strategy name",
+      actions: [
+        {
+          tag: "New meta Action MetaAction_0",
+          transitions: [
+            { destination: "New meta Action MetaAction_1", type: "Jack" },
+          ],
+        },
+        {
+          tag: "New meta Action MetaAction_1",
+          transitions: [
+            { destination: "New meta Action MetaAction_2", type: "Failed" },
+          ],
+        },
+        { tag: "New meta Action MetaAction_2", transitions: [] },
+      ],
+    }
+
+    const result = parserGraph.parseStrategyGraph(toParse)
     expect(result).toStrictEqual(expectedResult)
   })
 
-  test("Test of the parseMetaActionArray method", () => {
+  test("Test of the parseMetaActionGraph method", () => {
     const toParse = [
+      {
+        id: "MetaAction_0",
+        name: "New meta Action MetaAction_0",
+        flow: [
+          {
+            id: "Node_0",
+            type: "input",
+            position: {
+              x: 116,
+              y: 67.25,
+            },
+            data: {
+              label: "Hello",
+            },
+            actionData: {
+              type: "Bezier",
+              chained: true,
+              radius: 999,
+              x: 99,
+              y: 9,
+              speed: "FUCKING_SLOW",
+            },
+            isSelected: false,
+          },
+          {
+            id: "Node_1",
+            type: "default",
+            position: {
+              x: 141,
+              y: 191.25,
+            },
+            data: {
+              label: "World",
+            },
+            actionData: {
+              type: "Homing",
+              forward: true,
+              side: true,
+            },
+            isSelected: false,
+          },
+          {
+            id: "Node_2",
+            type: "output",
+            position: {
+              x: 144,
+              y: 303.25,
+            },
+            data: {
+              label: "!",
+            },
+            actionData: {
+              type: "End",
+            },
+            isSelected: false,
+          },
+          {
+            id: "Edge_0",
+            source: "Node_0",
+            target: "Node_1",
+            type: "smart",
+            arrowHeadType: "arrow",
+            label: "NoEvent",
+            isSelected: false,
+          },
+          {
+            id: "Edge_1",
+            source: "Node_1",
+            target: "Node_2",
+            type: "smart",
+            arrowHeadType: "arrow",
+            label: "AckServo",
+            isSelected: false,
+          },
+        ],
+        reactFlowInstance: {},
+        isSelected: false,
+      },
+      {
+        id: "MetaAction_1",
+        name: "New meta Action MetaAction_1",
+        flow: [
+          {
+            id: "Node_0",
+            type: "input",
+            position: {
+              x: 140,
+              y: 89.25,
+            },
+            data: {
+              label: "This",
+            },
+            actionData: {
+              type: "Line",
+              forward: true,
+              distance: 300,
+              speed: "VERY_SLOW",
+            },
+            isSelected: false,
+          },
+          {
+            id: "Node_1",
+            type: "default",
+            position: {
+              x: 187,
+              y: 206.25,
+            },
+            data: {
+              label: "Is",
+            },
+            actionData: {
+              type: "End",
+            },
+            isSelected: false,
+          },
+          {
+            id: "Node_2",
+            type: "output",
+            position: {
+              x: 170,
+              y: 307.25,
+            },
+            data: {
+              label: "A test",
+            },
+            actionData: {
+              type: "End",
+            },
+            isSelected: false,
+          },
+          {
+            id: "Edge_0",
+            source: "Node_0",
+            target: "Node_1",
+            type: "smart",
+            arrowHeadType: "arrow",
+            label: "",
+            isSelected: false,
+          },
+          {
+            id: "Edge_1",
+            source: "Node_1",
+            target: "Node_2",
+            type: "smart",
+            arrowHeadType: "arrow",
+            label: "",
+            isSelected: false,
+          },
+        ],
+        reactFlowInstance: {},
+        isSelected: false,
+      },
+      {
+        id: "MetaAction_2",
+        name: "New meta Action MetaAction_2",
+        flow: [
+          {
+            id: "Node_0",
+            type: "input",
+            position: {
+              x: 174,
+              y: 163.25,
+            },
+            data: {
+              label: "Start",
+            },
+            actionData: {
+              type: "CalculateOdometry",
+            },
+            isSelected: false,
+          },
+          {
+            id: "Node_1",
+            type: "output",
+            position: {
+              x: 167,
+              y: 261.25,
+            },
+            data: {
+              label: "Stop",
+            },
+            actionData: {
+              type: "End",
+            },
+            isSelected: false,
+          },
+          {
+            id: "Edge_0",
+            source: "Node_0",
+            target: "Node_1",
+            type: "smart",
+            arrowHeadType: "arrow",
+            label: "Timeout",
+            isSelected: false,
+          },
+        ],
+        reactFlowInstance: {},
+        isSelected: false,
+      },
+    ]
+
+    const expectedResult = [
       {
         name: "New meta Action MetaAction_0",
         actions: [
@@ -123,7 +325,6 @@ describe("Test parserStrategy methods", () => {
             transitions: [{ destination: "Is", type: "" }],
           },
           {
-
             parameters: { action: "End" },
             tag: "Is",
             transitions: [{ destination: "A test", type: "" }],
@@ -144,209 +345,7 @@ describe("Test parserStrategy methods", () => {
       },
     ]
 
-    const expectedResult = [
-      {
-        id: "MetaAction_0",
-        name: "New meta Action MetaAction_0",
-        flow: [
-          {
-            id: "Node_0",
-            type: "input",
-            position: {
-              x: 100,
-              y: 0,
-            },
-            data: {
-              label: "Hello",
-            },
-            actionData: {
-              type: "Bezier",
-              chained: true,
-              radius: 999,
-              x: 99,
-              y: 9,
-              speed: "FUCKING_SLOW",
-            },
-            isSelected: false,
-          },
-          {
-            id: "Node_1",
-            type: "default",
-            position: {
-              x: 100,
-              y: 100,
-            },
-            data: {
-              label: "World",
-            },
-            actionData: {
-              type: "Homing",
-              forward: true,
-              side: true,
-            },
-            isSelected: false,
-          },
-          {
-            id: "Node_2",
-            type: "output",
-            position: {
-              x: 100,
-              y: 200,
-            },
-            data: {
-              label: "!",
-            },
-            actionData: {
-              type: "End",
-            },
-            isSelected: false,
-          },
-          {
-            id: "Edge_0",
-            source: "Node_0",
-            target: "Node_1",
-            type: "smart",
-            arrowHeadType: "arrow",
-            label: "NoEvent",
-            isSelected: false,
-          },
-          {
-            id: "Edge_1",
-            source: "Node_1",
-            target: "Node_2",
-            type: "smart",
-            arrowHeadType: "arrow",
-            label: "AckServo",
-            isSelected: false,
-          },
-        ],
-        reactFlowInstance: null,
-        isSelected: false,
-      },
-      {
-        id: "MetaAction_1",
-        name: "New meta Action MetaAction_1",
-        flow: [
-          {
-            id: "Node_0",
-            type: "input",
-            position: {
-              x: 100,
-              y: 0,
-            },
-            data: {
-              label: "This",
-            },
-            actionData: {
-              type: "Line",
-              forward: true,
-              distance: 300,
-              speed: "VERY_SLOW",
-            },
-            isSelected: false,
-          },
-          {
-            id: "Node_1",
-            type: "default",
-            position: {
-              x: 100,
-              y: 100,
-            },
-            data: {
-              label: "Is",
-            },
-            actionData: {
-              type: "End",
-            },
-            isSelected: false,
-          },
-          {
-            id: "Node_2",
-            type: "output",
-            position: {
-              x: 100,
-              y: 200,
-            },
-            data: {
-              label: "A test",
-            },
-            actionData: {
-              type: "End",
-            },
-            isSelected: false,
-          },
-          {
-            id: "Edge_0",
-            source: "Node_0",
-            target: "Node_1",
-            type: "smart",
-            arrowHeadType: "arrow",
-            label: "",
-            isSelected: false,
-          },
-          {
-            id: "Edge_1",
-            source: "Node_1",
-            target: "Node_2",
-            type: "smart",
-            arrowHeadType: "arrow",
-            label: "",
-            isSelected: false,
-          },
-        ],
-        reactFlowInstance: null,
-        isSelected: false,
-      },
-      {
-        id: "MetaAction_2",
-        name: "New meta Action MetaAction_2",
-        flow: [
-          {
-            id: "Node_0",
-            type: "input",
-            position: {
-              x: 100,
-              y: 0,
-            },
-            data: {
-              label: "Start",
-            },
-            actionData: {
-              type: "CalculateOdometry",
-            },
-            isSelected: false,
-          },
-          {
-            id: "Node_1",
-            type: "output",
-            position: {
-              x: 100,
-              y: 100,
-            },
-            data: {
-              label: "Stop",
-            },
-            actionData: {
-              type: "End",
-            },
-            isSelected: false,
-          },
-          {
-            id: "Edge_0",
-            source: "Node_0",
-            target: "Node_1",
-            type: "smart",
-            arrowHeadType: "arrow",
-            label: "Timeout",
-            isSelected: false,
-          },
-        ],
-        reactFlowInstance: null,
-        isSelected: false,
-      },
-    ]
-
-    const result = parserStrategy.parseMetaActionArray(toParse)
+    const result = parserGraph.parseMetaActionGraph(toParse)
     expect(result).toStrictEqual(expectedResult)
   })
 })

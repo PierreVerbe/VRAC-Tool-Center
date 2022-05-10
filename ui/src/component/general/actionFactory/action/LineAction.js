@@ -13,12 +13,14 @@ import { setMetaActionArrayActionCreator } from "../../../../action/strategyActi
 import configData from "./../../../../resources/config.json"
 
 const LineAction = ({ action, metaActionArray, setMetaActionArray }) => {
-    const ACTION = "Line"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
+    const getSelectedNode = getSelectedMetaAction.flow.filter(nodeOrEdge => nodeOrEdge.id === action.id)[0]
     const defaultActionData = { type: action.actionData.type, distance: 0, forward: false, chained: false, speed: "" }
 
     useEffect(() => {
-        if (action.actionData.type !== ACTION) {
+        const hasAllFields = Object.keys(defaultActionData).map(key => key in (getSelectedNode.actionData)).reduce((acc, next) => acc && next)
+
+        if (! hasAllFields) {
             const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ?
                 { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: defaultActionData } : nodeOrEdge) } :
                 metaAction))
@@ -67,7 +69,7 @@ const LineAction = ({ action, metaActionArray, setMetaActionArray }) => {
                     label="Enable chained"
                 />
 
-                <TextField id="standard-basic" label="distance" type="number" inputProps={{ min: -3000, max: 3000 }} defaultValue={action.actionData.distance} onChange={handleChangeNumber} name="distance" />
+                <TextField id="standard-basic" label="distance" type="number" inputProps={{ min: -3000, max: 3000 }} value={action.actionData.distance} onChange={handleChangeNumber} name="distance" />
                 
                 <Select
                     labelId="demo-simple-select-label"

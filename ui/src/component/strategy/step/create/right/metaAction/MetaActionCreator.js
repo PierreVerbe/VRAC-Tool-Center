@@ -40,7 +40,7 @@ const MetaActionCreator = ({ metaActionArray, openDialogMetaAction, setMetaActio
   const classes = useStyles()
 
   useEffect(() => {
-    const startMetaAction = metaActionArray.at(-1) // Get last metaAction
+    const startMetaAction = metaActionArray[metaActionArray.length - 1] // Get last metaAction
 
     idMetaAction = startMetaAction === undefined ? 0 : parseInt(startMetaAction.id.split("_")[1]) + 1
     // eslint-disable-next-line

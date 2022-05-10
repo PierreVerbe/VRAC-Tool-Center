@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import { columns, TableStrategyHead } from "./TableStrategyHead"
 import TableStrategySearchBar from "./TableStrategySearchBar"
-import { setIdRowStrategyTableActionCreator, setStrategyActionCreator } from "../../../../../action/strategyAction"
+import { setIdRowStrategyTableActionCreator, setStrategyLoaderActionCreator } from "../../../../../action/strategyAction"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,7 +42,7 @@ const rowCounter = (rows) => {
   }
 }
 
-const TableStrategy = ({ idRowStrategyTable, setIdRowStrategyTable, allStrategies, setStrategy }) => {
+const TableStrategy = ({ idRowStrategyTable, setIdRowStrategyTable, allStrategies, setStrategyLoader }) => {
   const classes = useStyles()
 
   const rows = allStrategies
@@ -52,11 +52,12 @@ const TableStrategy = ({ idRowStrategyTable, setIdRowStrategyTable, allStrategie
   const handleClick = (event, id) => {
     if (idRowStrategyTable === null) {
       setIdRowStrategyTable(id)
-      setStrategy(allStrategies.filter(row => row.id === id)[0])
+      setStrategyLoader(allStrategies.filter(row => row.id === id)[0])
     }
+
     else if (idRowStrategyTable === id) {
       setIdRowStrategyTable(null)
-      setStrategy({})
+      setStrategyLoader({})
     }
   }
 
@@ -91,11 +92,20 @@ const TableStrategy = ({ idRowStrategyTable, setIdRowStrategyTable, allStrategie
 
                   {columns.map((column) => {
                     const value = row[column.id]
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
-                      </TableCell>
-                    )
+                    if (column.id === "name") {
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format && typeof value === 'number' ? column.format(value) : row["strategy"].name}
+                        </TableCell>
+                      )
+                    }
+                    else {
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format && typeof value === 'number' ? column.format(value) : value}
+                        </TableCell>
+                      )
+                    }
                   })}
                 </TableRow>
               )
@@ -118,7 +128,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setIdRowStrategyTable: idRowStrategyTable => dispatch(setIdRowStrategyTableActionCreator(idRowStrategyTable)),
-  setStrategy: strategy => dispatch(setStrategyActionCreator(strategy))
+  setStrategyLoader: strategy => dispatch(setStrategyLoaderActionCreator(strategy))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableStrategy)

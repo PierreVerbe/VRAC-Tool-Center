@@ -26,9 +26,10 @@
             "AckMoveXYT",
             "AckEndMove",
             "AckServo",
-            "Stock1_Filed",
-            "Stock2_Filed",
-            "Stock3_Filed"
+            "ToStockage1",
+            "ToStockage2",
+            "ToStockage3",
+            "AckConfig"
         ],
         "speed": {
             "values": [

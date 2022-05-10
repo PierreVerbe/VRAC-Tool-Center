@@ -49,12 +49,12 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const metaActionActionType = ["BackGrippersDropCenter", "BackGrippersDropLeft", "BackGrippersDropRight", "BackGrippersGrabCenter", "BackGrippersGrabLeft",
-    "BackGrippersGrabRight", "BackGrippersIn", "BackGrippersOut", "Bezier", "BottomArmsInDouble",
-    "BottomArmsInSingle", "BottomArmsOutDouble", "BottomArmsOutSingle", "CalculateOdometry", "End",
-    "Homing", "Line", "Rotate", "TopArmGaleryBottom", "TopArmGaleryTop",
-    "TopArmGetSamples", "TopArmGetSingleSample", "TopArmSingleStockage", "TopArmStockage", "Wait",
-    "XYT"]
+const metaActionActionType = ["ActivateBackGripperAutoGrab", "BackGrippersDropCenter", "BackGrippersDropLeft", "BackGrippersDropRight", "BackGrippersGrabCenter",
+    "BackGrippersGrabLeft", "BackGrippersGrabRight", "BackGrippersIn", "BackGrippersOut", "Bezier",
+    "BottomArmsInDouble", "BottomArmsInSingle", "BottomArmsOutDouble", "BottomArmsOutSingle", "BottomArmRetrieveDouble", "CalculateOdometry", "CheckStockage",
+    "End", "Homing", "Line", "Rotate", "SetDetectionRange",
+    "SetOdometry", "TopArmGaleryBottom", "TopArmGaleryTop", "TopArmGetSamples", "TopArmGetSingleSample", "TopArmIdle",
+    "TopArmSingleStockage", "TopArmPreStockage", "TopArmPreStockage2", "TopArmStockage", "TopArmStockage2", "Wait", "XYT"]
 
 const configMetaActionTransition = configData.metaAction.transition
 
@@ -70,7 +70,7 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
     const handleCancel = (event) => {
         const deselectedMetaAction = metaActionArray.map(metaAction => ({ ...metaAction, isSelected: false }))
         const deselectedMetaActionAction = deselectedMetaAction.map(metaAction => (
-            {...metaAction, flow: metaAction.flow.map(nodeOrEdge => ({...nodeOrEdge, isSelected: false}))}
+            { ...metaAction, flow: metaAction.flow.map(nodeOrEdge => ({ ...nodeOrEdge, isSelected: false })) }
         ))
 
         setMetaActionArray(deselectedMetaActionAction)
@@ -83,11 +83,11 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
         const updatedMetaActionArray = metaActionArray.filter(metaAction => metaAction.id !== getSelectedMetaAction.id)
         setMetaActionArray(updatedMetaActionArray)
 
-        const strategyCreatorFlowNode = strategyCreator.flow.filter(item => item.id.startsWith('Node')).map(node => node.data.id === getSelectedMetaAction.id ? {...node, data: {label: `${node.id} node`, id: undefined}  } : node)
+        const strategyCreatorFlowNode = strategyCreator.flow.filter(item => item.id.startsWith('Node')).map(node => node.data.id === getSelectedMetaAction.id ? { ...node, data: { label: `${node.id} node`, id: undefined } } : node)
         const strategyCreatorFlowEdge = strategyCreator.flow.filter(item => item.id.startsWith('Edge'))
         const strategyCreatorFlow = strategyCreatorFlowNode.concat(strategyCreatorFlowEdge)
-        setStrategyCreator({...strategyCreator, flow: strategyCreatorFlow})
-        
+        setStrategyCreator({ ...strategyCreator, flow: strategyCreatorFlow })
+
         setOpenDialogMetaAction(false)
     }
 
@@ -97,14 +97,14 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
 
         handleCancel(event)
     }
-    
+
 
     const deleteEdge = (event, id) => {
         event.preventDefault()
 
-        const updatedMetaActionArray = metaActionArray.map(metaAction => metaAction.isSelected === true ? 
-            {...metaAction, flow :metaAction.flow.filter(nodeOrEdge => nodeOrEdge.id !== id)} :
-             metaAction)
+        const updatedMetaActionArray = metaActionArray.map(metaAction => metaAction.isSelected === true ?
+            { ...metaAction, flow: metaAction.flow.filter(nodeOrEdge => nodeOrEdge.id !== id) } :
+            metaAction)
 
         setMetaActionArray(updatedMetaActionArray)
     }
@@ -112,87 +112,90 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
     const deleteNode = (event, id) => {
         event.preventDefault()
 
-        const updatedMetaActionArray = metaActionArray.map(metaAction => metaAction.isSelected === true ? 
-            {...metaAction, flow :metaAction.flow.filter(nodeOrEdge => nodeOrEdge.id !== id && nodeOrEdge.source !== id && nodeOrEdge.target !== id)} :
-             metaAction)
+        const updatedMetaActionArray = metaActionArray.map(metaAction => metaAction.isSelected === true ?
+            { ...metaAction, flow: metaAction.flow.filter(nodeOrEdge => nodeOrEdge.id !== id && nodeOrEdge.source !== id && nodeOrEdge.target !== id) } :
+            metaAction)
 
         setMetaActionArray(updatedMetaActionArray)
     }
 
     const listEdgesToDelete = () => {
-        const metaActionActionSelected = getSelectedMetaAction.flow.filter(element => element.isSelected === true).at(-1)
+        const metaActionActionFiltered = getSelectedMetaAction.flow.filter(element => element.isSelected === true)
+        const metaActionActionSelected = metaActionActionFiltered[metaActionActionFiltered.length - 1]
 
         const edges = getSelectedMetaAction.flow.filter(element => element.id.startsWith("Edge"))
         const filteredEdges = edges.filter(element => metaActionActionSelected.id === element.source || metaActionActionSelected.id === element.target)
 
-        return (filteredEdges.length === 0 ? 
+        return (filteredEdges.length === 0 ?
             <Typography>There are no edges</Typography> :
             filteredEdges.map((value) => (
-            <ListItem>
-                <ListItemAvatar>
-                    <Avatar>
-                        <LinearScaleIcon />
-                    </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                    primary={value.id}
-                    secondary={`Source : ${value.source} Target : ${value.target}`}
-                />
-                <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="delete" onClick={(event) => deleteEdge(event, value.id)}>
-                        <DeleteIcon style={{ color: "red" }}/>
-                    </IconButton>
-                </ListItemSecondaryAction>
-            </ListItem>)
+                <ListItem>
+                    <ListItemAvatar>
+                        <Avatar>
+                            <LinearScaleIcon />
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary={value.id}
+                        secondary={`Source : ${value.source} Target : ${value.target}`}
+                    />
+                    <ListItemSecondaryAction>
+                        <IconButton edge="end" aria-label="delete" onClick={(event) => deleteEdge(event, value.id)}>
+                            <DeleteIcon style={{ color: "red" }} />
+                        </IconButton>
+                    </ListItemSecondaryAction>
+                </ListItem>)
 
-        )
+            )
         )
     }
-    
+
     const onTextNameChange = (name) => {
         const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? { ...metaAction, name: name.target.value } : metaAction))
-        const updatedStrategyCreatorNode = strategyCreator.flow.filter(item => item.id.startsWith('Node')).map(nodeOrEdge => (nodeOrEdge.data.id === getSelectedMetaAction.id ? {...nodeOrEdge, data : {label: name.target.value, id: getSelectedMetaAction.id}} : nodeOrEdge))
+        const updatedStrategyCreatorNode = strategyCreator.flow.filter(item => item.id.startsWith('Node')).map(nodeOrEdge => (nodeOrEdge.data.id === getSelectedMetaAction.id ? { ...nodeOrEdge, data: { label: name.target.value, id: getSelectedMetaAction.id } } : nodeOrEdge))
         const updatedStrategyCreatorEdge = strategyCreator.flow.filter(item => item.id.startsWith('Edge'))
         const updatedStrategyCreatorFlow = updatedStrategyCreatorNode.concat(updatedStrategyCreatorEdge)
 
-        setStrategyCreator({...strategyCreator, flow:  updatedStrategyCreatorFlow})
+        setStrategyCreator({ ...strategyCreator, flow: updatedStrategyCreatorFlow })
         setMetaActionArray(updatedMetaActionArray)
     }
 
     const onLabelNode = (event) => {
         console.log(metaActionArray)
-        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.isSelected === true ? 
-            { ...metaAction, flow: metaAction.flow.map(action => (action.isSelected === true ? {...action, data: {label: event.target.value}} : action)) } : metaAction))
+        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.isSelected === true ?
+            { ...metaAction, flow: metaAction.flow.map(action => (action.isSelected === true ? { ...action, data: { label: event.target.value } } : action)) } : metaAction))
         console.log(updatedMetaActionArray)
         setMetaActionArray(updatedMetaActionArray)
     }
 
     const handleChange = (event) => {
-        const updatedMetaActionArray = metaActionArray.map(metaAction => metaAction.isSelected === true ? 
-            {...metaAction, flow :metaAction.flow.map(action => (action.isSelected === true ? {...action, actionData: {...action.actionData, type: event.target.value}} : 
-                action))} :
-             metaAction)
-      
+        const updatedMetaActionArray = metaActionArray.map(metaAction => metaAction.isSelected === true ?
+            {
+                ...metaAction, flow: metaAction.flow.map(action => (action.isSelected === true ? { ...action, actionData: { ...action.actionData, type: event.target.value } } :
+                    action))
+            } :
+            metaAction)
+
         setMetaActionArray(updatedMetaActionArray)
     }
 
     const truc = (event, id) => {
-        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? 
+        const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ?
             { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === id ? { ...nodeOrEdge, label: event.target.value } : nodeOrEdge) } :
-             metaAction))
+            metaAction))
 
-        setMetaActionArray(updatedMetaActionArray)        
+        setMetaActionArray(updatedMetaActionArray)
     }
 
     const dialogNodeOrEdge = () => {
-        const nodeOrEdge = selectedMetaAction.length === 0 || ! getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.isSelected) ? undefined : getSelectedMetaAction.flow.filter(action => action.isSelected === true)[0]
-    
+        const nodeOrEdge = selectedMetaAction.length === 0 || !getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.isSelected) ? undefined : getSelectedMetaAction.flow.filter(action => action.isSelected === true)[0]
+
         if (nodeOrEdge === undefined)
             return <Typography>Click on a node or an edge</Typography>
         else if (nodeOrEdge.id.startsWith('Node'))
             return (
                 <div>
-                    
+
                     <FormControl className={classes.formControl}>
                         <FormGroup>
                             <FormLabel color='primary'>Node information</FormLabel>
@@ -233,7 +236,7 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
                                 value={selectedMetaAction.length === 0 ? "Undefined" : getSelectedMetaAction.flow.filter(action => action.isSelected === true)[0].actionData.type}
                                 onChange={handleChange}
                             >
-                                {metaActionActionType.map(actionType => 
+                                {metaActionActionType.map(actionType =>
                                     <MenuItem value={actionType}>{actionType}</MenuItem>
                                 )}
                             </Select>
@@ -245,88 +248,88 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
 
                     </FormControl>
 
-                    </div>
+                </div>
 
             )
 
         else if (nodeOrEdge.id.startsWith('Edge'))
             return (
                 <List>
-                <ListItem>
-                    <ListItemAvatar>
-                        <Avatar>
-                            <LinearScaleIcon />
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                        primary={nodeOrEdge.id}
-                        secondary={`ActionName: ${nodeOrEdge.label}`}
-                    />
-                    
-                    <FormControl className={classes.formControl}>
-                        <FormGroup>
-                            <FormLabel color='primary'>Type transition</FormLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={nodeOrEdge.label}
-                                onChange={(event) => truc(event, nodeOrEdge.id)}
-                            >
-                                {configMetaActionTransition.map(actionType => 
-                                    <MenuItem value={actionType}>{actionType}</MenuItem>
-                                )}
-                            </Select>
-                            
-                        </FormGroup>
-                    </FormControl>
+                    <ListItem>
+                        <ListItemAvatar>
+                            <Avatar>
+                                <LinearScaleIcon />
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText
+                            primary={nodeOrEdge.id}
+                            secondary={`ActionName: ${nodeOrEdge.label}`}
+                        />
 
-                    <ListItemSecondaryAction>
-                        <IconButton edge="end" aria-label="delete" onClick={(event) => deleteEdge(event, nodeOrEdge.id)}>
-                            <DeleteIcon style={{ color: "red" }}/>
-                        </IconButton>
-                    </ListItemSecondaryAction>
-                </ListItem>
+                        <FormControl className={classes.formControl}>
+                            <FormGroup>
+                                <FormLabel color='primary'>Type transition</FormLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={nodeOrEdge.label}
+                                    onChange={(event) => truc(event, nodeOrEdge.id)}
+                                >
+                                    {configMetaActionTransition.map(actionType =>
+                                        <MenuItem value={actionType}>{actionType}</MenuItem>
+                                    )}
+                                </Select>
+
+                            </FormGroup>
+                        </FormControl>
+
+                        <ListItemSecondaryAction>
+                            <IconButton edge="end" aria-label="delete" onClick={(event) => deleteEdge(event, nodeOrEdge.id)}>
+                                <DeleteIcon style={{ color: "red" }} />
+                            </IconButton>
+                        </ListItemSecondaryAction>
+                    </ListItem>
                 </List>
             )
-          
+
     }
 
     return (
         <div>
-            
-            <Dialog 
+
+            <Dialog
                 fullWidth={true}
                 maxWidth="xl"  // lg ou xl
-                open={open} 
-                onClose={event => handleCancel(event)} 
+                open={open}
+                onClose={event => handleCancel(event)}
                 aria-labelledby="form-dialog-title"
             >
                 <DialogTitle id="form-dialog-title">Dialog edit meta action</DialogTitle>
                 <DialogContent>
                     <Grid container spacing={3}>
                         <Grid item xs={8}>
-                        <DialogContentText>
-                        Please fill in the form and the graph.
-                    </DialogContentText>
+                            <DialogContentText>
+                                Please fill in the form and the graph.
+                            </DialogContentText>
 
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        onChange={onTextNameChange}
-                        id="name"
-                        label="Name"
-                        defaultValue={selectedMetaAction.length === 0 ? "Undefined" : getSelectedMetaAction.name}
-                        fullWidth
-                        variant="standard"
-                    />
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                onChange={onTextNameChange}
+                                id="name"
+                                label="Meta action name"
+                                value={selectedMetaAction.length === 0 ? "Undefined" : getSelectedMetaAction.name}
+                                fullWidth
+                                variant="standard"
+                            />
 
-                
-                    <MetaActionGraph />
 
-                    
+                            <MetaActionGraph />
+
+
                         </Grid>
                         <Grid item xs={4}>
-                        {dialogNodeOrEdge()}
+                            {dialogNodeOrEdge()}
                         </Grid>
                     </Grid>
 
@@ -334,44 +337,44 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
 
 
 
-                    
-                
-                    
+
+
+
                 </DialogContent>
-            
+
                 <DialogActions>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={(event) => handleCancel(event)}
-                    startIcon={<ClearIcon />}
-                    //className={classes.button}
-                    style={{ backgroundColor: "orange" }}
-                >
-                    Cancel
-                </Button>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={(event) => handleCancel(event)}
+                        startIcon={<ClearIcon />}
+                        //className={classes.button}
+                        style={{ backgroundColor: "orange" }}
+                    >
+                        Cancel
+                    </Button>
 
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={(event) => handleDelete(event)}
-                    startIcon={<ClearIcon />}
-                    //className={classes.button}
-                    style={{ backgroundColor: "red" }}
-                >
-                    Delete
-                </Button>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={(event) => handleDelete(event)}
+                        startIcon={<ClearIcon />}
+                        //className={classes.button}
+                        style={{ backgroundColor: "red" }}
+                    >
+                        Delete
+                    </Button>
 
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={(event) => handleSubmit(event)}
-                    // className={classes.button}
-                    startIcon={<PublishIcon />}
-                    style={{ backgroundColor: "green" }}
-                >
-                    Submit
-                </Button>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={(event) => handleSubmit(event)}
+                        // className={classes.button}
+                        startIcon={<PublishIcon />}
+                        style={{ backgroundColor: "green" }}
+                    >
+                        Submit
+                    </Button>
                 </DialogActions>
             </Dialog>
         </div>

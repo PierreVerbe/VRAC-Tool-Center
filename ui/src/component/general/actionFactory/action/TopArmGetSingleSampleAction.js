@@ -8,12 +8,14 @@ import TextField from "@material-ui/core/TextField"
 import { setMetaActionArrayActionCreator } from "../../../../action/strategyAction"
 
 const TopArmGetSingleSampleAction = ({action, metaActionArray, setMetaActionArray}) => {
-    const ACTION = "TopArmGetSingleSample"
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
+    const getSelectedNode = getSelectedMetaAction.flow.filter(nodeOrEdge => nodeOrEdge.id === action.id)[0]
     const defaultActionData = {type: action.actionData.type, side: 0}
 
     useEffect(() => {
-        if (action.actionData.type !== ACTION) {
+        const hasAllFields = Object.keys(defaultActionData).map(key => key in (getSelectedNode.actionData)).reduce((acc, next) => acc && next)
+
+        if (! hasAllFields) {
             const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? 
                 { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: defaultActionData } : nodeOrEdge) } :
                  metaAction))
@@ -35,7 +37,7 @@ const TopArmGetSingleSampleAction = ({action, metaActionArray, setMetaActionArra
     return (
         <div>
             <FormGroup>
-                 <TextField id="standard-basic" label="side" type="number" defaultValue={action.actionData.side} onChange={handleChangeNumber} name="side"/>
+                 <TextField id="standard-basic" label="side" type="number" value={action.actionData.side} onChange={handleChangeNumber} name="side"/>
             </FormGroup> 
         </div>
     )

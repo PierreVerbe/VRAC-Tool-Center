@@ -24,8 +24,11 @@ const MetaActionGraph = ({ metaActionArray, setMetaActionArray }) => {
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
 
     useEffect(() => {
-        const startNode = getSelectedMetaAction.flow.filter(item => item.id.startsWith('Node')).at(-1)
-        const startEdge = getSelectedMetaAction.flow.filter(item => item.id.startsWith('Edge')).at(-1)
+        const metaActionFilteredNode = getSelectedMetaAction.flow.filter(item => item.id.startsWith('Node'))
+        const startNode = metaActionFilteredNode[metaActionFilteredNode.length -1]
+
+        const metaActionFilteredEdge = getSelectedMetaAction.flow.filter(item => item.id.startsWith('Edge'))
+        const startEdge = metaActionFilteredEdge[metaActionFilteredEdge.length -1]
 
         idNode = startNode === undefined ? 0 : parseInt(startNode.id.split("_")[1]) + 1
         idEdge = startEdge === undefined ? 0 : parseInt(startEdge.id.split("_")[1]) + 1

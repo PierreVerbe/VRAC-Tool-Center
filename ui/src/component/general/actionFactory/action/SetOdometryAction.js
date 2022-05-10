@@ -2,16 +2,15 @@ import React, { useEffect } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 
-import Switch from "@material-ui/core/Switch"
-import FormControlLabel from "@material-ui/core/FormControlLabel"
 import FormGroup from "@material-ui/core/FormGroup"
+import TextField from "@material-ui/core/TextField"
 
 import { setMetaActionArrayActionCreator } from "../../../../action/strategyAction"
 
-const BottomArmsOutSingleAction = ({ action, metaActionArray, setMetaActionArray }) => {
+const SetOdometryAction = ({ action, metaActionArray, setMetaActionArray }) => {
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
     const getSelectedNode = getSelectedMetaAction.flow.filter(nodeOrEdge => nodeOrEdge.id === action.id)[0]
-    const defaultActionData = { type: action.actionData.type, side: false }
+    const defaultActionData = { type: action.actionData.type, x: 0, y: 0, theta: 0 }
 
     useEffect(() => {
         const hasAllFields = Object.keys(defaultActionData).map(key => key in (getSelectedNode.actionData)).reduce((acc, next) => acc && next)
@@ -20,14 +19,14 @@ const BottomArmsOutSingleAction = ({ action, metaActionArray, setMetaActionArray
             const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ?
                 { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: defaultActionData } : nodeOrEdge) } :
                 metaAction))
-                
+
             setMetaActionArray(updatedMetaActionArray)
         }
         // eslint-disable-next-line
     }, [])
 
-    const handleChangeSwitch = (event) => {
-        const updatedActionData = { ...action.actionData, [event.target.name]: event.target.checked }
+    const handleChangeNumber = (event) => {
+        const updatedActionData = { ...action.actionData, [event.target.name]: event.target.valueAsNumber }
         const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ?
             { ...metaAction, flow: getSelectedMetaAction.flow.map(nodeOrEdge => nodeOrEdge.id === action.id ? { ...nodeOrEdge, actionData: updatedActionData } : nodeOrEdge) } :
             metaAction))
@@ -36,17 +35,17 @@ const BottomArmsOutSingleAction = ({ action, metaActionArray, setMetaActionArray
     }
 
     return (
-        <FormGroup>
-            <FormControlLabel
-                control={<Switch checked={action.actionData.side} onChange={handleChangeSwitch} color="primary" name="side" />}
-                label="Enable Chained"
-            />
-        </FormGroup>
+        <div>
+            <FormGroup>
+                <TextField id="standard-basic" label="x" type="number" inputProps={{ min: 0, max: 2000 }} value={action.actionData.x} onChange={handleChangeNumber} name="x" />
+                <TextField id="standard-basic" label="y" type="number" inputProps={{ min: 0, max: 3000 }} value={action.actionData.y} onChange={handleChangeNumber} name="y" />
+                <TextField id="standard-basic" label="theta" type="number" inputProps={{ min: -3600, max: 3600 }} value={action.actionData.theta} onChange={handleChangeNumber} name="theta" />
+            </FormGroup>
+        </div>
     )
-
 }
 
-BottomArmsOutSingleAction.propTypes = {
+SetOdometryAction.propTypes = {
     action: PropTypes.object.isRequired
 }
 
@@ -58,4 +57,4 @@ const mapDispatchToProps = dispatch => ({
     setMetaActionArray: metaActionArray => dispatch(setMetaActionArrayActionCreator(metaActionArray))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(BottomArmsOutSingleAction)
+export default connect(mapStateToProps, mapDispatchToProps)(SetOdometryAction)

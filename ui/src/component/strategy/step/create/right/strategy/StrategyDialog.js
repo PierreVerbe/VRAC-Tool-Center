@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { connect } from "react-redux"
 import { setStrategyCreatorActionCreator, setOpenDialogNodeStrategyActionCreator } from "../../../../../../action/strategyAction"
 import PropTypes from 'prop-types'
@@ -9,7 +9,6 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import TextField from '@material-ui/core/TextField'
 import ClearIcon from '@material-ui/icons/Clear'
 import PublishIcon from '@material-ui/icons/Publish'
 import Typography from "@material-ui/core/Typography"
@@ -34,20 +33,22 @@ import configData from "./../../../../../../resources/config.json"
 
 const configMetaActionTransition = configData.strategy.transition
 
-const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, openDialogNodeStrategy, setStrategyCreator, setOpenDialogNodeStrategy }) => {
+const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, setStrategyCreator, setOpenDialogNodeStrategy }) => {
+
     const deleteEdge = (event, id) => {
         event.preventDefault()
 
         const filteredEdge = strategyCreator.flow.filter(edge => edge.id !== id)
-        setStrategyCreator({...strategyCreator, flow: filteredEdge})
+        setStrategyCreator({ ...strategyCreator, flow: filteredEdge })
     }
 
     const listEdgesToDelete = () => {
-        const selectedStrategyNode= strategyCreator.flow.filter(nodeOrEdge => nodeOrEdge.isSelected === true).at(-1)
+        const strategyCreatorFiltered = strategyCreator.flow.filter(nodeOrEdge => nodeOrEdge.isSelected === true)
+        const selectedStrategyNode = strategyCreatorFiltered[strategyCreatorFiltered.length - 1]
 
         const edges = strategyCreator.flow.filter(element => element.id.startsWith("Edge"))
         const filteredEdges = edges.filter(edge => selectedStrategyNode.id === edge.source || selectedStrategyNode.id === edge.target)
-        
+
         return filteredEdges.map((value) => (
             <ListItem>
                 <ListItemAvatar>
@@ -61,20 +62,20 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, openDialog
                 />
                 <ListItemSecondaryAction>
                     <IconButton edge="end" aria-label="delete" onClick={(event) => deleteEdge(event, value.id)}>
-                        <DeleteIcon style={{ color: "red" }}/>
+                        <DeleteIcon style={{ color: "red" }} />
                     </IconButton>
                 </ListItemSecondaryAction>
-            </ListItem>)
-
+            </ListItem>
+        )
         )
     }
 
     const handleCancel = (event) => {
         event.preventDefault()
 
-        const updatedStrategyCreatorFlow = strategyCreator.flow.map(nodeOrEdge => ({...nodeOrEdge, isSelected: false}))
-        const updatedStrategyCreator = {...strategyCreator, flow: updatedStrategyCreatorFlow}
-        
+        const updatedStrategyCreatorFlow = strategyCreator.flow.map(nodeOrEdge => ({ ...nodeOrEdge, isSelected: false }))
+        const updatedStrategyCreator = { ...strategyCreator, flow: updatedStrategyCreatorFlow }
+
         setStrategyCreator(updatedStrategyCreator)
         setOpenDialogNodeStrategy(false)
     }
@@ -86,13 +87,13 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, openDialog
 
         if (selectedNodeOrEdge.id.startsWith('Node')) {
             const updatedStrategyCreatorFlow = strategyCreator.flow.filter(node => node.isSelected === false && node.source !== selectedNodeOrEdge.id && node.target !== selectedNodeOrEdge.id)
-            const updatedStrategyCreator = {...strategyCreator, flow: updatedStrategyCreatorFlow}
-        
+            const updatedStrategyCreator = { ...strategyCreator, flow: updatedStrategyCreatorFlow }
+
             setStrategyCreator(updatedStrategyCreator)
         }
         else if (selectedNodeOrEdge.id.startsWith('Edge')) {
             const updatedStrategyCreatorFlow = strategyCreator.flow.filter(edge => edge.isSelected === false)
-            const updatedStrategyCreator = {...strategyCreator, flow: updatedStrategyCreatorFlow}
+            const updatedStrategyCreator = { ...strategyCreator, flow: updatedStrategyCreatorFlow }
 
             setStrategyCreator(updatedStrategyCreator)
         }
@@ -108,26 +109,27 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, openDialog
         event.preventDefault()
     }
 
-    const truc = (event, id) => {
+    const setTypeTransition = (event, id) => {
         const updatedStrategyCreatorFlow = strategyCreator.flow.map(nodeOrEdge => nodeOrEdge.id === id ? { ...nodeOrEdge, label: event.target.value } : nodeOrEdge)
 
-        setStrategyCreator({...strategyCreator, flow: updatedStrategyCreatorFlow})
+        setStrategyCreator({ ...strategyCreator, flow: updatedStrategyCreatorFlow })
     }
 
     const setLabelNode = (event, id) => {
-        console.log(event)
-        const updatedDataNode = {label: event.target.value.name, id: event.target.value.id}
-        console.log(updatedDataNode)
+        const value = JSON.parse(event.target.value)
+        const updatedDataNode = { label: value.name, id: value.id }
         const updatedStrategyCreatorFlow = strategyCreator.flow.map(nodeOrEdge => nodeOrEdge.id === id ? { ...nodeOrEdge, data: updatedDataNode } : nodeOrEdge)
-        console.log(updatedStrategyCreatorFlow)
-        setStrategyCreator({...strategyCreator, flow: updatedStrategyCreatorFlow})
+
+        setStrategyCreator({ ...strategyCreator, flow: updatedStrategyCreatorFlow })
     }
 
+    /*
     const onTextLabelChange = (event) => {
         const updatedStrategyCreatorFlow = strategyCreator.flow.map(nodeOrEdge => nodeOrEdge.isSelected === true ? {...nodeOrEdge, data: {label: event.target.value}} : nodeOrEdge)
         const updatedStrategyCreator = { ...strategyCreator, flow: updatedStrategyCreatorFlow }
         setStrategyCreator(updatedStrategyCreator)
     }
+    */
 
     const dialogNodeOrEdge = () => {
         const nodeOrEdge = strategyCreator.flow.filter(nodeOrEdge => nodeOrEdge.isSelected === true)[0]
@@ -135,78 +137,82 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, openDialog
         if (nodeOrEdge === undefined)
             return <Typography>Click on a node or an edge</Typography>
         else if (nodeOrEdge.id.startsWith('Node')) {
-            console.log("truc")
-            console.log(nodeOrEdge.data.label)
+            const valueSelect = JSON.stringify({ id: nodeOrEdge.data.id, name: nodeOrEdge.data.label })
+
             return (
                 <div>
-            
-                <FormControl>
-                    <FormGroup>
-                        <FormLabel color='primary'>Type transition</FormLabel>
-                        <Select
-                            labelId="demo-simple-select-label2"
-                            id="demo-simple-select2"
-                            value={nodeOrEdge.data.label}
-                            onChange={(event) => setLabelNode(event, nodeOrEdge.id)}
-                        >
-                            {metaActionArray.map(metaAction => 
-                                <MenuItem value={metaAction}>{metaAction.name}</MenuItem>
-                            )}
-                        </Select>
-                        
-                    </FormGroup>
-                </FormControl>
-            
-                <Typography variant="h6" >
-                    List of edge to delete
-                </Typography>
-                <div >
-                    <List dense={true}>
-                        {listEdgesToDelete()}
-                    </List>
-                </div>
-                </div>
-            )
-        }
-        else if (nodeOrEdge.id.startsWith('Edge'))
-            return (
-                <List>
-                <ListItem>
-                    <ListItemAvatar>
-                        <Avatar>
-                            <LinearScaleIcon />
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                        primary={nodeOrEdge.id}
-                        secondary={`ActionName: ${nodeOrEdge.label}`}
-                    />
-                    
                     <FormControl>
                         <FormGroup>
-                            <FormLabel color='primary'>Type transition</FormLabel>
+                            <FormLabel color='primary'>Select meta action</FormLabel>
                             <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={nodeOrEdge.label}
-                                onChange={(event) => truc(event, nodeOrEdge.id)}
+                                labelId="demo-simple-select-label2"
+                                id="demo-simple-select2"
+                                value={valueSelect}
+                                onChange={(event) => setLabelNode(event, nodeOrEdge.id)}
                             >
-                                {configMetaActionTransition.map(actionType => 
-                                    <MenuItem value={actionType}>{actionType}</MenuItem>
+                                {metaActionArray.map(metaAction => {
+                                    const valueMenuItem = JSON.stringify({ id: metaAction.id, name: metaAction.name })
+                                    
+                                    return <MenuItem value={valueMenuItem}>{metaAction.name}</MenuItem>
+                                }
                                 )}
                             </Select>
-                            
+
                         </FormGroup>
                     </FormControl>
 
-                    <ListItemSecondaryAction>
-                        <IconButton edge="end" aria-label="delete" onClick={(event) => deleteEdge(event, nodeOrEdge.id)}>
-                            <DeleteIcon style={{ color: "red" }}/>
-                        </IconButton>
-                    </ListItemSecondaryAction>
-                </ListItem>
+
+                    <Typography variant="body1" >
+                        List of edge to delete
+                    </Typography>
+                    <div >
+                        <List dense={true}>
+                            {listEdgesToDelete()}
+                        </List>
+                    </div>
+                </div>
+            )
+        }
+        else if (nodeOrEdge.id.startsWith('Edge')) {
+            return (
+                <List>
+                    <ListItem>
+                        <ListItemAvatar>
+                            <Avatar>
+                                <LinearScaleIcon />
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText
+                            primary={nodeOrEdge.id}
+                            secondary={`ActionName: ${nodeOrEdge.label}`}
+                        />
+
+                        <FormControl>
+                            <FormGroup>
+                                <FormLabel color='primary'>Type transition</FormLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={nodeOrEdge.label}
+                                    onChange={(event) => setTypeTransition(event, nodeOrEdge.id)}
+                                >
+                                    {configMetaActionTransition.map(actionType =>
+                                        <MenuItem value={actionType}>{actionType}</MenuItem>
+                                    )}
+                                </Select>
+
+                            </FormGroup>
+                        </FormControl>
+
+                        <ListItemSecondaryAction>
+                            <IconButton edge="end" aria-label="delete" onClick={(event) => deleteEdge(event, nodeOrEdge.id)}>
+                                <DeleteIcon style={{ color: "red" }} />
+                            </IconButton>
+                        </ListItemSecondaryAction>
+                    </ListItem>
                 </List>
             )
+        }
     }
 
     return (
@@ -265,8 +271,7 @@ DialogUpdateNode.propTypes = {
 
 const mapStateToProps = state => ({
     strategyCreator: state.strategyCreator,
-    metaActionArray: state.metaActionArray,
-    openDialogNodeStrategy: state.openDialogNodeStrategy
+    metaActionArray: state.metaActionArray
 })
 
 const mapDispatchToProps = dispatch => ({

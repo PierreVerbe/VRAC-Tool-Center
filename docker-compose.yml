@@ -1,14 +1,14 @@
 version: "3.8"
 services:
   react-app:
-    image: pierreverbe/vrac-tool-center-ui:0.2.2
+    image: pierreverbe/vrac-tool-center-ui:0.3.0
     stdin_open: true
     ports: 
       - "3000:3000"
     networks:
       - vrac-tool-center
   api-server:
-    image: pierreverbe/vrac-tool-center-rest-service:0.1.4-SNAPSHOT
+    image: pierreverbe/vrac-tool-center-rest-service:0.2.0
     ports:
       - "5000:5000"
     networks:
