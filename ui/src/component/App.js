@@ -11,7 +11,7 @@ import MuiAlert from "@material-ui/lab/Alert"
 
 import { blue, green } from "@material-ui/core/colors"
 
-import { setSnackBarCreator } from "./../action/generalAction"
+import { setSnackBarActionCreator } from "./../action/generalAction"
 
 const App = ({ darkMode, snackBar, setSnackBar }) => {
   const darkTheme = createTheme({
@@ -62,7 +62,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setSnackBar: snackBar => dispatch(setSnackBarCreator(snackBar))
+  setSnackBar: snackBar => dispatch(setSnackBarActionCreator(snackBar))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

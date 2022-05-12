@@ -7,14 +7,14 @@ import FieldImage from "./../../../resources/image/AgeOfBots/fondTable22v2.jpg"
 import RobotOpenImage from "./../../../resources/image/Robot/robot_open.png"
 
 import { searchInputStrategy, searchNextStrategy } from "./RobotSearchGraph"
-import { setSnackBarCreator } from "../../../action/generalAction"
+import { setSnackBarActionCreator, setPointerSimulatorActionCreator } from "../../../action/generalAction"
 
 import { Stage, Sprite, Graphics } from '@inlet/react-pixi'
 import Button from '@material-ui/core/Button'
 import PropTypes from "prop-types"
 
-const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, setSnackBar }) => {
-    const [pointerSimulator, setPointerSimulator] = React.useState({ x: undefined, y: undefined })
+const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, pointerSimulator, setSnackBar, setPointerSimulator }) => {
+    
     const [simulatedRobot, setSimulatedRobot] = React.useState({ angle: DEFAULT_ROBOT_T, x: DEFAULT_ROBOT_X, y: DEFAULT_ROBOT_Y, actual: { strategyNode: { id: undefined, name: undefined }, metaActionNode: { id: undefined, name: undefined } }, previous: [], render: undefined })
 
     const handleCursorPosition = (e) => {
@@ -182,10 +182,13 @@ RobotSimulator.propTypes = {
     metaActionArrayToSimulate: PropTypes.array
 }
 
-const mapStateToProps = state => ({})
+const mapStateToProps = state => ({
+    pointerSimulator: state.pointerSimulator
+})
 
 const mapDispatchToProps = dispatch => ({
-    setSnackBar: snackBar => dispatch(setSnackBarCreator(snackBar))
+    setSnackBar: snackBar => dispatch(setSnackBarActionCreator(snackBar)),
+    setPointerSimulator: snackBar => dispatch(setPointerSimulatorActionCreator(snackBar))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RobotSimulator)

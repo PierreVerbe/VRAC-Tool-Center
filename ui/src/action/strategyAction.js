@@ -1,5 +1,7 @@
 import { insertStrategy, getAllStrategies, getStrategy, updateStrategy, deleteStrategy } from "./../request/apiStrategy"
 
+export const SET_STRATEGY_APP_BAR = "SET_STRATEGY_APP_BAR"
+
 export const INSERT_STRATEGY = "INSERT_STRATEGY"
 export const GET_ALL_STRATEGIES = "GET_ALL_STRATEGIES"
 export const GET_STRATEGY = "GET_STRATEGY"
@@ -74,6 +76,15 @@ export const deleteStrategyActionCreator = (strategy) => {
 }
 
 // Set states
+export const setStrategyAppBarActionCreator = appBar => {
+    return function (dispatch) {
+        dispatch({
+            type: SET_STRATEGY_APP_BAR,
+            payload: appBar
+        })
+    }
+}
+
 export const setStrategyStepperActionCreator = stepperStrategy => {
     return function (dispatch) {
         dispatch({

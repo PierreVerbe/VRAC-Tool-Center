@@ -17,8 +17,6 @@ import { setStrategyLoaderActionCreator, setFileUploadedActionCreator, setOpenDi
 
 
 const DialogLoadStrategyFromFile = ({ fileUploaded, setFileUploaded, strategyLoader, setStrategyLoader, strategyCreator, setStrategy, insertStrategy, openDialogStrategy, setOpenDialogStrategy }) => {
-    //const [fileUploaded, setfileUploaded] = React.useState([]);
-
     const handleCancel = () => {
         setOpenDialogStrategy(false)
     }
