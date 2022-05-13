@@ -1,12 +1,15 @@
-import { SET_DARK_MODE, SET_SNACK_BAR, SET_POINTER_SIMULATOR } from "../action/generalAction"
+import { SET_DARK_MODE, SET_SNACK_BAR, SET_POINTER_SIMULATOR, SET_SIMULATED_ROBOT } from "../action/generalAction"
 import { strategyReducer } from "./strategyReducer"
 import { monitoringReducer } from "./monitoringReducer"
+
+import { DEFAULT_ROBOT_X, DEFAULT_ROBOT_Y, DEFAULT_ROBOT_T } from "./../component/general/robotSimulator/RobotActionFactory"
 
 const defaultState = {
     // General
     darkMode: false,
     snackBar: { isOpen: false, severity: undefined, message: undefined },
     pointerSimulator : { x: undefined, y: undefined },
+    simulatedRobot : { angle: DEFAULT_ROBOT_T, x: DEFAULT_ROBOT_X, y: DEFAULT_ROBOT_Y, actual: { strategyNode: { id: undefined, name: undefined }, metaActionNode: { id: undefined, name: undefined } }, previous: [], render: undefined },
 
     // Strategy 
     strategyStepper: 0,
@@ -64,6 +67,12 @@ const commonReducer = (state, action) => {
             return {
                 ...state,
                 pointerSimulator: action.payload
+            }
+
+        case SET_SIMULATED_ROBOT:
+            return {
+                ...state,
+                simulatedRobot: action.payload
             }
 
         default:

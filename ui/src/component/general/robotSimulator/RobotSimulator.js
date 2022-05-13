@@ -7,16 +7,13 @@ import FieldImage from "./../../../resources/image/AgeOfBots/fondTable22v2.jpg"
 import RobotOpenImage from "./../../../resources/image/Robot/robot_open.png"
 
 import { searchInputStrategy, searchNextStrategy } from "./RobotSearchGraph"
-import { setSnackBarActionCreator, setPointerSimulatorActionCreator } from "../../../action/generalAction"
+import { setSnackBarActionCreator, setPointerSimulatorActionCreator, setSimulatedRobotActionCreator } from "../../../action/generalAction"
 
 import { Stage, Sprite, Graphics } from '@inlet/react-pixi'
 import Button from '@material-ui/core/Button'
 import PropTypes from "prop-types"
 
-const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, pointerSimulator, setSnackBar, setPointerSimulator }) => {
-    
-    const [simulatedRobot, setSimulatedRobot] = React.useState({ angle: DEFAULT_ROBOT_T, x: DEFAULT_ROBOT_X, y: DEFAULT_ROBOT_Y, actual: { strategyNode: { id: undefined, name: undefined }, metaActionNode: { id: undefined, name: undefined } }, previous: [], render: undefined })
-
+const RobotSimulator = ({ strategyToSimulate, metaActionArrayToSimulate, simulatedRobot, pointerSimulator, setSimulatedRobot, setSnackBar, setPointerSimulator }) => {
     const handleCursorPosition = (e) => {
         const x = Math.round((e.clientY - e.target.offsetTop) * REDUCING_FACTOR)
         const y = Math.round((e.clientX - e.target.offsetLeft) * REDUCING_FACTOR)
@@ -183,12 +180,14 @@ RobotSimulator.propTypes = {
 }
 
 const mapStateToProps = state => ({
-    pointerSimulator: state.pointerSimulator
+    pointerSimulator: state.pointerSimulator,
+    simulatedRobot: state.simulatedRobot
 })
 
 const mapDispatchToProps = dispatch => ({
     setSnackBar: snackBar => dispatch(setSnackBarActionCreator(snackBar)),
-    setPointerSimulator: snackBar => dispatch(setPointerSimulatorActionCreator(snackBar))
+    setPointerSimulator: snackBar => dispatch(setPointerSimulatorActionCreator(snackBar)),
+    setSimulatedRobot: simulatedRobot => dispatch(setSimulatedRobotActionCreator(simulatedRobot))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RobotSimulator)

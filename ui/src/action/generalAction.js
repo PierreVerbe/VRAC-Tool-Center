@@ -1,6 +1,7 @@
 export const SET_DARK_MODE = "SET_DARK_MODE"
 export const SET_SNACK_BAR = "SET_SNACK_BAR"
 export const SET_POINTER_SIMULATOR = "SET_POINTER_SIMULATOR"
+export const SET_SIMULATED_ROBOT = "SET_SIMULATED_ROBOT"
 
 export const setDarkModeActionCreator = darkMode => {
     return function (dispatch) {
@@ -25,6 +26,15 @@ export const setPointerSimulatorActionCreator = pointerSimulator => {
         dispatch({
             type: SET_POINTER_SIMULATOR,
             payload: pointerSimulator
+        })
+    }
+}
+
+export const setSimulatedRobotActionCreator = simulatedRobot => {
+    return function (dispatch) {
+        dispatch({
+            type: SET_SIMULATED_ROBOT,
+            payload: simulatedRobot
         })
     }
 }
