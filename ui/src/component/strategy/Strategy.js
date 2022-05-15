@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper'
 import Stepper from "@material-ui/core/Stepper"
 import Step from "@material-ui/core/Step"
 import StepLabel from "@material-ui/core/StepLabel"
-import Button from "@material-ui/core/Button"
+//import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 
 import CreateIcon from '@material-ui/icons/Create';
@@ -66,14 +66,20 @@ const Strategy = ({ strategyStepper, getAllStrategies, setStrategyStepper }) => 
     useEffect(getAllStrategies) // get all strategies
 
     const classes = useStyles()
-    const steps = ["Create", "Load/Delete", "Statistic"]
+    const steps = [{ key: "Create", value: 0 }, { key: "Load/Delete", value: 1 }, { key: "Statistic", value: 2 }]
 
+    /*
     const handleNext = () => {
         strategyStepper === steps.length - 1 ? setStrategyStepper(0) : setStrategyStepper(strategyStepper + 1)
     }
 
     const handleBack = () => {
         strategyStepper === 0 ? setStrategyStepper(steps.length - 1) : setStrategyStepper(strategyStepper - 1)
+    }
+    */
+
+    const testNext = (label) => {
+        setStrategyStepper(label.value)
     }
 
     return (
@@ -85,8 +91,8 @@ const Strategy = ({ strategyStepper, getAllStrategies, setStrategyStepper }) => 
                     connector={<ColorlibConnector />}
                 >
                     {steps.map((label) => (
-                        <Step key={label}>
-                            <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+                        <Step key={label.key} onClick={() => testNext(label)}>
+                            <StepLabel StepIconComponent={ColorlibStepIcon}>{label.key}</StepLabel>
                         </Step>
                     ))}
                 </Stepper>
@@ -94,6 +100,8 @@ const Strategy = ({ strategyStepper, getAllStrategies, setStrategyStepper }) => 
                 <Typography component={'span'} className={classes.instructions}>
                     {getStepContent(strategyStepper)}
                 </Typography>
+
+                {/*
 
                 <Button
                     variant="contained"
@@ -112,6 +120,8 @@ const Strategy = ({ strategyStepper, getAllStrategies, setStrategyStepper }) => 
                 >
                     Next
                 </Button>
+
+                */}
             </Paper>
         </div >
     )
