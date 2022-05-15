@@ -17,6 +17,7 @@ import CreateStrategy from "./step/create/CreateStrategy"
 import LoadDeleteStrategy from "./step/loadDelete/LoadDeleteStrategy"
 import StatisticStrategy from "./step/statistic/StatisticStrategy"
 import { setStrategyStepperActionCreator, getAllStrategiesActionCreator } from "./../../action/strategyAction"
+
 import { ELEVATION_PAGE_CONTENT, ColorlibConnector, useColorlibStepIconStyles, useStyles } from "./../Style"
 import "./../Style.css"
 

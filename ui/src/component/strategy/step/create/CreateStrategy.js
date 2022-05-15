@@ -1,38 +1,27 @@
-import { makeStyles } from '@material-ui/core/styles'
+import React from "react"
+
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 
 import StrategyPanel from "./right/StrategyPanel"
 import StrategySimulator from "./left/StrategySimulator"
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        padding: '2px 4px',
-        display: 'flex',
-        alignItems: 'center',
-        flexGrow: 1,
-    },
-    paper: {
-        padding: theme.spacing(2),
-        color: theme.palette.text.secondary,
-    }
-}))
+import { ELEVATION_PAGE_CONTENT, GRID_CONTAINER_SPACING, MONITORING_GRID_SIZING } from "../../../Style"
+import './../../../Style.css'
 
 const CreateStrategy = () => {
-    const classes = useStyles()
-
     return (
-        <div className={classes.root}>
-            <Grid container spacing={3}>
-                <Grid item xs={6}>
-                    <Paper className={classes.paper} component="form">
-                        <StrategySimulator/>
+        <div className="rootStep">
+            <Grid container spacing={GRID_CONTAINER_SPACING}>
+                <Grid item xs={MONITORING_GRID_SIZING}>
+                    <Paper elevation={ELEVATION_PAGE_CONTENT} className="paperPanel" component="form">
+                        <StrategySimulator />
                     </Paper>
                 </Grid>
 
-                <Grid item xs={6}>
-                    <Paper className={classes.paper} component="form">
-                        <StrategyPanel/>
+                <Grid item xs={MONITORING_GRID_SIZING}>
+                    <Paper elevation={ELEVATION_PAGE_CONTENT} className="paperPanel" component="form">
+                        <StrategyPanel />
                     </Paper>
                 </Grid>
             </Grid>
