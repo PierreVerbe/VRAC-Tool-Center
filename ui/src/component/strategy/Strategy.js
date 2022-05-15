@@ -7,7 +7,6 @@ import Paper from '@material-ui/core/Paper'
 import Stepper from "@material-ui/core/Stepper"
 import Step from "@material-ui/core/Step"
 import StepLabel from "@material-ui/core/StepLabel"
-//import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 
 import CreateIcon from '@material-ui/icons/Create';
@@ -68,17 +67,7 @@ const Strategy = ({ strategyStepper, getAllStrategies, setStrategyStepper }) => 
     const classes = useStyles()
     const steps = [{ key: "Create", value: 0 }, { key: "Load/Delete", value: 1 }, { key: "Statistic", value: 2 }]
 
-    /*
-    const handleNext = () => {
-        strategyStepper === steps.length - 1 ? setStrategyStepper(0) : setStrategyStepper(strategyStepper + 1)
-    }
-
-    const handleBack = () => {
-        strategyStepper === 0 ? setStrategyStepper(steps.length - 1) : setStrategyStepper(strategyStepper - 1)
-    }
-    */
-
-    const testNext = (label) => {
+    const handleNextStep = (label) => {
         setStrategyStepper(label.value)
     }
 
@@ -91,7 +80,7 @@ const Strategy = ({ strategyStepper, getAllStrategies, setStrategyStepper }) => 
                     connector={<ColorlibConnector />}
                 >
                     {steps.map((label) => (
-                        <Step key={label.key} onClick={() => testNext(label)}>
+                        <Step key={label.key} onClick={() => handleNextStep(label)}>
                             <StepLabel StepIconComponent={ColorlibStepIcon}>{label.key}</StepLabel>
                         </Step>
                     ))}
@@ -100,28 +89,6 @@ const Strategy = ({ strategyStepper, getAllStrategies, setStrategyStepper }) => 
                 <Typography component={'span'} className={classes.instructions}>
                     {getStepContent(strategyStepper)}
                 </Typography>
-
-                {/*
-
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleBack}
-                    className={classes.button}
-                >
-                    Back
-                </Button>
-
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                >
-                    Next
-                </Button>
-
-                */}
             </Paper>
         </div >
     )
