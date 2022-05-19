@@ -21,12 +21,10 @@ const getIdMetaAction = () => `MetaAction_${idMetaAction++}`
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    //maxWidth: 400,
     backgroundColor: theme.palette.background.paper,
     position: "relative",
     overflow: "auto",
     height: "calc(100vh - 370px)",
-    //maxHeight: 580,
   },
   listSection: {
     backgroundColor: "inherit",

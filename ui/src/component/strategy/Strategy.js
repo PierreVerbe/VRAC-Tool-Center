@@ -63,7 +63,7 @@ const getStepContent = (step) => {
 }
 
 const Strategy = ({ strategyStepper, getAllStrategies, setStrategyStepper }) => {
-    useEffect(getAllStrategies) // get all strategies
+    useEffect(getAllStrategies)
 
     const classes = useStyles()
     const steps = [{ key: "Create", value: 0 }, { key: "Load/Delete", value: 1 }, { key: "Statistic", value: 2 }]

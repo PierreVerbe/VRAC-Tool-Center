@@ -37,11 +37,11 @@ const StrategySimulator = ({ strategyCreator, setStrategyCreator, metaActionArra
 
     return (
         <div >
-            <Button variant="contained" onClick={(event) => handleParseStrategy(event)}>
+            <Button color="primary" variant="contained" onClick={(event) => handleParseStrategy(event)}>
                 Get Strategy
             </Button>
 
-            <Button variant="contained" onClick={(event) => handleClearStrategy(event)}>
+            <Button color="primary" variant="contained" onClick={(event) => handleClearStrategy(event)}>
                 Clear Strategy
             </Button>
 

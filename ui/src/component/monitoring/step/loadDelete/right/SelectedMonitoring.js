@@ -16,7 +16,6 @@ import { insertMonitoringActionCreator, deleteMonitoringActionCreator, setIdRowM
 import "./../LoadDelete.css"
 
 const SelectedMonitoring = ({ deleteMonitoring, idRowMonitoringTable, monitoring, setIdRowMonitoringTable, setMonitoring, setOpenDialogMonitoring }) => {
-    // Is button disabled
     const isSaveButtonDisabled = () => {
         return (idRowMonitoringTable !== null && idRowMonitoringTable !== -1) || Object.entries(monitoring).length === 0
     }
@@ -33,7 +32,6 @@ const SelectedMonitoring = ({ deleteMonitoring, idRowMonitoringTable, monitoring
         return Object.entries(monitoring).length === 0
     }
 
-    // OnClick function for button
     const handleSave = (event) => {
         setOpenDialogMonitoring(true)
         //event.preventDefault()

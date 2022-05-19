@@ -61,11 +61,8 @@ const configMetaActionTransition = configData.metaAction.transition
 const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyCreator, setMetaActionArray, setOpenDialogMetaAction }) => {
     const selectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)
     const getSelectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)[0]
-    //const getSelectedAction = getSelectedMetaAction.flow.filter(action => action.isSelected === true)[0]
 
     const classes = useStyles()
-
-    //const nodes = useStoreState((store) => store.nodes)
 
     const handleCancel = (event) => {
         const deselectedMetaAction = metaActionArray.map(metaAction => ({ ...metaAction, isSelected: false }))

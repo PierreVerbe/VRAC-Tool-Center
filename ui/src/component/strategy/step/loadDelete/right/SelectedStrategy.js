@@ -2,8 +2,6 @@ import React from "react"
 import { connect } from "react-redux"
 
 import Button from "@material-ui/core/Button"
-
-//import { makeStyles } from "@material-ui/core/styles"
 import SaveIcon from "@material-ui/icons/Save"
 import DeleteIcon from "@material-ui/icons/Delete"
 import GetAppIcon from "@material-ui/icons/GetApp"
@@ -12,27 +10,10 @@ import ReactJson from "react-json-view"
 
 import DialogLoadStrategyFromFile from "./DialogLoadStrategyFromFile"
 import { setMetaActionArrayActionCreator, setStrategyCreatorActionCreator, setFileUploadedActionCreator, setStrategyLoaderActionCreator, insertStrategyActionCreator, deleteStrategyActionCreator, setIdRowStrategyTableActionCreator, setStrategyActionCreator, setOpenDialogStrategyActionCreator } from "../../../../../action/strategyAction"
-
-
 import parserGraph from "../../../../../utils/parserGraph"
 import parserStrategy from "../../../../../utils/parserStrategy"
 
-/*
-const useStyles = makeStyles({
-    root: {
-      width: "100%",
-    },
-    container: {
-      maxHeight: 500,
-    },
-  })
-*/
-
-const SelectedStrategy = ({setMetaActionArray, setStrategyCreator, setFileUploaded, insertStrategy, setStrategyLoader, strategyCreator, metaActionArray, deleteStrategy, idRowStrategyTable, strategyLoader, setIdRowStrategyTable, setStrategy, setOpenDialogStrategy }) => {
-    //const classes = useStyles()
-  
-
-    // Is button disabled
+const SelectedStrategy = ({ setMetaActionArray, setStrategyCreator, setFileUploaded, insertStrategy, setStrategyLoader, strategyCreator, metaActionArray, deleteStrategy, idRowStrategyTable, strategyLoader, setIdRowStrategyTable, setStrategy, setOpenDialogStrategy }) => {
     const isSaveButtonDisabled = () => {
         return (idRowStrategyTable !== null && idRowStrategyTable !== -1) || Object.entries(strategyLoader).length === 0
     }
@@ -49,7 +30,6 @@ const SelectedStrategy = ({setMetaActionArray, setStrategyCreator, setFileUpload
         return Object.entries(strategyLoader).length === 0
     }
 
-    // OnClick function for button
     const handleLoadFromCreator = (event) => {
         const contentParser = parserGraph.parse(strategyCreator, metaActionArray)
         setIdRowStrategyTable(-1)
@@ -66,16 +46,10 @@ const SelectedStrategy = ({setMetaActionArray, setStrategyCreator, setFileUpload
 
         if (strategyLoader.metaActions !== undefined) {
             const metaActionArrayParsed = parserStrategy.parseMetaActionArray(strategyLoader.metaActions)
-            
+
             setMetaActionArray(metaActionArrayParsed)
         }
-        
 
-        
-
-        //const contentParser = parserGraph.parse(strategyCreator, metaActionArray)
-        //setIdRowStrategyTable(-1)
-        //setStrategyLoader(contentParser)
         //event.preventDefault
     }
 
@@ -132,7 +106,7 @@ const SelectedStrategy = ({setMetaActionArray, setStrategyCreator, setFileUpload
                 variant="contained"
                 color="primary"
                 onClick={(event) => handleLoadFromCreator(event)}
-                //disabled={isSaveButtonDisabled()}
+            //disabled={isSaveButtonDisabled()}
             >
                 Load from creator
             </Button>
@@ -141,7 +115,7 @@ const SelectedStrategy = ({setMetaActionArray, setStrategyCreator, setFileUpload
                 variant="contained"
                 color="primary"
                 onClick={(event) => handleLoadToCreator(event)}
-                //disabled={isSaveButtonDisabled()}
+            //disabled={isSaveButtonDisabled()}
             >
                 Load to creator
             </Button>
@@ -150,11 +124,11 @@ const SelectedStrategy = ({setMetaActionArray, setStrategyCreator, setFileUpload
                 variant="contained"
                 color="primary"
                 onClick={(event) => handleLoadStrategyFromFile(event)}
-                //disabled={isSaveButtonDisabled()}
+            //disabled={isSaveButtonDisabled()}
             >
                 Load from file
             </Button>
-    
+
             <Button
                 variant="contained"
                 color="primary"
@@ -166,11 +140,9 @@ const SelectedStrategy = ({setMetaActionArray, setStrategyCreator, setFileUpload
             >
                 Save
             </Button>
+
             <DialogLoadStrategyFromFile />
 
-{/* 
-            <DialogSaveStrategy />
- */}
             <Button
                 variant="contained"
                 color="primary"
@@ -198,9 +170,6 @@ const SelectedStrategy = ({setMetaActionArray, setStrategyCreator, setFileUpload
 
             <ReactJson src={strategyLoader} collapsed={1} />
 
-            {/* 
-            <DropzoneOrReactJson isSelected={idRowStrategyTable !== null} strategy={strategyLoader} setIdRowStrategyTable={setIdRowStrategyTable} setStrategy={setStrategyLoader} />
-            */}
             <Button
                 variant="contained"
                 color="primary"

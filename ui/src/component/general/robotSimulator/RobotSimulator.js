@@ -1,6 +1,10 @@
 import React from "react"
 import { connect } from "react-redux"
+
 import Typography from "@material-ui/core/Typography"
+import ReplayIcon from "@material-ui/icons/Replay"
+import PlayArrowIcon from "@material-ui/icons/PlayArrow"
+import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 
 import {
     DEFAULT_ROBOT_X,
@@ -170,16 +174,23 @@ const RobotSimulator = ({
         ) {
             return (
                 <div>
-                    <Button variant="contained" onClick={(event) => handleResetSimulator(event)}>
+                    <Button
+                        color="primary"
+                        variant="contained"
+                        onClick={(event) => handleResetSimulator(event)}
+                        startIcon={<ReplayIcon />}
+                    >
                         Reset
                     </Button>
 
                     <Button
+                        color="primary"
                         variant="contained"
                         onClick={(event) => handleActionIdButtonSimulator(event, undefined, undefined)}
                         disabled={strategyToSimulate.flow.length === 0}
+                        startIcon={<PlayArrowIcon />}
                     >
-                        Start
+                        Play
                     </Button>
                 </div>
             )
@@ -222,16 +233,27 @@ const RobotSimulator = ({
                 })
 
             const prev = (
-                <Button variant="contained" onClick={(event) => handlePreviousAction(event)}>
+                <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={(event) => handlePreviousAction(event)}
+                    startIcon={<SkipPreviousIcon />}
+                >
                     Previous
                 </Button>
             )
 
             return (
                 <div>
-                    <Button variant="contained" onClick={(event) => handleResetSimulator(event)}>
+                    <Button
+                        color="primary"
+                        variant="contained"
+                        onClick={(event) => handleResetSimulator(event)}
+                        startIcon={<ReplayIcon />}
+                    >
                         Reset
                     </Button>
+
                     {prev}
 
                     {arrayNextMetaAction.length === 0 ? strategyNextNodesButtons : arrayNextMetaAction}
