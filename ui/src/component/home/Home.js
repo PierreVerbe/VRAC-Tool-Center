@@ -1,6 +1,6 @@
 import React from "react"
 
-import Paper from '@material-ui/core/Paper'
+import Paper from "@material-ui/core/Paper"
 
 import logo from "./../../resources/image/logo_VRAC.png"
 import { ELEVATION_PAGE_CONTENT } from "../Style"

@@ -1,43 +1,47 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import * as JSZip from 'jszip'
-import { saveAs } from 'file-saver'
+import * as JSZip from "jszip"
+import { saveAs } from "file-saver"
 
-import Button from '@material-ui/core/Button'
-import parserGraph from './../../../../../utils/parserGraph'
+import Button from "@material-ui/core/Button"
+import parserGraph from "./../../../../../utils/parserGraph"
 import RobotSimulator from "./../../../../general/robotSimulator/RobotSimulator"
 
 import { setStrategyCreatorActionCreator, setMetaActionArrayActionCreator } from "./../../../../../action/strategyAction"
 
 const StrategySimulator = ({ strategyCreator, setStrategyCreator, metaActionArray,setMetaActionArray }) => {
-    const handleParseStrategy = () => {
+    const handleParseStrategy = (event) => {
         const contentParser = parserGraph.parse(strategyCreator, metaActionArray)
 
         var zip = new JSZip()
-        zip.file("strategy.json", JSON.stringify(contentParser.strategy, null, ' '))
+        zip.file("strategy.json", JSON.stringify(contentParser.strategy, null, " "))
         contentParser.metaActions.forEach(metaAction => {
-            zip.file(metaAction.name + ".json", JSON.stringify(metaAction, null, ' '))
+            zip.file(metaAction.name + ".json", JSON.stringify(metaAction, null, " "))
         })
 
         zip.generateAsync({ type: "blob" })
             .then(function (content) {
                 saveAs(content, contentParser.strategy.name + ".zip")
             })
+        
+        //event.preventDefault()
     }
 
-    const handleClearStrategy = () => {
+    const handleClearStrategy = (event) => {
         setStrategyCreator({...strategyCreator, name: "Strategy name", flow: []})
         setMetaActionArray([])
+
+        //event.preventDefault()
     }
 
     return (
         <div >
-            <Button variant="contained" onClick={handleParseStrategy}>
+            <Button variant="contained" onClick={(event) => handleParseStrategy(event)}>
                 Get Strategy
             </Button>
 
-            <Button variant="contained" onClick={handleClearStrategy}>
+            <Button variant="contained" onClick={(event) => handleClearStrategy(event)}>
                 Clear Strategy
             </Button>
 

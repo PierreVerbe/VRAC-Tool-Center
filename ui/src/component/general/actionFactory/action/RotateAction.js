@@ -37,6 +37,8 @@ const RotateAction = ({action, metaActionArray, setMetaActionArray}) => {
              metaAction))
 
         setMetaActionArray(updatedMetaActionArray)
+
+        event.preventDefault()
     }
 
     const handleChangeSwitch = (event) => {
@@ -46,6 +48,8 @@ const RotateAction = ({action, metaActionArray, setMetaActionArray}) => {
             metaAction))
 
         setMetaActionArray(updatedMetaActionArray)
+
+        event.preventDefault()
     }
 
     const handleChangeList = (event) => {
@@ -55,6 +59,8 @@ const RotateAction = ({action, metaActionArray, setMetaActionArray}) => {
             metaAction))
 
         setMetaActionArray(updatedMetaActionArray)
+
+        event.preventDefault()
     }
 
     return (

@@ -32,6 +32,8 @@ const TopArmGetSingleSampleAction = ({action, metaActionArray, setMetaActionArra
              metaAction))
 
         setMetaActionArray(updatedMetaActionArray)
+
+        event.preventDefault()
     }
 
     return (

@@ -73,7 +73,7 @@ class parserStrategy {
         const nodeId = `Node_${nodeIdNumber++}`
         const type2 = action.transitions.length === 0 ? "output" : "default"
         const data = { label: action.tag }
-        const { 'action': removedProperty, ...partialActionData } = action.parameters
+        const { "action": removedProperty, ...partialActionData } = action.parameters
         const actionData = { ...partialActionData, type: action.parameters.action }
 
         nodeTagIdMap.set(action.tag, nodeId)

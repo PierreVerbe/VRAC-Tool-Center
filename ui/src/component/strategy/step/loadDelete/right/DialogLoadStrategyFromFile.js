@@ -1,24 +1,26 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogTitle from '@material-ui/core/DialogTitle'
+import Dialog from "@material-ui/core/Dialog"
+import DialogActions from "@material-ui/core/DialogActions"
+import DialogContent from "@material-ui/core/DialogContent"
+import DialogContentText from "@material-ui/core/DialogContentText"
+import DialogTitle from "@material-ui/core/DialogTitle"
 import Button from "@material-ui/core/Button"
 
-import { DropzoneArea } from 'material-ui-dropzone'
+import { DropzoneArea } from "material-ui-dropzone"
 
-import ClearIcon from '@material-ui/icons/Clear'
-import PublishIcon from '@material-ui/icons/Publish'
+import ClearIcon from "@material-ui/icons/Clear"
+import PublishIcon from "@material-ui/icons/Publish"
 
 import { setStrategyLoaderActionCreator, setFileUploadedActionCreator, setOpenDialogStrategyActionCreator } from "../../../../../action/strategyAction"
 
 
 const DialogLoadStrategyFromFile = ({ fileUploaded, setFileUploaded, strategyLoader, setStrategyLoader, strategyCreator, setStrategy, insertStrategy, openDialogStrategy, setOpenDialogStrategy }) => {
-    const handleCancel = () => {
+    const handleCancel = (event) => {
         setOpenDialogStrategy(false)
+
+        //event.preventDefault()
     }
 
     const handleSubmit = () => {
@@ -93,7 +95,7 @@ const DialogLoadStrategyFromFile = ({ fileUploaded, setFileUploaded, strategyLoa
     }
 
     return (
-        <Dialog open={openDialogStrategy} onClose={handleCancel}>
+        <Dialog open={openDialogStrategy} onClose={(event) => handleCancel(event)}>
             <DialogTitle>Load VRAC strategy from files</DialogTitle>
             <DialogContent>
                 <DialogContentText>
@@ -108,7 +110,7 @@ const DialogLoadStrategyFromFile = ({ fileUploaded, setFileUploaded, strategyLoa
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={handleCancel}
+                    onClick={(event) => handleCancel(event)}
                     startIcon={<ClearIcon />}
                     //className={classes.button}
                     style={{ backgroundColor: "orange" }}
@@ -119,7 +121,7 @@ const DialogLoadStrategyFromFile = ({ fileUploaded, setFileUploaded, strategyLoa
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={handleSubmit}
+                    onClick={(event) => handleSubmit(event)}
                     // className={classes.button}
                     startIcon={<PublishIcon />}
                     style={{ backgroundColor: "green" }}

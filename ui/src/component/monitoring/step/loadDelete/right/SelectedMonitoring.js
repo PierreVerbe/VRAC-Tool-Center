@@ -1,19 +1,19 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import Box from '@material-ui/core/Box'
+import Box from "@material-ui/core/Box"
 import Button from "@material-ui/core/Button"
 
-import SaveIcon from '@material-ui/icons/Save'
-import DeleteIcon from '@material-ui/icons/Delete'
-import GetAppIcon from '@material-ui/icons/GetApp'
-import ClearIcon from '@material-ui/icons/Clear'
+import SaveIcon from "@material-ui/icons/Save"
+import DeleteIcon from "@material-ui/icons/Delete"
+import GetAppIcon from "@material-ui/icons/GetApp"
+import ClearIcon from "@material-ui/icons/Clear"
 
 import DropzoneOrReactJson from "./DropzoneOrReactJson"
 import DialogSaveMonitoring from "./DialogSaveMonitoring"
 import { insertMonitoringActionCreator, deleteMonitoringActionCreator, setIdRowMonitoringTableActionCreator, setMonitoringActionCreator, setOpenDialogMonitoringActionCreator } from "../../../../../action/monitoringAction"
 
-import './../LoadDelete.css'
+import "./../LoadDelete.css"
 
 const SelectedMonitoring = ({ deleteMonitoring, idRowMonitoringTable, monitoring, setIdRowMonitoringTable, setMonitoring, setOpenDialogMonitoring }) => {
     // Is button disabled
@@ -34,35 +34,42 @@ const SelectedMonitoring = ({ deleteMonitoring, idRowMonitoringTable, monitoring
     }
 
     // OnClick function for button
-    const handleSave = () => {
+    const handleSave = (event) => {
         setOpenDialogMonitoring(true)
+        //event.preventDefault()
     }
 
-    const handleDelete = () => {
+    const handleDelete = (event) => {
         if (idRowMonitoringTable !== -1) {
             const body = { id: idRowMonitoringTable }
             deleteMonitoring(body)
             setIdRowMonitoringTable(null)
             setMonitoring({})
         }
+
+        //event.preventDefault()
     }
 
-    const handleExport = async () => {
+    const handleExport = async (event) => {
         const fileName = monitoring.name ? monitoring.name : "exported_file"
         const json = JSON.stringify(monitoring)
-        const blob = new Blob([json], { type: 'application/json' })
+        const blob = new Blob([json], { type: "application/json" })
         const href = await URL.createObjectURL(blob)
-        const link = document.createElement('a')
+        const link = document.createElement("a")
         link.href = href
         link.download = fileName + ".json"
         document.body.appendChild(link)
         link.click()
         document.body.removeChild(link)
+
+        //event.preventDefault()
     }
 
-    const handleClear = () => {
+    const handleClear = (event) => {
         setIdRowMonitoringTable(null)
         setMonitoring({})
+
+        //event.preventDefault()
     }
 
     return (
@@ -73,7 +80,7 @@ const SelectedMonitoring = ({ deleteMonitoring, idRowMonitoringTable, monitoring
                         className="buttonMonitoring"
                         variant="contained"
                         color="primary"
-                        onClick={handleSave}
+                        onClick={(event) => handleSave(event)}
                         startIcon={<SaveIcon />}
                         style={{ backgroundColor: "green" }}
                         disabled={isSaveButtonDisabled()}
@@ -89,7 +96,7 @@ const SelectedMonitoring = ({ deleteMonitoring, idRowMonitoringTable, monitoring
                         className="buttonMonitoring"
                         variant="contained"
                         color="primary"
-                        onClick={handleDelete}
+                        onClick={(event) => handleDelete(event)}
                         startIcon={<DeleteIcon />}
                         style={{ backgroundColor: "red" }}
                         disabled={isDeleteButtonDisabled()}
@@ -103,7 +110,7 @@ const SelectedMonitoring = ({ deleteMonitoring, idRowMonitoringTable, monitoring
                         className="buttonMonitoring"
                         variant="contained"
                         color="primary"
-                        onClick={handleExport}
+                        onClick={(event) => handleExport(event)}
                         startIcon={<GetAppIcon />}
                         style={{ backgroundColor: "blue" }}
                         disabled={isExportButtonDisabled()}
@@ -119,7 +126,7 @@ const SelectedMonitoring = ({ deleteMonitoring, idRowMonitoringTable, monitoring
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={handleClear}
+                    onClick={(event) => handleClear(event)}
                     startIcon={<ClearIcon />}
                     disabled={isClearButtonDisabled()}
                     style={{ backgroundColor: "orange" }}

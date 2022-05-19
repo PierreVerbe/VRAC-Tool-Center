@@ -14,55 +14,59 @@ import { blue, green } from "@material-ui/core/colors"
 import { setSnackBarActionCreator } from "./../action/generalAction"
 
 const App = ({ darkMode, snackBar, setSnackBar }) => {
-  const darkTheme = createTheme({
-    palette: {
-      type: "dark"
+    const darkTheme = createTheme({
+        palette: {
+            type: "dark",
+        },
+    })
+
+    const ligthTheme = createTheme({
+        palette: {
+            primary: {
+                main: blue[500],
+            },
+            secondary: {
+                main: green[500],
+            },
+        },
+    })
+
+    const handleClose = (event) => {
+        setSnackBar({ isOpen: false, severity: undefined, message: undefined })
+
+        event.preventDefault()
     }
-  })
 
-  const ligthTheme = createTheme({
-    palette: {
-      primary: {
-        main: blue[500]
-      },
-      secondary: {
-        main: green[500]
-      }
+    const Alert = (props) => {
+        return <MuiAlert elevation={6} variant="filled" {...props} />
     }
-  })
 
-  const handleClose = (event) => {
-    setSnackBar({ isOpen: false, severity: undefined, message: undefined })
-  }
-
-  const Alert = (props) => {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-  }
-
-  return (
-    <ThemeProvider theme={darkMode ? darkTheme : ligthTheme}>
-      <Paper id="App" elevation={0} square={true}>
-        <Header />
-        <Snackbar anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-          open={snackBar.isOpen}
-          autoHideDuration={6000}
-          onClose={handleClose}>
-          <Alert onClose={handleClose} severity={snackBar.severity}>
-            {snackBar.message}
-          </Alert>
-        </Snackbar>
-      </Paper>
-    </ThemeProvider>
-  )
+    return (
+        <ThemeProvider theme={darkMode ? darkTheme : ligthTheme}>
+            <Paper id="App" elevation={0} square={true}>
+                <Header />
+                <Snackbar
+                    anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                    open={snackBar.isOpen}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                >
+                    <Alert onClose={handleClose} severity={snackBar.severity}>
+                        {snackBar.message}
+                    </Alert>
+                </Snackbar>
+            </Paper>
+        </ThemeProvider>
+    )
 }
 
-const mapStateToProps = state => ({
-  darkMode: state.darkMode,
-  snackBar: state.snackBar
+const mapStateToProps = (state) => ({
+    darkMode: state.darkMode,
+    snackBar: state.snackBar,
 })
 
-const mapDispatchToProps = dispatch => ({
-  setSnackBar: snackBar => dispatch(setSnackBarActionCreator(snackBar))
+const mapDispatchToProps = (dispatch) => ({
+    setSnackBar: (snackBar) => dispatch(setSnackBarActionCreator(snackBar)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

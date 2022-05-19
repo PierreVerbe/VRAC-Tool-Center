@@ -1,13 +1,13 @@
 import React from "react"
 
-import Paper from '@material-ui/core/Paper'
-import Grid from '@material-ui/core/Grid'
+import Paper from "@material-ui/core/Paper"
+import Grid from "@material-ui/core/Grid"
 
 import TableMonitoring from "./left/TableMonitoring"
 import SelectedMonitoring from "./right/SelectedMonitoring"
 
 import { ELEVATION_PAGE_CONTENT, GRID_CONTAINER_SPACING, MONITORING_GRID_SIZING } from "../../../Style"
-import './../../../Style.css'
+import "./../../../Style.css"
 
 const LoadDelete = () => {
     return (

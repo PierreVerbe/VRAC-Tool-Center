@@ -37,6 +37,8 @@ const XYTAction = ({ action, metaActionArray, setMetaActionArray }) => {
             metaAction))
 
         setMetaActionArray(updatedMetaActionArray)
+
+        event.preventDefault()
     }
 
     const handleChangeNumber = (event) => {
@@ -46,6 +48,8 @@ const XYTAction = ({ action, metaActionArray, setMetaActionArray }) => {
             metaAction))
 
         setMetaActionArray(updatedMetaActionArray)
+
+        event.preventDefault()
     }
 
     const handleChangeList = (event) => {

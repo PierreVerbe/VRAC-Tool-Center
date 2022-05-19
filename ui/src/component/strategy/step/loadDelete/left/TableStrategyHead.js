@@ -1,15 +1,15 @@
 import React from "react"
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
-import TableCell from '@material-ui/core/TableCell'
-import Checkbox from '@material-ui/core/Checkbox'
+import TableHead from "@material-ui/core/TableHead"
+import TableRow from "@material-ui/core/TableRow"
+import TableCell from "@material-ui/core/TableCell"
+import Checkbox from "@material-ui/core/Checkbox"
 
 export const columns = [
-    { id: 'id', label: 'Id', minWidth: 10 },
-    { id: 'name', label: 'Name', minWidth: 10 },
-    { id: 'date', label: 'Date', minWidth: 10 }
+    { id: "id", label: "Id", minWidth: 10 },
+    { id: "name", label: "Name", minWidth: 10 },
+    { id: "date", label: "Date", minWidth: 10 }
 ]
 
 export const TableStrategyHead = (props) => {

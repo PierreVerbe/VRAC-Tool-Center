@@ -3,15 +3,15 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import clsx from "clsx"
 
-import Paper from '@material-ui/core/Paper'
+import Paper from "@material-ui/core/Paper"
 import Stepper from "@material-ui/core/Stepper"
 import Step from "@material-ui/core/Step"
 import StepLabel from "@material-ui/core/StepLabel"
 import Typography from "@material-ui/core/Typography"
 
-import CreateIcon from '@material-ui/icons/Create';
-import EqualizerIcon from '@material-ui/icons/Equalizer'
-import GetAppIcon from '@material-ui/icons/GetApp'
+import CreateIcon from "@material-ui/icons/Create"
+import EqualizerIcon from "@material-ui/icons/Equalizer"
+import GetAppIcon from "@material-ui/icons/GetApp"
 
 import CreateStrategy from "./step/create/CreateStrategy"
 import LoadDeleteStrategy from "./step/loadDelete/LoadDeleteStrategy"
@@ -87,7 +87,7 @@ const Strategy = ({ strategyStepper, getAllStrategies, setStrategyStepper }) => 
                     ))}
                 </Stepper>
 
-                <Typography component={'span'} className={classes.instructions}>
+                <Typography component={"span"} className={classes.instructions}>
                     {getStepContent(strategyStepper)}
                 </Typography>
             </Paper>

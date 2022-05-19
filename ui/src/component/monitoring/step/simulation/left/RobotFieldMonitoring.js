@@ -12,7 +12,7 @@ const RobotFieldMonitoring = ({ monitoring, activeStepMonitoring }) => {
 
     useEffect(() => {
         const canvas = canvasRef.current
-        const context = canvas.getContext('2d')
+        const context = canvas.getContext("2d")
 
         fieldImage.onload = function () {
             const robotField = new RobotField(context, fieldImage)

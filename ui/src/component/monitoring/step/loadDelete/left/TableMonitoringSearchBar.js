@@ -1,11 +1,11 @@
 import React from "react"
 
-import InputBase from '@material-ui/core/InputBase'
-import IconButton from '@material-ui/core/IconButton'
+import InputBase from "@material-ui/core/InputBase"
+import IconButton from "@material-ui/core/IconButton"
 
-import { makeStyles } from '@material-ui/core/styles'
-import MenuIcon from '@material-ui/icons/Menu'
-import SearchIcon from '@material-ui/icons/Search'
+import { makeStyles } from "@material-ui/core/styles"
+import MenuIcon from "@material-ui/icons/Menu"
+import SearchIcon from "@material-ui/icons/Search"
 
 const useStyles = makeStyles((theme) => ({
     iconButton: {
@@ -29,7 +29,7 @@ const TableMonitoringSearchBar = () => {
             <InputBase
                 className={classes.input}
                 placeholder="Search VRAC Monitoring"
-                inputProps={{ 'aria-label': 'search vrac monitoring' }}
+                inputProps={{ "aria-label": "search vrac monitoring" }}
             />
 
             <IconButton type="submit" className={classes.iconButton} aria-label="search">

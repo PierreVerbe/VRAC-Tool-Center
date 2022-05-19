@@ -33,6 +33,8 @@ const BottomArmsInSingleAction = ({ action, metaActionArray, setMetaActionArray 
             metaAction))
 
         setMetaActionArray(updatedMetaActionArray)
+
+        event.preventDefault()
     }
 
     return (

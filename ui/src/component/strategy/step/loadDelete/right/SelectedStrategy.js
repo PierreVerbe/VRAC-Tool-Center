@@ -3,24 +3,24 @@ import { connect } from "react-redux"
 
 import Button from "@material-ui/core/Button"
 
-//import { makeStyles } from '@material-ui/core/styles'
-import SaveIcon from '@material-ui/icons/Save'
-import DeleteIcon from '@material-ui/icons/Delete'
-import GetAppIcon from '@material-ui/icons/GetApp'
-import ClearIcon from '@material-ui/icons/Clear'
-import ReactJson from 'react-json-view'
+//import { makeStyles } from "@material-ui/core/styles"
+import SaveIcon from "@material-ui/icons/Save"
+import DeleteIcon from "@material-ui/icons/Delete"
+import GetAppIcon from "@material-ui/icons/GetApp"
+import ClearIcon from "@material-ui/icons/Clear"
+import ReactJson from "react-json-view"
 
 import DialogLoadStrategyFromFile from "./DialogLoadStrategyFromFile"
 import { setMetaActionArrayActionCreator, setStrategyCreatorActionCreator, setFileUploadedActionCreator, setStrategyLoaderActionCreator, insertStrategyActionCreator, deleteStrategyActionCreator, setIdRowStrategyTableActionCreator, setStrategyActionCreator, setOpenDialogStrategyActionCreator } from "../../../../../action/strategyAction"
 
 
-import parserGraph from '../../../../../utils/parserGraph'
-import parserStrategy from '../../../../../utils/parserStrategy'
+import parserGraph from "../../../../../utils/parserGraph"
+import parserStrategy from "../../../../../utils/parserStrategy"
 
 /*
 const useStyles = makeStyles({
     root: {
-      width: '100%',
+      width: "100%",
     },
     container: {
       maxHeight: 500,
@@ -50,13 +50,15 @@ const SelectedStrategy = ({setMetaActionArray, setStrategyCreator, setFileUpload
     }
 
     // OnClick function for button
-    const handleLoadFromCreator = () => {
+    const handleLoadFromCreator = (event) => {
         const contentParser = parserGraph.parse(strategyCreator, metaActionArray)
         setIdRowStrategyTable(-1)
         setStrategyLoader(contentParser)
+
+        //event.preventDefault()
     }
 
-    const handleLoadToCreator = () => {
+    const handleLoadToCreator = (event) => {
         if (strategyLoader.strategy !== undefined) {
             const strategyCreatorParsed = parserStrategy.parseStrategyCreator(strategyLoader.strategy)
             setStrategyCreator(strategyCreatorParsed)
@@ -64,7 +66,7 @@ const SelectedStrategy = ({setMetaActionArray, setStrategyCreator, setFileUpload
 
         if (strategyLoader.metaActions !== undefined) {
             const metaActionArrayParsed = parserStrategy.parseMetaActionArray(strategyLoader.metaActions)
-            console.log(metaActionArrayParsed)
+            
             setMetaActionArray(metaActionArrayParsed)
         }
         
@@ -74,43 +76,54 @@ const SelectedStrategy = ({setMetaActionArray, setStrategyCreator, setFileUpload
         //const contentParser = parserGraph.parse(strategyCreator, metaActionArray)
         //setIdRowStrategyTable(-1)
         //setStrategyLoader(contentParser)
+        //event.preventDefault
     }
 
-    const handleLoadStrategyFromFile = () => {
+    const handleLoadStrategyFromFile = (event) => {
         setOpenDialogStrategy(true)
+
+        //event.preventDefault()
     }
 
-    const handleSave = () => {
+    const handleSave = (event) => {
         insertStrategy(strategyLoader)
         //setOpenDialogStrategy(true)
+
+        //event.preventDefault
     }
 
-    const handleDelete = () => {
+    const handleDelete = (event) => {
         if (idRowStrategyTable !== -1) {
             const body = { id: idRowStrategyTable }
             deleteStrategy(body)
             setIdRowStrategyTable(null)
             setStrategy({})
         }
+
+        //event.preventDefault()
     }
 
-    const handleExport = async () => {
+    const handleExport = async (event) => {
         const fileName = strategyLoader.name ? strategyLoader.name : "exported_file"
         const json = JSON.stringify(strategyLoader)
-        const blob = new Blob([json], { type: 'application/json' })
+        const blob = new Blob([json], { type: "application/json" })
         const href = await URL.createObjectURL(blob)
-        const link = document.createElement('a')
+        const link = document.createElement("a")
         link.href = href
         link.download = fileName + ".json"
         document.body.appendChild(link)
         link.click()
         document.body.removeChild(link)
+
+        //event.preventDefault()
     }
 
-    const handleClear = () => {
+    const handleClear = (event) => {
         setIdRowStrategyTable(null)
         setStrategyLoader({})
         setFileUploaded([])
+
+        //event.preventDefault()
     }
 
     return (
@@ -118,7 +131,7 @@ const SelectedStrategy = ({setMetaActionArray, setStrategyCreator, setFileUpload
             <Button
                 variant="contained"
                 color="primary"
-                onClick={handleLoadFromCreator}
+                onClick={(event) => handleLoadFromCreator(event)}
                 //disabled={isSaveButtonDisabled()}
             >
                 Load from creator
@@ -127,7 +140,7 @@ const SelectedStrategy = ({setMetaActionArray, setStrategyCreator, setFileUpload
             <Button
                 variant="contained"
                 color="primary"
-                onClick={handleLoadToCreator}
+                onClick={(event) => handleLoadToCreator(event)}
                 //disabled={isSaveButtonDisabled()}
             >
                 Load to creator
@@ -136,7 +149,7 @@ const SelectedStrategy = ({setMetaActionArray, setStrategyCreator, setFileUpload
             <Button
                 variant="contained"
                 color="primary"
-                onClick={handleLoadStrategyFromFile}
+                onClick={(event) => handleLoadStrategyFromFile(event)}
                 //disabled={isSaveButtonDisabled()}
             >
                 Load from file
@@ -145,7 +158,7 @@ const SelectedStrategy = ({setMetaActionArray, setStrategyCreator, setFileUpload
             <Button
                 variant="contained"
                 color="primary"
-                onClick={handleSave}
+                onClick={(event) => handleSave(event)}
                 //className={classes.button}
                 startIcon={<SaveIcon />}
                 style={{ backgroundColor: "green" }}
@@ -161,7 +174,7 @@ const SelectedStrategy = ({setMetaActionArray, setStrategyCreator, setFileUpload
             <Button
                 variant="contained"
                 color="primary"
-                onClick={handleDelete}
+                onClick={(event) => handleDelete(event)}
                 //className={classes.button}
                 startIcon={<DeleteIcon />}
                 style={{ backgroundColor: "red" }}
@@ -173,7 +186,7 @@ const SelectedStrategy = ({setMetaActionArray, setStrategyCreator, setFileUpload
             <Button
                 variant="contained"
                 color="primary"
-                onClick={handleExport}
+                onClick={(event) => handleExport(event)}
 
                 startIcon={<GetAppIcon />}
                 //className={classes.button}
@@ -191,7 +204,7 @@ const SelectedStrategy = ({setMetaActionArray, setStrategyCreator, setFileUpload
             <Button
                 variant="contained"
                 color="primary"
-                onClick={handleClear}
+                onClick={(event) => handleClear(event)}
                 startIcon={<ClearIcon />}
                 //className={classes.button}
                 disabled={isClearButtonDisabled()}

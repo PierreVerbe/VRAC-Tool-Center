@@ -1,11 +1,11 @@
 import React from "react"
 
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
+import Paper from "@material-ui/core/Paper"
+import Typography from "@material-ui/core/Typography"
 
-import YouTubeIcon from '@material-ui/icons/YouTube'
-import HttpIcon from '@material-ui/icons/Http'
-import GitHubIcon from '@material-ui/icons/GitHub'
+import YouTubeIcon from "@material-ui/icons/YouTube"
+import HttpIcon from "@material-ui/icons/Http"
+import GitHubIcon from "@material-ui/icons/GitHub"
 
 import { ELEVATION_PAGE_CONTENT } from "./../Style"
 
@@ -18,8 +18,8 @@ const About = () => {
             <Paper elevation={ELEVATION_PAGE_CONTENT} className="paperPage">
        
                 <div id="textAbout">
-                    <Typography variant="h1" component="h2">Vieux Roboticiens Amis de Cachan</Typography>
-                    <Typography variant="h2">Participations :</Typography>
+                    <Typography variant="h2">Vieux Roboticiens Amis de Cachan</Typography>
+                    <Typography variant="h3">Participations :</Typography>
                     <Typography >Édition 2018 Coupe de France de robotique (CRAC) : 4 ème</Typography >
 
                     <Typography >Édition 2019</Typography >

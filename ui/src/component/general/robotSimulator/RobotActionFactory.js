@@ -18,7 +18,7 @@ export const RobotActionFactory = (robot, action) => {
     const actionType = action !== undefined ? action.type : undefined
 
     switch (actionType) {
-        case 'Bezier':
+        case "Bezier":
             const xBezier = action.x / REDUCING_FACTOR
             const yBezier = action.y / REDUCING_FACTOR
 
@@ -86,7 +86,7 @@ export const RobotActionFactory = (robot, action) => {
 
             return { x: xBezier, y: yBezier, t: angleBezier, render: renderBezier }
 
-        case 'Homing':
+        case "Homing":
             /*
                 Axis: true -> Y
                 Axis: false -> X
@@ -127,7 +127,7 @@ export const RobotActionFactory = (robot, action) => {
 
             return { x: xHoming, y: yHoming, t: robot.angle, render: renderHoming }
 
-        case 'Line':
+        case "Line":
             const radianLine = action.forward ? degreeToRadian(-robot.angle) : degreeToRadian(-robot.angle - 180)
             const xLine = (action.distance / REDUCING_FACTOR) * Math.cos(radianLine) + robot.x
             const yLine = (action.distance / REDUCING_FACTOR) * Math.sin(radianLine) + robot.y
@@ -166,7 +166,7 @@ export const RobotActionFactory = (robot, action) => {
 
             return { x: xLine, y: yLine, t: robot.angle, render: renderLine }
 
-        case 'Rotate':
+        case "Rotate":
             const thetaRotate = action.relative ? robot.angle - action.theta : -action.theta
 
             const renderRotate = (g) => {
@@ -184,14 +184,14 @@ export const RobotActionFactory = (robot, action) => {
 
             return { x: robot.x, y: robot.y, t: thetaRotate, render: renderRotate }
 
-        case 'SetOdometry':
+        case "SetOdometry":
             const xSetOdometry = action.x / REDUCING_FACTOR
             const ySetOdometry = action.y / REDUCING_FACTOR
             const tSetOdometry = -action.theta
 
             return { x: xSetOdometry, y: ySetOdometry, t: tSetOdometry }
 
-        case 'XYT':
+        case "XYT":
             const thetaXYT = -action.theta
             const xXYT = action.x / REDUCING_FACTOR
             const yXYT = action.y / REDUCING_FACTOR

@@ -1,7 +1,7 @@
 import React from "react"
-import ReactJson from 'react-json-view'
-import { DropzoneArea } from 'material-ui-dropzone'
-import PropTypes from 'prop-types'
+import ReactJson from "react-json-view"
+import { DropzoneArea } from "material-ui-dropzone"
+import PropTypes from "prop-types"
 
 const DropzoneOrReactJson = (props) => {
     const { isSelected, monitoring, setIdRowMonitoringTable, setMonitoring } = props

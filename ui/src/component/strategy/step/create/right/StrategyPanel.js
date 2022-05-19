@@ -1,19 +1,19 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React from "react"
+import { connect } from "react-redux"
 
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 
-import Typography from '@material-ui/core/Typography'
+import Typography from "@material-ui/core/Typography"
 
-import Tabs from '@material-ui/core/Tabs'
-import AppBar from '@material-ui/core/AppBar'
-import Tab from '@material-ui/core/Tab'
-import Box from '@material-ui/core/Box'
+import Tabs from "@material-ui/core/Tabs"
+import AppBar from "@material-ui/core/AppBar"
+import Tab from "@material-ui/core/Tab"
+import Box from "@material-ui/core/Box"
 
-import StrategyCreator from './strategy/StrategyCreator'
-import MetaActionCreator from './metaAction/MetaActionCreator'
+import StrategyCreator from "./strategy/StrategyCreator"
+import MetaActionCreator from "./metaAction/MetaActionCreator"
 
-import { setStrategyAppBarActionCreator } from './../../../../../action/strategyAction'
+import { setStrategyAppBarActionCreator } from "./../../../../../action/strategyAction"
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props

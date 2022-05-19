@@ -1,13 +1,13 @@
 import React from "react"
 
-import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
+import Grid from "@material-ui/core/Grid"
+import Paper from "@material-ui/core/Paper"
 
 import { ELEVATION_PAGE_CONTENT, GRID_CONTAINER_SPACING } from "../../../Style"
 import HistoryMonitoring from "./right/HistoryMonitoring"
 import RobotFieldMonitoring from "./left/RobotFieldMonitoring"
 
-import './../../../Style.css'
+import "./../../../Style.css"
 
 const Simulation = () => {
     return (

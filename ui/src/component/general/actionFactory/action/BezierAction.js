@@ -37,6 +37,7 @@ const BezierAction = ({ action, metaActionArray, setMetaActionArray }) => {
             metaAction))
 
         setMetaActionArray(updatedMetaActionArray)
+        event.preventDefault()
     }
 
     const handleChangeNumber = (event) => {
@@ -46,6 +47,7 @@ const BezierAction = ({ action, metaActionArray, setMetaActionArray }) => {
             metaAction))
 
         setMetaActionArray(updatedMetaActionArray)
+        event.preventDefault()
     }
 
     const handleChangeList = (event) => {
@@ -55,6 +57,7 @@ const BezierAction = ({ action, metaActionArray, setMetaActionArray }) => {
             metaAction))
 
         setMetaActionArray(updatedMetaActionArray)
+        event.preventDefault()
     }
 
     return (

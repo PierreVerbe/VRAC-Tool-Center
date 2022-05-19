@@ -34,6 +34,8 @@ const HomingAction = ({ action, metaActionArray, setMetaActionArray }) => {
             metaAction))
 
         setMetaActionArray(updatedMetaActionArray)
+
+        event.preventDefault()
     }
 
     
@@ -44,6 +46,8 @@ const HomingAction = ({ action, metaActionArray, setMetaActionArray }) => {
             metaAction))
 
         setMetaActionArray(updatedMetaActionArray)
+
+        event.preventDefault()
     }
 
     return (

@@ -1,11 +1,11 @@
 import React from "react"
 
-import { BottomNavigation, BottomNavigationAction, Box} from '@material-ui/core/'
-import YouTubeIcon from '@material-ui/icons/YouTube'
-import HttpIcon from '@material-ui/icons/Http'
-import GitHubIcon from '@material-ui/icons/GitHub'
+import { BottomNavigation, BottomNavigationAction, Box} from "@material-ui/core/"
+import YouTubeIcon from "@material-ui/icons/YouTube"
+import HttpIcon from "@material-ui/icons/Http"
+import GitHubIcon from "@material-ui/icons/GitHub"
 
-import './Footer.css'
+import "./Footer.css"
 
 const Footer = () => {
     return (

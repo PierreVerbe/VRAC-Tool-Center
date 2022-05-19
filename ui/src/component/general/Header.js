@@ -2,10 +2,10 @@ import React from "react"
 import { connect } from "react-redux"
 import { BrowserRouter, Link, Route, Switch as SwitchRouter } from "react-router-dom"
 
-import { Switch, AppBar, Tabs, Tab } from '@material-ui/core'
-import Toolbar from '@material-ui/core/Toolbar'
-import MenuIcon from '@material-ui/icons/Menu'
-import Brightness4Icon from '@material-ui/icons/Brightness4'
+import { Switch, AppBar, Tabs, Tab } from "@material-ui/core"
+import Toolbar from "@material-ui/core/Toolbar"
+import MenuIcon from "@material-ui/icons/Menu"
+import Brightness4Icon from "@material-ui/icons/Brightness4"
 
 import Home from "./../home/Home"
 import Strategy from "../strategy/Strategy"

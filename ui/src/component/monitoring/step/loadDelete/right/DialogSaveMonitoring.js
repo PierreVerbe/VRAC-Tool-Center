@@ -1,27 +1,31 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import TextField from '@material-ui/core/TextField'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogTitle from '@material-ui/core/DialogTitle'
+import TextField from "@material-ui/core/TextField"
+import Dialog from "@material-ui/core/Dialog"
+import DialogActions from "@material-ui/core/DialogActions"
+import DialogContent from "@material-ui/core/DialogContent"
+import DialogContentText from "@material-ui/core/DialogContentText"
+import DialogTitle from "@material-ui/core/DialogTitle"
 import Button from "@material-ui/core/Button"
 
-import ClearIcon from '@material-ui/icons/Clear'
-import PublishIcon from '@material-ui/icons/Publish'
+import ClearIcon from "@material-ui/icons/Clear"
+import PublishIcon from "@material-ui/icons/Publish"
 
 import { insertMonitoringActionCreator, setMonitoringActionCreator, setOpenDialogMonitoringActionCreator } from "../../../../../action/monitoringAction"
 
 const DialogSaveMonitoring = ({ monitoring, setMonitoring, insertMonitoring, openDialogMonitoring, setOpenDialogMonitoring }) => {
-    const handleCancel = () => {
+    const handleCancel = (event) => {
         setOpenDialogMonitoring(false)
+
+        //event.preventDefault()
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
         insertMonitoring(monitoring)
         setOpenDialogMonitoring(false)
+        
+        //event.preventDefault()
     }
 
     // Text field in dialog
@@ -41,7 +45,7 @@ const DialogSaveMonitoring = ({ monitoring, setMonitoring, insertMonitoring, ope
     }
 
     return (
-        <Dialog open={openDialogMonitoring} onClose={handleCancel}>
+        <Dialog open={openDialogMonitoring} onClose={(event) => handleCancel(event)}>
             <DialogTitle>Save VRAC monitoring</DialogTitle>
             <DialogContent>
                 <DialogContentText>
@@ -84,7 +88,7 @@ const DialogSaveMonitoring = ({ monitoring, setMonitoring, insertMonitoring, ope
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={handleCancel}
+                    onClick={(event) => handleCancel(event)}
                     startIcon={<ClearIcon />}
                     //className={classes.button}
                     style={{ backgroundColor: "orange" }}
@@ -95,7 +99,7 @@ const DialogSaveMonitoring = ({ monitoring, setMonitoring, insertMonitoring, ope
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={handleSubmit}
+                    onClick={(event) => handleSubmit(event)}
                     // className={classes.button}
                     startIcon={<PublishIcon />}
                     style={{ backgroundColor: "green" }}

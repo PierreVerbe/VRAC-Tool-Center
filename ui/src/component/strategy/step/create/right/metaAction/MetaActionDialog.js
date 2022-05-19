@@ -1,14 +1,14 @@
 import { Typography } from "@material-ui/core"
 import Avatar from "@material-ui/core/Avatar"
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogTitle from '@material-ui/core/DialogTitle'
+import Button from "@material-ui/core/Button"
+import Dialog from "@material-ui/core/Dialog"
+import DialogActions from "@material-ui/core/DialogActions"
+import DialogContent from "@material-ui/core/DialogContent"
+import DialogContentText from "@material-ui/core/DialogContentText"
+import DialogTitle from "@material-ui/core/DialogTitle"
 import FormControl from "@material-ui/core/FormControl"
-import FormGroup from '@material-ui/core/FormGroup'
-import FormLabel from '@material-ui/core/FormLabel'
+import FormGroup from "@material-ui/core/FormGroup"
+import FormLabel from "@material-ui/core/FormLabel"
 import IconButton from "@material-ui/core/IconButton"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
@@ -16,24 +16,24 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar"
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction"
 import ListItemText from "@material-ui/core/ListItemText"
 import MenuItem from "@material-ui/core/MenuItem"
-import Paper from '@material-ui/core/Paper'
+import Paper from "@material-ui/core/Paper"
 import Select from "@material-ui/core/Select"
-import { makeStyles } from '@material-ui/core/styles'
-import TextField from '@material-ui/core/TextField'
+import { makeStyles } from "@material-ui/core/styles"
+import TextField from "@material-ui/core/TextField"
 import DeleteIcon from "@material-ui/icons/Delete"
-import LinearScaleIcon from '@material-ui/icons/LinearScale'
-import PropTypes from 'prop-types'
+import LinearScaleIcon from "@material-ui/icons/LinearScale"
+import PropTypes from "prop-types"
 import React from "react"
 import { connect } from "react-redux"
 import { setStrategyCreatorActionCreator, setMetaActionArrayActionCreator, setOpenDialogMetaActionActionCreator } from "../../../../../../action/strategyAction"
-import ActionFactory from '../../../../../general/actionFactory/ActionFactory'
+import ActionFactory from "../../../../../general/actionFactory/ActionFactory"
 import MetaActionGraph from "./MetaActionGraph"
-import ClearIcon from '@material-ui/icons/Clear'
-import PublishIcon from '@material-ui/icons/Publish'
+import ClearIcon from "@material-ui/icons/Clear"
+import PublishIcon from "@material-ui/icons/Publish"
 
-import Grid from '@material-ui/core/Grid';
+import Grid from "@material-ui/core/Grid"
 
-import configData from "./../../../../../../resources/config.json";
+import configData from "./../../../../../../resources/config.json"
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -42,8 +42,8 @@ const useStyles = makeStyles((theme) => ({
     },
 
     actionFactoryPaper: {
-        display: 'flex',
-        '& > *': {
+        display: "flex",
+        "& > *": {
             padding: theme.spacing(3)
         },
     }
@@ -65,7 +65,7 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
 
     const classes = useStyles()
 
-    //const nodes = useStoreState((store) => store.nodes);
+    //const nodes = useStoreState((store) => store.nodes)
 
     const handleCancel = (event) => {
         const deselectedMetaAction = metaActionArray.map(metaAction => ({ ...metaAction, isSelected: false }))
@@ -75,48 +75,49 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
 
         setMetaActionArray(deselectedMetaActionAction)
         setOpenDialogMetaAction(false)
+
+        event.preventDefault()
     }
 
     const handleDelete = (event) => {
-        event.preventDefault()
-
         const updatedMetaActionArray = metaActionArray.filter(metaAction => metaAction.id !== getSelectedMetaAction.id)
         setMetaActionArray(updatedMetaActionArray)
 
-        const strategyCreatorFlowNode = strategyCreator.flow.filter(item => item.id.startsWith('Node')).map(node => node.data.id === getSelectedMetaAction.id ? { ...node, data: { label: `${node.id} node`, id: undefined } } : node)
-        const strategyCreatorFlowEdge = strategyCreator.flow.filter(item => item.id.startsWith('Edge'))
+        const strategyCreatorFlowNode = strategyCreator.flow.filter(item => item.id.startsWith("Node")).map(node => node.data.id === getSelectedMetaAction.id ? { ...node, data: { label: `${node.id} node`, id: undefined } } : node)
+        const strategyCreatorFlowEdge = strategyCreator.flow.filter(item => item.id.startsWith("Edge"))
         const strategyCreatorFlow = strategyCreatorFlowNode.concat(strategyCreatorFlowEdge)
         setStrategyCreator({ ...strategyCreator, flow: strategyCreatorFlow })
 
         setOpenDialogMetaAction(false)
+
+        event.preventDefault()
     }
 
     const handleSubmit = (event) => {
-        //nodes.forEach(node => console.log(node))
         // TODO
-
         handleCancel(event)
+
+        event.preventDefault()
     }
 
-
     const deleteEdge = (event, id) => {
-        event.preventDefault()
-
         const updatedMetaActionArray = metaActionArray.map(metaAction => metaAction.isSelected === true ?
             { ...metaAction, flow: metaAction.flow.filter(nodeOrEdge => nodeOrEdge.id !== id) } :
             metaAction)
 
         setMetaActionArray(updatedMetaActionArray)
+
+        event.preventDefault()
     }
 
     const deleteNode = (event, id) => {
-        event.preventDefault()
-
         const updatedMetaActionArray = metaActionArray.map(metaAction => metaAction.isSelected === true ?
             { ...metaAction, flow: metaAction.flow.filter(nodeOrEdge => nodeOrEdge.id !== id && nodeOrEdge.source !== id && nodeOrEdge.target !== id) } :
             metaAction)
 
         setMetaActionArray(updatedMetaActionArray)
+
+        event.preventDefault()
     }
 
     const listEdgesToDelete = () => {
@@ -146,14 +147,14 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
                     </ListItemSecondaryAction>
                 </ListItem>)
 
-            )
+                    )
         )
     }
 
     const onTextNameChange = (name) => {
         const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === getSelectedMetaAction.name ? { ...metaAction, name: name.target.value } : metaAction))
-        const updatedStrategyCreatorNode = strategyCreator.flow.filter(item => item.id.startsWith('Node')).map(nodeOrEdge => (nodeOrEdge.data.id === getSelectedMetaAction.id ? { ...nodeOrEdge, data: { label: name.target.value, id: getSelectedMetaAction.id } } : nodeOrEdge))
-        const updatedStrategyCreatorEdge = strategyCreator.flow.filter(item => item.id.startsWith('Edge'))
+        const updatedStrategyCreatorNode = strategyCreator.flow.filter(item => item.id.startsWith("Node")).map(nodeOrEdge => (nodeOrEdge.data.id === getSelectedMetaAction.id ? { ...nodeOrEdge, data: { label: name.target.value, id: getSelectedMetaAction.id } } : nodeOrEdge))
+        const updatedStrategyCreatorEdge = strategyCreator.flow.filter(item => item.id.startsWith("Edge"))
         const updatedStrategyCreatorFlow = updatedStrategyCreatorNode.concat(updatedStrategyCreatorEdge)
 
         setStrategyCreator({ ...strategyCreator, flow: updatedStrategyCreatorFlow })
@@ -161,11 +162,11 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
     }
 
     const onLabelNode = (event) => {
-        console.log(metaActionArray)
         const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.isSelected === true ?
             { ...metaAction, flow: metaAction.flow.map(action => (action.isSelected === true ? { ...action, data: { label: event.target.value } } : action)) } : metaAction))
-        console.log(updatedMetaActionArray)
         setMetaActionArray(updatedMetaActionArray)
+
+        event.preventDefault()
     }
 
     const handleChange = (event) => {
@@ -177,6 +178,8 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
             metaAction)
 
         setMetaActionArray(updatedMetaActionArray)
+
+        event.preventDefault()
     }
 
     const truc = (event, id) => {
@@ -185,6 +188,8 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
             metaAction))
 
         setMetaActionArray(updatedMetaActionArray)
+
+        event.preventDefault()
     }
 
     const dialogNodeOrEdge = () => {
@@ -192,13 +197,13 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
 
         if (nodeOrEdge === undefined)
             return <Typography>Click on a node or an edge</Typography>
-        else if (nodeOrEdge.id.startsWith('Node'))
+        else if (nodeOrEdge.id.startsWith("Node"))
             return (
                 <div>
 
                     <FormControl className={classes.formControl}>
                         <FormGroup>
-                            <FormLabel color='primary'>Node information</FormLabel>
+                            <FormLabel color="primary">Node information</FormLabel>
                             <TextField
                                 autoFocus
                                 margin="dense"
@@ -229,7 +234,7 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
 
                     <FormControl className={classes.formControl}>
                         <FormGroup>
-                            <FormLabel color='primary'>Action Type</FormLabel>
+                            <FormLabel color="primary">Action Type</FormLabel>
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
@@ -252,7 +257,7 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
 
             )
 
-        else if (nodeOrEdge.id.startsWith('Edge'))
+        else if (nodeOrEdge.id.startsWith("Edge"))
             return (
                 <List>
                     <ListItem>
@@ -268,7 +273,7 @@ const MetaActionDialog = ({ open, strategyCreator, metaActionArray, setStrategyC
 
                         <FormControl className={classes.formControl}>
                             <FormGroup>
-                                <FormLabel color='primary'>Type transition</FormLabel>
+                                <FormLabel color="primary">Type transition</FormLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"

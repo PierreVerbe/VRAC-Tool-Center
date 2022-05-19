@@ -1,16 +1,16 @@
 import React from "react"
 import { connect } from "react-redux"
 import { setStrategyCreatorActionCreator, setOpenDialogNodeStrategyActionCreator } from "../../../../../../action/strategyAction"
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 
 import Button from "@material-ui/core/Button"
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import ClearIcon from '@material-ui/icons/Clear'
-import PublishIcon from '@material-ui/icons/Publish'
+import Dialog from "@material-ui/core/Dialog"
+import DialogActions from "@material-ui/core/DialogActions"
+import DialogContent from "@material-ui/core/DialogContent"
+import DialogContentText from "@material-ui/core/DialogContentText"
+import DialogTitle from "@material-ui/core/DialogTitle"
+import ClearIcon from "@material-ui/icons/Clear"
+import PublishIcon from "@material-ui/icons/Publish"
 import Typography from "@material-ui/core/Typography"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
@@ -21,13 +21,13 @@ import Avatar from "@material-ui/core/Avatar"
 import IconButton from "@material-ui/core/IconButton"
 
 import FormControl from "@material-ui/core/FormControl"
-import FormGroup from '@material-ui/core/FormGroup'
-import FormLabel from '@material-ui/core/FormLabel'
+import FormGroup from "@material-ui/core/FormGroup"
+import FormLabel from "@material-ui/core/FormLabel"
 import MenuItem from "@material-ui/core/MenuItem"
 
 import Select from "@material-ui/core/Select"
 import DeleteIcon from "@material-ui/icons/Delete"
-import LinearScaleIcon from '@material-ui/icons/LinearScale'
+import LinearScaleIcon from "@material-ui/icons/LinearScale"
 
 import configData from "./../../../../../../resources/config.json"
 
@@ -36,10 +36,10 @@ const configMetaActionTransition = configData.strategy.transition
 const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, setStrategyCreator, setOpenDialogNodeStrategy }) => {
 
     const deleteEdge = (event, id) => {
-        event.preventDefault()
-
         const filteredEdge = strategyCreator.flow.filter(edge => edge.id !== id)
         setStrategyCreator({ ...strategyCreator, flow: filteredEdge })
+
+        event.preventDefault()
     }
 
     const listEdgesToDelete = () => {
@@ -71,27 +71,27 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, setStrateg
     }
 
     const handleCancel = (event) => {
-        event.preventDefault()
+        
 
         const updatedStrategyCreatorFlow = strategyCreator.flow.map(nodeOrEdge => ({ ...nodeOrEdge, isSelected: false }))
         const updatedStrategyCreator = { ...strategyCreator, flow: updatedStrategyCreatorFlow }
 
         setStrategyCreator(updatedStrategyCreator)
         setOpenDialogNodeStrategy(false)
+
+        event.preventDefault()
     }
 
     const handleDelete = (event) => {
-        event.preventDefault()
-
         const selectedNodeOrEdge = strategyCreator.flow.filter(nodeOrEdge => nodeOrEdge.isSelected === true)[0]
 
-        if (selectedNodeOrEdge.id.startsWith('Node')) {
+        if (selectedNodeOrEdge.id.startsWith("Node")) {
             const updatedStrategyCreatorFlow = strategyCreator.flow.filter(node => node.isSelected === false && node.source !== selectedNodeOrEdge.id && node.target !== selectedNodeOrEdge.id)
             const updatedStrategyCreator = { ...strategyCreator, flow: updatedStrategyCreatorFlow }
 
             setStrategyCreator(updatedStrategyCreator)
         }
-        else if (selectedNodeOrEdge.id.startsWith('Edge')) {
+        else if (selectedNodeOrEdge.id.startsWith("Edge")) {
             const updatedStrategyCreatorFlow = strategyCreator.flow.filter(edge => edge.isSelected === false)
             const updatedStrategyCreator = { ...strategyCreator, flow: updatedStrategyCreatorFlow }
 
@@ -99,6 +99,8 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, setStrateg
         }
 
         setOpenDialogNodeStrategy(false)
+
+        event.preventDefault()
     }
 
     const handleSubmit = (event) => {
@@ -113,6 +115,8 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, setStrateg
         const updatedStrategyCreatorFlow = strategyCreator.flow.map(nodeOrEdge => nodeOrEdge.id === id ? { ...nodeOrEdge, label: event.target.value } : nodeOrEdge)
 
         setStrategyCreator({ ...strategyCreator, flow: updatedStrategyCreatorFlow })
+
+        event.preventDefault()
     }
 
     const setLabelNode = (event, id) => {
@@ -136,14 +140,14 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, setStrateg
         
         if (nodeOrEdge === undefined)
             return <Typography>Click on a node or an edge</Typography>
-        else if (nodeOrEdge.id.startsWith('Node')) {
+        else if (nodeOrEdge.id.startsWith("Node")) {
             const valueSelect = JSON.stringify({ id: nodeOrEdge.data.id, name: nodeOrEdge.data.label })
 
             return (
                 <div>
                     <FormControl>
                         <FormGroup>
-                            <FormLabel color='primary'>Select meta action</FormLabel>
+                            <FormLabel color="primary">Select meta action</FormLabel>
                             <Select
                                 labelId="demo-simple-select-label2"
                                 id="demo-simple-select2"
@@ -173,7 +177,7 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, setStrateg
                 </div>
             )
         }
-        else if (nodeOrEdge.id.startsWith('Edge')) {
+        else if (nodeOrEdge.id.startsWith("Edge")) {
             return (
                 <List>
                     <ListItem>
@@ -189,7 +193,7 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, setStrateg
 
                         <FormControl>
                             <FormGroup>
-                                <FormLabel color='primary'>Type transition</FormLabel>
+                                <FormLabel color="primary">Type transition</FormLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
@@ -216,7 +220,7 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, setStrateg
     }
 
     return (
-        <Dialog open={isOpen} onClose={handleCancel}>
+        <Dialog open={isOpen} onClose={(event) => handleCancel(event)}>
             <DialogTitle>Dialog edit strategy node or edge</DialogTitle>
             <DialogContent>
                 <DialogContentText>

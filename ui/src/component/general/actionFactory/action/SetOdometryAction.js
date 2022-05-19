@@ -32,6 +32,8 @@ const SetOdometryAction = ({ action, metaActionArray, setMetaActionArray }) => {
             metaAction))
 
         setMetaActionArray(updatedMetaActionArray)
+
+        event.preventDefault()
     }
 
     return (

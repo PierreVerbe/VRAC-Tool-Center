@@ -1,15 +1,15 @@
 import React, { useEffect } from "react"
 import { connect } from "react-redux"
 
-import { makeStyles } from '@material-ui/core/styles'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import ListSubheader from '@material-ui/core/ListSubheader'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
+import { makeStyles } from "@material-ui/core/styles"
+import List from "@material-ui/core/List"
+import ListItem from "@material-ui/core/ListItem"
+import ListItemText from "@material-ui/core/ListItemText"
+import ListSubheader from "@material-ui/core/ListSubheader"
+import ListItemIcon from "@material-ui/core/ListItemIcon"
 
-import AddCircleIcon from '@material-ui/icons/AddCircle'
-import { green } from '@material-ui/core/colors'
+import AddCircleIcon from "@material-ui/icons/AddCircle"
+import { green } from "@material-ui/core/colors"
 
 import MetaActionDialog from "./MetaActionDialog"
 
@@ -20,18 +20,19 @@ const getIdMetaAction = () => `MetaAction_${idMetaAction++}`
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
-    maxWidth: 400,
+    width: "100%",
+    //maxWidth: 400,
     backgroundColor: theme.palette.background.paper,
-    position: 'relative',
-    overflow: 'auto',
-    maxHeight: 300,
+    position: "relative",
+    overflow: "auto",
+    height: "calc(100vh - 370px)",
+    //maxHeight: 580,
   },
   listSection: {
-    backgroundColor: 'inherit',
+    backgroundColor: "inherit",
   },
   ul: {
-    backgroundColor: 'inherit',
+    backgroundColor: "inherit",
     padding: 0,
   }
 }))

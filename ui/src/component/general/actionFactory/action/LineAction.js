@@ -37,6 +37,8 @@ const LineAction = ({ action, metaActionArray, setMetaActionArray }) => {
             metaAction))
 
         setMetaActionArray(updatedMetaActionArray)
+
+        event.preventDefault()
     }
 
     const handleChangeNumber = (event) => {
@@ -46,6 +48,8 @@ const LineAction = ({ action, metaActionArray, setMetaActionArray }) => {
             metaAction))
 
         setMetaActionArray(updatedMetaActionArray)
+
+        event.preventDefault()
     }
 
     const handleChangeList = (event) => {
@@ -55,6 +59,8 @@ const LineAction = ({ action, metaActionArray, setMetaActionArray }) => {
             metaAction))
 
         setMetaActionArray(updatedMetaActionArray)
+
+        event.preventDefault()
     }
 
     return (
