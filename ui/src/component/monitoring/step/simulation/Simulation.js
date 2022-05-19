@@ -3,9 +3,9 @@ import React from "react"
 import Grid from "@material-ui/core/Grid"
 import Paper from "@material-ui/core/Paper"
 
-import { ELEVATION_PAGE_CONTENT, GRID_CONTAINER_SPACING } from "../../../Style"
+import { ELEVATION_PAGE_CONTENT, GRID_CONTAINER_SPACING,MONITORING_GRID_SIZING } from "../../../Style"
 import HistoryMonitoring from "./right/HistoryMonitoring"
-import RobotFieldMonitoring from "./left/RobotFieldMonitoring"
+import MonitoringSimulation from "./left/MonitoringSimulation"
 
 import "./../../../Style.css"
 
@@ -13,13 +13,13 @@ const Simulation = () => {
     return (
         <div className="rootStep">
             <Grid container spacing={GRID_CONTAINER_SPACING}>
-                <Grid item xs={8}>
+                <Grid item xs={MONITORING_GRID_SIZING}>
                     <Paper elevation={ELEVATION_PAGE_CONTENT} className="paperPanel">
-                        <RobotFieldMonitoring />
+                        <MonitoringSimulation />
                     </Paper>
                 </Grid>
 
-                <Grid item xs={4}>
+                <Grid item xs={MONITORING_GRID_SIZING}>
                     <Paper elevation={ELEVATION_PAGE_CONTENT} className="paperPanel">
                         <HistoryMonitoring />
                     </Paper>
