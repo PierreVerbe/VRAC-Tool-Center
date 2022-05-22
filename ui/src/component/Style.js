@@ -54,11 +54,51 @@ export const useColorlibStepIconStyles = makeStyles({
 })
 
 export const useStyles = makeStyles((theme) => ({
-    button: {
+    commonButton: {
         marginRight: theme.spacing(1)
     },
     instructions: {
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1)
+    },
+    loadTable: {
+        maxHeight: "calc(100vh - 390px)",
+    },
+    loadTableSearchBar: {
+        marginLeft: theme.spacing(1),
+        flex: 1,
+    },
+    loadTableSearchBarButton: {
+        padding: 10,
+    },
+
+    // Strategy
+    metaActionCreatorList: {
+        width: "100%",
+        backgroundColor: theme.palette.background.paper,
+        position: "relative",
+        overflow: "auto",
+        height: "calc(100vh - 370px)",
+    },
+    metaActionCreatorLi: {
+        backgroundColor: "inherit",
+    },
+    metaActionCreatorUl: {
+        backgroundColor: "inherit",
+        padding: 0,
+    },
+    metaActionCreatorForm: {
+        margin: theme.spacing(1),
+        minWidth: 120
+    },
+    metaActionCreatorFormPaper: {
+        display: "flex",
+        "& > *": {
+            padding: theme.spacing(3)
+        },
     }
+
+
+
+    // MetaActionDialog.js
 }))

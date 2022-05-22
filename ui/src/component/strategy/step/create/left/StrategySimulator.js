@@ -9,8 +9,11 @@ import parserGraph from "./../../../../../utils/parserGraph"
 import RobotSimulator from "./../../../../general/robotSimulator/RobotSimulator"
 
 import { setStrategyCreatorActionCreator, setMetaActionArrayActionCreator } from "./../../../../../action/strategyAction"
+import { useStyles } from "./../../../../Style"
 
-const StrategySimulator = ({ strategyCreator, setStrategyCreator, metaActionArray,setMetaActionArray }) => {
+const StrategySimulator = ({ strategyCreator, setStrategyCreator, metaActionArray, setMetaActionArray }) => {
+    const classes = useStyles()
+
     const handleParseStrategy = (event) => {
         const contentParser = parserGraph.parse(strategyCreator, metaActionArray)
 
@@ -24,12 +27,12 @@ const StrategySimulator = ({ strategyCreator, setStrategyCreator, metaActionArra
             .then(function (content) {
                 saveAs(content, contentParser.strategy.name + ".zip")
             })
-        
+
         //event.preventDefault()
     }
 
     const handleClearStrategy = (event) => {
-        setStrategyCreator({...strategyCreator, name: "Strategy name", flow: []})
+        setStrategyCreator({ ...strategyCreator, name: "Strategy name", flow: [] })
         setMetaActionArray([])
 
         //event.preventDefault()
@@ -37,15 +40,23 @@ const StrategySimulator = ({ strategyCreator, setStrategyCreator, metaActionArra
 
     return (
         <div >
-            <Button color="primary" variant="contained" onClick={(event) => handleParseStrategy(event)}>
+            <Button
+                color="primary"
+                variant="contained"
+                className={classes.commonButton}
+                onClick={(event) => handleParseStrategy(event)}>
                 Get Strategy
             </Button>
 
-            <Button color="primary" variant="contained" onClick={(event) => handleClearStrategy(event)}>
+            <Button
+                color="primary"
+                variant="contained"
+                className={classes.commonButton}
+                onClick={(event) => handleClearStrategy(event)}>
                 Clear Strategy
             </Button>
 
-            <RobotSimulator strategyToSimulate={strategyCreator} metaActionArrayToSimulate={metaActionArray}/>
+            <RobotSimulator strategyToSimulate={strategyCreator} metaActionArrayToSimulate={metaActionArray} />
         </div>
     )
 }

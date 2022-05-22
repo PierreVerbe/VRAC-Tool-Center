@@ -9,12 +9,13 @@ import ListItemText from "@material-ui/core/ListItemText"
 import List from "@material-ui/core/List"
 import Typography from "@material-ui/core/Typography"
 
-import { makeStyles, useTheme } from "@material-ui/core/styles"
+import { useTheme } from "@material-ui/core/styles"
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft"
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight"
 
 import { setActiveStepMonitoringActionCreator } from "../../../../../action/monitoringAction"
 
+/*
 const useStyles = makeStyles({
   root: {
     width: "80%",
@@ -34,9 +35,10 @@ const useStyles = makeStyles({
     padding: 0,
   },
 })
+*/
 
 const HistoryMonitoring = ({ monitoring, activeStepMonitoring, setActiveStepMonitoring }) => {
-  const classes = useStyles()
+  //const classes = useStyles()
   const theme = useTheme()
 
   const handleNext = (event) => {
@@ -75,7 +77,7 @@ const HistoryMonitoring = ({ monitoring, activeStepMonitoring, setActiveStepMoni
               steps={monitoring.monitoring.length}
               position="static"
               activeStep={activeStepMonitoring}
-              className={classes.root}
+              //className={classes.root}
               nextButton={
                 <Button size="small" onClick={(event) => handleNext(event)} disabled={activeStepMonitoring === monitoring.monitoring.length - 1}>
                   Next
@@ -91,9 +93,17 @@ const HistoryMonitoring = ({ monitoring, activeStepMonitoring, setActiveStepMoni
             />
           </Box>
 
-          <List className={classes.list} subheader={<li />}>
-            {<li key={`section`} className={classes.listSection}>
-              <ul className={classes.ul}>
+          <List 
+          //className={classes.list} 
+          subheader={<li />}
+          >
+            {<li 
+            key={`section`} 
+            //className={classes.listSection}
+            >
+              <ul 
+              //className={classes.ul}
+              >
                 {monitoring.monitoring.map((item) =>
                   item.id === activeStepMonitoring ? activeItemMonitoring(true, item) : activeItemMonitoring(false, item)
                 )}

@@ -29,6 +29,8 @@ import { Stage, Sprite, Graphics } from "@inlet/react-pixi"
 import Button from "@material-ui/core/Button"
 import PropTypes from "prop-types"
 
+import { useStyles } from "../../Style"
+
 const RobotSimulator = ({
     strategyToSimulate,
     metaActionArrayToSimulate,
@@ -38,6 +40,8 @@ const RobotSimulator = ({
     setSnackBar,
     setPointerSimulator,
 }) => {
+    const classes = useStyles()
+
     const handleCursorPosition = (event) => {
         const x = Math.round((event.clientY - event.target.offsetTop) * REDUCING_FACTOR)
         const y = Math.round((event.clientX - event.target.offsetLeft) * REDUCING_FACTOR)
@@ -177,6 +181,7 @@ const RobotSimulator = ({
                     <Button
                         color="primary"
                         variant="contained"
+                        className={classes.commonButton}
                         onClick={(event) => handleResetSimulator(event)}
                         startIcon={<ReplayIcon />}
                     >
@@ -186,6 +191,7 @@ const RobotSimulator = ({
                     <Button
                         color="primary"
                         variant="contained"
+                        className={classes.commonButton}
                         onClick={(event) => handleActionIdButtonSimulator(event, undefined, undefined)}
                         disabled={strategyToSimulate.flow.length === 0}
                         startIcon={<PlayArrowIcon />}
@@ -205,7 +211,9 @@ const RobotSimulator = ({
                 .map((strategyNode) => {
                     return (
                         <Button
+                            color="secondary"
                             variant="contained"
+                            className={classes.commonButton}
                             onClick={(event) => handleActionIdButtonSimulator(event, strategyNode.id, undefined)}
                         >
                             {strategyNode.data.label}
@@ -224,7 +232,9 @@ const RobotSimulator = ({
                 .map((node) => {
                     return (
                         <Button
+                            color="secondary"
                             variant="contained"
+                            className={classes.commonButton}
                             onClick={(event) => handleActionIdButtonSimulator(event, undefined, node.id)}
                         >
                             {node.data.label}
@@ -236,6 +246,7 @@ const RobotSimulator = ({
                 <Button
                     color="primary"
                     variant="contained"
+                    className={classes.commonButton}
                     onClick={(event) => handlePreviousAction(event)}
                     startIcon={<SkipPreviousIcon />}
                 >
@@ -248,6 +259,7 @@ const RobotSimulator = ({
                     <Button
                         color="primary"
                         variant="contained"
+                        className={classes.commonButton}
                         onClick={(event) => handleResetSimulator(event)}
                         startIcon={<ReplayIcon />}
                     >

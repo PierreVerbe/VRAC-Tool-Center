@@ -1,7 +1,6 @@
 import React, { useEffect } from "react"
 import { connect } from "react-redux"
 
-import { makeStyles } from "@material-ui/core/styles"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
 import ListItemText from "@material-ui/core/ListItemText"
@@ -14,26 +13,10 @@ import { green } from "@material-ui/core/colors"
 import MetaActionDialog from "./MetaActionDialog"
 
 import { setMetaActionArrayActionCreator, setOpenDialogMetaActionActionCreator } from "../../../../../../action/strategyAction"
+import { useStyles } from "./../../../../../Style"
 
 let idMetaAction = 0
 const getIdMetaAction = () => `MetaAction_${idMetaAction++}`
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    backgroundColor: theme.palette.background.paper,
-    position: "relative",
-    overflow: "auto",
-    height: "calc(100vh - 370px)",
-  },
-  listSection: {
-    backgroundColor: "inherit",
-  },
-  ul: {
-    backgroundColor: "inherit",
-    padding: 0,
-  }
-}))
 
 const MetaActionCreator = ({ metaActionArray, openDialogMetaAction, setMetaActionArray, setOpenDialogMetaAction }) => {
   const classes = useStyles()
@@ -70,9 +53,9 @@ const MetaActionCreator = ({ metaActionArray, openDialogMetaAction, setMetaActio
 
   return (
     <div>
-      <List className={classes.root} subheader={<li />}>
-        <li key={`section`} className={classes.listSection}>
-          <ul className={classes.ul}>
+      <List className={classes.metaActionCreatorList} subheader={<li />}>
+        <li key={`section`} className={classes.metaActionCreatorLi}>
+          <ul className={classes.metaActionCreatorUl}>
             <ListSubheader>{`Meta Action List`}</ListSubheader>
             {metaActionArray.map((metaAction) => (
               <ListItem button key={`item-${metaAction.name}`} onClick={() => selectMetaAction(metaAction.name)}>

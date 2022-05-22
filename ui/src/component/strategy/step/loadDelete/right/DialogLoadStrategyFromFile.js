@@ -7,16 +7,17 @@ import DialogContent from "@material-ui/core/DialogContent"
 import DialogContentText from "@material-ui/core/DialogContentText"
 import DialogTitle from "@material-ui/core/DialogTitle"
 import Button from "@material-ui/core/Button"
-
 import { DropzoneArea } from "material-ui-dropzone"
-
 import ClearIcon from "@material-ui/icons/Clear"
 import PublishIcon from "@material-ui/icons/Publish"
 
+import { useStyles } from "./../../../../Style"
+
 import { setStrategyLoaderActionCreator, setFileUploadedActionCreator, setOpenDialogStrategyActionCreator } from "../../../../../action/strategyAction"
 
-
-const DialogLoadStrategyFromFile = ({ fileUploaded, setFileUploaded, strategyLoader, setStrategyLoader, strategyCreator, setStrategy, insertStrategy, openDialogStrategy, setOpenDialogStrategy }) => {
+const DialogLoadStrategyFromFile = ({ fileUploaded, setFileUploaded, strategyLoader, setStrategyLoader, openDialogStrategy, setOpenDialogStrategy }) => {
+    const classes = useStyles()
+    
     const handleCancel = (event) => {
         setOpenDialogStrategy(false)
 
@@ -110,9 +111,9 @@ const DialogLoadStrategyFromFile = ({ fileUploaded, setFileUploaded, strategyLoa
                 <Button
                     variant="contained"
                     color="primary"
+                    className={classes.commonButton}
                     onClick={(event) => handleCancel(event)}
                     startIcon={<ClearIcon />}
-                    //className={classes.button}
                     style={{ backgroundColor: "orange" }}
                 >
                     Cancel
@@ -121,8 +122,8 @@ const DialogLoadStrategyFromFile = ({ fileUploaded, setFileUploaded, strategyLoa
                 <Button
                     variant="contained"
                     color="primary"
+                    className={classes.commonButton}
                     onClick={(event) => handleSubmit(event)}
-                    // className={classes.button}
                     startIcon={<PublishIcon />}
                     style={{ backgroundColor: "green" }}
                 >

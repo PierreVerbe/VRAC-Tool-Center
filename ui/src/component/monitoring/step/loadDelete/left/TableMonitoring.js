@@ -8,17 +8,12 @@ import TableContainer from "@material-ui/core/TableContainer"
 import TableRow from "@material-ui/core/TableRow"
 import Typography from "@material-ui/core/Typography"
 import Checkbox from "@material-ui/core/Checkbox"
-import { makeStyles } from "@material-ui/core/styles"
 
 import { columns, TableMonitoringHead } from "./TableMonitoringHead"
 import TableMonitoringSearchBar from "./TableMonitoringSearchBar"
 import { setIdRowMonitoringTableActionCreator, setMonitoringActionCreator } from "../../../../../action/monitoringAction"
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    maxHeight: "calc(100vh - 390px)",
-  }
-}))
+import { useStyles } from "../../../../Style"
 
 const rowCounter = (rows) => {
   switch (rows) {
@@ -53,7 +48,7 @@ const TableMonitoring = ({ idRowMonitoringTable, setIdRowMonitoringTable, allMon
     <div>
       <TableMonitoringSearchBar />
 
-      <TableContainer className={classes.container}>
+      <TableContainer className={classes.loadTable}>
         <Table stickyHeader aria-label="sticky table">
           <TableMonitoringHead isAnyRowSelected={idRowMonitoringTable !== null} />
 

@@ -29,11 +29,14 @@ import Select from "@material-ui/core/Select"
 import DeleteIcon from "@material-ui/icons/Delete"
 import LinearScaleIcon from "@material-ui/icons/LinearScale"
 
+import { useStyles } from "./../../../../../Style"
+
 import configData from "./../../../../../../resources/config.json"
 
 const configMetaActionTransition = configData.strategy.transition
 
 const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, setStrategyCreator, setOpenDialogNodeStrategy }) => {
+    const classes = useStyles()
 
     const deleteEdge = (event, id) => {
         const filteredEdge = strategyCreator.flow.filter(edge => edge.id !== id)
@@ -71,8 +74,6 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, setStrateg
     }
 
     const handleCancel = (event) => {
-        
-
         const updatedStrategyCreatorFlow = strategyCreator.flow.map(nodeOrEdge => ({ ...nodeOrEdge, isSelected: false }))
         const updatedStrategyCreator = { ...strategyCreator, flow: updatedStrategyCreatorFlow }
 
@@ -127,17 +128,9 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, setStrateg
         setStrategyCreator({ ...strategyCreator, flow: updatedStrategyCreatorFlow })
     }
 
-    /*
-    const onTextLabelChange = (event) => {
-        const updatedStrategyCreatorFlow = strategyCreator.flow.map(nodeOrEdge => nodeOrEdge.isSelected === true ? {...nodeOrEdge, data: {label: event.target.value}} : nodeOrEdge)
-        const updatedStrategyCreator = { ...strategyCreator, flow: updatedStrategyCreatorFlow }
-        setStrategyCreator(updatedStrategyCreator)
-    }
-    */
-
     const dialogNodeOrEdge = () => {
         const nodeOrEdge = strategyCreator.flow.filter(nodeOrEdge => nodeOrEdge.isSelected === true)[0]
-        
+
         if (nodeOrEdge === undefined)
             return <Typography>Click on a node or an edge</Typography>
         else if (nodeOrEdge.id.startsWith("Node")) {
@@ -156,7 +149,7 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, setStrateg
                             >
                                 {metaActionArray.map(metaAction => {
                                     const valueMenuItem = JSON.stringify({ id: metaAction.id, name: metaAction.name })
-                                    
+
                                     return <MenuItem value={valueMenuItem}>{metaAction.name}</MenuItem>
                                 }
                                 )}
@@ -164,7 +157,6 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, setStrateg
 
                         </FormGroup>
                     </FormControl>
-
 
                     <Typography variant="body1" >
                         List of edge to delete
@@ -235,9 +227,9 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, setStrateg
                 <Button
                     variant="contained"
                     color="primary"
+                    className={classes.commonButton}
                     onClick={(event) => handleCancel(event)}
                     startIcon={<ClearIcon />}
-                    //className={classes.button}
                     style={{ backgroundColor: "orange" }}
                 >
                     Cancel
@@ -246,9 +238,9 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, setStrateg
                 <Button
                     variant="contained"
                     color="primary"
+                    className={classes.commonButton}
                     onClick={(event) => handleDelete(event)}
                     startIcon={<ClearIcon />}
-                    //className={classes.button}
                     style={{ backgroundColor: "red" }}
                 >
                     Delete
@@ -257,8 +249,8 @@ const DialogUpdateNode = ({ isOpen, strategyCreator, metaActionArray, setStrateg
                 <Button
                     variant="contained"
                     color="primary"
+                    className={classes.commonButton}
                     onClick={(event) => handleSubmit(event)}
-                    // className={classes.button}
                     startIcon={<PublishIcon />}
                     style={{ backgroundColor: "green" }}
                 >

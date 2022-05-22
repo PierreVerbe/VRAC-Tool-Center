@@ -1,7 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import Paper from "@material-ui/core/Paper"
 import Table from "@material-ui/core/Table"
 import TableBody from "@material-ui/core/TableBody"
 import TableCell from "@material-ui/core/TableCell"
@@ -9,27 +8,12 @@ import TableContainer from "@material-ui/core/TableContainer"
 import TableRow from "@material-ui/core/TableRow"
 import Typography from "@material-ui/core/Typography"
 import Checkbox from "@material-ui/core/Checkbox"
-import { makeStyles } from "@material-ui/core/styles"
 
 import { columns, TableStrategyHead } from "./TableStrategyHead"
 import TableStrategySearchBar from "./TableStrategySearchBar"
 import { setIdRowStrategyTableActionCreator, setStrategyLoaderActionCreator } from "../../../../../action/strategyAction"
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-  },
-  container: {
-    maxHeight: 500,
-  },
-  iconButton: {
-    padding: 10,
-  },
-  input: {
-    marginLeft: theme.spacing(1),
-    flex: 1,
-  }
-}))
+import { useStyles } from "../../../../Style"
 
 const rowCounter = (rows) => {
   switch (rows) {
@@ -62,10 +46,10 @@ const TableStrategy = ({ idRowStrategyTable, setIdRowStrategyTable, allStrategie
   }
 
   return (
-    <Paper className={classes.root}>
+    <div>
       <TableStrategySearchBar />
 
-      <TableContainer className={classes.container}>
+      <TableContainer className={classes.loadTable}>
         <Table stickyHeader aria-label="sticky table">
           <TableStrategyHead isAnyRowSelected={idRowStrategyTable !== null} />
 
@@ -117,7 +101,7 @@ const TableStrategy = ({ idRowStrategyTable, setIdRowStrategyTable, allStrategie
       <Typography >
         {rowCounter(rows.length)}
       </Typography>
-    </Paper>
+    </div>
   )
 }
 

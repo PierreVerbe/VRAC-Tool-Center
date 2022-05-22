@@ -13,7 +13,11 @@ import { setMetaActionArrayActionCreator, setStrategyCreatorActionCreator, setFi
 import parserGraph from "../../../../../utils/parserGraph"
 import parserStrategy from "../../../../../utils/parserStrategy"
 
+import { useStyles } from "../../../../Style"
+
 const SelectedStrategy = ({ setMetaActionArray, setStrategyCreator, setFileUploaded, insertStrategy, setStrategyLoader, strategyCreator, metaActionArray, deleteStrategy, idRowStrategyTable, strategyLoader, setIdRowStrategyTable, setStrategy, setOpenDialogStrategy }) => {
+    const classes = useStyles()
+
     const isSaveButtonDisabled = () => {
         return (idRowStrategyTable !== null && idRowStrategyTable !== -1) || Object.entries(strategyLoader).length === 0
     }
@@ -105,8 +109,8 @@ const SelectedStrategy = ({ setMetaActionArray, setStrategyCreator, setFileUploa
             <Button
                 variant="contained"
                 color="primary"
+                className={classes.commonButton}
                 onClick={(event) => handleLoadFromCreator(event)}
-            //disabled={isSaveButtonDisabled()}
             >
                 Load from creator
             </Button>
@@ -114,8 +118,8 @@ const SelectedStrategy = ({ setMetaActionArray, setStrategyCreator, setFileUploa
             <Button
                 variant="contained"
                 color="primary"
+                className={classes.commonButton}
                 onClick={(event) => handleLoadToCreator(event)}
-            //disabled={isSaveButtonDisabled()}
             >
                 Load to creator
             </Button>
@@ -123,8 +127,8 @@ const SelectedStrategy = ({ setMetaActionArray, setStrategyCreator, setFileUploa
             <Button
                 variant="contained"
                 color="primary"
+                className={classes.commonButton}
                 onClick={(event) => handleLoadStrategyFromFile(event)}
-            //disabled={isSaveButtonDisabled()}
             >
                 Load from file
             </Button>
@@ -132,8 +136,8 @@ const SelectedStrategy = ({ setMetaActionArray, setStrategyCreator, setFileUploa
             <Button
                 variant="contained"
                 color="primary"
+                className={classes.commonButton}
                 onClick={(event) => handleSave(event)}
-                //className={classes.button}
                 startIcon={<SaveIcon />}
                 style={{ backgroundColor: "green" }}
                 disabled={isSaveButtonDisabled()}
@@ -146,8 +150,8 @@ const SelectedStrategy = ({ setMetaActionArray, setStrategyCreator, setFileUploa
             <Button
                 variant="contained"
                 color="primary"
+                className={classes.commonButton}
                 onClick={(event) => handleDelete(event)}
-                //className={classes.button}
                 startIcon={<DeleteIcon />}
                 style={{ backgroundColor: "red" }}
                 disabled={isDeleteButtonDisabled()}
@@ -158,10 +162,9 @@ const SelectedStrategy = ({ setMetaActionArray, setStrategyCreator, setFileUploa
             <Button
                 variant="contained"
                 color="primary"
+                className={classes.commonButton}
                 onClick={(event) => handleExport(event)}
-
                 startIcon={<GetAppIcon />}
-                //className={classes.button}
                 style={{ backgroundColor: "blue" }}
                 disabled={isExportButtonDisabled()}
             >
@@ -173,9 +176,9 @@ const SelectedStrategy = ({ setMetaActionArray, setStrategyCreator, setFileUploa
             <Button
                 variant="contained"
                 color="primary"
+                className={classes.commonButton}
                 onClick={(event) => handleClear(event)}
                 startIcon={<ClearIcon />}
-                //className={classes.button}
                 disabled={isClearButtonDisabled()}
                 style={{ backgroundColor: "orange" }}
             >

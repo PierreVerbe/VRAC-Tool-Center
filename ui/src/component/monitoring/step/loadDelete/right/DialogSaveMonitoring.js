@@ -8,13 +8,16 @@ import DialogContent from "@material-ui/core/DialogContent"
 import DialogContentText from "@material-ui/core/DialogContentText"
 import DialogTitle from "@material-ui/core/DialogTitle"
 import Button from "@material-ui/core/Button"
-
 import ClearIcon from "@material-ui/icons/Clear"
 import PublishIcon from "@material-ui/icons/Publish"
+
+import { useStyles } from "./../../../../Style"
 
 import { insertMonitoringActionCreator, setMonitoringActionCreator, setOpenDialogMonitoringActionCreator } from "../../../../../action/monitoringAction"
 
 const DialogSaveMonitoring = ({ monitoring, setMonitoring, insertMonitoring, openDialogMonitoring, setOpenDialogMonitoring }) => {
+    const classes = useStyles()
+    
     const handleCancel = (event) => {
         setOpenDialogMonitoring(false)
 
@@ -88,9 +91,9 @@ const DialogSaveMonitoring = ({ monitoring, setMonitoring, insertMonitoring, ope
                 <Button
                     variant="contained"
                     color="primary"
+                    className={classes.commonButton}
                     onClick={(event) => handleCancel(event)}
                     startIcon={<ClearIcon />}
-                    //className={classes.button}
                     style={{ backgroundColor: "orange" }}
                 >
                     Cancel
@@ -99,8 +102,8 @@ const DialogSaveMonitoring = ({ monitoring, setMonitoring, insertMonitoring, ope
                 <Button
                     variant="contained"
                     color="primary"
+                    className={classes.commonButton}
                     onClick={(event) => handleSubmit(event)}
-                    // className={classes.button}
                     startIcon={<PublishIcon />}
                     style={{ backgroundColor: "green" }}
                 >
