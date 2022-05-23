@@ -68,8 +68,10 @@ const Monitoring = ({ getAllMonitorings, monitoringStepper, setMonitoringStepper
   const classes = useStyles()
   const steps = [{ key: "Load/Delete", value: 0 }, { key: "Simulation", value: 1 }, { key: "Statistic", value: 2 }]
 
-  const handleNextStep = (label) => {
+  const handleNextStep = (event, label) => {
     setMonitoringStepper(label.value)
+
+    //event.preventDefault()
   }
 
   return (
@@ -81,7 +83,7 @@ const Monitoring = ({ getAllMonitorings, monitoringStepper, setMonitoringStepper
           connector={<ColorlibConnector />}
         >
           {steps.map((label) => (
-            <Step key={label.key} onClick={() => handleNextStep(label)}>
+            <Step key={label.key} onClick={(event) => handleNextStep(event, label)}>
               <StepLabel StepIconComponent={ColorlibStepIcon}>{label.key}</StepLabel>
             </Step>
           ))}

@@ -28,7 +28,7 @@ const MetaActionCreator = ({ metaActionArray, openDialogMetaAction, setMetaActio
     // eslint-disable-next-line
   }, [])
 
-  const addNewMetaAction = () => {
+  const addNewMetaAction = (event) => {
     const metaActionId = getIdMetaAction()
     const newMetaAction = {
       id: metaActionId,
@@ -39,9 +39,11 @@ const MetaActionCreator = ({ metaActionArray, openDialogMetaAction, setMetaActio
     }
     const updatedMetaActionArray = metaActionArray.concat([newMetaAction])
     setMetaActionArray(updatedMetaActionArray)
+
+    //event.preventDefault()
   }
 
-  const selectMetaAction = (metaActionName) => {
+  const selectMetaAction = (event, metaActionName) => {
     setOpenDialogMetaAction(true)
     const selectedMetaAction = metaActionArray.filter((item) => item.isSelected === true)
 
@@ -49,6 +51,8 @@ const MetaActionCreator = ({ metaActionArray, openDialogMetaAction, setMetaActio
       const updatedMetaActionArray = metaActionArray.map(metaAction => (metaAction.name === metaActionName ? { ...metaAction, isSelected: !metaAction.isSelected } : metaAction))
       setMetaActionArray(updatedMetaActionArray)
     }
+
+    //event.preventDefault()
   }
 
   return (
@@ -58,11 +62,11 @@ const MetaActionCreator = ({ metaActionArray, openDialogMetaAction, setMetaActio
           <ul className={classes.metaActionCreatorUl}>
             <ListSubheader>{`Meta Action List`}</ListSubheader>
             {metaActionArray.map((metaAction) => (
-              <ListItem button key={`item-${metaAction.name}`} onClick={() => selectMetaAction(metaAction.name)}>
+              <ListItem button key={`item-${metaAction.name}`} onClick={(event) => selectMetaAction(event, metaAction.name)}>
                 <ListItemText primary={metaAction.name} />
               </ListItem>
             ))}
-            <ListItem button key={`item-button`} onClick={() => addNewMetaAction()}>
+            <ListItem button key={`item-button`} onClick={(event) => addNewMetaAction(event)}>
               <ListItemIcon>
                 <AddCircleIcon style={{ color: green[500] }} />
               </ListItemIcon>

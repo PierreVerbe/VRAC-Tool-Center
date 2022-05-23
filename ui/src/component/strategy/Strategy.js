@@ -68,8 +68,10 @@ const Strategy = ({ strategyStepper, getAllStrategies, setStrategyStepper }) => 
     const classes = useStyles()
     const steps = [{ key: "Create", value: 0 }, { key: "Load/Delete", value: 1 }, { key: "Statistic", value: 2 }]
 
-    const handleNextStep = (label) => {
+    const handleNextStep = (event, label) => {
         setStrategyStepper(label.value)
+
+        //event.preventDefault()
     }
 
     return (
@@ -81,7 +83,7 @@ const Strategy = ({ strategyStepper, getAllStrategies, setStrategyStepper }) => 
                     connector={<ColorlibConnector />}
                 >
                     {steps.map((label) => (
-                        <Step key={label.key} onClick={() => handleNextStep(label)}>
+                        <Step key={label.key} onClick={(event) => handleNextStep(event, label)}>
                             <StepLabel StepIconComponent={ColorlibStepIcon}>{label.key}</StepLabel>
                         </Step>
                     ))}
