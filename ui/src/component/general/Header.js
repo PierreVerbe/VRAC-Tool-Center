@@ -18,9 +18,11 @@ import { setMonitoringStepperActionCreator } from "./../../action/monitoringActi
 const Header = ({ darkMode, setDarkMode, setStrategyStepper, setMonitoringStepper }) => {
     const routes = ["/", "/strategy", "/monitoring", "/about"]
 
-    const setStepperToZero = () => {
+    const setStepperToZero = (event) => {
         setStrategyStepper(0)
         setMonitoringStepper(0)
+
+        //event.preventDefault()
     }
 
     return (
@@ -39,28 +41,28 @@ const Header = ({ darkMode, setDarkMode, setStrategyStepper, setMonitoringSteppe
                                         label="Home"
                                         component={Link}
                                         to={routes[0]}
-                                        onClick={setStepperToZero}
+                                        onClick={(event) => setStepperToZero(event)}
                                     />
                                     <Tab
                                         value={routes[1]}
                                         label="Strategy"
                                         component={Link}
                                         to={routes[1]}
-                                        onClick={setStepperToZero}
+                                        onClick={(event) => setStepperToZero(event)}
                                     />
                                     <Tab
                                         value={routes[2]}
                                         label="Monitoring"
                                         component={Link}
                                         to={routes[2]}
-                                        onClick={setStepperToZero}
+                                        onClick={(event) => setStepperToZero(event)}
                                     />
                                     <Tab
                                         value={routes[3]}
                                         label="About"
                                         component={Link}
                                         to={routes[3]}
-                                        onClick={setStepperToZero}
+                                        onClick={(event) => setStepperToZero(event)}
                                     />
                                 </Tabs>
 
